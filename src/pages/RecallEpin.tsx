@@ -2,10 +2,10 @@
 import GenericButton from '@/components/Forms/Buttons/GenericButton';
 import GenericInputField from '@/components/Forms/Input/GenericInputField';
 import GenericDropdown from '@/components/Forms/DropDown/GenericDropDown';
-import React, {useState, useEffect} from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
-import {unAuthenticatedApi} from '@/utils/axios';
-import {useAddRecallEpin} from '@/lib/react-query/Admin/TopUp/topup';
+import React, { useState, useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { unAuthenticatedApi } from '@/utils/axios';
+import { useAddRecallEpin } from '@/lib/react-query/Admin/TopUp/topup';
 import toast from 'react-hot-toast';
 
 const RecallEpin = () => {
@@ -14,12 +14,12 @@ const RecallEpin = () => {
   const [customerData, setCustomerData] = useState<any>(null);
   const [isChecking, setIsChecking] = useState<boolean>(false);
 
-  const {handleSubmit, watch, setValue} = methods;
+  const { handleSubmit, watch, setValue } = methods;
 
   // Watch the CRN field for changes
   const crnNo = watch('crnNo');
 
-  const {mutateAsync: recallEpin, isPending} = useAddRecallEpin();
+  const { mutateAsync: recallEpin, isPending } = useAddRecallEpin();
 
   // Set customer name in form when it changes
   useEffect(() => {
@@ -144,9 +144,10 @@ const RecallEpin = () => {
             name="price"
             label="Price"
             options={[
-               {label: '25', value: '25'},
-                    {label: '50', value: '50'},
-                    {label: '100', value: '100'}
+              { label: '2000', value: '2000' },
+              { label: '1500', value: '1500' },
+              { label: '3500', value: '3500' },
+              { label: '1500', value: '1500' }, 
             ]}
           />
         </div>

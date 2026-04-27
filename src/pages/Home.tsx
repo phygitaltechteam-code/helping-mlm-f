@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {IoWalletSharp} from 'react-icons/io5';
+import React, { useEffect, useState } from 'react';
+import { IoWalletSharp } from 'react-icons/io5';
 import {
   FaDollarSign,
   FaShoppingBasket,
@@ -14,15 +14,15 @@ import {
   FaTicketAlt,
   FaHandHoldingUsd,
 } from 'react-icons/fa';
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 import StatCard from './StatCard';
-import {useFetchAdminHome} from '@/lib/react-query/Admin/Home/adminHome';
+import { useFetchAdminHome } from '@/lib/react-query/Admin/Home/adminHome';
 import NewMembers from '@/components/Charts/NewMembers';
 import TeamPerformance from '@/components/Charts/TeamPerformance';
 import ChartOne from '@/components/Charts/ChartOne';
 import Loader from '@/components/common/Loader';
-import {useAuthContext} from '@/context/AuthContext';
-import {FaKey, FaWallet} from 'react-icons/fa6';
+import { useAuthContext } from '@/context/AuthContext';
+import { FaKey, FaWallet } from 'react-icons/fa6';
 
 interface StatCardProps {
   amount: string;
@@ -33,11 +33,11 @@ interface StatCardProps {
 }
 
 const Home: React.FC = () => {
-  const {data, isSuccess, isError, isPending} = useFetchAdminHome();
+  const { data, isSuccess, isError, isPending } = useFetchAdminHome();
   console.log('====================================');
   console.log('data', data);
   console.log('====================================');
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
   const id = user?.id;
 
   console.log('rtreport', data);
@@ -75,111 +75,159 @@ const Home: React.FC = () => {
         selectedView === 'today' ? data?.rightCount : data?.rightCount;
       const customerCount =
         selectedView === 'today' ? data?.customerCount : data?.customerCount;
+      // setStatsData([
+      //   {
+      //     title: 'Total Business',
+      //     amount: `${data?.totalBuisness}`,
+      //     icon: <FaWallet className="text-2xl text-blue-500" />,
+      //     trend: 'up',
+      //     trendValue: '12%',
+      //   },
+      //   {
+      //     title: 'Total Commission',
+      //     amount: `${data?.totalCommission}`,
+      //     icon: <FaHandHoldingUsd className="text-2xl text-green-500" />,
+      //     trend: 'up',
+      //     trendValue: '8%',
+      //   },
+      //   {
+      //     title: 'Epin Given',
+      //     amount: `${data?.givenEpin}`,
+      //     icon: <FaKey className="text-2xl text-purple-500" />,
+      //     trend: 'up',
+      //     trendValue: '24%',
+      //   },
+      //   {
+      //     title: 'Epin Used',
+      //     amount: `${data?.usedEpin}`,
+      //     icon: <FaKey className="text-2xl text-yellow-500" />,
+      //     trend: 'up',
+      //     trendValue: '18%',
+      //   },
+      //   {
+      //     title: 'Pair Matching Income  ',
+      //     amount: `$${data?.binary}`,
+      //     icon: <FaSitemap className="text-2xl text-teal-500" />,
+      //     trend: 'up',
+      //     trendValue: '15%',
+      //   },
+      //   {
+      //     title: 'Total Level Income  ',
+      //     amount: `$${data?.totalRoi}`,
+      //     icon: <FaSitemap className="text-2xl text-teal-500" />,
+      //     trend: 'up',
+      //     trendValue: '15%',
+      //   },
+      //   {
+      //     title: 'Left Count ',
+      //     amount: `$${data?.leftCount}`,
+      //     icon: <FaSitemap className="text-2xl text-teal-500" />,
+      //     trend: 'up',
+      //     trendValue: '15%',
+      //   },
+      //   {
+      //     title: 'Right Count ',
+      //     amount: `$${data?.rightCount}`,
+      //     icon: <FaSitemap className="text-2xl text-teal-500" />,
+      //     trend: 'up',
+      //     trendValue: '15%',
+      //   },
+      //   // {
+      //   //   title: 'Direct Sponsor Income',
+      //   //   amount: `$${data?.directCommission}`,
+      //   //   icon: <FaCrown className="text-2xl text-pink-500" />,
+      //   //   trend: 'up',
+      //   //   trendValue: '10%',
+      //   // },
+      //   // {
+      //   //   title: 'Rewards Achiever Report',
+      //   //   amount: `$${achiverReport || 0}`,
+      //   //   icon: <FaAward className="text-2xl text-indigo-500" />,
+      //   //   trend: 'up',
+      //   //   trendValue: '5%',
+      //   // },
+      //   // {
+      //   //   title: 'Repurchase Commission',
+      //   //   amount: `$${repurchaseCommission}`,
+      //   //   icon: <FaRedoAlt className="text-2xl text-amber-500" />,
+      //   //   trend: 'up',
+      //   //   trendValue: '20%',
+      //   // },
+      //   // {
+      //   //   title: 'Repurchase Amount',
+      //   //   amount: `$${repurchaseAmount}`,
+      //   //   icon: <FaShoppingCart className="text-2xl text-amber-500" />,
+      //   //   trend: 'up',
+      //   //   trendValue: '20%',
+      //   // },
+      //   {
+      //     title: 'In Active Customer',
+      //     amount: `${inActiveCustomer}`,
+      //     icon: <FaShoppingCart className="text-2xl text-amber-500" />,
+      //     trend: 'up',
+      //     trendValue: '20%',
+      //   },
+      //   {
+      //     title: ' Active Customer',
+      //     amount: `${customerCount - inActiveCustomer}`,
+      //     icon: <FaShoppingCart className="text-2xl text-amber-500" />,
+      //     trend: 'up',
+      //     trendValue: '20%',
+      //   },
+      //   {
+      //     title: 'Total Customer',
+      //     amount: `${customerCount}`,
+      //     icon: <FaShoppingCart className="text-2xl text-amber-500" />,
+      //     trend: 'up',
+      //     trendValue: '20%',
+      //   },
+      // ]);
+
       setStatsData([
         {
+          title: 'Total Team',
+          amount: '0',
+          icon: <FaUserPlus className="text-2xl text-blue-500" />,
+        },
+        {
           title: 'Total Business',
-          amount: `${data?.totalBuisness}`,
-          icon: <FaWallet className="text-2xl text-blue-500" />,
-          trend: 'up',
-          trendValue: '12%',
+          amount: '0',
+          icon: <FaWallet className="text-2xl text-green-500" />,
+        },
+        {
+          title: 'Total Pins',
+          amount: '0',
+          icon: <FaKey className="text-2xl text-purple-500" />,
+        },
+        {
+          title: 'Active Pins',
+          amount: '0',
+          icon: <FaKey className="text-2xl text-green-500" />,
+        },
+        {
+          title: 'Inactive Pins',
+          amount: '0',
+          icon: <FaKey className="text-2xl text-red-500" />,
         },
         {
           title: 'Total Commission',
-          amount: `${data?.totalCommission}`,
-          icon: <FaHandHoldingUsd className="text-2xl text-green-500" />,
-          trend: 'up',
-          trendValue: '8%',
+          amount: '0',
+          icon: <FaHandHoldingUsd className="text-2xl text-yellow-500" />,
         },
         {
-          title: 'Epin Given',
-          amount: `${data?.givenEpin}`,
-          icon: <FaKey className="text-2xl text-purple-500" />,
-          trend: 'up',
-          trendValue: '24%',
+          title: 'Bonus Income Achievers',
+          amount: '0',
+          icon: <FaAward className="text-2xl text-pink-500" />,
         },
         {
-          title: 'Epin Used',
-          amount: `${data?.usedEpin}`,
-          icon: <FaKey className="text-2xl text-yellow-500" />,
-          trend: 'up',
-          trendValue: '18%',
+          title: 'Generation Income',
+          amount: '0',
+          icon: <FaSitemap className="text-2xl text-indigo-500" />,
         },
         {
-          title: 'Pair Matching Income  ',
-          amount: `$${data?.binary}`,
-          icon: <FaSitemap className="text-2xl text-teal-500" />,
-          trend: 'up',
-          trendValue: '15%',
-        },
-        {
-          title: 'Total Level Income  ',
-          amount: `$${data?.totalRoi}`,
-          icon: <FaSitemap className="text-2xl text-teal-500" />,
-          trend: 'up',
-          trendValue: '15%',
-        },
-        {
-          title: 'Left Count ',
-          amount: `$${data?.leftCount}`,
-          icon: <FaSitemap className="text-2xl text-teal-500" />,
-          trend: 'up',
-          trendValue: '15%',
-        },
-        {
-          title: 'Right Count ',
-          amount: `$${data?.rightCount}`,
-          icon: <FaSitemap className="text-2xl text-teal-500" />,
-          trend: 'up',
-          trendValue: '15%',
-        },
-        // {
-        //   title: 'Direct Sponsor Income',
-        //   amount: `$${data?.directCommission}`,
-        //   icon: <FaCrown className="text-2xl text-pink-500" />,
-        //   trend: 'up',
-        //   trendValue: '10%',
-        // },
-        // {
-        //   title: 'Rewards Achiever Report',
-        //   amount: `$${achiverReport || 0}`,
-        //   icon: <FaAward className="text-2xl text-indigo-500" />,
-        //   trend: 'up',
-        //   trendValue: '5%',
-        // },
-        // {
-        //   title: 'Repurchase Commission',
-        //   amount: `$${repurchaseCommission}`,
-        //   icon: <FaRedoAlt className="text-2xl text-amber-500" />,
-        //   trend: 'up',
-        //   trendValue: '20%',
-        // },
-        // {
-        //   title: 'Repurchase Amount',
-        //   amount: `$${repurchaseAmount}`,
-        //   icon: <FaShoppingCart className="text-2xl text-amber-500" />,
-        //   trend: 'up',
-        //   trendValue: '20%',
-        // },
-        {
-          title: 'In Active Customer',
-          amount: `${inActiveCustomer}`,
-          icon: <FaShoppingCart className="text-2xl text-amber-500" />,
-          trend: 'up',
-          trendValue: '20%',
-        },
-        {
-          title: ' Active Customer',
-          amount: `${customerCount - inActiveCustomer}`,
-          icon: <FaShoppingCart className="text-2xl text-amber-500" />,
-          trend: 'up',
-          trendValue: '20%',
-        },
-        {
-          title: 'Total Customer',
-          amount: `${customerCount}`,
-          icon: <FaShoppingCart className="text-2xl text-amber-500" />,
-          trend: 'up',
-          trendValue: '20%',
+          title: 'Auto Pool Income',
+          amount: '0',
+          icon: <FaChartLine className="text-2xl text-teal-500" />,
         },
       ]);
     }
@@ -188,8 +236,8 @@ const Home: React.FC = () => {
   if (isError) {
     return (
       <motion.div
-        initial={{opacity: 0}}
-        animate={{opacity: 1}}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         className="flex h-64 items-center justify-center rounded-lg bg-red-50"
       >
         <p className="text-lg text-red-500">
@@ -224,20 +272,20 @@ const Home: React.FC = () => {
   };
 
   const customerGrowthData = [
-    {name: 'Jan', customers: 45},
-    {name: 'Feb', customers: 52},
-    {name: 'Mar', customers: 48},
-    {name: 'Apr', customers: 78},
-    {name: 'May', customers: 65},
-    {name: 'Jun', customers: 90},
-    {name: 'Jul', customers: data?.customerCount || 0},
+    { name: 'Jan', customers: 45 },
+    { name: 'Feb', customers: 52 },
+    { name: 'Mar', customers: 48 },
+    { name: 'Apr', customers: 78 },
+    { name: 'May', customers: 65 },
+    { name: 'Jun', customers: 90 },
+    { name: 'Jul', customers: data?.customerCount || 0 },
   ];
 
   return (
     <motion.div
-      initial={{opacity: 0, y: 20}}
-      animate={{opacity: 1, y: 0}}
-      transition={{duration: 0.5}}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
       className="p-4 md:p-6"
     >
       <div className="mb-6 flex items-center gap-4">
@@ -253,11 +301,10 @@ const Home: React.FC = () => {
         </button> */}
         <button
           onClick={() => setSelectedView('month')}
-          className={`rounded-lg px-4 py-2 text-sm font-medium ${
-            selectedView === 'month'
+          className={`rounded-lg px-4 py-2 text-sm font-medium ${selectedView === 'month'
               ? 'border border-blue-600 bg-blue-600 text-white'
               : 'bg-gray-200 text-gray-800 border-gray-200 border'
-          }`}
+            }`}
         >
           All
         </button>
@@ -266,11 +313,11 @@ const Home: React.FC = () => {
         {displayedStats.map((stat, index) => (
           <motion.div
             key={index}
-            initial={{opacity: 0, y: 20}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.3, delay: index * 0.1}}
-            whileHover={{scale: 1.03}}
-            whileTap={{scale: 0.98}}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
           >
             <StatCard
               amount={stat.amount}
@@ -286,8 +333,8 @@ const Home: React.FC = () => {
           <motion.button
             onClick={handleToggle}
             className="flex items-center rounded-lg bg-blue-50 px-4 py-2 text-blue-600"
-            whileHover={{scale: 1.05}}
-            whileTap={{scale: 0.95}}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             <span>{showExtraBoxes ? 'Show Less' : 'Show More'}</span>
             <svg

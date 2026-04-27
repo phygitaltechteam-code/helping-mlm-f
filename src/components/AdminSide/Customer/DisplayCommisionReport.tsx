@@ -51,7 +51,8 @@ const DisplayCommisionReport: React.FC = () => {
   useEffect(() => {
     if (isSuccess && commissionData) {
       const transformed: Commission[] = commissionData
-        .filter((item: any) => item.amount > 0)
+        // .filter((item: any) => item.amount > 0)
+        .filter((item: any) => item.amount > 0 && item.status === 'PAID')
         .map((item: any) => {
           const date = new Date(item.createdAt);
           const formattedDate = new Intl.DateTimeFormat('en-US', {

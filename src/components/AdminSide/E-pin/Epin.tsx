@@ -1,21 +1,21 @@
 /* eslint-disable*/
-import React, {useEffect, useState} from 'react';
-import {useForm, FormProvider} from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 import GenericInputField from '@/components/Forms/Input/GenericInputField';
 import GenericButton from '@/components/Forms/Buttons/GenericButton';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {z} from 'zod';
-import {useAGetOtp, useCreateEPin} from '@/lib/react-query/Admin/Epin/epin';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useAGetOtp, useCreateEPin } from '@/lib/react-query/Admin/Epin/epin';
 import toast from 'react-hot-toast';
 import GenericDropdown from '@/components/Forms/DropDown/GenericDropDown';
-import {epinSchema} from '@/lib/validation/epinSchema';
+import { epinSchema } from '@/lib/validation/epinSchema';
 
 type FormValues = z.infer<typeof epinSchema>;
 export const Epin: React.FC = () => {
   const methods = useForm<FormValues>({
     resolver: zodResolver(epinSchema),
   });
-  const {mutate: createEPin, isSuccess, isPending, error} = useCreateEPin();
+  const { mutate: createEPin, isSuccess, isPending, error } = useCreateEPin();
   const [selectedType, setSelectedType] = useState('');
   const [countValue, setCountValue] = useState('');
   const {
@@ -84,9 +84,10 @@ export const Epin: React.FC = () => {
               label="Price"
               name="price"
               options={[
-                 {label: '25', value: '25'},
-                    {label: '50', value: '50'},
-                    {label: '100', value: '100'}
+                { label: '2000', value: '2000' },
+                { label: '1500', value: '1500' },
+                { label: '3500', value: '3500' },
+                { label: '1500', value: '1500' },
               ]}
               onChange={handleTypeChange}
             />
