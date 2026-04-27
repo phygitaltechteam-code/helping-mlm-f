@@ -72,7 +72,7 @@ const CommissionReport: React.FC = () => {
   ];
 
   useEffect(() => {
-    if (apiData && Array.isArray(apiData)) {
+    if (apiData && Array.isArray(apiData) && apiData.length > 0) {
       // Map the API response to the required data structure
       const mappedData = apiData
         .slice()
@@ -90,15 +90,55 @@ const CommissionReport: React.FC = () => {
             minute: '2-digit',
             second: '2-digit',
           }).format(new Date(item.createdAt)),
-          amount: `$` + `` + item.amount || 0,
-          payableAmount: `$` + `` + (item.payableAmount || 0),
-          tdsAmount: `$` + `` + (item.tdsAmount || 0),
+          amount: Number(item.amount || 0),
+          payableAmount: Number(item.payableAmount || 0),
+          tdsAmount: Number(item.tdsAmount || 0),
           status: item.status || 'N/A',
           type: item.type || 'N/A',
           details: item.details || 'N/A',
           walletAddress: item.customer?.wallet?.walletAddress || 'N/A',
         }));
       setCommissionData(mappedData);
+    } else {
+      // Add Mock Data for testing when backend has no data
+      setCommissionData([
+        {
+          id: 'MOCK001',
+          dateTime: new Intl.DateTimeFormat('en-IN', {
+            year: 'numeric',
+            month: 'long',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          }).format(new Date()),
+          amount: 500,
+          payableAmount: 450,
+          tdsAmount: 50,
+          status: 'PAID',
+          type: 'Referral',
+          details: 'Direct referral bonus',
+          walletAddress: '0xabc123...',
+        },
+        {
+          id: 'MOCK002',
+          dateTime: new Intl.DateTimeFormat('en-IN', {
+            year: 'numeric',
+            month: 'long',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          }).format(new Date(Date.now() - 86400000)), // Yesterday
+          amount: 250,
+          payableAmount: 225,
+          tdsAmount: 25,
+          status: 'PENDING',
+          type: 'Level Income',
+          details: 'Level 2 team bonus',
+          walletAddress: '0xabc123...',
+        },
+      ]);
     }
   }, [apiData]);
 
