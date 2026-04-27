@@ -15,7 +15,9 @@ import {
   FaUserCircle,
   FaEnvelope,
   FaPhone,
-  FaIdCard
+  FaIdCard,
+  FaKey,
+  FaNetworkWired
 } from 'react-icons/fa';
 import { GiTakeMyMoney } from 'react-icons/gi';
 import { HiOutlineRefresh } from 'react-icons/hi';
@@ -92,6 +94,12 @@ const CustomerDashboard = () => {
     totalEarning: dashboardData?.totalEarning ?? 0,
     totalWithdrawal: dashboardData?.totalWithdrawal ?? 0,
     walletBalance: dashboardData?.WalletBalance ?? 0,
+    // New cards
+    customerTeam: dashboardData?.customerTeam ?? 0,
+    activePin: dashboardData?.activePin ?? 0,
+    inactivePin: dashboardData?.inactivePin ?? 0,
+    generationCommission: dashboardData?.generationCommission ?? 0,
+    autopullCommission: dashboardData?.autopullCommission ?? 0,
   };
 
   return (
@@ -176,6 +184,30 @@ const CustomerDashboard = () => {
               <div>
                 <p className="text-base font-semibold">{card.title}</p>
                 <p className="text-3xl font-bold mt-1"> {card.dollor} {card.value}</p>
+              </div>
+              <div className="text-2xl opacity-90">{card.icon}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Third Row - New Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-10">
+        {[
+          { title: 'Customer Team', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
+          { title: 'Active Pin', value: formatCount(stats.activePin), gradient: 'from-green-400 to-emerald-500', icon: <FaKey /> },
+          { title: 'Inactive Pin', value: formatCount(stats.inactivePin), gradient: 'from-red-400 to-rose-500', icon: <FaKey /> },
+          { title: 'Generation Comm.', value: formatCurrency(stats.generationCommission), gradient: 'from-yellow-400 to-amber-500', icon: <FaMoneyBillWave />, dollor:'$' },
+          { title: 'Autopull Comm.', value: formatCurrency(stats.autopullCommission), gradient: 'from-indigo-400 to-purple-500', icon: <FaSeedling />, dollor:'$' },
+        ].map((card, i) => (
+          <div
+            key={i}
+            className={`bg-gradient-to-br ${card.gradient} rounded-md shadow-lg p-3 text-white h-24 flex flex-col justify-between`}
+          >
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-base font-semibold">{card.title}</p>
+                <p className="text-3xl font-bold mt-1"> {card.dollor ? card.dollor : ''} {card.value}</p>
               </div>
               <div className="text-2xl opacity-90">{card.icon}</div>
             </div>

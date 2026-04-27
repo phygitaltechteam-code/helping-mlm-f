@@ -1,14 +1,14 @@
 /* eslint-disable */
-import React, {useEffect, useState} from 'react';
-import {useForm, FormProvider, Controller} from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm, FormProvider, Controller } from 'react-hook-form';
 import GenericInputField from '@/components/Forms/Input/GenericInputField';
 import GenericDropdown from '@/components/Forms/DropDown/GenericDropDown';
 import GenericButton from '@/components/Forms/Buttons/GenericButton';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {z} from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import toast from 'react-hot-toast';
-import {useCreateCustomerEPin} from '@/lib/react-query/Admin/Epin/epin';
-import {unAuthenticatedApi} from '@/utils/axios';
+import { useCreateCustomerEPin } from '@/lib/react-query/Admin/Epin/epin';
+import { unAuthenticatedApi } from '@/utils/axios';
 
 export const epinCustomerSchema = z.object({
   Count: z.string().nonempty('E-Pin Count is required').transform(Number),
@@ -31,10 +31,10 @@ const EpinForm: React.FC = () => {
     },
   });
 
-  const {handleSubmit, watch, setValue} = methods;
+  const { handleSubmit, watch, setValue } = methods;
   const crnNo = watch('crnNo'); // Watch the CRN field for changes
 
-  const {mutate: createEPin, isPending} = useCreateCustomerEPin();
+  const { mutate: createEPin, isPending } = useCreateCustomerEPin();
 
   // Effect to set customer name in form when it changes
   useEffect(() => {
@@ -153,14 +153,14 @@ const EpinForm: React.FC = () => {
             <Controller
               name="price"
               control={methods.control}
-              render={({field}) => (
+              render={({ field }) => (
                 <GenericDropdown
                   label="Price"
                   name="price"
                   options={[
-                    {label: '25', value: '25'},
-                    {label: '50', value: '50'},
-                    {label: '100', value: '100'}
+                    { label: '25', value: '25' },
+                    { label: '50', value: '50' },
+                    { label: '100', value: '100' }
                   ]}
                   onChange={field.onChange}
                 />

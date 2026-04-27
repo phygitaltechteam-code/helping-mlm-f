@@ -40,8 +40,11 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({onNext}) => {
     : 'unknown_user';
   const crnNo = user?.crnNo || 'ARC000000';
 
-  const leftRegistrationLink = `https://arcinternational.live/register/${fullname}/${crnNo}/LEFT`;
-  const rightRegistrationLink = `https://arcinternational.live/register/${fullname}/${crnNo}/RIGHT`;
+  // const leftRegistrationLink = `https://arcinternational.live/register/${fullname}/${crnNo}/LEFT`;
+  // const rightRegistrationLink = `https://arcinternational.live/register/${fullname}/${crnNo}/RIGHT`;
+
+  const leftRegistrationLink = `https://localhost:5173/register/${fullname}/${crnNo}/LEFT`;
+  const rightRegistrationLink = `https://localhost:5173/register/${fullname}/${crnNo}/RIGHT`;
 
   useEffect(() => {
     setValue('leftLink', leftRegistrationLink);

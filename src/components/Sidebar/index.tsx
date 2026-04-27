@@ -219,17 +219,33 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}: SidebarProps) => {
               icon: <ProfileIcon size={18} />,
             },
             {
-              label: 'My Network',
-              path: '/admin/binarytree',
+              label: 'My Tree',
+              path: '/customer/helping-tree',
               icon: <NetworkIcon size={18} />,
               subRoutes: [
                 {
-                  label: 'Tree View',
-                  path: '/admin/binarytree',
+                  label: 'Helping Tree',
+                  path: '/customer/helping-tree',
                 },
                 {
-                  label: 'Downline List',
-                  path: '/customer/downlinelist',
+                  label: 'Generation Tree',
+                  path: '/customer/generation-tree',
+                },
+              ],
+            },
+
+            {
+              label: 'My Team',
+              path: '/customer/helping-team',
+              icon: <FaNetworkWired size={18} />,
+              subRoutes: [
+                {
+                  label: 'Helping Team',
+                  path: '/customer/helping-team',
+                },
+                {
+                  label: 'Generation Team',
+                  path: '/customer/generation-team',
                 },
               ],
             },

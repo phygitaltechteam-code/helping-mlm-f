@@ -19,8 +19,8 @@ import {
   RejectEpinRequestResponse,
   ApiError,
 } from '@/types';
-import {useQueryClient, useMutation, useQuery} from '@tanstack/react-query';
-import {ADMIN_EPIN_QUERY_KEYS} from '../../QueryKeys';
+import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import { ADMIN_EPIN_QUERY_KEYS } from '../../QueryKeys';
 import toast from 'react-hot-toast';
 
 export const useCreateEPin = () => {
@@ -29,9 +29,9 @@ export const useCreateEPin = () => {
   return useMutation<
     CreateEPinResponse,
     ApiError,
-    {epincount: number; price: number}
+    { epincount: number; price: number }
   >({
-    mutationFn: ({epincount, price}) => createEPin(epincount, price), // Pass the epincount here
+    mutationFn: ({ epincount, price }) => createEPin(epincount, price), // Pass the epincount here
     onSuccess: () => {
       // Additional logic on success if needed
       toast.success('E-Pin created successfully!');
@@ -59,7 +59,7 @@ export const useCreateCustomerEPin = () => {
   const queryClient = useQueryClient();
 
   return useMutation<CreateEPinResponse, ApiError, CreateEPinInput>({
-    mutationFn: ({Count, price, crnNo}) =>
+    mutationFn: ({ Count, price, crnNo }) =>
       createCustomerEPin(Count, price, crnNo),
     onSuccess: () => {
       toast.success('Customer E-Pin created successfully!');
@@ -104,7 +104,7 @@ export const useCheckEpin = () => {
 
 export const useAGetOtp = () => {
   return useMutation({
-    mutationFn: ({epincount, type}: {epincount: string; type: string}) =>
+    mutationFn: ({ epincount, type }: { epincount: string; type: string }) =>
       getOtp(epincount, type),
   });
 };
@@ -120,10 +120,10 @@ export const useApproveEpinRequest = () => {
   return useMutation<
     CreateEPinResponse,
     unknown,
-    {id: string; data: {epincount: number}}
+    { id: string; data: { epincount: number } }
   >({
-    mutationFn: ({id, data}) => ApproveEpinRequest(id, data),
-    onSuccess: () => {},
+    mutationFn: ({ id, data }) => ApproveEpinRequest(id, data),
+    onSuccess: () => { },
     onError: (error) => {
       console.error('Failed to approve E-Pin request:', error);
     },
@@ -140,7 +140,7 @@ export const useRejectEpinRequest = () => {
   const queryClient = useQueryClient();
   return useMutation<RejectEpinRequestResponse, unknown, string>({
     mutationFn: (id) => rejectEpinRequest(id),
-    onSuccess: () => {},
+    onSuccess: () => { },
     onError: (error) => {
       console.error('Failed to reject E-Pin request:', error);
     },
