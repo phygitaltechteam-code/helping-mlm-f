@@ -60,6 +60,11 @@ import { Route as AppCustomerRepurchaseProductRepurchaseproductRouteImport } fro
 import { Route as AppCustomerReportReportcRouteImport } from './routes/_app/customer/_report/reportc'
 import { Route as AppCustomerRegisterCustomersidesharelinkRouteImport } from './routes/_app/customer/_register/customersidesharelink'
 import { Route as AppCustomerRegisterCustomerregistercRouteImport } from './routes/_app/customer/_register/customerregisterc'
+import { Route as AppCustomerMytreeHelpingTreeRouteImport } from './routes/_app/customer/_mytree/helping-tree'
+import { Route as AppCustomerMytreeGenerationTreeRouteImport } from './routes/_app/customer/_mytree/generation-tree'
+import { Route as AppCustomerMyteamHelpingTeamRouteImport } from './routes/_app/customer/_myteam/helping-team'
+import { Route as AppCustomerMyteamGenerationTeamRouteImport } from './routes/_app/customer/_myteam/generation-team'
+import { Route as AppCustomerMynetworkMynetworkRouteImport } from './routes/_app/customer/_mynetwork/mynetwork'
 import { Route as AppCustomerHomeHomeRouteImport } from './routes/_app/customer/_home/home'
 import { Route as AppCustomerHelpingdataHelpingRouteImport } from './routes/_app/customer/_helpingdata/helping'
 import { Route as AppCustomerEpinProductepinRouteImport } from './routes/_app/customer/_epin/productepin'
@@ -401,6 +406,36 @@ const AppCustomerRegisterCustomerregistercRoute =
   AppCustomerRegisterCustomerregistercRouteImport.update({
     id: '/customer/_register/customerregisterc',
     path: '/customer/customerregisterc',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppCustomerMytreeHelpingTreeRoute =
+  AppCustomerMytreeHelpingTreeRouteImport.update({
+    id: '/customer/_mytree/helping-tree',
+    path: '/customer/helping-tree',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppCustomerMytreeGenerationTreeRoute =
+  AppCustomerMytreeGenerationTreeRouteImport.update({
+    id: '/customer/_mytree/generation-tree',
+    path: '/customer/generation-tree',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppCustomerMyteamHelpingTeamRoute =
+  AppCustomerMyteamHelpingTeamRouteImport.update({
+    id: '/customer/_myteam/helping-team',
+    path: '/customer/helping-team',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppCustomerMyteamGenerationTeamRoute =
+  AppCustomerMyteamGenerationTeamRouteImport.update({
+    id: '/customer/_myteam/generation-team',
+    path: '/customer/generation-team',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppCustomerMynetworkMynetworkRoute =
+  AppCustomerMynetworkMynetworkRouteImport.update({
+    id: '/customer/_mynetwork/mynetwork',
+    path: '/customer/mynetwork',
     getParentRoute: () => AppRoute,
   } as any)
 const AppCustomerHomeHomeRoute = AppCustomerHomeHomeRouteImport.update({
@@ -798,6 +833,11 @@ export interface FileRoutesByFullPath {
   '/customer/productepin': typeof AppCustomerEpinProductepinRoute
   '/customer/helping': typeof AppCustomerHelpingdataHelpingRoute
   '/customer/home': typeof AppCustomerHomeHomeRoute
+  '/customer/mynetwork': typeof AppCustomerMynetworkMynetworkRoute
+  '/customer/generation-team': typeof AppCustomerMyteamGenerationTeamRoute
+  '/customer/helping-team': typeof AppCustomerMyteamHelpingTeamRoute
+  '/customer/generation-tree': typeof AppCustomerMytreeGenerationTreeRoute
+  '/customer/helping-tree': typeof AppCustomerMytreeHelpingTreeRoute
   '/customer/customerregisterc': typeof AppCustomerRegisterCustomerregistercRoute
   '/customer/customersidesharelink': typeof AppCustomerRegisterCustomersidesharelinkRoute
   '/customer/reportc': typeof AppCustomerReportReportcRoute
@@ -903,6 +943,11 @@ export interface FileRoutesByTo {
   '/customer/productepin': typeof AppCustomerEpinProductepinRoute
   '/customer/helping': typeof AppCustomerHelpingdataHelpingRoute
   '/customer/home': typeof AppCustomerHomeHomeRoute
+  '/customer/mynetwork': typeof AppCustomerMynetworkMynetworkRoute
+  '/customer/generation-team': typeof AppCustomerMyteamGenerationTeamRoute
+  '/customer/helping-team': typeof AppCustomerMyteamHelpingTeamRoute
+  '/customer/generation-tree': typeof AppCustomerMytreeGenerationTreeRoute
+  '/customer/helping-tree': typeof AppCustomerMytreeHelpingTreeRoute
   '/customer/customerregisterc': typeof AppCustomerRegisterCustomerregistercRoute
   '/customer/customersidesharelink': typeof AppCustomerRegisterCustomersidesharelinkRoute
   '/customer/reportc': typeof AppCustomerReportReportcRoute
@@ -1012,6 +1057,11 @@ export interface FileRoutesById {
   '/_app/customer/_epin/productepin': typeof AppCustomerEpinProductepinRoute
   '/_app/customer/_helpingdata/helping': typeof AppCustomerHelpingdataHelpingRoute
   '/_app/customer/_home/home': typeof AppCustomerHomeHomeRoute
+  '/_app/customer/_mynetwork/mynetwork': typeof AppCustomerMynetworkMynetworkRoute
+  '/_app/customer/_myteam/generation-team': typeof AppCustomerMyteamGenerationTeamRoute
+  '/_app/customer/_myteam/helping-team': typeof AppCustomerMyteamHelpingTeamRoute
+  '/_app/customer/_mytree/generation-tree': typeof AppCustomerMytreeGenerationTreeRoute
+  '/_app/customer/_mytree/helping-tree': typeof AppCustomerMytreeHelpingTreeRoute
   '/_app/customer/_register/customerregisterc': typeof AppCustomerRegisterCustomerregistercRoute
   '/_app/customer/_register/customersidesharelink': typeof AppCustomerRegisterCustomersidesharelinkRoute
   '/_app/customer/_report/reportc': typeof AppCustomerReportReportcRoute
@@ -1119,6 +1169,11 @@ export interface FileRouteTypes {
     | '/customer/productepin'
     | '/customer/helping'
     | '/customer/home'
+    | '/customer/mynetwork'
+    | '/customer/generation-team'
+    | '/customer/helping-team'
+    | '/customer/generation-tree'
+    | '/customer/helping-tree'
     | '/customer/customerregisterc'
     | '/customer/customersidesharelink'
     | '/customer/reportc'
@@ -1224,6 +1279,11 @@ export interface FileRouteTypes {
     | '/customer/productepin'
     | '/customer/helping'
     | '/customer/home'
+    | '/customer/mynetwork'
+    | '/customer/generation-team'
+    | '/customer/helping-team'
+    | '/customer/generation-tree'
+    | '/customer/helping-tree'
     | '/customer/customerregisterc'
     | '/customer/customersidesharelink'
     | '/customer/reportc'
@@ -1332,6 +1392,11 @@ export interface FileRouteTypes {
     | '/_app/customer/_epin/productepin'
     | '/_app/customer/_helpingdata/helping'
     | '/_app/customer/_home/home'
+    | '/_app/customer/_mynetwork/mynetwork'
+    | '/_app/customer/_myteam/generation-team'
+    | '/_app/customer/_myteam/helping-team'
+    | '/_app/customer/_mytree/generation-tree'
+    | '/_app/customer/_mytree/helping-tree'
     | '/_app/customer/_register/customerregisterc'
     | '/_app/customer/_register/customersidesharelink'
     | '/_app/customer/_report/reportc'
@@ -1730,6 +1795,41 @@ declare module '@tanstack/react-router' {
       path: '/customer/customerregisterc'
       fullPath: '/customer/customerregisterc'
       preLoaderRoute: typeof AppCustomerRegisterCustomerregistercRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customer/_mytree/helping-tree': {
+      id: '/_app/customer/_mytree/helping-tree'
+      path: '/customer/helping-tree'
+      fullPath: '/customer/helping-tree'
+      preLoaderRoute: typeof AppCustomerMytreeHelpingTreeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customer/_mytree/generation-tree': {
+      id: '/_app/customer/_mytree/generation-tree'
+      path: '/customer/generation-tree'
+      fullPath: '/customer/generation-tree'
+      preLoaderRoute: typeof AppCustomerMytreeGenerationTreeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customer/_myteam/helping-team': {
+      id: '/_app/customer/_myteam/helping-team'
+      path: '/customer/helping-team'
+      fullPath: '/customer/helping-team'
+      preLoaderRoute: typeof AppCustomerMyteamHelpingTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customer/_myteam/generation-team': {
+      id: '/_app/customer/_myteam/generation-team'
+      path: '/customer/generation-team'
+      fullPath: '/customer/generation-team'
+      preLoaderRoute: typeof AppCustomerMyteamGenerationTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customer/_mynetwork/mynetwork': {
+      id: '/_app/customer/_mynetwork/mynetwork'
+      path: '/customer/mynetwork'
+      fullPath: '/customer/mynetwork'
+      preLoaderRoute: typeof AppCustomerMynetworkMynetworkRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/customer/_home/home': {
@@ -2175,6 +2275,11 @@ interface AppRouteChildren {
   AppCustomerEpinProductepinRoute: typeof AppCustomerEpinProductepinRoute
   AppCustomerHelpingdataHelpingRoute: typeof AppCustomerHelpingdataHelpingRoute
   AppCustomerHomeHomeRoute: typeof AppCustomerHomeHomeRoute
+  AppCustomerMynetworkMynetworkRoute: typeof AppCustomerMynetworkMynetworkRoute
+  AppCustomerMyteamGenerationTeamRoute: typeof AppCustomerMyteamGenerationTeamRoute
+  AppCustomerMyteamHelpingTeamRoute: typeof AppCustomerMyteamHelpingTeamRoute
+  AppCustomerMytreeGenerationTreeRoute: typeof AppCustomerMytreeGenerationTreeRoute
+  AppCustomerMytreeHelpingTreeRoute: typeof AppCustomerMytreeHelpingTreeRoute
   AppCustomerRegisterCustomerregistercRoute: typeof AppCustomerRegisterCustomerregistercRoute
   AppCustomerRegisterCustomersidesharelinkRoute: typeof AppCustomerRegisterCustomersidesharelinkRoute
   AppCustomerReportReportcRoute: typeof AppCustomerReportReportcRoute
@@ -2276,6 +2381,11 @@ const AppRouteChildren: AppRouteChildren = {
   AppCustomerEpinProductepinRoute: AppCustomerEpinProductepinRoute,
   AppCustomerHelpingdataHelpingRoute: AppCustomerHelpingdataHelpingRoute,
   AppCustomerHomeHomeRoute: AppCustomerHomeHomeRoute,
+  AppCustomerMynetworkMynetworkRoute: AppCustomerMynetworkMynetworkRoute,
+  AppCustomerMyteamGenerationTeamRoute: AppCustomerMyteamGenerationTeamRoute,
+  AppCustomerMyteamHelpingTeamRoute: AppCustomerMyteamHelpingTeamRoute,
+  AppCustomerMytreeGenerationTreeRoute: AppCustomerMytreeGenerationTreeRoute,
+  AppCustomerMytreeHelpingTreeRoute: AppCustomerMytreeHelpingTreeRoute,
   AppCustomerRegisterCustomerregistercRoute:
     AppCustomerRegisterCustomerregistercRoute,
   AppCustomerRegisterCustomersidesharelinkRoute:

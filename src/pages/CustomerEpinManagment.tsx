@@ -11,9 +11,9 @@ const CustomerEpinManagment = () => {
         <div className="col-span-8">
           <EpinForm />
         </div>
-        {/* <div className="col-span-8">
+        <div className="col-span-8">
           <CustomerEpins />
-        </div> */}
+        </div>
       </div>
     </div>
   );

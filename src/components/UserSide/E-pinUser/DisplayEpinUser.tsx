@@ -93,8 +93,8 @@ const DisplayEpinUser: React.FC = () => {
   ];
 
   return (
-    <div>
-      {/* <div>
+    <div className="space-y-8">
+      <div>
         <GenericTable
           title="Available Epins"
           itemsPerPage={5}
@@ -106,13 +106,13 @@ const DisplayEpinUser: React.FC = () => {
           }}
         />
       </div>
-      <div style={{marginTop: '2rem'}}>
+      <div>
         <GenericTable
           title="Used Epins"
           data={usedEpins}
           columns={usedEpinsColumns}
         />
-      </div> */}
+      </div>
     </div>
   );
 };

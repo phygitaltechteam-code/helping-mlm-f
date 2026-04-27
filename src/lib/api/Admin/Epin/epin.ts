@@ -1,5 +1,5 @@
-import {api} from '@/utils/axios';
-import {AxiosError} from 'axios';
+import { api } from '@/utils/axios';
+import { AxiosError } from 'axios';
 
 // Create E-Pins
 export const createEPin = async (epincount: number, price: number) => {
@@ -110,7 +110,7 @@ export const getEpinRequest = async () => {
 
 export const ApproveEpinRequest = async (
   id: string,
-  data: {epincount: number},
+  data: { epincount: number },
 ) => {
   try {
     const response = await api.post(`admin/epin/create/${id}`, data);

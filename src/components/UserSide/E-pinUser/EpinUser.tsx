@@ -12,6 +12,8 @@ import image from '../../../assets/images/header/image.png';
 const createEpinRequestSchema = z.object({
   paidAmount: z.string().min(1, { message: 'Paid amount is required' }),
   transactionHash: z.string().min(1, { message: 'Transaction hash is required' }),
+  product: z.string().min(1, { message: 'Product is required' }),
+  quantity: z.string().min(1, { message: 'Quantity is required' }),
   imageFile: z.instanceof(FileList).refine((files) => files.length > 0, {
     message: 'Payment proof is required',
   }),
@@ -47,6 +49,8 @@ const EpinUser: React.FC = () => {
     const formData = new FormData();
     formData.append('paidAmount', data.paidAmount);
     formData.append('transactionHash', data.transactionHash);
+    formData.append('product', data.product);
+    formData.append('quantity', data.quantity);
     formData.append('imageFile', selectedFile[0]);
 
     createEpinRequest(formData);
@@ -80,6 +84,18 @@ const EpinUser: React.FC = () => {
               name="paidAmount"
               label="Paid Amount"
               placeholder="Enter paid amount"
+              type="number"
+            />
+            <GenericInputField
+              name="product"
+              label="Product"
+              placeholder="Enter product name"
+              type="text"
+            />
+            <GenericInputField
+              name="quantity"
+              label="Quantity"
+              placeholder="Enter quantity"
               type="number"
             />
             <GenericInputField
