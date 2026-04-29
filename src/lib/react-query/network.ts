@@ -10,14 +10,14 @@ import {NETWORK_QUERY_KEYS, NEW_NETWORK_QUERY_KEYS} from './QueryKeys';
 
 export const useGetNetwotkTree = () => {
   return useQuery({
-    queryKey: [NETWORK_QUERY_KEYS.NETWORK],
+    queryKey: [NETWORK_QUERY_KEYS.NETWORK, 'generation'],
     queryFn: () => getnetwork(),
   });
 };
 
 export const useGetNetwotkBinaryTree = () => {
   return useQuery({
-    queryKey: [NETWORK_QUERY_KEYS.NETWORK],
+    queryKey: [NETWORK_QUERY_KEYS.NETWORK, 'binary'],
     queryFn: () => getbinarynetwork(),
   });
 };

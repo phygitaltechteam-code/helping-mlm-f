@@ -1,19 +1,19 @@
 /*eslint-disable */
-import React, {useState} from 'react';
-import {user, userbw, golden, userRed} from '../../assets/images/user';
-import {FiPlus} from 'react-icons/fi';
-import {useNavigate} from '@tanstack/react-router';
+import React, { useState } from 'react';
+import { user, userbw, golden, userRed } from '../../assets/images/user';
+import { FiPlus } from 'react-icons/fi';
+import { useNavigate } from '@tanstack/react-router';
 
 const textLayout = {
   vertical: {
-    title: {textAnchor: 'start', x: 40},
+    title: { textAnchor: 'start', x: 40 },
     attributes: {},
-    attribute: {x: 40, dy: '1.2em'},
+    attribute: { x: 40, dy: '1.2em' },
   },
   horizontal: {
-    title: {textAnchor: 'start', y: 40},
-    attributes: {x: 0, y: 40},
-    attribute: {x: 0, dy: '1.2em'},
+    title: { textAnchor: 'start', y: 40 },
+    attributes: { x: 0, y: 40 },
+    attribute: { x: 0, dy: '1.2em' },
   },
 };
 
@@ -36,9 +36,12 @@ const PureSvgNodeElementG = ({
       return [key, value];
     });
 
-  const handleTogglePopup = (e) => {
-    e.stopPropagation();
-    setShowPopup((prev) => !prev);
+  const handleMouseEnter = () => {
+    setShowPopup(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowPopup(false);
   };
 
   if (nodeDatum._invisible) {
@@ -59,20 +62,16 @@ const PureSvgNodeElementG = ({
               cursor: 'pointer',
               border: '1px dashed gray',
             }}
-            onClick={
-              () =>
-                navigate({
-                  to: '/admin/customerregister',
-                  state: {
-                    data: {
-                      side: nodeDatum.__side,
-                      parentId: nodeDatum.__parentId,
-                    },
+            onClick={() =>
+              navigate({
+                to: '/admin/customerregister',
+                state: {
+                  data: {
+                    side: nodeDatum.__side,
+                    parentId: nodeDatum.__parentId,
                   },
-                })
-              // console.log(
-              //   `Add child at ${nodeDatum.__side} of CRN: ${nodeDatum.__parentId}`,
-              // )
+                },
+              })
             }
           >
             <FiPlus />
@@ -86,30 +85,32 @@ const PureSvgNodeElementG = ({
     ? userRed
     : nodeDatum.attributes.IsGolden
       ? golden
-      : userbw;
+      : user;
 
   return (
     <>
-      <image
-        href={imageSource}
-        width={45}
-        height={45}
-        onClick={toggleNode}
-        style={{
-          cursor: 'pointer',
-          outline:
-            matchedNode?.attributes?.ID === nodeDatum.attributes?.ID
-              ? '10px solid red'
-              : 'none',
-          borderRadius: '50%',
-        }}
-        x={-20}
-        y={-20}
-      />
+      <g
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{ cursor: 'pointer' }}
+      >
+        <image
+          href={imageSource}
+          width={45}
+          height={45}
+          onClick={toggleNode}
+          style={{
+            outline:
+              matchedNode?.attributes?.ID === nodeDatum.attributes?.ID
+                ? '10px solid red'
+                : 'none',
+            borderRadius: '50%',
+          }}
+          x={-20}
+          y={-20}
+        />
 
-      <g className="rd3t-label__title">
         <text
-          onClick={handleTogglePopup}
           className="rd3t-label__title"
           {...textLayout[orientation].title}
           style={{
@@ -119,18 +120,13 @@ const PureSvgNodeElementG = ({
           <tspan x={textLayout[orientation].title.x} dy="0">
             {nodeDatum.name}
           </tspan>
-          <tspan
-            x={textLayout[orientation].title.x}
-            dy="1.2em"
-            onClick={handleTogglePopup}
-            style={{cursor: 'pointer'}}
-          >
+          <tspan x={textLayout[orientation].title.x} dy="1.2em">
             {nodeDatum.attributes?.ID}
           </tspan>
         </text>
 
         {showPopup && (
-          <foreignObject x={50} y={20} width={200} height={150}>
+          <foreignObject x={50} y={20} width={200} height={500}>
             <div
               xmlns="http://www.w3.org/1999/xhtml"
               style={{
@@ -140,8 +136,8 @@ const PureSvgNodeElementG = ({
                 padding: 8,
                 boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
                 fontSize: 12,
+                pointerEvents: 'none', // Prevents the popup from interfering with mouse events
               }}
-              onClick={(e) => e.stopPropagation()}
             >
               {filteredAttributes.map(([key, value]) => (
                 <div

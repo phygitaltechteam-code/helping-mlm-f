@@ -2,35 +2,9 @@
 import React, { useState } from 'react';
 import Tree from 'react-d3-tree';
 import PureSvgNodeElementG from './PureSvgNodeElementG';
+import { any } from 'zod';
 
-// ─── Mock data (replace with real API response) ───────────────────────────────
-const MOCK_GENERATION_DATA = {
-  name: 'You (Root)',
-  data: { id: 'ROOT001', crnNo: 'CRN001', first_name: 'You', sponserer_username: '-', isGolden: false, isActive: true },
-  children: [
-    {
-      name: 'Member A',
-      data: { id: 'MEM001', crnNo: 'CRN002', first_name: 'Member A', sponserer_username: 'CRN001', isGolden: false, isActive: true },
-      children: [],
-    },
-    {
-      name: 'Member B',
-      data: { id: 'MEM002', crnNo: 'CRN003', first_name: 'Member B', sponserer_username: 'CRN001', isGolden: true, isActive: true },
-      children: [],
-    },
-    {
-      name: 'Member C',
-      data: { id: 'MEM003', crnNo: 'CRN004', first_name: 'Member C', sponserer_username: 'CRN001', isGolden: false, isActive: false },
-      children: [],
-    },
-    {
-      name: 'Member D',
-      data: { id: 'MEM004', crnNo: 'CRN005', first_name: 'Member D', sponserer_username: 'CRN001', isGolden: false, isActive: true },
-      children: [],
-    },
-  ],
-};
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 interface NetworkNode {
   name: string;
@@ -55,23 +29,14 @@ const transformToD3 = (node: NetworkNode): any => ({
     ID: node.data?.id,
     CRN: node.data?.crnNo || '',
     Sponsor: node.data?.sponserer_username || '',
-    Active: node.data?.isActive ? 'Yes' : 'No',
+    IsActive: node.data?.isActive,
+    IsGolden: node.data?.isGolden,
   },
-  // Only render ONE level of children — no recursion
-  children: (node.children ?? []).map((child) => ({
-    name: child.name,
-    attributes: {
-      ID: child.data?.id,
-      CRN: child.data?.crnNo || '',
-      Sponsor: child.data?.sponserer_username || '',
-      Active: child.data?.isActive ? 'Yes' : 'No',
-    },
-    children: [], // Stop here — single level only
-  })),
+  children: (node.children ?? []).map((child) => transformToD3(child)),
 });
 
 const GenerationTreeView: React.FC<Props> = ({ network }) => {
-  const source = network && Object.keys(network).length > 0 ? network : MOCK_GENERATION_DATA;
+  const source = network;
   const treeData = transformToD3(source as NetworkNode);
 
   const windowWidth = window.innerWidth;
@@ -90,10 +55,7 @@ const GenerationTreeView: React.FC<Props> = ({ network }) => {
     >
       <div className="flex items-center gap-3 p-4">
         <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-          Direct children shown: {source.children?.length ?? 0}
-        </span>
-        <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-semibold text-yellow-700">
-          Mock Data — Replace with API
+          Direct children shown: {source?.children?.length ?? 0}
         </span>
       </div>
       <Tree
@@ -101,7 +63,7 @@ const GenerationTreeView: React.FC<Props> = ({ network }) => {
         orientation="vertical"
         centeringTransitionDuration={800}
         translate={{ x: smallScreen ? 187 : 548, y: smallScreen ? 140 : 115 }}
-        collapsible={false}
+        collapsible={true}
         initialDepth={2}
         zoomable={true}
         draggable={true}

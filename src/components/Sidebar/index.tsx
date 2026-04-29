@@ -19,6 +19,8 @@ import SidebarLinkGroup from './SidebarLinkGroup';
 import logo from '../../../public/logo.png';
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const { user } = useAuthContext();
+const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+  const { user } = useAuthContext();
 
   const role = user?.role;
 
@@ -65,22 +67,57 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         //   path: '/admin/customerregister',
         //   icon: <RegistrationIcon size={18} />,
         // },
+        {
+          label: 'Dashboard',
+          path: '/dashboard',
+          icon: <PiSquaresFourLight size={18} />,
+        },
+        {
+          label: 'Laverage Tree',
+          path: '/admin/autopool',
+          icon: <NetworkIcon size={18} />,
+        },
+        // {
+        //   label: 'My Invoice',
+        //   path: '/admin/invoice',
+        //   icon: <PiFileTextLight size={18} />,
+        // },
+        // {
+        //   label: 'Welcome Letter',
+        //   path: '/admin/wlcmletter',
+        //   icon: <PiEnvelopeSimpleLight size={18} />,
+        // },
+        {
+          label: 'Binary Tree',
+          path: '/admin/binarytree',
+          icon: <NetworkIcon size={18} />,
+        },
+        // {
+        //   label: 'Generation Tree',
+        //   path: '/admin/network',
+        //   icon: <FaNetworkWired size={18} />,
+        // },
+        // {
+        //   label: 'Registeration',
+        //   path: '/admin/customerregister',
+        //   icon: <RegistrationIcon size={18} />,
+        // },
 
-        // {
-        //   label: 'My Team',
-        //   path: '/admin/customerlist',
-        //   icon: <BiListUl size={18} />,
-        // },
-        // {
-        //   label: 'Fund Request',
-        //   path: '/admin/epinrequest',
-        //   icon: <MdApproval size={18} />,
-        // },
-        // {
-        //   label: 'Fund Transfer',
-        //   path: '/fundtransfer',
-        //   icon: <FaMoneyBillTransfer size={18} />,
-        // },
+        {
+          label: 'Customer List',
+          path: '/admin/customerlist',
+          icon: <BiListUl size={18} />,
+        },
+        {
+          label: 'Fund Request',
+          path: '/admin/epinrequest',
+          icon: <MdApproval size={18} />,
+        },
+        {
+          label: 'Fund Transfer',
+          path: '/fundtransfer',
+          icon: <FaMoneyBillTransfer size={18} />,
+        },
         // {
         //   label: 'Activate ID',
         //   path: '/admin/topup',
@@ -103,17 +140,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         //   icon: <PiShareLight size={18} />,
         // },
 
-        // {
-        //   label: 'Reports',
-        //   path: '/admin/roi',
-        //   icon: <PiShareLight size={18} />,
-        //   subRoutes: [
-        //     {
-        //       label: 'ROI Income',
-        //       path: '/admin/roi',
-        //     },
-        //   ],
-        // },
+        {
+          label: 'Reports',
+          path: '/admin/roi',
+          icon: <PiShareLight size={18} />,
+          subRoutes: [
+            {
+              label: 'ROI Income',
+              path: '/admin/roi',
+            },
+          ],
+        },
 
         // {
         //   label: 'Wallet Report',
@@ -387,199 +424,193 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       //   ]
       // Customer
         role === 'CUSTOMER'
+      role === 'CUSTOMER'
         ? [
-            {
-              label: 'Dashboard',
-              path: '/customer/dashboard',
-              icon: <PiSquaresFourLight size={18} />,
-            },
-            // {
-            //   label: 'Registeration',
-            //   path: '/customer/customerregisterc',
-            //   icon: <RegistrationIcon size={18} />,
-            // },
-            {
-              label: 'Customer Profile',
-              path: '/customer/profile',
-              icon: <ProfileIcon size={18} />,
-            },
-            {
-              label: 'My Tree',
-              path: '/customer/helping-tree',
-              icon: <NetworkIcon size={18} />,
-              subRoutes: [
-                {
-                  label: 'Helping Tree',
-                  path: '/customer/helping-tree',
-                },
-                {
-                  label: 'Generation Tree',
-                  path: '/customer/generation-tree',
-                },
-              ],
-            },
+          {
+            label: 'Dashboard',
+            path: '/customer/dashboard',
+            icon: <PiSquaresFourLight size={18} />,
+          },
+          // {
+          //   label: 'Registeration',
+          //   path: '/customer/customerregisterc',
+          //   icon: <RegistrationIcon size={18} />,
+          // },
+          {
+            label: 'Customer Profile',
+            path: '/customer/profile',
+            icon: <ProfileIcon size={18} />,
+          },
+          {
+            label: 'My Tree',
+            path: '/customer/generation-tree',
+            icon: <NetworkIcon size={18} />,
+            subRoutes: [
+              {
+                label: 'Generation Tree',
+                path: '/customer/generation-tree',
+              },
+            ],
+          },
 
-            {
-              label: 'My Team',
-              path: '/customer/helping-team',
-              icon: <FaNetworkWired size={18} />,
-              subRoutes: [
-                {
-                  label: 'Helping Team',
-                  path: '/customer/helping-team',
-                },
-                {
-                  label: 'Generation Team',
-                  path: '/customer/generation-team',
-                },
-              ],
-            },
+          {
+            label: 'My Team',
+            path: '/customer/generation-team',
+            icon: <FaNetworkWired size={18} />,
+            subRoutes: [
+              {
+                label: 'Generation Team',
+                path: '/customer/generation-team',
+              },
+            ],
+          },
 
-            // {
-            //   label: 'Direct Customer',
-            //   path: '/customer/directcustomer',
-            //   icon: <NetworkIcon size={18} />,
-            // },
-            // {
-            //   label: 'Generation Tree',
-            //   path: '/customer/gentree',
-            //   icon: <FaNetworkWired size={18} />,
-            // },
-            {
-              label: 'Activate ID',
-              path: '/customer/topup',
-              icon: <PiSquaresFourLight size={18} />,
-              subRoutes: [
-                
-                {
-                  label: 'Activate ID Wallet',
-                  path: '/customer/activatefromwallet',
-                },
-                {
-                  label: 'Activate history',
-                  path: '/customer/activateIdHistory',
-                },
-              ],
-            },
-            // {
-            //   label: 'Award Reward',
-            //   path: '/customer/awardreward',
-            //   icon: <BiAward size={18} />,
-            // },
-            {
-              label: 'Report',
-              path: '/customer/reportc',
-              icon: <ReportIcon size={18} />,
-            },
-            // {
-            //   label: 'Lavrage',
-            //   path: '/customer/helping',
-            //   icon: <ReportIcon size={18} />,
-            // },
-            // {
-            //   label: 'BDF',
-            //   path: '/customer/royelty',
-            //   icon: <PiSquaresFourLight size={18} />,
-            // },
-            // {
-            //   label: 'Share Link',
-            //   path: '/customer/customersidesharelink',
-            //   icon: <PiSquaresFourLight size={18} />,
-            // },
-            {
-              label: 'Wallet',
-              path: '/customer/walletc',
-              icon: <PiSquaresFourLight size={18} />,
-              subRoutes: [
-                {
-                  label: 'Wallet History',
-                  path: '/customer/walletc',
-                },
-                {
-                  label: 'Roi History',
-                  path: '/customer/roiHistory',
-                },
-                {
-                  label: 'Wallet Address',
-                  path: '/customer/addwallet',
-                },
-                {
-                  label: 'Wallet income',
-                  path: '/customer/walletincome',
-                },
-              ],
-            },
-            {
-              label: 'Withdrawal',
-              path: '/customer/withdraw',
-              icon: <PiSquaresFourLight size={18} />,
-              subRoutes: [
-                {
-                  label: 'Withdrawal',
-                  path: '/customer/withdraw',
-                },
-                {
-                  label: 'Withdrawal History',
-                  path: '/customer/withdrawhistory',
-                },
-              ],
-            },
+          // {
+          //   label: 'Direct Customer',
+          //   path: '/customer/directcustomer',
+          //   icon: <NetworkIcon size={18} />,
+          // },
+          // {
+          //   label: 'Generation Tree',
+          //   path: '/customer/gentree',
+          //   icon: <FaNetworkWired size={18} />,
+          // },
+          {
+            label: 'Activate ID',
+            path: '/customer/topup',
+            icon: <PiSquaresFourLight size={18} />,
+            subRoutes: [
 
-            // {
-            //   label: ' Payout History',
-            //   path: '/customer/historypayout',
-            //   icon: <PiSquaresFourLight size={18} />,
-            // },
-            // {
-            //   label: 'Withdraw Amount',
-            //   path: '/customer/withdraw',
-            //   icon: <PiSquaresFourLight size={18} />,
-            // },
-            {
-              label: 'fund transfer',
-              path: '/customer/custmerfundtransfer',
-              icon: <PiSquaresFourLight size={18} />,
-              subRoutes: [
-                {
-                  label: 'fund transfer',
-                  path: '/customer/custmerfundtransfer',
-                },
-                {
-                  label: 'Transfer History',
-                  path: '/customer/fundTransferHistory',
-                },
-              ],
-            },
-            {
-              label: 'E-Pin',
-              path: '/customer/epinc',
-              icon: <PiNavigationArrowFill size={18} />,
-              
-            },
-            {
-              label: 'Fund Request',
-              path: '/customer/epinc',
-              icon: <PiNavigationArrowFill size={18} />,
-              subRoutes: [
-                {
-                  label: 'Fund Request',
-                  path: '/customer/epinc',
-                },
-                {
-                  label: 'request History',
-                  path: '/customer/fundrequestHistory',
-                },
-              ],
-            },
-            // {
-            //   label: 'Repurchase Product',
-            //   path: '/customer/repurchaseproduct',
-            //   icon: <MdOutlineProductionQuantityLimits size={18} />,
-            // },
-          ]
+              {
+                label: 'Activate ID Wallet',
+                path: '/customer/activatefromwallet',
+              },
+              {
+                label: 'Activate history',
+                path: '/customer/activateIdHistory',
+              },
+            ],
+          },
+          // {
+          //   label: 'Award Reward',
+          //   path: '/customer/awardreward',
+          //   icon: <BiAward size={18} />,
+          // },
+          {
+            label: 'Report',
+            path: '/customer/reportc',
+            icon: <ReportIcon size={18} />,
+          },
+          // {
+          //   label: 'Lavrage',
+          //   path: '/customer/helping',
+          //   icon: <ReportIcon size={18} />,
+          // },
+          // {
+          //   label: 'BDF',
+          //   path: '/customer/royelty',
+          //   icon: <PiSquaresFourLight size={18} />,
+          // },
+          // {
+          //   label: 'Share Link',
+          //   path: '/customer/customersidesharelink',
+          //   icon: <PiSquaresFourLight size={18} />,
+          // },
+          {
+            label: 'Wallet',
+            path: '/customer/walletc',
+            icon: <PiSquaresFourLight size={18} />,
+            subRoutes: [
+              {
+                label: 'Wallet History',
+                path: '/customer/walletc',
+              },
+              {
+                label: 'Roi History',
+                path: '/customer/roiHistory',
+              },
+              {
+                label: 'Wallet Address',
+                path: '/customer/addwallet',
+              },
+              {
+                label: 'Wallet income',
+                path: '/customer/walletincome',
+              },
+            ],
+          },
+          {
+            label: 'Withdrawal',
+            path: '/customer/withdraw',
+            icon: <PiSquaresFourLight size={18} />,
+            subRoutes: [
+              {
+                label: 'Withdrawal',
+                path: '/customer/withdraw',
+              },
+              {
+                label: 'Withdrawal History',
+                path: '/customer/withdrawhistory',
+              },
+            ],
+          },
+
+          // {
+          //   label: ' Payout History',
+          //   path: '/customer/historypayout',
+          //   icon: <PiSquaresFourLight size={18} />,
+          // },
+          // {
+          //   label: 'Withdraw Amount',
+          //   path: '/customer/withdraw',
+          //   icon: <PiSquaresFourLight size={18} />,
+          // },
+          {
+            label: 'fund transfer',
+            path: '/customer/custmerfundtransfer',
+            icon: <PiSquaresFourLight size={18} />,
+            subRoutes: [
+              {
+                label: 'fund transfer',
+                path: '/customer/custmerfundtransfer',
+              },
+              {
+                label: 'Transfer History',
+                path: '/customer/fundTransferHistory',
+              },
+            ],
+          },
+          {
+            label: 'E-Pin',
+            path: '/customer/epinc',
+            icon: <PiNavigationArrowFill size={18} />,
+
+          },
+          {
+            label: 'Fund Request',
+            path: '/customer/epinc',
+            icon: <PiNavigationArrowFill size={18} />,
+            subRoutes: [
+              {
+                label: 'Fund Request',
+                path: '/customer/epinc',
+              },
+              {
+                label: 'request History',
+                path: '/customer/fundrequestHistory',
+              },
+            ],
+          },
+          // {
+          //   label: 'Repurchase Product',
+          //   path: '/customer/repurchaseproduct',
+          //   icon: <MdOutlineProductionQuantityLimits size={18} />,
+          // },
+        ]
         : [];
 
   const location = useLocation();
+  const { pathname } = location;
   const { pathname } = location;
 
   const trigger = useRef<HTMLButtonElement>(null);
@@ -597,6 +628,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   useEffect(() => {
     const clickHandler = (event: MouseEvent) => {
       const { target } = event;
+      const { target } = event;
 
       if (!sidebar.current || !trigger.current) return;
       if (
@@ -613,6 +645,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   // close if the esc key is pressed
   useEffect(() => {
+    const keyHandler = ({ keyCode }: KeyboardEvent) => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
       if (!sidebarOpen || keyCode !== 27) return;
       setSidebarOpen(false);
@@ -633,6 +666,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
+      className={`lg:to-gray-50 absolute left-0 top-0 z-[9999] flex h-screen w-64 flex-col overflow-y-hidden bg-white shadow-xl duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 lg:bg-gradient-to-b lg:from-white lg:dark:from-boxdark lg:dark:to-boxdark/95 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
       className={`lg:to-gray-50 absolute left-0 top-0 z-[9999] flex h-screen w-64 flex-col overflow-y-hidden bg-white shadow-xl duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 lg:bg-gradient-to-b lg:from-white lg:dark:from-boxdark lg:dark:to-boxdark/95 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
     >
@@ -681,7 +716,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         <Link
                           to=""
                           className={`text-gray-700 dark:text-gray-300 group relative flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition-all duration-200 hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20 ${pathname.includes(route.path!) &&
+                          className={`text-gray-700 dark:text-gray-300 group relative flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition-all duration-200 hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20 ${pathname.includes(route.path!) &&
                             'bg-primary/10 text-primary dark:bg-primary/20'
+                            }`}
                             }`}
                           onClick={(e) => {
                             e.preventDefault();
@@ -701,6 +738,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           />
                         </Link>
                         <div
+                          className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                            }`}
                           className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                             }`}
                         >
@@ -731,7 +770,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <Link
                       to={route.path}
                       className={`text-gray-700 dark:text-gray-300 group relative flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition-all duration-200 hover:bg-primary/10 hover:pl-6 hover:text-primary dark:hover:bg-primary/20 ${pathname.includes(route.path) &&
+                      className={`text-gray-700 dark:text-gray-300 group relative flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition-all duration-200 hover:bg-primary/10 hover:pl-6 hover:text-primary dark:hover:bg-primary/20 ${pathname.includes(route.path) &&
                         'bg-primary/10 text-primary dark:bg-primary/20'
+                        }`}
                         }`}
                       onClick={handleLinkClick}
                     >
