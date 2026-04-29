@@ -73,6 +73,7 @@ export interface Customer {
   walletId?: string;
   createdAt: string;
   updatedAt: string;
+  role: string;
 }
 
 export type UserRole = {
@@ -91,6 +92,8 @@ export interface AuthContextType {
   setToken: React.Dispatch<React.SetStateAction<Token | null>>;
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  role: string | null;
+  setRole: React.Dispatch<React.SetStateAction<string | null>>;
   customer: Customer | null;
   setCustomer: React.Dispatch<React.SetStateAction<Customer | null>>;
 }
@@ -368,7 +371,6 @@ export interface GetAllEPinsResponse {
   requestId: string;
   usedBy: string | null;
 }
-[];
 
 // Response for RejectEpinRequest
 export interface RejectEpinRequestResponse {
