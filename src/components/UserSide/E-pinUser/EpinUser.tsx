@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import GenericButton from '@/components/Forms/Buttons/GenericButton';
 import GenericInputField from '@/components/Forms/Input/GenericInputField';
+import GenericSelectField from '@/components/Forms/Input/GenericSelectField';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreateEpinRequest } from '@/lib/react-query/Customer/epin';
 import DisplayEpinUser from './DisplayEpinUser';
 import toast from 'react-hot-toast';
 import image from '../../../assets/images/header/image.png';
+import { useGetProduct } from '@/lib/react-query/Admin/Product/products';
 
 const createEpinRequestSchema = z.object({
   paidAmount: z.string().min(1, { message: 'Paid amount is required' }),
@@ -26,6 +28,13 @@ const EpinUser: React.FC = () => {
     resolver: zodResolver(createEpinRequestSchema),
   });
 
+  const { data: products, isLoading: isLoadingProducts } = useGetProduct();
+  console.log('Fetched products in EpinUser:', products);
+
+  const productOptions = products?.map((product: any) => ({
+    value: product._id || product.id,
+    label: product.name,
+  })) || [];
   const watchFiles = methods.watch('imageFile');
 
   const {
@@ -86,11 +95,11 @@ const EpinUser: React.FC = () => {
               placeholder="Enter paid amount"
               type="number"
             />
-            <GenericInputField
+            <GenericSelectField
               name="product"
               label="Product"
-              placeholder="Enter product name"
-              type="text"
+              options={productOptions}
+              placeholder="Select product"
             />
             <GenericInputField
               name="quantity"

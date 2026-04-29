@@ -6,56 +6,7 @@ import { useGetNetwotkTree, useGetNetwotkBinaryTree } from '@/lib/react-query/ne
 import { useAuthContext } from '@/context/AuthContext';
 import Loader from '@/components/common/Loader';
 
-// ─── Mock binary tree data ────────────────────────────────────────────────────
-const MOCK_BINARY_DATA = {
-  name: 'You (Root)',
-  data: {
-    id: 'ROOT001', first_name: 'You', directSponsorId: '-',
-    side: '', isGolden: false, isActive: true,
-    leftCount: 2, rightCount: 1, orderStatus: 'ACTIVE',
-  },
-  children: [
-    {
-      name: 'Left Member',
-      data: {
-        id: 'L001', first_name: 'Left Member', directSponsorId: 'ROOT001',
-        side: 'LEFT', isGolden: false, isActive: true,
-        leftCount: 1, rightCount: 0, orderStatus: 'ACTIVE',
-      },
-      children: [
-        {
-          name: 'LL Member',
-          data: {
-            id: 'LL001', first_name: 'LL Member', directSponsorId: 'L001',
-            side: 'LEFT', isGolden: false, isActive: true,
-            leftCount: 0, rightCount: 0, orderStatus: 'ACTIVE',
-          },
-          children: [],
-        },
-      ],
-    },
-    {
-      name: 'Right Member',
-      data: {
-        id: 'R001', first_name: 'Right Member', directSponsorId: 'ROOT001',
-        side: 'RIGHT', isGolden: true, isActive: true,
-        leftCount: 0, rightCount: 0, orderStatus: 'ACTIVE',
-      },
-      children: [],
-    },
-  ],
-};
 
-// ─── Mock generation tree data ────────────────────────────────────────────────
-const MOCK_GEN_DATA = {
-  name: 'You (Root)',
-  data: { username: 'you', id: 'ROOT001', first_name: 'You', sponserer_username: '-', isGolden: false, isActive: true },
-  children: [
-    { name: 'Gen Member A', data: { username: 'gena', id: 'G001', first_name: 'Gen Member A', sponserer_username: 'you', isGolden: false, isActive: true }, children: [] },
-    { name: 'Gen Member B', data: { username: 'genb', id: 'G002', first_name: 'Gen Member B', sponserer_username: 'you', isGolden: true, isActive: true }, children: [] },
-    { name: 'Gen Member C', data: { username: 'genc', id: 'G003', first_name: 'Gen Member C', sponserer_username: 'you', isGolden: false, isActive: false }, children: [] },
-  ],
-};
 
 // ─── Mock team table data ─────────────────────────────────────────────────────
 const MOCK_HELPING_TEAM = [
@@ -92,11 +43,7 @@ const StatusBadge = ({ status }: { status: string }) => (
   }`}>{status}</span>
 );
 
-const MockBadge = () => (
-  <span className="ml-2 rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-medium text-yellow-700">
-    Mock Data
-  </span>
-);
+
 
 const MyNetworkPage: React.FC = () => {
   const [mainTab, setMainTab] = useState<MainTab>('myTree');
@@ -109,8 +56,7 @@ const MyNetworkPage: React.FC = () => {
   const { data: binaryData, isLoading: binaryLoading } = useGetNetwotkBinaryTree();
   const { data: genData, isLoading: genLoading } = useGetNetwotkTree();
 
-  const resolvedBinaryData = (binaryData && Object.keys(binaryData).length > 0) ? binaryData : MOCK_BINARY_DATA;
-  const resolvedGenData = (genData && Object.keys(genData).length > 0) ? genData : MOCK_GEN_DATA;
+
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-boxdark-2">
@@ -171,9 +117,8 @@ const MyNetworkPage: React.FC = () => {
                   <h2 className="text-base font-semibold text-gray-700 dark:text-gray-200">
                     Helping Tree — Binary View (Left / Right)
                   </h2>
-                  {!binaryData && <MockBadge />}
                 </div>
-                {binaryLoading ? <Loader /> : <BinaryTreeNode network={resolvedBinaryData} />}
+                {binaryLoading ? <Loader /> : (binaryData && Object.keys(binaryData).length > 0 ? <BinaryTreeNode network={binaryData} /> : <div className="p-6 text-center text-gray-500">No tree data found.</div>)}
               </div>
             )}
 
@@ -183,9 +128,8 @@ const MyNetworkPage: React.FC = () => {
                   <h2 className="text-base font-semibold text-gray-700 dark:text-gray-200">
                     Generation Tree — Direct Downline
                   </h2>
-                  {!genData && <MockBadge />}
                 </div>
-                {genLoading ? <Loader /> : <GenerationTreeView network={resolvedGenData as any} />}
+                {genLoading ? <Loader /> : (genData && Object.keys(genData).length > 0 ? <GenerationTreeView network={genData as any} /> : <div className="p-6 text-center text-gray-500">No tree data found.</div>)}
               </div>
             )}
           </div>

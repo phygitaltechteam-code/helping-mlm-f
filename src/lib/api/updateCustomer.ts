@@ -48,11 +48,12 @@ export const getAllCustomers = async () => {
   }
 };
 
-export const assignEpin = async (crnNo: string, epinNo: string) => {
+export const assignEpin = async (epinNo: string , productId: string) => {
   try {
     console.log('Type of epinNo:', typeof epinNo);
-    const response = await api.put(`/customers/active/${crnNo}`, {
+    const response = await api.put(`/customers/active`, {
       epinNo: epinNo,
+      productId: productId,
     });
     return response.data;
   } catch (error) {

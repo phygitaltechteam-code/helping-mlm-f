@@ -71,3 +71,15 @@ export const ApproveDeliveredRequest = async (id: string) => {
     throw error;
   }
 };
+
+export const getProduct = async () => {
+  try {
+    const response = await api.get('/product');
+    return response.data;
+  } catch (error) {
+    console.error("Product fetch failed:", error);
+    throw error;
+  }
+};
+
+

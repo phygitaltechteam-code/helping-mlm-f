@@ -44,6 +44,8 @@ export const getEpinRequests = async () => {
 export const getEpins = async () => {
   try {
     const response = await api.get('customers/epin');
+    console.log('epins',response.data);
+
 
     return response.data;
   } catch (error: unknown) {

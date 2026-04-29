@@ -11,6 +11,7 @@ import {
 import {Customer, Commission} from '@/types';
 import {useQuery} from '@tanstack/react-query';
 import {CUSTOMER_QUERY_KEYS} from '../QueryKeys';
+import { api } from '@/utils/axios';
 
 // Fetch customer details
 export const useGetCustomer = (id: string) => {
@@ -68,3 +69,22 @@ export const useGetCustmerDownline = () => {
     queryFn: getcustomerdownline,
   });
 };
+
+
+// export const getProduct = async () => {
+//   try {
+//     const response = await api.get('/product');
+//     return response.data;
+//   } catch (error) {
+//     console.error("Product fetch failed:", error);
+//     throw error;
+//   }
+// };
+
+// export const useGetProduct = () => {
+//   return useQuery({
+//     queryKey: ['get-product'],
+//     queryFn: getProduct,
+//   });
+// };
+

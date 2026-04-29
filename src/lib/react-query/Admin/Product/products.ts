@@ -5,6 +5,7 @@ import {
   deleteProduct,
   getAllProductsReport,
   ApproveDeliveredRequest,
+  getProduct,
 } from '@/lib/api/Admin/Product/product';
 import {ProductResponse, Product, ApiError} from '@/types';
 import {useQuery, useQueryClient, useMutation} from '@tanstack/react-query';
@@ -102,3 +103,12 @@ export const useDeliveredReport = () => {
     },
   });
 };
+
+
+export const useGetProduct = () => {
+  return useQuery({
+    queryKey: ['get-product'],
+    queryFn: getProduct,
+  });
+};
+
