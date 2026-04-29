@@ -33,10 +33,10 @@ export const Epin: React.FC = () => {
   console.log('price', selectedType);
 
   const onSubmit = (data: FormValues) => {
-    console.log('dataaa', data);
+    console.log('dataaa123', data);
     createEPin({
-      epincount: data.count,
-      price: Number(selectedType),
+      count: data.count,
+      price: data.price,
     });
     setSelectedType('');
   };

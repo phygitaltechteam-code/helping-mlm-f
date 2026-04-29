@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import GenericTable from '@/components/Forms/Table/GenericTable';
-import {useGetCustomer} from '@/lib/react-query/Customer/commision';
-import {Column} from '@/types';
-import {useNavigate} from '@tanstack/react-router';
-import {useFetchCustomerList} from '@/lib/react-query/Admin/Home/adminHome';
+import { useGetCustomer } from '@/lib/react-query/Customer/commision';
+import { Column } from '@/types';
+import { useNavigate } from '@tanstack/react-router';
+import { useFetchCustomerList } from '@/lib/react-query/Admin/Home/adminHome';
 import Loader from '@/components/common/Loader';
-import {useAdminLogin, useCustomerLogin} from '@/lib/react-query/Auth/auth';
-import {QUERY_KEYS} from '@/lib/react-query/QueryKeys';
-import {jwtDecode, JwtPayload} from 'jwt-decode';
-import {useAuthContext} from '@/context/AuthContext';
+import { useAdminLogin, useCustomerLogin } from '@/lib/react-query/Auth/auth';
+import { QUERY_KEYS } from '@/lib/react-query/QueryKeys';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { useAuthContext } from '@/context/AuthContext';
 
 type CustomerData = {
   fullname: string;
@@ -25,22 +25,24 @@ interface DecodedToken extends JwtPayload {
 }
 
 const columns: Column<CustomerData>[] = [
-  {header: 'Name', accessor: 'fullname'},
-  {header: 'Customer ID', accessor: 'crnNo'},
-  {header: 'Mobile No', accessor: 'phoneNumber'},
-  {header: 'Email', accessor: 'email'},
+  { header: 'Name', accessor: 'fullname' },
+  { header: 'Customer ID', accessor: 'crnNo' },
+  { header: 'Mobile No', accessor: 'phoneNumber' },
+  { header: 'Email', accessor: 'email' },
   // {header: 'Sponsor ID', accessor: 'sponsorId'},
-  {header: 'Password', accessor: 'password'},
+  { header: 'Password', accessor: 'password' },
 ];
 
 const DisplayCustomerList: React.FC = () => {
-  const {mutateAsync: signIn} = useAdminLogin();
+  const { mutateAsync: signIn } = useAdminLogin();
   const navigate = useNavigate();
-  const {data: apiData, isLoading, error} = useFetchCustomerList();
+  const { data: apiData, isLoading, error } = useFetchCustomerList();
   const [customerData, setCustomerData] = useState<CustomerData[]>([]);
 
   useEffect(() => {
     if (apiData) {
+      console.log("RAW API DATA:", apiData);
+      console.log("FIRST CUSTOMER:", apiData?.[0]);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mappedData = apiData?.map((customer: any) => ({
         id: customer.id,
@@ -61,7 +63,7 @@ const DisplayCustomerList: React.FC = () => {
     }
   }, [apiData]);
 
-  const {setUser, setIsAuthenticated, setToken, isAuthenticated,setCustomer} =
+  const { setUser, setIsAuthenticated, setToken, isAuthenticated, setCustomer } =
     useAuthContext();
   const handleLogin = async (item) => {
     try {

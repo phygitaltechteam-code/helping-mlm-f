@@ -57,6 +57,7 @@ const EpinColumn: Column<EpinData>[] = [
 
 const DisplayEpin: React.FC = () => {
   const {data: epinData, isSuccess, isLoading} = useGetAdminPins();
+  console.log("API RESPONSE =", epinData);
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 

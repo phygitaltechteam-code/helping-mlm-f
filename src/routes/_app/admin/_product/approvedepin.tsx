@@ -9,9 +9,9 @@
 // }
 
 
-import ApprovedEpin from '@/components/AdminSide/E-pin/ApprovedEpin';
+import EpinApproval from '@/components/AdminSide/E-pin/EpinApproval';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_app/admin/_product/approvedepin')({
-  component: ApprovedEpin,
+  component: EpinApproval,
 });

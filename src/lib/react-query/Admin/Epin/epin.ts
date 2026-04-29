@@ -29,9 +29,9 @@ export const useCreateEPin = () => {
   return useMutation<
     CreateEPinResponse,
     ApiError,
-    { epincount: number; price: number }
+    { count: number; price: number }
   >({
-    mutationFn: ({ epincount, price }) => createEPin(epincount, price), // Pass the epincount here
+    mutationFn: ({ count, price }) => createEPin(count, price), // Pass the epincount here
     onSuccess: () => {
       // Additional logic on success if needed
       toast.success('E-Pin created successfully!');

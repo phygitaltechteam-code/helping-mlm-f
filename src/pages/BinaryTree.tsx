@@ -57,6 +57,7 @@ const BinaryTree = () => {
       {isSuccess && (
         <div className="dottedBackground mx-8">
           <BinaryTreeNode network={filteredTree || data} />
+          {/* <BinaryTreeNode network={filteredTree || data?.data} /> */}
         </div>
       )}
     </>

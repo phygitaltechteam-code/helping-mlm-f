@@ -2,11 +2,11 @@ import { api } from '@/utils/axios';
 import { AxiosError } from 'axios';
 
 // Create E-Pins
-export const createEPin = async (epincount: number, price: number) => {
+export const createEPin = async (count: number, price: number) => {
   try {
-    console.log('epinssssscount', epincount);
+    console.log('epinssssscount', count);
     console.log('prsssssice', price);
-    const response = await api.post(`admin/epin/create-self/${epincount}`, {
+    const response = await api.post(`admin/epin/create-self/${count}`, {
       price: price,
     });
     return response.data;
@@ -113,7 +113,7 @@ export const ApproveEpinRequest = async (
   data: { epincount: number },
 ) => {
   try {
-    const response = await api.post(`admin/epin/create/${id}`, data);
+    const response = await api.post(`admin/epin/create/${id}`, {count:data.epincount});
     return response.data;
   } catch (error) {
     console.error(

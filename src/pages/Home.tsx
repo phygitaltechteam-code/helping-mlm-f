@@ -49,6 +49,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess && data) {
+      console.log("🔥 ADMIN HOME API RESPONSE:", data);
       const commission =
         selectedView === 'today'
           ? data?.todayscommission
@@ -186,47 +187,47 @@ const Home: React.FC = () => {
       setStatsData([
         {
           title: 'Total Team',
-          amount: '0',
+          amount: String(data?.customerCount || 0),
           icon: <FaUserPlus className="text-2xl text-blue-500" />,
         },
         {
           title: 'Total Business',
-          amount: '0',
+          amount: String(data?.totalBuisness || 0),
           icon: <FaWallet className="text-2xl text-green-500" />,
         },
         {
           title: 'Total Pins',
-          amount: '0',
+          amount: String(data?.givenEpin || 0),
           icon: <FaKey className="text-2xl text-purple-500" />,
         },
         {
           title: 'Active Pins',
-          amount: '0',
+          amount: String((data?.givenEpin || 0) - (data?.usedEpin || 0)),
           icon: <FaKey className="text-2xl text-green-500" />,
         },
         {
           title: 'Inactive Pins',
-          amount: '0',
+          amount: String(data?.usedEpin || 0),
           icon: <FaKey className="text-2xl text-red-500" />,
         },
         {
           title: 'Total Commission',
-          amount: '0',
+          amount: String(data?.totalIncome || 0),
           icon: <FaHandHoldingUsd className="text-2xl text-yellow-500" />,
         },
         {
           title: 'Bonus Income Achievers',
-          amount: '0',
+          amount: String(data?.todaysCommission || 0),
           icon: <FaAward className="text-2xl text-pink-500" />,
         },
         {
           title: 'Generation Income',
-          amount: '0',
+          amount: String(data?.totalIncome || 0),
           icon: <FaSitemap className="text-2xl text-indigo-500" />,
         },
         {
           title: 'Auto Pool Income',
-          amount: '0',
+          amount: String(data?.topupAmount || 0),
           icon: <FaChartLine className="text-2xl text-teal-500" />,
         },
       ]);
@@ -302,8 +303,8 @@ const Home: React.FC = () => {
         <button
           onClick={() => setSelectedView('month')}
           className={`rounded-lg px-4 py-2 text-sm font-medium ${selectedView === 'month'
-              ? 'border border-blue-600 bg-blue-600 text-white'
-              : 'bg-gray-200 text-gray-800 border-gray-200 border'
+            ? 'border border-blue-600 bg-blue-600 text-white'
+            : 'bg-gray-200 text-gray-800 border-gray-200 border'
             }`}
         >
           All

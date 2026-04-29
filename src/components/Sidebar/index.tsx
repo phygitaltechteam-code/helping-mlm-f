@@ -51,7 +51,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         //   icon: <PiEnvelopeSimpleLight size={18} />,
         // },
         {
-          label: 'Binary Tree',
+          label: 'Helping Tree',
           path: '/admin/binarytree',
           icon: <NetworkIcon size={18} />,
         },
@@ -210,183 +210,182 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         // },
       ]
       : // Customer
-      role === 'CUSTOMER'
-        ? [
-          {
-            label: 'Dashboard',
-            path: '/customer/dashboard',
-            icon: <PiSquaresFourLight size={18} />,
-          },
-          // {
-          //   label: 'Registeration',
-          //   path: '/customer/customerregisterc',
-          //   icon: <RegistrationIcon size={18} />,
-          // },
-          {
-            label: 'Customer Profile',
-            path: '/customer/profile',
-            icon: <ProfileIcon size={18} />,
-          },
-          {
-            label: 'My Network',
-            path: '/admin/binarytree',
-            icon: <NetworkIcon size={18} />,
-            subRoutes: [
-              {
-                label: 'Tree View',
-                path: '/admin/binarytree',
-              },
-              {
-                label: 'Downline List',
-                path: '/customer/downlinelist',
-              },
-            ],
-          },
+      // role === 'CUSTOMER'
+      //   ? [
+      //     {
+      //       label: 'Dashboard',
+      //       path: '/customer/dashboard',
+      //       icon: <PiSquaresFourLight size={18} />,
+      //     },
+      //     // {
+      //     //   label: 'Registeration',
+      //     //   path: '/customer/customerregisterc',
+      //     //   icon: <RegistrationIcon size={18} />,
+      //     // },
+      //     {
+      //       label: 'Customer Profile',
+      //       path: '/customer/profile',
+      //       icon: <ProfileIcon size={18} />,
+      //     },
+      //     {
+      //       label: 'My Network',
+      //       path: '/admin/binarytree',
+      //       icon: <NetworkIcon size={18} />,
+      //       subRoutes: [
+      //         {
+      //           label: 'Tree View',
+      //           path: '/admin/binarytree',
+      //         },
+      //         {
+      //           label: 'Downline List',
+      //           path: '/customer/downlinelist',
+      //         },
+      //       ],
+      //     },
 
-          // {
-          //   label: 'Direct Customer',
-          //   path: '/customer/directcustomer',
-          //   icon: <NetworkIcon size={18} />,
-          // },
-          // {
-          //   label: 'Generation Tree',
-          //   path: '/customer/gentree',
-          //   icon: <FaNetworkWired size={18} />,
-          // },
-          {
-            label: 'Activate ID',
-            path: '/customer/topup',
-            icon: <PiSquaresFourLight size={18} />,
-            subRoutes: [
+      //     // {
+      //     //   label: 'Direct Customer',
+      //     //   path: '/customer/directcustomer',
+      //     //   icon: <NetworkIcon size={18} />,
+      //     // },
+      //     // {
+      //     //   label: 'Generation Tree',
+      //     //   path: '/customer/gentree',
+      //     //   icon: <FaNetworkWired size={18} />,
+      //     // },
+      //     {
+      //       label: 'Activate ID',
+      //       path: '/customer/topup',
+      //       icon: <PiSquaresFourLight size={18} />,
+      //       subRoutes: [
 
-              {
-                label: 'Activate ID Wallet',
-                path: '/customer/activatefromwallet',
-              },
-              {
-                label: 'Activate history',
-                path: '/customer/activateIdHistory',
-              },
-            ],
-          },
-          // {
-          //   label: 'Award Reward',
-          //   path: '/customer/awardreward',
-          //   icon: <BiAward size={18} />,
-          // },
-          {
-            label: 'Report',
-            path: '/customer/reportc',
-            icon: <ReportIcon size={18} />,
-          },
-          // {
-          //   label: 'Lavrage',
-          //   path: '/customer/helping',
-          //   icon: <ReportIcon size={18} />,
-          // },
-          // {
-          //   label: 'BDF',
-          //   path: '/customer/royelty',
-          //   icon: <PiSquaresFourLight size={18} />,
-          // },
-          // {
-          //   label: 'Share Link',
-          //   path: '/customer/customersidesharelink',
-          //   icon: <PiSquaresFourLight size={18} />,
-          // },
-          {
-            label: 'Wallet',
-            path: '/customer/walletc',
-            icon: <PiSquaresFourLight size={18} />,
-            subRoutes: [
-              {
-                label: 'Wallet History',
-                path: '/customer/walletc',
-              },
-              {
-                label: 'Roi History',
-                path: '/customer/roiHistory',
-              },
-              {
-                label: 'Wallet Address',
-                path: '/customer/addwallet',
-              },
-              {
-                label: 'Wallet income',
-                path: '/customer/walletincome',
-              },
-            ],
-          },
-          {
-            label: 'Withdrawal',
-            path: '/customer/withdraw',
-            icon: <PiSquaresFourLight size={18} />,
-            subRoutes: [
-              {
-                label: 'Withdrawal',
-                path: '/customer/withdraw',
-              },
-              {
-                label: 'Withdrawal History',
-                path: '/customer/withdrawhistory',
-              },
-            ],
-          },
+      //         {
+      //           label: 'Activate ID Wallet',
+      //           path: '/customer/activatefromwallet',
+      //         },
+      //         {
+      //           label: 'Activate history',
+      //           path: '/customer/activateIdHistory',
+      //         },
+      //       ],
+      //     },
+      //     // {
+      //     //   label: 'Award Reward',
+      //     //   path: '/customer/awardreward',
+      //     //   icon: <BiAward size={18} />,
+      //     // },
+      //     {
+      //       label: 'Report',
+      //       path: '/customer/reportc',
+      //       icon: <ReportIcon size={18} />,
+      //     },
+      //     // {
+      //     //   label: 'Lavrage',
+      //     //   path: '/customer/helping',
+      //     //   icon: <ReportIcon size={18} />,
+      //     // },
+      //     // {
+      //     //   label: 'BDF',
+      //     //   path: '/customer/royelty',
+      //     //   icon: <PiSquaresFourLight size={18} />,
+      //     // },
+      //     // {
+      //     //   label: 'Share Link',
+      //     //   path: '/customer/customersidesharelink',
+      //     //   icon: <PiSquaresFourLight size={18} />,
+      //     // },
+      //     {
+      //       label: 'Wallet',
+      //       path: '/customer/walletc',
+      //       icon: <PiSquaresFourLight size={18} />,
+      //       subRoutes: [
+      //         {
+      //           label: 'Wallet History',
+      //           path: '/customer/walletc',
+      //         },
+      //         {
+      //           label: 'Roi History',
+      //           path: '/customer/roiHistory',
+      //         },
+      //         {
+      //           label: 'Wallet Address',
+      //           path: '/customer/addwallet',
+      //         },
+      //         {
+      //           label: 'Wallet income',
+      //           path: '/customer/walletincome',
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       label: 'Withdrawal',
+      //       path: '/customer/withdraw',
+      //       icon: <PiSquaresFourLight size={18} />,
+      //       subRoutes: [
+      //         {
+      //           label: 'Withdrawal',
+      //           path: '/customer/withdraw',
+      //         },
+      //         {
+      //           label: 'Withdrawal History',
+      //           path: '/customer/withdrawhistory',
+      //         },
+      //       ],
+      //     },
 
-          // {
-          //   label: ' Payout History',
-          //   path: '/customer/historypayout',
-          //   icon: <PiSquaresFourLight size={18} />,
-          // },
-          // {
-          //   label: 'Withdraw Amount',
-          //   path: '/customer/withdraw',
-          //   icon: <PiSquaresFourLight size={18} />,
-          // },
-          {
-            label: 'fund transfer',
-            path: '/customer/custmerfundtransfer',
-            icon: <PiSquaresFourLight size={18} />,
-            subRoutes: [
-              {
-                label: 'fund transfer',
-                path: '/customer/custmerfundtransfer',
-              },
-              {
-                label: 'Transfer History',
-                path: '/customer/fundTransferHistory',
-              },
-            ],
-          },
-          {
-            label: 'E-Pin',
-            path: '/customer/epinc',
-            icon: <PiNavigationArrowFill size={18} />,
+      //     // {
+      //     //   label: ' Payout History',
+      //     //   path: '/customer/historypayout',
+      //     //   icon: <PiSquaresFourLight size={18} />,
+      //     // },
+      //     // {
+      //     //   label: 'Withdraw Amount',
+      //     //   path: '/customer/withdraw',
+      //     //   icon: <PiSquaresFourLight size={18} />,
+      //     // },
+      //     {
+      //       label: 'fund transfer',
+      //       path: '/customer/custmerfundtransfer',
+      //       icon: <PiSquaresFourLight size={18} />,
+      //       subRoutes: [
+      //         {
+      //           label: 'fund transfer',
+      //           path: '/customer/custmerfundtransfer',
+      //         },
+      //         {
+      //           label: 'Transfer History',
+      //           path: '/customer/fundTransferHistory',
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       label: 'E-Pin',
+      //       path: '/customer/epinc',
+      //       icon: <PiNavigationArrowFill size={18} />,
 
-          },
-          {
-            label: 'Fund Request',
-            path: '/customer/epinc',
-            icon: <PiNavigationArrowFill size={18} />,
-            subRoutes: [
-              {
-                label: 'Fund Request',
-                path: '/customer/epinc',
-              },
-              {
-                label: 'request History',
-                path: '/customer/fundrequestHistory',
-              },
-            ],
-          },
-          // {
-          //   label: 'Repurchase Product',
-          //   path: '/customer/repurchaseproduct',
-          //   icon: <MdOutlineProductionQuantityLimits size={18} />,
-          // },
-        ]
-<<<<<<< Updated upstream
-      : // Customer
+      //     },
+      //     {
+      //       label: 'Fund Request',
+      //       path: '/customer/epinc',
+      //       icon: <PiNavigationArrowFill size={18} />,
+      //       subRoutes: [
+      //         {
+      //           label: 'Fund Request',
+      //           path: '/customer/epinc',
+      //         },
+      //         {
+      //           label: 'request History',
+      //           path: '/customer/fundrequestHistory',
+      //         },
+      //       ],
+      //     },
+      //     // {
+      //     //   label: 'Repurchase Product',
+      //     //   path: '/customer/repurchaseproduct',
+      //     //   icon: <MdOutlineProductionQuantityLimits size={18} />,
+      //     // },
+      //   ]
+      // Customer
         role === 'CUSTOMER'
         ? [
             {
@@ -578,8 +577,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             //   icon: <MdOutlineProductionQuantityLimits size={18} />,
             // },
           ]
-=======
->>>>>>> Stashed changes
         : [];
 
   const location = useLocation();

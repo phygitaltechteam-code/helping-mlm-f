@@ -1,8 +1,24 @@
 import React from 'react';
-import GenericTable, {Column} from '@/components/Forms/Table/GenericTable';
-import {useGetCustomerEpins} from '@/lib/react-query/Admin/Epin/epin';
+import GenericTable, { Column } from '@/components/Forms/Table/GenericTable';
+import { useGetCustomerEpins } from '@/lib/react-query/Admin/Epin/epin';
 import toast from 'react-hot-toast';
 import EpinForm from './EpinForm';
+
+// type CustomerEpinData = {
+//   id: string;
+//   epinNo: string;
+//   assignedToId: string;
+//   createdAt: string;
+//   isUsed: boolean;
+//   usedAt: string | null;
+//   requestId: string;
+//   usedBy: string | null;
+//   customer: {
+//     firstName: string;
+//     lastName: string;
+//     crnNo: string;
+//   };
+// };
 
 type CustomerEpinData = {
   id: string;
@@ -14,22 +30,35 @@ type CustomerEpinData = {
   requestId: string;
   usedBy: string | null;
   customer: {
-    firstName: string;
-    lastName: string;
     crnNo: string;
+    user?: {
+      fullname: string;
+      phoneNumber?: string;
+    };
   };
 };
+
 const CustomerEpinColumn: Column<CustomerEpinData>[] = [
-  {header: 'Date', accessor: 'createdAt'},
-  {header: 'E-Pin No', accessor: 'epinNo'},
-  {header: 'Used', accessor: 'isUsed', sortable: true},
-  {header: 'Used By', accessor: 'usedBy'},
+  { header: 'Date', accessor: 'createdAt' },
+  { header: 'E-Pin No', accessor: 'epinNo' },
+  // { header: 'Used', accessor: 'isUsed', sortable: true },
   {
+  header: 'Status',
+  accessor: (row) => (row.isUsed ? 'Used' : 'Not Used'),
+  sortable: true,
+},
+  // { header: 'Used By', accessor: 'usedBy' },
+{
+  header: 'Used By (CRN)',
+  accessor: (row) =>
+    row.isUsed ? row.customer?.crnNo || '-' : 'Not Used',
+},
+ {
     header: 'Customer Name',
-    accessor: (row) =>
-      `${row.customer?.firstName || ''} ${row.customer?.lastName || ''}`,
+    accessor: (row) => row.customer?.user?.fullname || '-',
   },
-  {header: 'Customer ID', accessor: (row) => row.customer?.crnNo || ''},
+
+  { header: 'Customer ID', accessor: (row) => row.customer?.crnNo || '' },
 ];
 
 const CustomerEpins: React.FC = () => {
@@ -42,28 +71,28 @@ const CustomerEpins: React.FC = () => {
 
   const CustomerFormattedData = customerEpinSuccess
     ? Array.isArray(CustomerepinData) &&
-      CustomerepinData.map((epin: CustomerEpinData) => ({
-        ...epin, // Retain all original properties
-        usedBy: epin.usedBy || '-',
-        isUsed: epin.isUsed, // <--- Change this line
-        createdAt: new Date(epin.createdAt).toLocaleString('en-IN', {
+    CustomerepinData.map((epin: CustomerEpinData) => ({
+      ...epin, // Retain all original properties
+      // usedBy: epin.usedBy || '-',
+      isUsed: epin.isUsed, // <--- Change this line
+      createdAt: new Date(epin.createdAt).toLocaleString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      usedAt: epin.usedAt
+        ? new Date(epin.usedAt).toLocaleString('en-IN', {
           day: '2-digit',
           month: 'short',
           year: 'numeric',
           hour: '2-digit',
           minute: '2-digit',
-        }),
-        usedAt: epin.usedAt
-          ? new Date(epin.usedAt).toLocaleString('en-IN', {
-              day: '2-digit',
-              month: 'short',
-              year: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit',
-              hour12: true,
-            })
-          : 'null',
-      }))
+          hour12: true,
+        })
+        : 'null',
+    }))
     : [];
   return (
     <>

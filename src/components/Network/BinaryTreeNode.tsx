@@ -9,8 +9,21 @@ import PureSvgNodeElement from './PureSvgNodeElement';
 const BinaryTreeNode = ({network}) => {
   const [data, setData] = useState(null);
 
+  const getRootNode = (source) => {
+    if (!source) return null;
+
+    // Supports both shapes:
+    // 1) direct tree node
+    // 2) API wrapper where actual tree is in source.data
+    if (source?.data?.data && Array.isArray(source?.data?.children)) {
+      return source.data;
+    }
+
+    return source;
+  };
+
   useEffect(() => {
-    const transformedData = transformNode(network);
+    const transformedData = transformNode(getRootNode(network));
     setData(transformedData);
   }, [network]);
 
@@ -65,12 +78,20 @@ const BinaryTreeNode = ({network}) => {
     //   }
     // }
 
-    const leftChild = node.children?.find(
-      (child) => child.data.side === 'LEFT',
+    const normalizedChildren = Array.isArray(node.children) ? node.children : [];
+    const leftChildBySide = normalizedChildren.find(
+      (child) => child?.data?.side === 'LEFT',
     );
-    const rightChild = node.children?.find(
-      (child) => child.data.side === 'RIGHT',
+    const rightChildBySide = normalizedChildren.find(
+      (child) => child?.data?.side === 'RIGHT',
     );
+
+    // Fallback for payloads where children do not include side.
+    const leftChild = leftChildBySide || normalizedChildren[0];
+    const rightChild =
+      rightChildBySide ||
+      normalizedChildren.find((child) => child !== leftChild) ||
+      null;
 
     children.push(
       leftChild
@@ -224,7 +245,7 @@ const BinaryTreeNode = ({network}) => {
   };
 
   return (
-    Object.keys(network).length > 0 && (
+    Object.keys(getRootNode(network) || {}).length > 0 && (
       <div
         className={`relative ${smallScreen ? 'mobileTree' : 'desktopTree'}`}
         style={containerStyles}

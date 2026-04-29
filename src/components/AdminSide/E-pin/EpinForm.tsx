@@ -158,16 +158,12 @@ const EpinForm: React.FC = () => {
                   label="Price"
                   name="price"
                   options={[
-<<<<<<< Updated upstream
-                    { label: '25', value: '25' },
-                    { label: '50', value: '50' },
-                    { label: '100', value: '100' }
-=======
+
+
                     { label: '2000', value: '2000' },
                     { label: '1500', value: '1500' },
                     { label: '3500', value: '3500' },
                     { label: '1500', value: '1500' }, // duplicate
->>>>>>> Stashed changes
                   ]}
                   onChange={field.onChange}
                 />

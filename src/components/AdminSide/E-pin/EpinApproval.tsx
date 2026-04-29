@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   useApproveEpinRequest,
   useGetAllEpinRequests,
   useRejectEpinRequest,
 } from '@/lib/react-query/Admin/Epin/epin';
-import toast, {CheckmarkIcon} from 'react-hot-toast';
-import {IoCloseCircleOutline} from 'react-icons/io5';
+import toast, { CheckmarkIcon } from 'react-hot-toast';
+import { IoCloseCircleOutline } from 'react-icons/io5';
 import EpinHistory from './EpinHistory';
-import {useAuthContext} from '@/context/AuthContext';
+import { useAuthContext } from '@/context/AuthContext';
 
 const EpinApproval = () => {
-  const {data} = useGetAllEpinRequests();
+  const { data } = useGetAllEpinRequests();
   console.log('Epin Requests :', data);
   // const {user} = useAuthContext();
   // const userRole = user?.crnNo;
@@ -30,15 +30,29 @@ const EpinApproval = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 5;
 
+  // const handleApprove = (item) => {
+  //   // const epinValue = epinValues[item.id];
+  //   // if (!epinValue || epinValue.trim() === '') {
+  //   //   alert('Please fill in the EPIN value');
+  //   //   return;
+  //   // }
+  //   approveEpin({
+  //     id: item.id,
+  //     data: { epincount: parseInt('0') },
+  //   });
+  // };
+
   const handleApprove = (item) => {
-    // const epinValue = epinValues[item.id];
-    // if (!epinValue || epinValue.trim() === '') {
-    //   alert('Please fill in the EPIN value');
-    //   return;
-    // }
+    const count = parseInt(epinValues[item.id]);
+
+    if (!count || count <= 0) {
+      toast.error('Enter valid count');
+      return;
+    }
+
     approveEpin({
       id: item.id,
-      data: {epincount: parseInt('0')},
+      data: { epincount: count },
     });
   };
 
@@ -51,6 +65,7 @@ const EpinApproval = () => {
       ...prev,
       [id]: value,
     }));
+    console.log(epinValues)
   };
 
   const openModal = (image) => {
@@ -103,13 +118,14 @@ const EpinApproval = () => {
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
                 {[
-                  {label: 'Date & Time', accessor: 'createdAt'},
-                  {label: 'Customer Name', accessor: 'customer.firstName'},
-                  {label: 'CRN', accessor: 'customer.crnNo'},
-                  {label: 'Requested Amount', accessor: 'paidAmount'},
-                  {label: 'Image', accessor: 'image'},
+                  { label: 'Date & Time', accessor: 'createdAt' },
+                  { label: 'Customer Name', accessor: 'customer.firstName' },
+                  { label: 'CRN', accessor: 'customer.crnNo' },
+                  { label: 'Requested Amount', accessor: 'paidAmount' },
+                  { label: 'Image', accessor: 'image' },
                   // {label: 'EPINs Approved', accessor: 'epinValues'},
-                  {label: 'Actions'},
+                  { label: 'Approve Count' },   // ✅ ADD THIS LINE
+                  { label: 'Actions' },
                 ].map((col, index) => (
                   <th
                     key={index}
@@ -154,7 +170,19 @@ const EpinApproval = () => {
                         onClick={() => openModal(item.image)}
                       />
                     </td>
-                    
+
+                    {/* ✅ ADD THIS BLOCK */}
+                    <td className="px-4 py-2 dark:text-white">
+                      <input
+                        type="number"
+                        min="1"
+                        placeholder="Count"
+                        value={epinValues[item.id] || ''}
+                        onChange={(e) => handleEpinChange(item.id, e.target.value)}
+                        className="w-20 rounded border px-2 py-1 text-black"
+                      />
+                    </td>
+
                     <td className="px-4 py-2 dark:text-white">
                       <div className="flex items-center space-x-4">
                         {/* Approve Button */}
