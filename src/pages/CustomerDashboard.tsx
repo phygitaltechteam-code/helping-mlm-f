@@ -1,15 +1,15 @@
 import { useAuthContext } from '@/context/AuthContext';
-import { useFetchCustomerHome} from '@/lib/react-query/Customer/home';
+import { useFetchCustomerHome } from '@/lib/react-query/Customer/home';
 import { assignEpin } from '@/lib/api/updateCustomer';
 import React, { useState, useEffect } from 'react';
-import { 
-  FaBriefcase, 
-  FaUsers, 
-  FaShoppingBag, 
-  FaUser, 
-  FaSuitcase, 
-  FaSeedling, 
-  FaMoneyBillWave, 
+import {
+  FaBriefcase,
+  FaUsers,
+  FaShoppingBag,
+  FaUser,
+  FaSuitcase,
+  FaSeedling,
+  FaMoneyBillWave,
   FaWallet,
   FaCopy,
   FaCheckCircle,
@@ -25,20 +25,21 @@ import { HiOutlineRefresh } from 'react-icons/hi';
 import { boolean } from 'zod';
 import { useGetProduct } from '@/lib/react-query/Admin/Product/products';
 import { useCheckEpin } from '@/lib/react-query/Admin/Epin/epin';
+import { useGetNetwotkTree } from '@/lib/react-query/network';
 import Logo from '../../public/logo.png';
 import toast from 'react-hot-toast';
 
 const CustomerDashboard = () => {
   const { user, setUser } = useAuthContext();
-const { data: product, isLoading: isProductLoading } = useGetProduct();
+  const { data: product, isLoading: isProductLoading } = useGetProduct();
 
-console.log('product', product?.map(element => {
-  console.log('element', element.name);
-}));
+  console.log('product', product?.map(element => {
+    console.log('element', element.name);
+  }));
 
   let isActive = user?.isActive;
 
-  
+
   const {
     data: dashboardData,
     isPending,
@@ -46,6 +47,11 @@ console.log('product', product?.map(element => {
     refetch,
     isSuccess,
   } = useFetchCustomerHome();
+
+  const { data: networkData } = useGetNetwotkTree();
+  const children = networkData?.children || [];
+  const activeTeamCount = children.filter((child: any) => child.data?.isActive).length;
+  const inactiveTeamCount = children.filter((child: any) => !child.data?.isActive).length;
 
   console.log('dashboardData', dashboardData);
 
@@ -114,10 +120,10 @@ console.log('product', product?.map(element => {
       setActivationError('Please provide both E-pin and select a product.');
       return;
     }
-    
+
     setIsActivating(true);
     setActivationError('');
-    
+
     try {
       await assignEpin(epinInput, selectedProductId);
       // On success, update user context to reflect active state
@@ -142,8 +148,9 @@ console.log('product', product?.map(element => {
 
   const baseUrl = import.meta.env.VITE_LIVE_URL || 'https://f5z16x7l-5173.inc1.devtunnels.ms';
   const RegistrationLink = `${baseUrl}/register/${fullname}/${crnNo}`;
-  
-   const copyLink = (key:string) => {
+  const shortRegistrationLink = `.../register/${fullname}/${crnNo}`;
+
+  const copyLink = (key: string) => {
     navigator.clipboard.writeText(RegistrationLink);
     setCopied(key);
     setTimeout(() => setCopied(null), 1500);
@@ -192,10 +199,11 @@ console.log('product', product?.map(element => {
     walletBalance: dashboardData?.WalletBalance ?? 0,
     // New cards
     customerTeam: dashboardData?.customerTeam ?? 0,
-    activePin: dashboardData?.activePin ?? 0,
-    inactivePin: dashboardData?.inactivePin ?? 0,
+    activeTeam: activeTeamCount,
+    inactiveTeam: inactiveTeamCount,
     generationCommission: dashboardData?.generationCommission ?? 0,
     autopullCommission: dashboardData?.autopullCommission ?? 0,
+    totalSales: dashboardData?.totalSales ?? dashboardData?.TotalSales ?? 0,
   };
 
   return (
@@ -295,7 +303,7 @@ console.log('product', product?.map(element => {
       )}
 
       <div className="flex items-center gap-4 mb-6">
-     
+
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Dashboard</h1>
           <p className="text-gray-600 font-medium">Welcome To ARC International</p>
@@ -304,24 +312,23 @@ console.log('product', product?.map(element => {
 
       {/* Referral Link */}
       <div className="mb-8">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-xl shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm">
-              <FaNetworkWired className="text-2xl" />
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4 w-full sm:w-auto min-w-0">
+            <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm shrink-0">
+              <FaNetworkWired className="text-xl md:text-2xl" />
             </div>
-            <div>
-              <p className="text-xs font-bold opacity-80 uppercase tracking-widest">Your Registration Link</p>
-              <p className="font-mono text-sm break-all opacity-95">
-                {RegistrationLink}
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-bold opacity-80 uppercase tracking-widest mb-0.5">Your Registration Link</p>
+              <p className="font-mono text-sm opacity-95 truncate" title={RegistrationLink}>
+                {shortRegistrationLink}
               </p>
             </div>
           </div>
-          
+
           <button
             onClick={() => copyLink('registration')}
-            className={`${
-              copied === 'registration' ? 'bg-green-500' : 'bg-white text-indigo-700 hover:bg-blue-50'
-            } px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap`}
+            className={`${copied === 'registration' ? 'bg-green-500' : 'bg-white text-indigo-700 hover:bg-blue-50'
+              } w-full sm:w-auto px-6 py-2.5 rounded-lg font-bold flex justify-center items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0`}
           >
             {copied === 'registration' ? (
               <>
@@ -339,17 +346,17 @@ console.log('product', product?.map(element => {
       {/* First Row - Team & Package Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
         {[
-            { 
-            title: 'Bonus Income', 
-            value: 1000, 
-            gradient: 'from-orange-400 to-red-500', 
+          {
+            title: 'Bonus Income',
+            value: 1000,
+            gradient: 'from-orange-400 to-red-500',
             icon: <FaShoppingBag />,
             remaining: Math.max(0, 5 - (dashboardData?.directTeam ?? 0))
           },
-                    { title: 'Total Team', value: formatCount(stats.directTeam), gradient: 'from-purple-500 to-pink-600', icon: <FaUsers /> },
+          { title: 'Total Team', value: formatCount(stats.directTeam), gradient: 'from-purple-500 to-pink-600', icon: <FaUsers /> },
 
-         // { title: 'My Package', value: formatCurrency(stats.myPackage), gradient: 'from-cyan-400 to-teal-500', icon: <FaBriefcase /> ,dollor:'$' },
-        
+          // { title: 'My Package', value: formatCurrency(stats.myPackage), gradient: 'from-cyan-400 to-teal-500', icon: <FaBriefcase /> ,dollor:'$' },
+
         ].filter(card => card.title !== 'Bonus Income' || (card.remaining ?? 0) > 0).map((card, i) => (
           <div
             key={i}
@@ -379,15 +386,15 @@ console.log('product', product?.map(element => {
       {/* Second Row - Income & Wallet Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-10">
         {[
-           { title: 'Active Pin', value: formatCount(stats.activePin), gradient: 'from-green-400 to-emerald-500', icon: <FaKey /> },
-          { title: 'Inactive Pin', value: formatCount(stats.inactivePin), gradient: 'from-red-400 to-rose-500', icon: <FaKey /> },
-   { title: 'Genarational Income', value: formatCurrency(stats.binaryIncome), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
-          { title: 'Helping Income', value: formatCurrency(stats.binaryIncome), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling /> ,dollor:'$' },
-          { title: 'Rent Helping Income', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
+          { title: 'Active Team', value: formatCount(stats.activeTeam), gradient: 'from-green-400 to-emerald-500', icon: <FaUsers /> },
+          { title: 'Inactive Team', value: formatCount(stats.inactiveTeam), gradient: 'from-red-400 to-rose-500', icon: <FaUsers /> },
+          { title: 'Genarational Income', value: formatCurrency(stats.generationCommission), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
+          { title: 'Helping Income', value: formatCurrency(stats.autopullCommission), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
+          { title: 'Rent Helping Income', value: formatCurrency(stats.binaryIncome), gradient: 'from-blue-400 to-indigo-500', icon: <GiTakeMyMoney />, dollor: '$' },
 
-          { title: 'ROI Income', value: formatCurrency(stats.roiIncome), gradient: 'from-amber-400 to-orange-600', icon: <GiTakeMyMoney /> ,dollor:'$' },
+          { title: 'ROI Income', value: formatCurrency(stats.roiIncome), gradient: 'from-amber-400 to-orange-600', icon: <GiTakeMyMoney />, dollor: '$' },
           // { title: 'Total Withdrawal', value: formatCurrency(stats.totalWithdrawal), gradient: 'from-purple-500 to-pink-600', icon: <FaMoneyBillWave /> ,dollor:'$' },
-         // { title: 'Wallet Balance', value: formatCurrency(stats.walletBalance), gradient: 'from-pink-500 to-purple-700', icon: <FaWallet /> ,dollor:'$' },
+          // { title: 'Wallet Balance', value: formatCurrency(stats.walletBalance), gradient: 'from-pink-500 to-purple-700', icon: <FaWallet /> ,dollor:'$' },
         ].map((card, i) => (
           <div
             key={i}
@@ -407,12 +414,12 @@ console.log('product', product?.map(element => {
       {/* Third Row - New Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-10">
         {[
-                    { title: 'Remaining Member for helping Income', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
-                    { title: 'Total Earning', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
-                    { title: 'Total Sales', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
+          { title: 'Remaining Member for helping Income', value: formatCount(Math.max(0, 5 - stats.directTeam)), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
+          { title: 'Total Earning', value: formatCurrency(stats.totalEarning), gradient: 'from-blue-400 to-indigo-500', icon: <FaMoneyBillWave />, dollor: '$' },
+          { title: 'Total Sales', value: formatCurrency(stats.totalSales), gradient: 'from-blue-400 to-indigo-500', icon: <FaShoppingBag />, dollor: '$' },
 
           // { title: 'Customer Team', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
-         
+
         ].map((card, i) => (
           <div
             key={i}

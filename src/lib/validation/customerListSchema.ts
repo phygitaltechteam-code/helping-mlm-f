@@ -24,16 +24,17 @@ export const updateProfileSchema = z.object({
   state: z.string().optional(),
   aadharNo: z.string().optional(),
   panNo: z.string().optional(),
-  // upiId: z
-  //   .string({required_error: 'UPI ID is required'})
-  //   .min(6, 'UPI ID must be at least 6 characters'),
+  upiId: z.string().optional(),
   landMark: z.string().optional(),
   flatNo: z.string().optional(),
   areaName: z.string().optional(),
   bankName: z.string().optional(),
-  bankAccNo: z.string().optional(),
-  bankIFSC: z.string().optional(),
-  bankBranch: z.string().optional(),
+  bankAccNo: z.string().min(1, {message: 'Bank account number is required'}).optional(),
+  bankIFSC: z
+    .string()
+    .length(11, {message: 'Bank IFSC code must be exactly 11 characters'})
+    .optional(),
+  bankBranch: z.string().min(1, {message: 'Bank branch is required'}).optional(),
   sponsorId: z.string().optional(),
   crn: z.string().optional(),
 });

@@ -103,11 +103,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             path: '/customer/dashboard',
             icon: <PiSquaresFourLight size={18} />,
           },
-          {
-            label: 'Customer Profile',
-            path: '/customer/profile',
-            icon: <ProfileIcon size={18} />,
-          },
+          
           {
             label: 'My Tree',
             path: '/customer/generation-tree',
@@ -131,7 +127,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             ],
           },
           {
-            label: 'Report',
+            label: 'Commission Report',
             path: '/customer/reportc',
             icon: <ReportIcon size={18} />,
           },
@@ -171,7 +167,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           //   ],
           // },
           {
-            label: 'E-Pin',
+            label: 'E-Pin Request',
             path: '/customer/epinc',
             icon: <PiNavigationArrowFill size={18} />,
           },
