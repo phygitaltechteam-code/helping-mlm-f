@@ -1,4 +1,5 @@
 /*eslint-disable */
+// @ts-nocheck
 
 import React, {useState, useEffect} from 'react';
 import Tree from 'react-d3-tree';
@@ -6,10 +7,11 @@ import MixedNodeInputElement from './MixedNodeInputElement';
 import MixedNodeElement from './MixedNodeElement';
 import PureSvgNodeElement from './PureSvgNodeElement';
 
-const BinaryTreeNode = ({network}) => {
-  const [data, setData] = useState(null);
+const BinaryTreeNode = ({network}: {network: any}) => {
+  const [data, setData] = useState<any>(null);
+  const [hoveredNode, setHoveredNode] = useState<any>(null);
 
-  const getRootNode = (source) => {
+  const getRootNode = (source: any) => {
     if (!source) return null;
 
     // Supports both shapes:
@@ -30,7 +32,7 @@ const BinaryTreeNode = ({network}) => {
   const windowWidth = window.innerWidth;
   const smallScreen = windowWidth <= 768;
 
-  const transformNode = (node) => {
+  const transformNode = (node: any) => {
     if (!node || !node.data) return null;
 
     const {
@@ -45,52 +47,21 @@ const BinaryTreeNode = ({network}) => {
       orderStatus = '',
     } = node.data;
 
-    let children = [];
-
-    // if (node.children && node.children.length > 0) {
-    //   const leftChild = node.children.find(
-    //     (child) => child.data.side === 'LEFT',
-    //   );
-    //   const rightChild = node.children.find(
-    //     (child) => child.data.side === 'RIGHT',
-    //   );
-
-    //   if (leftChild) {
-    //     children.push(transformNode(leftChild));
-    //   } else {
-    //     children.push({
-    //       name: ' ',
-    //       attributes: {},
-    //       _invisible: true, // Custom flag if you want to skip rendering content
-    //       children: [],
-    //     });
-    //   }
-
-    //   if (rightChild) {
-    //     children.push(transformNode(rightChild));
-    //   } else {
-    //     children.push({
-    //       name: ' ',
-    //       attributes: {},
-    //       _invisible: true,
-    //       children: [],
-    //     });
-    //   }
-    // }
+    let children: any[] = [];
 
     const normalizedChildren = Array.isArray(node.children) ? node.children : [];
     const leftChildBySide = normalizedChildren.find(
-      (child) => child?.data?.side === 'LEFT',
+      (child: any) => child?.data?.side === 'LEFT',
     );
     const rightChildBySide = normalizedChildren.find(
-      (child) => child?.data?.side === 'RIGHT',
+      (child: any) => child?.data?.side === 'RIGHT',
     );
 
     // Fallback for payloads where children do not include side.
     const leftChild = leftChildBySide || normalizedChildren[0];
     const rightChild =
       rightChildBySide ||
-      normalizedChildren.find((child) => child !== leftChild) ||
+      normalizedChildren.find((child: any) => child !== leftChild) ||
       null;
 
     children.push(
@@ -136,24 +107,24 @@ const BinaryTreeNode = ({network}) => {
     };
   };
 
-  const countNodes = (node) => {
+  const countNodes = (node: any): number => {
     if (!node?.children || node?.children?.length === 0) {
       return 0;
     }
 
     let count = node?.children?.length;
 
-    node.children.forEach((child) => {
+    node.children.forEach((child: any) => {
       count += countNodes(child);
     });
 
     return count;
   };
 
-  const customNodeFnMapping = {
+  const customNodeFnMapping: any = {
     svg: {
       description: 'Default - Pure SVG node & label (IE11 compatible)',
-      fn: (rd3tProps, appState) => (
+      fn: (rd3tProps: any, appState: any) => (
         <PureSvgNodeElement
           nodeDatum={rd3tProps.nodeDatum}
           toggleNode={rd3tProps.toggleNode}
@@ -165,7 +136,7 @@ const BinaryTreeNode = ({network}) => {
     },
     mixed: {
       description: 'MixedNodeElement - SVG `circle` + `foreignObject` label',
-      fn: ({nodeDatum, toggleNode}, appState) => (
+      fn: ({nodeDatum, toggleNode}: any, appState: any) => (
         <MixedNodeElement
           nodeData={nodeDatum}
           triggerNodeToggle={toggleNode}
@@ -180,7 +151,7 @@ const BinaryTreeNode = ({network}) => {
     },
     input: {
       description: 'MixedNodeElement - Interactive nodes with inputs',
-      fn: ({nodeDatum, toggleNode}, appState) => (
+      fn: ({nodeDatum, toggleNode}: any, appState: any) => (
         <MixedNodeInputElement
           nodeData={nodeDatum}
           triggerNodeToggle={toggleNode}
@@ -236,9 +207,10 @@ const BinaryTreeNode = ({network}) => {
       },
     },
   };
+
   if (!data) return <div>Loading...</div>;
 
-  const containerStyles = {
+  const containerStyles: React.CSSProperties = {
     width: '100%',
     height: '100vh',
     position: 'relative',
@@ -255,16 +227,16 @@ const BinaryTreeNode = ({network}) => {
         </div>
 
         <Tree
-          data={treeProps.data}
+          data={treeProps.data as any}
           renderCustomNodeElement={
             treeProps.renderCustomNodeElement
-              ? (rd3tProps) =>
+              ? (rd3tProps: any) =>
                   treeProps.renderCustomNodeElement(rd3tProps, {
                     ...treeProps,
                   })
               : undefined
           }
-          orientation={treeProps.orientation}
+          orientation={treeProps.orientation as any}
           centeringTransitionDuration={treeProps.centeringTransitionDuration}
           translate={{x: treeProps.translateX, y: treeProps.translateY}}
           collapsible={treeProps.collapsible}
@@ -277,9 +249,10 @@ const BinaryTreeNode = ({network}) => {
           separation={treeProps.separation}
           enableLegacyTransitions={treeProps.enableLegacyTransitions}
           transitionDuration={treeProps.transitionDuration}
+          // @ts-ignore
           styles={treeProps.styles}
           shouldCollapseNeighborNodes={treeProps.shouldCollapseNeighborNodes}
-          onNodeClick={(node) => {
+          onNodeClick={(node: any) => {
             setHoveredNode(node);
           }}
         />

@@ -19,23 +19,66 @@ const TreeNode = ({network}) => {
   const windowWidth = window.innerWidth;
   const smallScreen = windowWidth <= 768;
 
+  // const transformNetworkData = (data) => {
+  //   const transformNode = (node) => {
+  //     const {
+  //       id,
+  //       first_name,
+  //       sponserer_username,
+  //       isGolden,
+  //       joining_date,
+  //       crn_no,
+  //       sponsor_crn,
+  //     } = node.data;
+
+  //     const {name} = node;
+
+  //     return {
+  //       name: name,
+  //       attributes: {
+  //         ID: id,
+  //         CRN: crn_no,
+  //         Name: first_name,
+  //         JoiningDate: joining_date,
+  //         SponsorName: sponserer_username,
+  //         SponsorCRN: sponsor_crn,
+  //         TeamCount: countNodes(node), // 👈 using your existing function
+  //         IsGolden: isGolden,
+  //         IsActive: node.data.isActive,
+  //       },
+  //       children: node.children ? node.children.map(transformNode) : [],
+  //     };
+  //   };
+  //   return transformNode(data);
+  // };
+
   const transformNetworkData = (data) => {
-    const transformNode = (node) => {
-      const {side, id, first_name, sponserer_username, isGolden} = node.data;
+    const transformNode = (node, parent = null) => {
+      const {id, first_name, joining_date, crn_no, isGolden} = node.data;
+
       const {name} = node;
+
       return {
         name: name,
         attributes: {
           ID: id,
-          // FirstName: first_name,
-          Sponserer: sponserer_username,
-          // Side: side,
+          CRN: crn_no,
+          Name: first_name,
+          JoiningDate: joining_date,
+
+          // ✅ FIX: sponsor = parent node name
+          SponsorName: parent ? parent.name : 'N/A',
+
+          TeamCount: countNodes(node),
           IsGolden: isGolden,
           IsActive: node.data.isActive,
         },
-        children: node.children ? node.children.map(transformNode) : [],
+        children: node.children
+          ? node.children.map((child) => transformNode(child, node))
+          : [],
       };
     };
+
     return transformNode(data);
   };
 
@@ -208,11 +251,22 @@ const TreeNode = ({network}) => {
               zIndex: 1000,
             }}
           >
-            <p className="text-gray-800 font-semibold">{hoveredNode.name}</p>
-            <p>ID: {hoveredNode.attributes.ID}</p>
-            <p>First Name: {hoveredNode.attributes.FirstName}</p>
-            <p>Sponserer: {hoveredNode.attributes.Sponserer}</p>
-            <p>Sponserer: {hoveredNode.attributes.Side}</p>
+            <p>
+              <strong>Name:</strong> {hoveredNode.attributes.Name}
+            </p>
+            <p>
+              <strong>CRN No:</strong> {hoveredNode.attributes.CRN}
+            </p>
+            <p>
+              <strong>Joining Date:</strong>{' '}
+              {hoveredNode.attributes.JoiningDate}
+            </p>
+            <p>
+              <strong>Sponsor:</strong> {hoveredNode.attributes.SponsorName}
+            </p>
+            <p>
+              <strong>Team Count:</strong> {hoveredNode.attributes.TeamCount}
+            </p>
           </div>
         )}
       </div>

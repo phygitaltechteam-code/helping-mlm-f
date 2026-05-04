@@ -1,250 +1,139 @@
 import React, { useEffect, useState } from 'react';
-import { IoWalletSharp } from 'react-icons/io5';
 import {
-  FaDollarSign,
-  FaShoppingBasket,
   FaUserPlus,
   FaChartLine,
   FaAward,
-  FaCrown,
-  FaMoneyBillWave,
-  FaRedoAlt,
-  FaShoppingCart,
   FaSitemap,
-  FaTicketAlt,
   FaHandHoldingUsd,
+  FaUsers,
+  FaUserCheck,
+  FaUserTimes,
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import StatCard from './StatCard';
 import { useFetchAdminHome } from '@/lib/react-query/Admin/Home/adminHome';
-import NewMembers from '@/components/Charts/NewMembers';
-import TeamPerformance from '@/components/Charts/TeamPerformance';
-import ChartOne from '@/components/Charts/ChartOne';
 import Loader from '@/components/common/Loader';
-import { useAuthContext } from '@/context/AuthContext';
 import { FaKey, FaWallet } from 'react-icons/fa6';
 
 interface StatCardProps {
   amount: string;
   title: string;
   icon: React.ReactNode;
-  trend?: string;
-  trendValue?: string;
 }
 
 const Home: React.FC = () => {
-  const { data, isSuccess, isError, isPending } = useFetchAdminHome();
-  console.log('====================================');
-  console.log('data', data);
-  console.log('====================================');
-  const { user } = useAuthContext();
-  const id = user?.id;
+  const [fromDate, setFromDate] = useState<string>('');
+  const [toDate, setToDate] = useState<string>('');
+  const [appliedFrom, setAppliedFrom] = useState<string>('');
+  const [appliedTo, setAppliedTo] = useState<string>('');
 
-  console.log('rtreport', data);
+  const { data, isSuccess, isError, isPending } = useFetchAdminHome(
+    appliedFrom,
+    appliedTo
+  );
+
   const [statsData, setStatsData] = useState<StatCardProps[]>([]);
-  const [showExtraBoxes, setShowExtraBoxes] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
-  const [selectedView, setSelectedView] = useState<'today' | 'month'>('today');
-  console.log(selectedView);
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log('API DATA:', data);
+    }
+  }, [isSuccess, data]);
 
   useEffect(() => {
     if (isSuccess && data) {
-      console.log("🔥 ADMIN HOME API RESPONSE:", data);
-      const commission =
-        selectedView === 'today'
-          ? data?.todayscommission
-          : data?.totalCommission;
-      const binaryCommission =
-        selectedView === 'today' ? data?.todayBinary : data?.binary;
-      const royalty =
-        selectedView === 'today' ? data?.todayRoyalty : data?.royelty;
-      const achiverReport =
-        selectedView === 'today' ? data?.todaysrewards : data?.totalrewards;
-      const repurchaseCommission =
-        selectedView === 'today'
-          ? data?.todayRepurchaseCommission
-          : data?.repurchaseCommission;
-      const repurchaseAmount =
-        selectedView === 'today'
-          ? data?.todayRepurchaseAmount
-          : data?.repurchaseAmount;
-      const inActiveCustomer =
-        selectedView === 'today' ? data?.inActive : data?.inActive;
-      const leftCount =
-        selectedView === 'today' ? data?.leftCount : data?.leftCount;
-      const rightCount =
-        selectedView === 'today' ? data?.rightCount : data?.rightCount;
-      const customerCount =
-        selectedView === 'today' ? data?.customerCount : data?.customerCount;
-      // setStatsData([
-      //   {
-      //     title: 'Total Business',
-      //     amount: `${data?.totalBuisness}`,
-      //     icon: <FaWallet className="text-2xl text-blue-500" />,
-      //     trend: 'up',
-      //     trendValue: '12%',
-      //   },
-      //   {
-      //     title: 'Total Commission',
-      //     amount: `${data?.totalCommission}`,
-      //     icon: <FaHandHoldingUsd className="text-2xl text-green-500" />,
-      //     trend: 'up',
-      //     trendValue: '8%',
-      //   },
-      //   {
-      //     title: 'Epin Given',
-      //     amount: `${data?.givenEpin}`,
-      //     icon: <FaKey className="text-2xl text-purple-500" />,
-      //     trend: 'up',
-      //     trendValue: '24%',
-      //   },
-      //   {
-      //     title: 'Epin Used',
-      //     amount: `${data?.usedEpin}`,
-      //     icon: <FaKey className="text-2xl text-yellow-500" />,
-      //     trend: 'up',
-      //     trendValue: '18%',
-      //   },
-      //   {
-      //     title: 'Pair Matching Income  ',
-      //     amount: `$${data?.binary}`,
-      //     icon: <FaSitemap className="text-2xl text-teal-500" />,
-      //     trend: 'up',
-      //     trendValue: '15%',
-      //   },
-      //   {
-      //     title: 'Total Level Income  ',
-      //     amount: `$${data?.totalRoi}`,
-      //     icon: <FaSitemap className="text-2xl text-teal-500" />,
-      //     trend: 'up',
-      //     trendValue: '15%',
-      //   },
-      //   {
-      //     title: 'Left Count ',
-      //     amount: `$${data?.leftCount}`,
-      //     icon: <FaSitemap className="text-2xl text-teal-500" />,
-      //     trend: 'up',
-      //     trendValue: '15%',
-      //   },
-      //   {
-      //     title: 'Right Count ',
-      //     amount: `$${data?.rightCount}`,
-      //     icon: <FaSitemap className="text-2xl text-teal-500" />,
-      //     trend: 'up',
-      //     trendValue: '15%',
-      //   },
-      //   // {
-      //   //   title: 'Direct Sponsor Income',
-      //   //   amount: `$${data?.directCommission}`,
-      //   //   icon: <FaCrown className="text-2xl text-pink-500" />,
-      //   //   trend: 'up',
-      //   //   trendValue: '10%',
-      //   // },
-      //   // {
-      //   //   title: 'Rewards Achiever Report',
-      //   //   amount: `$${achiverReport || 0}`,
-      //   //   icon: <FaAward className="text-2xl text-indigo-500" />,
-      //   //   trend: 'up',
-      //   //   trendValue: '5%',
-      //   // },
-      //   // {
-      //   //   title: 'Repurchase Commission',
-      //   //   amount: `$${repurchaseCommission}`,
-      //   //   icon: <FaRedoAlt className="text-2xl text-amber-500" />,
-      //   //   trend: 'up',
-      //   //   trendValue: '20%',
-      //   // },
-      //   // {
-      //   //   title: 'Repurchase Amount',
-      //   //   amount: `$${repurchaseAmount}`,
-      //   //   icon: <FaShoppingCart className="text-2xl text-amber-500" />,
-      //   //   trend: 'up',
-      //   //   trendValue: '20%',
-      //   // },
-      //   {
-      //     title: 'In Active Customer',
-      //     amount: `${inActiveCustomer}`,
-      //     icon: <FaShoppingCart className="text-2xl text-amber-500" />,
-      //     trend: 'up',
-      //     trendValue: '20%',
-      //   },
-      //   {
-      //     title: ' Active Customer',
-      //     amount: `${customerCount - inActiveCustomer}`,
-      //     icon: <FaShoppingCart className="text-2xl text-amber-500" />,
-      //     trend: 'up',
-      //     trendValue: '20%',
-      //   },
-      //   {
-      //     title: 'Total Customer',
-      //     amount: `${customerCount}`,
-      //     icon: <FaShoppingCart className="text-2xl text-amber-500" />,
-      //     trend: 'up',
-      //     trendValue: '20%',
-      //   },
-      // ]);
+      // Sales
+      const totalSales = data?.totalBuisness || 0;
+
+      // Team — customerCount is total; active = total - inActive
+      const totalTeam = data?.customerCount || 0;
+      const inactiveTeam = data?.inActive || 0;
+      const activeTeam = totalTeam - inactiveTeam;
+
+      // Income & Commission
+      const helpIncomeGivers   = data?.autopoolIncome || 0;
+      const totalBonusIncomeGivers = data?.bonusIncomeAchivers || 0;
+      const totalGenerationIncomeGivers = data?.genrationIncome || 0;
+      const totalCommission    = data?.totalCommission || 0;
+
+      // Pins
+      const totalPinAlloted = data?.givenEpin || 0;
+      const totalPinUsed    = data?.usedEpin  || 0;
 
       setStatsData([
         {
+          title: 'Total Sales',
+          amount: String(totalSales),
+          icon: <FaWallet className="text-2xl text-emerald-500" />,
+        },
+        {
           title: 'Total Team',
-          amount: String(data?.customerCount || 0),
-          icon: <FaUserPlus className="text-2xl text-blue-500" />,
+          amount: String(totalTeam),
+          icon: <FaUsers className="text-2xl text-blue-500" />,
         },
         {
-          title: 'Total Business',
-          amount: String(data?.totalBuisness || 0),
-          icon: <FaWallet className="text-2xl text-green-500" />,
+          title: 'Active Team',
+          amount: String(activeTeam),
+          icon: <FaUserCheck className="text-2xl text-green-500" />,
         },
         {
-          title: 'Total Pins',
-          amount: String(data?.givenEpin || 0),
-          icon: <FaKey className="text-2xl text-purple-500" />,
+          title: 'Inactive Team',
+          amount: String(inactiveTeam),
+          icon: <FaUserTimes className="text-2xl text-red-500" />,
         },
         {
-          title: 'Active Pins',
-          amount: String((data?.givenEpin || 0) - (data?.usedEpin || 0)),
-          icon: <FaKey className="text-2xl text-green-500" />,
-        },
-        {
-          title: 'Inactive Pins',
-          amount: String(data?.usedEpin || 0),
-          icon: <FaKey className="text-2xl text-red-500" />,
-        },
-        {
-          title: 'Total Commission',
-          amount: String(data?.totalIncome || 0),
+          title: 'Help Income Givers',
+          amount: String(helpIncomeGivers),
           icon: <FaHandHoldingUsd className="text-2xl text-yellow-500" />,
         },
         {
-          title: 'Bonus Income Achievers',
-          amount: String(data?.todaysCommission || 0),
+          title: 'Total Bonus Income Givers',
+          amount: String(totalBonusIncomeGivers),
           icon: <FaAward className="text-2xl text-pink-500" />,
         },
         {
-          title: 'Generation Income',
-          amount: String(data?.totalIncome || 0),
+          title: 'Total Generation Income Givers',
+          amount: String(totalGenerationIncomeGivers),
           icon: <FaSitemap className="text-2xl text-indigo-500" />,
         },
         {
-          title: 'Auto Pool Income',
-          amount: String(data?.topupAmount || 0),
+          title: 'Total Commission',
+          amount: String(totalCommission),
           icon: <FaChartLine className="text-2xl text-teal-500" />,
+        },
+        {
+          title: 'Total Pin Alloted',
+          amount: String(totalPinAlloted),
+          icon: <FaKey className="text-2xl text-purple-500" />,
+        },
+        {
+          title: 'Total Pin Used',
+          amount: String(totalPinUsed),
+          icon: <FaKey className="text-2xl text-orange-500" />,
         },
       ]);
     }
-  }, [isSuccess, data, isPending, selectedView]);
+  }, [isSuccess, data]);
+
+  const handleApplyFilter = () => {
+    setAppliedFrom(fromDate);
+    setAppliedTo(toDate);
+  };
+
+  const handleResetFilter = () => {
+    setFromDate('');
+    setToDate('');
+    setAppliedFrom('');
+    setAppliedTo('');
+  };
 
   if (isError) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="flex h-64 items-center justify-center rounded-lg bg-red-50"
-      >
+      <div className="flex h-64 items-center justify-center rounded-lg bg-red-50">
         <p className="text-lg text-red-500">
           Error fetching data. Please try again later.
         </p>
-      </motion.div>
+      </div>
     );
   }
 
@@ -252,73 +141,66 @@ const Home: React.FC = () => {
     return <Loader />;
   }
 
-  const handleToggle = () => {
-    setShowExtraBoxes(!showExtraBoxes);
-  };
-
-  const displayedStats = showExtraBoxes ? statsData : statsData.slice(0, 4);
-
-  // Transform customer data for charts
-  const transformCustomerData = () => {
-    if (!data?.customerList) return [];
-
-    return data.customerList.map((customer) => ({
-      name: customer.crnNo,
-      date: new Date(customer.createdAt).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-      }),
-      value: Math.floor(Math.random() * 1000) + 500, // Random value for visualization
-    }));
-  };
-
-  const customerGrowthData = [
-    { name: 'Jan', customers: 45 },
-    { name: 'Feb', customers: 52 },
-    { name: 'Mar', customers: 48 },
-    { name: 'Apr', customers: 78 },
-    { name: 'May', customers: 65 },
-    { name: 'Jun', customers: 90 },
-    { name: 'Jul', customers: data?.customerCount || 0 },
-  ];
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
       className="p-4 md:p-6"
     >
-      <div className="mb-6 flex items-center gap-4">
-        {/* <button
-          onClick={() => setSelectedView('today')}
-          className={`rounded-lg px-4 py-2 text-sm font-medium ${
-            selectedView === 'today'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 text-gray-800'
-          }`}
-        >
-          Today
-        </button> */}
+      {/* Date Filter */}
+      <div className="mb-6 flex flex-wrap items-end gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+        <div className="flex flex-col gap-1">
+          <label className="text-xs font-medium text-gray-500">From Date</label>
+          <input
+            type="date"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label className="text-xs font-medium text-gray-500">To Date</label>
+          <input
+            type="date"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+        </div>
+
         <button
-          onClick={() => setSelectedView('month')}
-          className={`rounded-lg px-4 py-2 text-sm font-medium ${selectedView === 'month'
-            ? 'border border-blue-600 bg-blue-600 text-white'
-            : 'bg-gray-200 text-gray-800 border-gray-200 border'
-            }`}
+          onClick={handleApplyFilter}
+          className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
         >
-          All
+          Apply
         </button>
+
+        <button
+          onClick={handleResetFilter}
+          className="rounded-lg border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+        >
+          Reset
+        </button>
+
+        {(appliedFrom || appliedTo) && (
+          <span className="ml-auto text-xs text-gray-400">
+            Showing:{' '}
+            <span className="font-medium text-gray-600">
+              {appliedFrom || '—'} → {appliedTo || '—'}
+            </span>
+          </span>
+        )}
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        {displayedStats.map((stat, index) => (
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5">
+        {statsData.map((stat, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
+            transition={{ delay: index * 0.07 }}
           >
             <StatCard
               amount={stat.amount}
@@ -328,127 +210,8 @@ const Home: React.FC = () => {
           </motion.div>
         ))}
       </div>
-
-      {statsData.length > 4 && (
-        <div className="mt-6 flex justify-center">
-          <motion.button
-            onClick={handleToggle}
-            className="flex items-center rounded-lg bg-blue-50 px-4 py-2 text-blue-600"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span>{showExtraBoxes ? 'Show Less' : 'Show More'}</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className={`ml-2 h-5 w-5 transform ${showExtraBoxes ? 'rotate-180' : ''}`}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </motion.button>
-        </div>
-      )}
-
-      {/* <motion.div
-        className="border-gray-100 mt-8 rounded-xl border p-6 shadow-sm"
-        initial={{opacity: 0}}
-        animate={{opacity: 1}}
-        transition={{delay: 0.4}}
-      >
-        <h3 className="text-gray-800 mb-4 text-lg font-semibold">
-          Recent Customers
-        </h3>
-        <div className="overflow-x-auto">
-          <table className="divide-gray-200 min-w-full divide-y">
-            <thead>
-              <tr>
-                <th className="text-gray-500 px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  CRN No
-                </th>
-                <th className="text-gray-500 px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Join Date
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-gray-200 divide-y">
-              {transformCustomerData().map((customer, index) => (
-                <motion.tr
-                  key={index}
-                  initial={{opacity: 0}}
-                  animate={{opacity: 1}}
-                  transition={{delay: 0.1 * index}}
-                  whileHover={{backgroundColor: '#f9fafb'}}
-                  className="text-sm"
-                >
-                  <td className="whitespace-nowrap px-4 py-3">
-                    <div className="flex items-center">
-                      <div className="mr-3 rounded-full bg-blue-100 p-2">
-                        <FaUserPlus className="text-blue-500" />
-                      </div>
-                      <span className="font-medium">{customer.name}</span>
-                    </div>
-                  </td>
-                  <td className="text-gray-500 whitespace-nowrap px-4 py-3">
-                    {customer.date}
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </motion.div> */}
     </motion.div>
   );
 };
 
 export default Home;
-//  {/* <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
-//       <motion.div
-//         className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: 1 }}
-//         transition={{ delay: 0.2 }}
-//       >
-//         <div className="flex justify-between items-center mb-4">
-//           <h3 className="text-lg font-semibold text-gray-800">Customer Growth</h3>
-//           <div className="flex space-x-2">
-//             <button className="text-xs px-3 py-1 bg-blue-50 text-blue-600 rounded-full">Month</button>
-//             <button className="text-xs px-3 py-1 text-gray-500 rounded-full hover:bg-gray-100">Quarter</button>
-//             <button className="text-xs px-3 py-1 text-gray-500 rounded-full hover:bg-gray-100">Year</button>
-//           </div>
-//         </div>
-//         <div className="h-80">
-//           <NewMembers data={customerGrowthData} />
-//         </div>
-//       </motion.div>
-
-//       <motion.div
-//         className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: 1 }}
-//         transition={{ delay: 0.3 }}
-//       >
-//         <h3 className="text-lg font-semibold text-gray-800 mb-4">Revenue Breakdown</h3>
-//         <div className="h-80">
-//           <ChartOne />
-//         </div>
-//       </motion.div>
-//     </div> */}
-//       {/* <motion.div
-//       className="mt-8 bg-white p-6 rounded-xl shadow-sm border border-gray-100"
-//       initial={{ opacity: 0 }}
-//       animate={{ opacity: 1 }}
-//       transition={{ delay: 0.5 }}
-//     >
-//       <h3 className="text-lg font-semibold text-gray-800 mb-4">Team Performance</h3>
-//       <div className="h-80">
-//         <TeamPerformance />
-//       </div>
-//     </motion.div> */}

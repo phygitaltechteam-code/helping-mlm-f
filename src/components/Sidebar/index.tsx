@@ -23,79 +23,79 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const sidebarRoutes =
     role === 'ADMIN'
       ? [
-        {
-          label: 'Dashboard',
-          path: '/dashboard',
-          icon: <PiSquaresFourLight size={18} />,
-        },
-        {
-          label: 'My Team',
-          path: '/admin/customerlist',
-          icon: <BiListUl size={18} />,
-        },
-        {
-          label: 'Helping Tree',
-          path: '/admin/binarytree',
-          icon: <NetworkIcon size={18} />,
-        },
-        {
-          label: 'Generation Tree',
-          path: '/admin/network',
-          icon: <FaNetworkWired size={18} />,
-        },
-        // {
-        //   label: 'Fund Request',
-        //   path: '/admin/epinrequest',
-        //   icon: <MdApproval size={18} />,
-        // },
-        // {
-        //   label: 'Fund Transfer',
-        //   path: '/fundtransfer',
-        //   icon: <FaMoneyBillTransfer size={18} />,
-        // },
-        {
-          label: 'Share Link',
-          path: '/admin/sharelink',
-          icon: <PiShareLight size={18} />,
-        },
-        // {
-        //   label: 'Reports',
-        //   path: '/admin/roi',
-        //   icon: <PiShareLight size={18} />,
-        //   subRoutes: [
-        //     {
-        //       label: 'ROI Income',
-        //       path: '/admin/roi',
-        //     },
-        //   ],
-        // },
-        {
-          label: 'Payout',
-          path: '/admin/commisionreport',
-          icon: <BiRupee size={18} />,
-          subRoutes: [
-            {
-              label: 'Paid Commission',
-              path: '/admin/commisionreport',
-            },
-            {
-              label: 'Pending Commission',
-              path: '/admin/pendingcommisionreport',
-            },
-          ],
-        },
-        {
-          label: 'E-Pin',
-          icon: <PiSquaresFourLight size={18} />,
-          path: '/admin/Epin',
-          subRoutes: [
-            { label: 'Admin E-Pin', path: '/admin/Epin' },
-            { label: 'Customer E-Pin', path: '/admin/customerepin' },
-            { label: 'Recall E-pin', path: '/admin/recallepin' },
-            { label: 'Approve E-pin', path: '/admin/approvedepin' },
-          ],
-        },
-      ]
+          {
+            label: 'Dashboard',
+            path: '/dashboard',
+            icon: <PiSquaresFourLight size={18} />,
+          },
+          {
+            label: 'Customer List',
+            path: '/admin/customerlist',
+            icon: <BiListUl size={18} />,
+          },
+          {
+            label: 'Helping Tree',
+            path: '/admin/binarytree',
+            icon: <NetworkIcon size={18} />,
+          },
+          {
+            label: 'Generation Tree',
+            path: '/admin/network',
+            icon: <FaNetworkWired size={18} />,
+          },
+          // {
+          //   label: 'Fund Request',
+          //   path: '/admin/epinrequest',
+          //   icon: <MdApproval size={18} />,
+          // },
+          // {
+          //   label: 'Fund Transfer',
+          //   path: '/fundtransfer',
+          //   icon: <FaMoneyBillTransfer size={18} />,
+          // },
+          {
+            label: 'Share Link',
+            path: '/admin/sharelink',
+            icon: <PiShareLight size={18} />,
+          },
+          // {
+          //   label: 'Reports',
+          //   path: '/admin/roi',
+          //   icon: <PiShareLight size={18} />,
+          //   subRoutes: [
+          //     {
+          //       label: 'ROI Income',
+          //       path: '/admin/roi',
+          //     },
+          //   ],
+          // },
+          {
+            label: 'Payout',
+            path: '/admin/commisionreport',
+            icon: <BiRupee size={18} />,
+            subRoutes: [
+              {
+                label: 'Paid Commission',
+                path: '/admin/commisionreport',
+              },
+              {
+                label: 'Pending Commission',
+                path: '/admin/pendingcommisionreport',
+              },
+            ],
+          },
+          {
+            label: 'E-Pin',
+            icon: <PiSquaresFourLight size={18} />,
+            path: '/admin/Epin',
+            subRoutes: [
+              { label: 'Admin E-Pin', path: '/admin/Epin' },
+              { label: 'Customer E-Pin', path: '/admin/customerepin' },
+              { label: 'Recall E-pin', path: '/admin/recallepin' },
+              { label: 'Requested E-pin', path: '/admin/approvedepin' },
+            ],
+          },
+        ]
       : role === 'CUSTOMER'
         ? [
           {
@@ -245,7 +245,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       </div>
 
       {/* Menu */}
-      <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
+      <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6 overflow-y-auto max-h-[calc(100vh-80px)]">
         <div>
           <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
             MENU

@@ -62,6 +62,7 @@ const CustomerEpinColumn: Column<CustomerEpinData>[] = [
 ];
 
 const CustomerEpins: React.FC = () => {
+  console.log("TABLE RENDERED");
   const {
     data: CustomerepinData,
     isSuccess: customerEpinSuccess,

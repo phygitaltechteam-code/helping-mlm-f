@@ -28,7 +28,7 @@ const PureSvgNodeElementG = ({
   const [showPopup, setShowPopup] = useState(false);
 
   const filteredAttributes = Object.entries(nodeDatum.attributes || {})
-    .filter(([key]) => key !== 'IsGolden')
+  .filter(([key]) => key !== 'IsGolden' && key !== 'ID')
     .map(([key, value]) => {
       if (key === 'IsActive') {
         return ['__status', value ? 'Active' : 'Inactive'];

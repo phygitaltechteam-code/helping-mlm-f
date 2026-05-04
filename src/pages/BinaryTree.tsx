@@ -5,15 +5,28 @@ import {useGetNetwotkBinaryTree} from '@/lib/react-query/network';
 import Loader from '@/components/common/Loader';
 import BinaryTreeNode from '@/components/Network/BinaryTreeNode';
 
-// Recursive function to find a node by ID in the tree
-const findNodeById = (node: any, id: string): any => {
+const findNodeById = (node: any, search: string): any => {
   if (!node) return null;
-  if (node.data?.id === id) return node;
+
+  const term = search.toLowerCase();
+
+  const id = node.data?.id?.toLowerCase() || '';
+  const crnNo = node.data?.crnNo?.toLowerCase() || '';
+  const fullname = node.data?.fullname?.toLowerCase() || '';
+
+  if (
+    id.includes(term) ||
+    crnNo.includes(term) ||
+    fullname.includes(term)
+  ) {
+    return node;
+  }
 
   for (const child of node.children || []) {
-    const found = findNodeById(child, id);
+    const found = findNodeById(child, search);
     if (found) return found;
   }
+
   return null;
 };
 
@@ -37,8 +50,8 @@ const BinaryTree = () => {
     }
   }, [searchTerm, data]);
 
-  // if (isPending) return <Loader />;
-  // if (isError) return <div className="dottedBackground mx-8">Error loading network.</div>;
+  if (isPending) return <Loader />;
+  if (isError) return <div className="dottedBackground mx-8">Error loading network.</div>;
 
   return (
     <>
@@ -57,7 +70,6 @@ const BinaryTree = () => {
       {isSuccess && (
         <div className="dottedBackground mx-8">
           <BinaryTreeNode network={filteredTree || data} />
-          {/* <BinaryTreeNode network={filteredTree || data?.data} /> */}
         </div>
       )}
     </>

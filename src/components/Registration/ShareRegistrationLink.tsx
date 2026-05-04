@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import GenericInputField from '@/components/Forms/Input/GenericInputField';
-import {useRegistration} from '@/context/RegisterContext';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {useForm, FormProvider} from 'react-hook-form';
-import {z} from 'zod';
-import {useAuthContext} from '@/context/AuthContext';
-import {toast} from 'react-hot-toast';
-import {FiCopy, FiShare2} from 'react-icons/fi';
-import {motion} from 'framer-motion';
+import { useRegistration } from '@/context/RegisterContext';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, FormProvider } from 'react-hook-form';
+import { z } from 'zod';
+import { useAuthContext } from '@/context/AuthContext';
+import { toast } from 'react-hot-toast';
+import { FiCopy, FiShare2 } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 
 const shareLinkSchema = z.object({
   leftLink: z.string().min(1, 'Link is required'),
@@ -20,8 +20,8 @@ interface SponsorInfoProps {
   onNext: () => void;
 }
 
-export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({onNext}) => {
-  const {user} = useAuthContext();
+export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({ onNext }) => {
+  const { user } = useAuthContext();
   const [copiedLeft, setCopiedLeft] = useState(false);
   const [copiedRight, setCopiedRight] = useState(false);
 
@@ -33,7 +33,7 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({onNext}) => {
     },
   });
 
-  const {setValue} = methods;
+  const { setValue } = methods;
 
   const fullname = user?.fullname
     ? user.fullname.replace(/\s/g, '_')
@@ -101,9 +101,9 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({onNext}) => {
   return (
     <FormProvider {...methods}>
       <motion.form
-        initial={{opacity: 0, y: 20}}
-        animate={{opacity: 1, y: 0}}
-        transition={{duration: 0.5}}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         onSubmit={methods.handleSubmit(onSubmit)}
         className="space-y-6 rounded-xl border border-blue-100 bg-gradient-to-br from-white to-blue-50 p-8 shadow-lg dark:border-strokedark dark:bg-gradient-to-br dark:from-black dark:to-black"
       >
@@ -126,7 +126,7 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({onNext}) => {
               <label className="text-gray-700 dark:text-gray-300 mb-1 block text-sm font-medium">
                 Left Side Referral Link
               </label>
-              <div className="relative">
+              {/* <div className="relative">
                 <GenericInputField name="leftLink" disabled />
                 <div className="absolute inset-y-0 right-0 flex">
                   <motion.button
@@ -149,6 +149,27 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({onNext}) => {
                     )}
                   </motion.button>
                 </div>
+              </div> */}
+              <div className="relative w-full">
+                <div className="pr-12">
+                  <GenericInputField name="leftLink" disabled />
+                </div>
+
+                <motion.button
+                  type="button"
+                  onClick={handleCopyLeft}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400"
+                  whileHover={{}}
+                  whileTap={{}}
+                >
+                  {copiedLeft ? (
+                    <span className="text-xs font-medium text-green-600">
+                      Copied!
+                    </span>
+                  ) : (
+                    <FiCopy className="text-lg" />
+                  )}
+                </motion.button>
               </div>
             </div>
 
@@ -156,8 +177,8 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({onNext}) => {
               type="button"
               onClick={handleShareLeft}
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 px-4 py-2.5 font-medium text-white shadow-md transition-shadow hover:shadow-lg"
-              whileHover={{scale: 1.02}}
-              whileTap={{scale: 0.98}}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <FiShare2 className="text-lg" />
               Share Left Link
@@ -170,20 +191,20 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({onNext}) => {
               <label className="text-gray-700 dark:text-gray-300 mb-1 block text-sm font-medium">
                 Right Side Referral Link
               </label>
-              <div className="relative">
+              {/* <div className="relative">
                 <GenericInputField name="rightLink" disabled />
                 <div className="absolute inset-y-0 right-0 flex">
                   <motion.button
                     type="button"
                     onClick={handleCopyRight}
                     className="text-gray-500 flex items-center px-4 hover:text-blue-600 dark:hover:text-blue-400"
-                    whileHover={{scale: 1.05}}
-                    whileTap={{scale: 0.95}}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     {copiedRight ? (
                       <motion.span
-                        initial={{opacity: 0, scale: 0.8}}
-                        animate={{opacity: 1, scale: 1}}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
                         className="text-sm font-medium text-green-600"
                       >
                         Copied!
@@ -193,6 +214,27 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({onNext}) => {
                     )}
                   </motion.button>
                 </div>
+              </div> */}
+              <div className="relative w-full">
+                <div className="pr-12">
+                  <GenericInputField name="rightLink" disabled />
+                </div>
+
+                <motion.button
+                  type="button"
+                  onClick={handleCopyRight}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400"
+                  whileHover={{}}
+                  whileTap={{}}
+                >
+                  {copiedRight ? (
+                    <span className="text-xs font-medium text-green-600">
+                      Copied!
+                    </span>
+                  ) : (
+                    <FiCopy className="text-lg" />
+                  )}
+                </motion.button>
               </div>
             </div>
 
@@ -200,8 +242,8 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({onNext}) => {
               type="button"
               onClick={handleShareRight}
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 px-4 py-2.5 font-medium text-white shadow-md transition-shadow hover:shadow-lg"
-              whileHover={{scale: 1.02}}
-              whileTap={{scale: 0.98}}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <FiShare2 className="text-lg" />
               Share Right Link
