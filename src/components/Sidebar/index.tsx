@@ -131,7 +131,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             ],
           },
           {
-            label: 'Report',
+            label: 'Commission Report',
             path: '/customer/reportc',
             icon: <ReportIcon size={18} />,
           },
@@ -171,7 +171,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           //   ],
           // },
           {
-            label: 'E-Pin',
+            label: 'E-Pin Request',
             path: '/customer/epinc',
             icon: <PiNavigationArrowFill size={18} />,
           },

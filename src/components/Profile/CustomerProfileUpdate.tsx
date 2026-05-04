@@ -72,6 +72,8 @@ const CustomerUpdateProfile: React.FC = () => {
         bankAccNo: profileData?.bankAccNo ?? '',
         bankIFSC: profileData?.bankIFSC ?? '',
         bankBranch: profileData?.bankBranch ?? '',
+        upiId: profileData?.upiId ?? '',
+        
         password: profileData?.password ?? '',
       });
     }
@@ -101,6 +103,8 @@ const CustomerUpdateProfile: React.FC = () => {
       customerData.bankBranch = filteredData.bankBranch;
     if (filteredData.bankIFSC) customerData.bankIFSC = filteredData.bankIFSC;
     if (filteredData.bankName) customerData.bankName = filteredData.bankName;
+    if (filteredData.upiId) customerData.upiId = filteredData.upiId;
+    
     if (filteredData.areaName) customerData.areaName = filteredData.areaName;
     if (filteredData.city) customerData.city = filteredData.city;
     if (filteredData.dob)
@@ -317,7 +321,7 @@ const CustomerUpdateProfile: React.FC = () => {
             </div> */}
 
             {/* 🏦 Bank Details */}
-            {/* <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">
+            <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">
               Bank Details
             </h2>
             <div className="col-span-12 md:col-span-6">
@@ -327,7 +331,8 @@ const CustomerUpdateProfile: React.FC = () => {
                 placeholder="e.g. HDFC Bank"
               />
             </div>
-            <div className="relative col-span-6">
+            
+            <div className="relative col-span-12 md:col-span-6">
               <GenericInputField
                 name="bankAccNo"
                 label="Account Number"
@@ -354,7 +359,14 @@ const CustomerUpdateProfile: React.FC = () => {
                 label="Branch Name"
                 placeholder="e.g. FC Road Branch"
               />
-            </div> */}
+            </div>
+            <div className="col-span-12 md:col-span-6">
+              <GenericInputField
+                name="upiId"
+                label="UPI ID"
+                placeholder="e.g. yourname@upi"
+              />
+            </div>
 
             {/* 🔐 Login Info */}
             <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">

@@ -13,6 +13,7 @@ type Data = {
   amount: number;
   payableAmount: number;
   tdsAmount: number;
+  adminCharges: number;
   status: string;
   type: string;
   details: string;
@@ -39,12 +40,17 @@ const CommissionReport: React.FC = () => {
       Cell: (value: number) => <span>${value?.toFixed(2) || '0.00'}</span>,
     },
     {
-      header: 'Admin Charges',
+      header: '5% TDS',
       accessor: 'tdsAmount',
       Cell: (value: number) => <span>${value?.toFixed(2) || '0.00'}</span>,
     },
     {
-      header: 'Payable Amount',
+      header: '5% Admin Charges',
+      accessor: 'adminCharges',
+      Cell: (value: number) => <span>${value?.toFixed(2) || '0.00'}</span>,
+    },
+    {
+      header: 'Total Receivable',
       accessor: 'payableAmount',
       Cell: (value: number) => <span>${value?.toFixed(2) || '0.00'}</span>,
     },
@@ -80,24 +86,32 @@ const CommissionReport: React.FC = () => {
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )
-        .map((item: any) => ({
-          id: item.id?.substring(0, 8) || 'N/A', // Show first 8 chars of ID
-          dateTime: new Intl.DateTimeFormat('en-IN', {
-            year: 'numeric',
-            month: 'long',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-          }).format(new Date(item.createdAt)),
-          amount: Number(item.amount || 0),
-          payableAmount: Number(item.payableAmount || 0),
-          tdsAmount: Number(item.tdsAmount || 0),
-          status: item.status || 'N/A',
-          type: item.type || 'N/A',
-          details: item.details || 'N/A',
-          walletAddress: item.customer?.wallet?.walletAddress || 'N/A',
-        }));
+        .map((item: any) => {
+          const amount = Number(item.amount || 0);
+          const tdsAmount = amount * 0.05;
+          const adminCharges = amount * 0.05;
+          const payableAmount = amount - (tdsAmount + adminCharges);
+
+          return {
+            id: item.id?.substring(0, 8) || 'N/A', // Show first 8 chars of ID
+            dateTime: new Intl.DateTimeFormat('en-IN', {
+              year: 'numeric',
+              month: 'long',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+            }).format(new Date(item.createdAt)),
+            amount,
+            payableAmount,
+            tdsAmount,
+            adminCharges,
+            status: item.status || 'N/A',
+            type: item.type || 'N/A',
+            details: item.details || 'N/A',
+            walletAddress: item.customer?.wallet?.walletAddress || 'N/A',
+          };
+        });
       setCommissionData(mappedData);
     } else {
       // Add Mock Data for testing when backend has no data
@@ -114,7 +128,8 @@ const CommissionReport: React.FC = () => {
           }).format(new Date()),
           amount: 500,
           payableAmount: 450,
-          tdsAmount: 50,
+          tdsAmount: 25,
+          adminCharges: 25,
           status: 'PAID',
           type: 'Referral',
           details: 'Direct referral bonus',
@@ -132,7 +147,8 @@ const CommissionReport: React.FC = () => {
           }).format(new Date(Date.now() - 86400000)), // Yesterday
           amount: 250,
           payableAmount: 225,
-          tdsAmount: 25,
+          tdsAmount: 12.5,
+          adminCharges: 12.5,
           status: 'PENDING',
           type: 'Level Income',
           details: 'Level 2 team bonus',
