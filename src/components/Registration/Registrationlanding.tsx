@@ -25,6 +25,7 @@ import {unAuthenticatedApi} from '@/utils/axios';
 import {useCustomerLogin} from '@/lib/react-query/Auth/auth';
 import {QUERY_KEYS} from '@/lib/react-query/QueryKeys';
 import {jwtDecode} from 'jwt-decode';
+import Logo from '../../../public/logo.png';
 
 type FormValues = z.infer<typeof externalRegistrationSchema>;
 
@@ -38,13 +39,10 @@ type Product = {
 };
 
 const RegistrationForm: React.FC = () => {
-  const {params} = useMatch(
-    '/_registration/register/$name/$crnno/$id' as any,
-  ) as {
+  const {params} = useMatch('/_registration/register/$name/$crnno' as any) as {
     params: {
       crnno: string;
       name: string;
-      id: string;
     };
   };
 
@@ -53,7 +51,6 @@ const RegistrationForm: React.FC = () => {
     mode: 'onChange',
     defaultValues: {
       sponsorId: params.crnno || '',
-      side: params.id || '',
       firstName: '',
       lastName: '',
       email: '',
@@ -178,7 +175,6 @@ const RegistrationForm: React.FC = () => {
       phone: formValues.phone || undefined,
       password: formValues.password,
       confirmPassword: formValues.confirmPassword,
-      side: formValues.side,
       epinNo: useWithoutEpin ? undefined : formValues.epinNo,
       productId: useWithoutEpin ? '' : selected[0]?.productId,
     };
@@ -214,6 +210,11 @@ const RegistrationForm: React.FC = () => {
         }}
       >
         <div className="m-4 w-full max-w-2xl rounded-lg bg-[#F6F8FA] p-6 shadow-lg">
+          <div className="flex justify-center mb-6">
+            <div className="bg-white p-3 rounded-2xl shadow-sm border border-gray-100">
+              <img src={Logo} alt="ARC Logo" className="h-20 w-auto object-contain" />
+            </div>
+          </div>
           {/* Sponsor Info */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
             <h1 className="col-span-12 mb-4 text-lg font-semibold">
@@ -222,7 +223,7 @@ const RegistrationForm: React.FC = () => {
             <p className="col-span-12 text-lg font-semibold">
               Name: {sponcerIDName}
             </p>
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12">
               <GenericInputField
                 name="sponsorId"
                 label="Sponsor Code"
@@ -233,17 +234,6 @@ const RegistrationForm: React.FC = () => {
                   // methods.setValue('sponsorId', e.target.value);
                   sponcerValidate(e);
                 }}
-              />
-            </div>
-
-            <div className="col-span-12 md:col-span-6">
-              <GenericDropdown
-                name="side"
-                label="Side"
-                options={[
-                  {value: 'LEFT', label: 'LEFT'},
-                  {value: 'RIGHT', label: 'RIGHT'},
-                ]}
               />
             </div>
             {/* {!useWithoutEpin && (

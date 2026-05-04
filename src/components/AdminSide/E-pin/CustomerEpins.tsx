@@ -70,11 +70,10 @@ const CustomerEpins: React.FC = () => {
   console.log('customer Eping data : ', CustomerepinData);
 
   const CustomerFormattedData = customerEpinSuccess
-    ? Array.isArray(CustomerepinData) &&
-    CustomerepinData.map((epin: CustomerEpinData) => ({
-      ...epin, // Retain all original properties
-      // usedBy: epin.usedBy || '-',
-      isUsed: epin.isUsed, // <--- Change this line
+    ? (Array.isArray(CustomerepinData) ? CustomerepinData : (CustomerepinData as any)?.data || [])
+    .map((epin: CustomerEpinData) => ({
+      ...epin,
+      isUsed: epin.isUsed,
       createdAt: new Date(epin.createdAt).toLocaleString('en-IN', {
         day: '2-digit',
         month: 'short',

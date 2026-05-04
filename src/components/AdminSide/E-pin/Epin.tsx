@@ -87,7 +87,6 @@ export const Epin: React.FC = () => {
                 { label: '2000', value: '2000' },
                 { label: '1500', value: '1500' },
                 { label: '3500', value: '3500' },
-                { label: '1500', value: '1500' },
               ]}
               onChange={handleTypeChange}
             />

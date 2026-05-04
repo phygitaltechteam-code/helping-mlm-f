@@ -1,18 +1,18 @@
 /* eslint-disable */
-import {zodResolver} from '@hookform/resolvers/zod';
-import {useMatch, useNavigate} from '@tanstack/react-router';
-import React, {useEffect, useState} from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMatch, useNavigate } from '@tanstack/react-router';
+import React, { useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import {z} from 'zod';
+import { z } from 'zod';
 import GenericButton from '@/components/Forms/Buttons/GenericButton';
 import GenericInputField from '@/components/Forms/Input/GenericInputField';
-import {useAuthContext} from '@/context/AuthContext';
-import {useRegistration} from '@/context/RegisterContext';
-import {useCheckEpin} from '@/lib/react-query/Admin/Epin/epin';
-import {useGetAllProducts} from '@/lib/react-query/Admin/Product/products';
-import {useCustomerRegistration} from '@/lib/react-query/Auth/auth';
-import {externalRegistrationSchema} from '@/lib/validation/externalRegistratioinSchema';
+import { useAuthContext } from '@/context/AuthContext';
+import { useRegistration } from '@/context/RegisterContext';
+import { useCheckEpin } from '@/lib/react-query/Admin/Epin/epin';
+import { useGetAllProducts } from '@/lib/react-query/Admin/Product/products';
+import { useCustomerRegistration } from '@/lib/react-query/Auth/auth';
+import { externalRegistrationSchema } from '@/lib/validation/externalRegistratioinSchema';
 import bgImage from '../../assets/images/header/header-bg.jpg';
 // import {useNavigate} from '@tanstack/react-router';
 import {
@@ -23,7 +23,7 @@ import {
   UsersIcon,
 } from 'lucide-react';
 import GenericDropdown from '../Forms/DropDown/GenericDropDown';
-import {unAuthenticatedApi} from '@/utils/axios';
+import { unAuthenticatedApi } from '@/utils/axios';
 
 type FormValues = z.infer<typeof externalRegistrationSchema>;
 
@@ -37,22 +37,19 @@ type Product = {
 };
 
 export const ExternalRegistration: React.FC = () => {
-  const {params} = useMatch(
-    '/_registration/register/$name/$crnno/$id' as any,
-  ) as {
+  const { params } = useMatch('/_registration/register/$name/$crnno' as any) as {
     params: {
       crnno: string;
       name: string;
-      id: string;
     };
   };
+
 
   const methods = useForm<FormValues>({
     resolver: zodResolver(externalRegistrationSchema),
     mode: 'onChange',
     defaultValues: {
       sponsorId: params.crnno || '',
-      side: params.id || '',
       firstName: '',
       lastName: '',
       email: '',
@@ -72,14 +69,14 @@ export const ExternalRegistration: React.FC = () => {
   const [sponcerIDName, setSponcerIDName] = useState<string>('ENTER NAME');
   const [useWithoutEpin, setUseWithoutEpin] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const {setSelectProduct} = useRegistration();
-  const {data: products} = useGetAllProducts();
+  const { setSelectProduct } = useRegistration();
+  const { data: products } = useGetAllProducts();
   const epinType = methods.watch('epinType');
-    
-  
+
+
   // methods.setValue('side', params?.id);
 
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
   const role = user?.role;
   const navigate = useNavigate();
 
@@ -114,7 +111,7 @@ export const ExternalRegistration: React.FC = () => {
   const handleCardClick = (productId: string) => {
     const count = selectedProducts[productId] || 0;
     if (count < 1 && getTotalSelectedCount() < 1) {
-      setSelectedProducts((prev) => ({...prev, [productId]: count + 1}));
+      setSelectedProducts((prev) => ({ ...prev, [productId]: count + 1 }));
     }
   };
   const sponcerValidate = async (CRN: string) => {
@@ -139,20 +136,19 @@ export const ExternalRegistration: React.FC = () => {
         productId: id,
         quantity,
       }));
-      setSelectProduct({products: selected});
+      setSelectProduct({ products: selected });
     } else {
-      setSelectProduct({products: []});
+      setSelectProduct({ products: [] });
     }
 
     const payload: any = {
-      sponsorId: params.crnno,
+      sponsorId: formValues.sponsorId,
       firstName: formValues.firstName,
       lastName: formValues.lastName,
       email: formValues.email || undefined,
       phone: formValues.phone || undefined,
       password: formValues.password,
       confirmPassword: formValues.confirmPassword,
-      side: formValues.side,
       epinNo: useWithoutEpin ? undefined : formValues.epinNo,
       productId: useWithoutEpin ? '' : selected[0]?.productId,
     };
@@ -198,11 +194,8 @@ export const ExternalRegistration: React.FC = () => {
             <p className="col-span-12 text-lg font-semibold">
               Name: &nbsp;{params.name}
             </p>
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12">
               <GenericInputField name="sponsorId" label="Sponsor ID" disabled />
-            </div>
-            <div className="col-span-12 md:col-span-6">
-              <GenericInputField name="side" label="Side" disabled />
             </div>
             {/* {!useWithoutEpin && (
               <div className="col-span-12 md:col-span-6">
@@ -447,9 +440,9 @@ export const ExternalRegistration: React.FC = () => {
             {/* Action section */}
             <div className="px-6 pb-5">
               <button
-                onClick={() => navigate({
-      to: `/signin`,
-    })}
+               onClick={() => {
+  navigate({ to: '/signin' });
+}}
                 className="flex w-full items-center justify-center rounded-lg bg-blue-600 py-3 font-medium text-white transition-all duration-200 hover:bg-blue-700 hover:shadow-lg"
               >
                 Continue

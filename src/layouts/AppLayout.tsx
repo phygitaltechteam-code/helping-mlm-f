@@ -7,7 +7,7 @@ import React, {useEffect, useState} from 'react';
 const AppLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const {isAuthenticated,customer} = useAuthContext();
-  
+
 
   const navigate = useNavigate();
 

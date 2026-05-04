@@ -5,7 +5,7 @@ export const getnetwork = async () => {
     console.log('Fetching network data...');
     const response = await api.get('/tree/gen');
 
-    console.log('Network data fetched', response.data);
+    console.log('Network data fetched getnetwok', response.data);
     return response.data;
   } catch (error) {
     console.error(error);

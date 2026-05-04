@@ -62,9 +62,10 @@ const DisplayEpin: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const formattedData = useMemo(() => {
-    if (!isSuccess || !Array.isArray(epinData)) return [];
+    const dataArray = Array.isArray(epinData) ? epinData : (epinData as any)?.data || [];
+    if (!isSuccess || dataArray.length === 0 && !Array.isArray(epinData)) return [];
 
-    return epinData.map((epin: EpinData) => ({
+    return dataArray.map((epin: EpinData) => ({
       ...epin,
       createdAt: new Date(epin.createdAt).toLocaleDateString('en-IN', {
         day: '2-digit',

@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {Link} from '@tanstack/react-router';
+import React, { useState } from 'react';
+import { Link } from '@tanstack/react-router';
 import ClickOutside from '../ClickOutside';
 import UserOne from '../../assets/images/user/user.png';
-import {IoIosArrowDown} from 'react-icons/io';
-import {QUERY_KEYS} from '@/lib/react-query/QueryKeys';
-import {useAuthContext} from '@/context/AuthContext';
-import {FiEdit} from 'react-icons/fi';
-import {jwtDecode} from 'jwt-decode';
+import { IoIosArrowDown } from 'react-icons/io';
+import { QUERY_KEYS } from '@/lib/react-query/QueryKeys';
+import { useAuthContext } from '@/context/AuthContext';
+import { FiEdit } from 'react-icons/fi';
+import { jwtDecode } from 'jwt-decode';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
 
   const role = user?.role;
   const name = user?.fullname;
@@ -62,9 +62,8 @@ const DropdownUser = () => {
         </span>
 
         <IoIosArrowDown
-          className={`hidden fill-current transition-transform duration-200 sm:block ${
-            dropdownOpen ? 'rotate-180' : ''
-          }`}
+          className={`hidden fill-current transition-transform duration-200 sm:block ${dropdownOpen ? 'rotate-180' : ''
+            }`}
           width={24}
           height={16}
         />
@@ -148,7 +147,15 @@ const DropdownUser = () => {
                 <span className="text-gray-600 dark:text-gray-300">
                   CRN: {crnNo}
                 </span>
+
+
               </div>
+              <Link
+                to="/Customer/profile"
+                className="inline-block px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-200"
+              >
+                Edit Profile/View Profile
+              </Link>
             </div>
           </div>
           <div className="flex">
