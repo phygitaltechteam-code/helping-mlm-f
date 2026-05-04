@@ -103,11 +103,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             path: '/customer/dashboard',
             icon: <PiSquaresFourLight size={18} />,
           },
-          {
-            label: 'Customer Profile',
-            path: '/customer/profile',
-            icon: <ProfileIcon size={18} />,
-          },
+          
           {
             label: 'My Tree',
             path: '/customer/generation-tree',
