@@ -23,81 +23,81 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const sidebarRoutes =
     role === 'ADMIN'
       ? [
-          {
-            label: 'Dashboard',
-            path: '/dashboard',
-            icon: <PiSquaresFourLight size={18} />,
-          },
-          {
-            label: 'My Team',
-            path: '/admin/customerlist',
-            icon: <BiListUl size={18} />,
-          },
-          {
-            label: 'Helping Tree',
-            path: '/admin/binarytree',
-            icon: <NetworkIcon size={18} />,
-          },
-          {
-            label: 'Generation Tree',
-            path: '/admin/network',
-            icon: <FaNetworkWired size={18} />,
-          },
-          // {
-          //   label: 'Fund Request',
-          //   path: '/admin/epinrequest',
-          //   icon: <MdApproval size={18} />,
-          // },
-          // {
-          //   label: 'Fund Transfer',
-          //   path: '/fundtransfer',
-          //   icon: <FaMoneyBillTransfer size={18} />,
-          // },
-          {
-            label: 'Share Link',
-            path: '/admin/sharelink',
-            icon: <PiShareLight size={18} />,
-          },
-          // {
-          //   label: 'Reports',
-          //   path: '/admin/roi',
-          //   icon: <PiShareLight size={18} />,
-          //   subRoutes: [
-          //     {
-          //       label: 'ROI Income',
-          //       path: '/admin/roi',
-          //     },
-          //   ],
-          // },
-          {
-            label: 'Payout',
-            path: '/admin/commisionreport',
-            icon: <BiRupee size={18} />,
-            subRoutes: [
-              {
-                label: 'Paid Commission',
-                path: '/admin/commisionreport',
-              },
-              {
-                label: 'Pending Commission',
-                path: '/admin/pendingcommisionreport',
-              },
-            ],
-          },
-          {
-            label: 'E-Pin',
-            icon: <PiSquaresFourLight size={18} />,
-            path: '/admin/Epin',
-            subRoutes: [
-              { label: 'Admin E-Pin', path: '/admin/Epin' },
-              { label: 'Customer E-Pin', path: '/admin/customerepin' },
-              { label: 'Recall E-pin', path: '/admin/recallepin' },
-              { label: 'Approve E-pin', path: '/admin/approvedepin' },
-            ],
-          },
-        ]
+        {
+          label: 'Dashboard',
+          path: '/dashboard',
+          icon: <PiSquaresFourLight size={18} />,
+        },
+        {
+          label: 'My Team',
+          path: '/admin/customerlist',
+          icon: <BiListUl size={18} />,
+        },
+        {
+          label: 'Helping Tree',
+          path: '/admin/binarytree',
+          icon: <NetworkIcon size={18} />,
+        },
+        {
+          label: 'Generation Tree',
+          path: '/admin/network',
+          icon: <FaNetworkWired size={18} />,
+        },
+        // {
+        //   label: 'Fund Request',
+        //   path: '/admin/epinrequest',
+        //   icon: <MdApproval size={18} />,
+        // },
+        // {
+        //   label: 'Fund Transfer',
+        //   path: '/fundtransfer',
+        //   icon: <FaMoneyBillTransfer size={18} />,
+        // },
+        {
+          label: 'Share Link',
+          path: '/admin/sharelink',
+          icon: <PiShareLight size={18} />,
+        },
+        // {
+        //   label: 'Reports',
+        //   path: '/admin/roi',
+        //   icon: <PiShareLight size={18} />,
+        //   subRoutes: [
+        //     {
+        //       label: 'ROI Income',
+        //       path: '/admin/roi',
+        //     },
+        //   ],
+        // },
+        {
+          label: 'Payout',
+          path: '/admin/commisionreport',
+          icon: <BiRupee size={18} />,
+          subRoutes: [
+            {
+              label: 'Paid Commission',
+              path: '/admin/commisionreport',
+            },
+            {
+              label: 'Pending Commission',
+              path: '/admin/pendingcommisionreport',
+            },
+          ],
+        },
+        {
+          label: 'E-Pin',
+          icon: <PiSquaresFourLight size={18} />,
+          path: '/admin/Epin',
+          subRoutes: [
+            { label: 'Admin E-Pin', path: '/admin/Epin' },
+            { label: 'Customer E-Pin', path: '/admin/customerepin' },
+            { label: 'Recall E-pin', path: '/admin/recallepin' },
+            { label: 'Approve E-pin', path: '/admin/approvedepin' },
+          ],
+        },
+      ]
       : role === 'CUSTOMER'
-      ? [
+        ? [
           {
             label: 'Dashboard',
             path: '/customer/dashboard',
@@ -135,48 +135,48 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             path: '/customer/reportc',
             icon: <ReportIcon size={18} />,
           },
-          {
-            label: 'Wallet',
-            path: '/customer/walletc',
-            icon: <PiSquaresFourLight size={18} />,
-            subRoutes: [
-              { label: 'Wallet History', path: '/customer/walletc' },
-              { label: 'Roi History', path: '/customer/roiHistory' },
-              { label: 'Wallet Address', path: '/customer/addwallet' },
-              { label: 'Wallet income', path: '/customer/walletincome' },
-            ],
-          },
-          {
-            label: 'Withdrawal',
-            path: '/customer/withdraw',
-            icon: <PiSquaresFourLight size={18} />,
-            subRoutes: [
-              { label: 'Withdrawal', path: '/customer/withdraw' },
-              { label: 'Withdrawal History', path: '/customer/withdrawhistory' },
-            ],
-          },
-          {
-            label: 'Fund Transfer',
-            path: '/customer/custmerfundtransfer',
-            icon: <PiSquaresFourLight size={18} />,
-            subRoutes: [
-              {
-                label: 'Fund Transfer',
-                path: '/customer/custmerfundtransfer',
-              },
-              {
-                label: 'Transfer History',
-                path: '/customer/fundTransferHistory',
-              },
-            ],
-          },
+          // {
+          //   label: 'Wallet',
+          //   path: '/customer/walletc',
+          //   icon: <PiSquaresFourLight size={18} />,
+          //   subRoutes: [
+          //     { label: 'Wallet History', path: '/customer/walletc' },
+          //     { label: 'Roi History', path: '/customer/roiHistory' },
+          //     { label: 'Wallet Address', path: '/customer/addwallet' },
+          //     { label: 'Wallet income', path: '/customer/walletincome' },
+          //   ],
+          // },
+          // {
+          //   label: 'Withdrawal',
+          //   path: '/customer/withdraw',
+          //   icon: <PiSquaresFourLight size={18} />,
+          //   subRoutes: [
+          //     { label: 'Withdrawal', path: '/customer/withdraw' },
+          //     { label: 'Withdrawal History', path: '/customer/withdrawhistory' },
+          //   ],
+          // },
+          // {
+          //   label: 'Fund Transfer',
+          //   path: '/customer/custmerfundtransfer',
+          //   icon: <PiSquaresFourLight size={18} />,
+          //   subRoutes: [
+          //     {
+          //       label: 'Fund Transfer',
+          //       path: '/customer/custmerfundtransfer',
+          //     },
+          //     {
+          //       label: 'Transfer History',
+          //       path: '/customer/fundTransferHistory',
+          //     },
+          //   ],
+          // },
           {
             label: 'E-Pin',
             path: '/customer/epinc',
             icon: <PiNavigationArrowFill size={18} />,
           },
         ]
-      : [];
+        : [];
 
   const location = useLocation();
   const { pathname } = location;
@@ -226,20 +226,23 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-[9999] flex h-screen w-64 flex-col bg-white shadow-xl duration-300 lg:static lg:translate-x-0 ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}
+      className={`absolute left-0 top-0 z-[9999] flex h-screen w-64 flex-col bg-white shadow-xl duration-300 lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-5.5 border-b">
+      <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="Logo" className="h-10" />
+          <img
+            src={logo}
+            alt="Logo"
+            className="h-12 sm:h-14 md:h-16 lg:h-20 xl:h-24 w-auto object-contain"
+          />
         </Link>
 
         <button
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="lg:hidden p-2"
+          className="lg:hidden p-2 text-lg"
         >
           <FaArrowLeftLong />
         </button>
@@ -264,11 +267,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-meta-4 ${
-                          (pathname === route.path ||
-                            pathname.includes(route.path!)) &&
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-meta-4 ${(pathname === route.path ||
+                          pathname.includes(route.path!)) &&
                           'bg-gray-100 dark:bg-meta-4'
-                        }`}
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           handleClick();
@@ -277,17 +279,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         {route.icon}
                         {route.label}
                         <IoIosArrowDown
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-                            open && 'rotate-180'
-                          }`}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && 'rotate-180'
+                            }`}
                         />
                       </Link>
 
                       {/* Dropdown Menu */}
                       <div
-                        className={`translate transform overflow-hidden ${
-                          !open && 'hidden'
-                        }`}
+                        className={`translate transform overflow-hidden ${!open && 'hidden'
+                          }`}
                       >
                         <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                           {route.subRoutes.map((sub, i) => (
@@ -295,9 +295,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               <Link
                                 to={sub.path}
                                 onClick={handleLinkClick}
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-black duration-300 ease-in-out hover:text-primary ${
-                                  pathname === sub.path && 'text-primary'
-                                }`}
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-black duration-300 ease-in-out hover:text-primary ${pathname === sub.path && 'text-primary'
+                                  }`}
                               >
                                 {sub.label}
                               </Link>
@@ -313,9 +312,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <Link
                     to={route.path}
                     onClick={handleLinkClick}
-                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-meta-4 ${
-                      pathname === route.path && 'bg-gray-100 dark:bg-meta-4'
-                    }`}
+                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-meta-4 ${pathname === route.path && 'bg-gray-100 dark:bg-meta-4'
+                      }`}
                   >
                     {route.icon}
                     {route.label}

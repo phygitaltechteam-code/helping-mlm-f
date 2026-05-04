@@ -171,7 +171,7 @@ const UpdateCustomerProfileU: React.FC = () => {
           state: FormValues.state || '',
           pinCode: FormValues.pinCode || '',
         },
-      });
+      });Sponsor
     }
   };
 
@@ -190,7 +190,7 @@ const UpdateCustomerProfileU: React.FC = () => {
             <GenericInputField
               name="sponsorId"
               label="Sponsor ID"
-              placeholder="Enter Sponsor ID"
+              placeholder="Enter  ID"
               disabled={isDataAvailable}
             />
           </div>

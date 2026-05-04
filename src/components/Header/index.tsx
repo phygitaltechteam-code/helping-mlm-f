@@ -6,7 +6,7 @@ import DarkModeSwitcher from './DarkModeSwitcher';
 import {FiMenu, FiX} from 'react-icons/fi';
 import {LuSearch} from 'react-icons/lu';
 import React from 'react';
-import Logo from '@/assets/images/logo/logo1.png';
+import Logo from '../../../public/logo.png';
 import DropdownNotification from './DropdownNotification';
 import {useAuthContext} from '@/context/AuthContext';
 
@@ -21,7 +21,6 @@ const Header = (props: {
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
           {/* <!-- Hamburger Toggle BTN --> */}
-
           <button
             aria-controls="sidebar"
             onClick={(e) => {
@@ -38,20 +37,17 @@ const Header = (props: {
               )}
             </span>
           </button>
-
           {/* <!-- Hamburger Toggle BTN --> */}
 
           <Link className="block flex-shrink-0 lg:hidden" to="/">
-            {/* <img src={Logo} alt="Logo" /> */}
+            <img src={Logo} alt="Logo" className="h-10 w-auto object-contain" />
           </Link>
         </div>
 
-        <div className="hidden sm:block">
-          <form action="https://formbold.com/s/unique_form_id" method="POST">
-            <div className="relative">
-              <button className="absolute left-0 top-1/2 -translate-y-1/2"></button>
-            </div>
-          </form>
+        
+
+        <div className="hidden sm:block flex-1 max-w-md mx-4">
+          {/* Optional Search or Space */}
         </div>
 
         <div className="flex items-center gap-3 2xsm:gap-7">

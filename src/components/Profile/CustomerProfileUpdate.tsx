@@ -19,6 +19,7 @@ import {
 import {useUpdateCustomer} from '@/lib/react-query/updateCustomer';
 import toast from 'react-hot-toast';
 import {InfoIcon, LockIcon} from 'lucide-react';
+import { FaUserCircle, FaUser, FaEnvelope, FaPhone, FaIdCard } from 'react-icons/fa';
 
 type formValues = z.infer<typeof updateProfileSchema>;
 const CustomerUpdateProfile: React.FC = () => {
@@ -139,11 +140,50 @@ const CustomerUpdateProfile: React.FC = () => {
 
   return (
     <div className="space-y-4 bg-white p-6 dark:bg-black">
+      {/* Profile Details Card */}
+      <div className="bg-white  shadow-sm p-6 mb-8 ">
+        <div className="flex justify-between items-center mb-6 pb-3">
+          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+            <FaUserCircle className="text-blue-600" />
+            User Profile
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
+          <div className="space-y-4">
+            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
+              <span className="font-medium text-gray-600 flex items-center gap-2">
+                <FaUser className="text-blue-500" /> Full Name
+              </span>
+              <span className="font-semibold">{user?.fullname || profileData?.fullname || '—'}</span>
+            </div>
+            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
+              <span className="font-medium text-gray-600 flex items-center gap-2">
+                <FaEnvelope className="text-blue-500" /> Email
+              </span>
+              <span className="font-semibold break-all">{user?.email || profileData?.email || '—'}</span>
+            </div>
+            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
+              <span className="font-medium text-gray-600 flex items-center gap-2">
+                <FaPhone className="text-blue-500" /> Phone Number
+              </span>
+              <span className="font-semibold">{profileData?.phoneNumber || '—'}</span>
+            </div>
+            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
+              <span className="font-medium text-gray-600 flex items-center gap-2">
+                <FaIdCard className="text-blue-500" /> CRN / Sponsor ID
+              </span>
+              <span className="font-semibold">{profileData?.sponcerId || user?.crnNo || '—'}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <h1 className="mb-4 text-lg font-semibold">Update Profile </h1>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit, error)}>
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-6">
+          <div className="grid grid-cols-12 gap-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="sponsorId"
                 label="Sponsor ID"
@@ -151,7 +191,7 @@ const CustomerUpdateProfile: React.FC = () => {
                 disabled
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="crn"
                 label="Your CRN No"
@@ -164,14 +204,14 @@ const CustomerUpdateProfile: React.FC = () => {
             <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">
               Personal Info
             </h2>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="fullname"
                 label="Full Name"
                 placeholder="Enter your full name"
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericDropdown
                 label="Gender"
                 name="gender"
@@ -182,7 +222,7 @@ const CustomerUpdateProfile: React.FC = () => {
                 ]}
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 type="date"
                 name="dob"
@@ -195,14 +235,14 @@ const CustomerUpdateProfile: React.FC = () => {
             <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">
               Contact Info
             </h2>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="phoneNumber"
                 label="Phone Number"
                 placeholder="Enter your mobile number"
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="email"
                 label="Email"
@@ -214,42 +254,42 @@ const CustomerUpdateProfile: React.FC = () => {
             {/* <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">
               Address Details
             </h2>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="flatNo"
                 label="Flat Number"
                 placeholder="e.g. B-203"
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="landMark"
                 label="Landmark"
                 placeholder="e.g. Near City Mall"
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="areaName"
                 label="Area Name"
                 placeholder="e.g. Shivaji Nagar"
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="city"
                 label="City"
                 placeholder="Enter your city"
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="state"
                 label="State"
                 placeholder="Enter your state"
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="pinCode"
                 label="PIN Code"
@@ -261,14 +301,14 @@ const CustomerUpdateProfile: React.FC = () => {
             {/* <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">
               Identity Documents
             </h2>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="aadharNo"
                 label="Aadhar Number"
                 placeholder="Enter your 12-digit Aadhar number"
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="panNo"
                 label="PAN Number"
@@ -280,7 +320,7 @@ const CustomerUpdateProfile: React.FC = () => {
             {/* <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">
               Bank Details
             </h2>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="bankName"
                 label="Bank Name"
@@ -301,14 +341,14 @@ const CustomerUpdateProfile: React.FC = () => {
                 </div>
               )}
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="bankIFSC"
                 label="IFSC Code"
                 placeholder="e.g. HDFC0000123"
               />
             </div>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="bankBranch"
                 label="Branch Name"
@@ -320,7 +360,7 @@ const CustomerUpdateProfile: React.FC = () => {
             <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">
               Login Info
             </h2>
-            <div className="col-span-6">
+            <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 type="password"
                 name="password"
@@ -330,8 +370,8 @@ const CustomerUpdateProfile: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex justify-end py-6">
-            <GenericButton type="submit">Save</GenericButton>
+          <div className="flex justify-end py-8 mt-4 border-t pt-6">
+            <GenericButton type="submit" className="w-full md:w-auto px-8 py-3 text-base font-semibold shadow-md hover:shadow-lg rounded-lg">Save Changes</GenericButton>
           </div>
         </form>
       </FormProvider>

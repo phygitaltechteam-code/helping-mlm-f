@@ -1,7 +1,7 @@
 import { useAuthContext } from '@/context/AuthContext';
 import { useFetchCustomerHome} from '@/lib/react-query/Customer/home';
 import { assignEpin } from '@/lib/api/updateCustomer';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   FaBriefcase, 
   FaUsers, 
@@ -24,6 +24,9 @@ import { GiTakeMyMoney } from 'react-icons/gi';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { boolean } from 'zod';
 import { useGetProduct } from '@/lib/react-query/Admin/Product/products';
+import { useCheckEpin } from '@/lib/react-query/Admin/Epin/epin';
+import Logo from '../../public/logo.png';
+import toast from 'react-hot-toast';
 
 const CustomerDashboard = () => {
   const { user, setUser } = useAuthContext();
@@ -46,14 +49,64 @@ console.log('product', product?.map(element => {
 
   console.log('dashboardData', dashboardData);
 
-  const [copied, setCopied] = useState<'left' | 'right' | null>(null);
+  const [copied, setCopied] = useState<string | null>(null);
   const [showInactivePopup, setShowInactivePopup] = useState(true);
 
   // Activation Form State
   const [epinInput, setEpinInput] = useState('');
+  const [epinPrice, setEpinPrice] = useState<number | null>(null);
+  const [isCheckingEpin, setIsCheckingEpin] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState('');
   const [isActivating, setIsActivating] = useState(false);
   const [activationError, setActivationError] = useState('');
+
+  const { mutate: checkEpinMutate } = useCheckEpin();
+
+  useEffect(() => {
+    if (!epinInput.trim()) {
+      setEpinPrice(null);
+      setActivationError('');
+      return;
+    }
+
+    const verifyEpin = () => {
+      setIsCheckingEpin(true);
+      checkEpinMutate(epinInput, {
+        onSuccess: (data: any) => {
+          // Some APIs return the price directly as a number, others in an object
+          const price = typeof data === 'object' ? data.price : data;
+          if (price) {
+            setEpinPrice(Number(price));
+            setActivationError('');
+          } else {
+            setEpinPrice(null);
+            setActivationError('Invalid E-pin or value not found.');
+          }
+          setIsCheckingEpin(false);
+        },
+        onError: (err: any) => {
+          setEpinPrice(null);
+          setActivationError(err?.response?.data?.message || 'Invalid E-pin');
+          setIsCheckingEpin(false);
+        }
+      });
+    };
+
+    const timeoutId = setTimeout(() => {
+      if (epinInput.trim().length >= 4) {
+        verifyEpin();
+      }
+    }, 600);
+
+    return () => clearTimeout(timeoutId);
+  }, [epinInput, checkEpinMutate]);
+
+  const filteredProducts = product?.filter((prod: any) => {
+    if (epinPrice === null) return false;
+    // Prioritize discountedPrice for filtering
+    const prodPrice = Number(prod.discountedPrice || prod.price || 0);
+    return prodPrice <= epinPrice;
+  });
 
   const handleActivateAccount = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,12 +141,11 @@ console.log('product', product?.map(element => {
   const crnNo = user?.crnNo || 'CRN0000000';
 
   const baseUrl = import.meta.env.VITE_LIVE_URL || 'https://f5z16x7l-5173.inc1.devtunnels.ms';
-  const leftRegistrationLink = `${baseUrl}/register/${fullname}/${crnNo}/LEFT`;
-  const rightRegistrationLink = `${baseUrl}/register/${fullname}/${crnNo}/RIGHT`;
-   const copyLink = (type: 'left' | 'right') => {
-    const link = type === 'left' ? leftRegistrationLink : rightRegistrationLink;
-    navigator.clipboard.writeText(link);
-    setCopied(type);
+  const RegistrationLink = `${baseUrl}/register/${fullname}/${crnNo}`;
+  
+   const copyLink = (key:string) => {
+    navigator.clipboard.writeText(RegistrationLink);
+    setCopied(key);
     setTimeout(() => setCopied(null), 1500);
   };
 
@@ -147,7 +199,7 @@ console.log('product', product?.map(element => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 md:p-6 font-sans relative">
+    <div className="min-h-screen bg-gray-100 md:p-6 font-sans relative">
       {/* Inactive Account Popup */}
       {!isActive && showInactivePopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
@@ -163,31 +215,51 @@ console.log('product', product?.map(element => {
             <form onSubmit={handleActivateAccount} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">E-Pin Number</label>
-                <input
-                  type="text"
-                  value={epinInput}
-                  onChange={(e) => setEpinInput(e.target.value)}
-                  placeholder="Enter E-pin"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                  disabled={isActivating}
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={epinInput}
+                    onChange={(e) => setEpinInput(e.target.value)}
+                    placeholder="Enter E-pin"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    disabled={isActivating}
+                  />
+                  {isCheckingEpin && (
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                      <HiOutlineRefresh className="animate-spin text-blue-500" />
+                    </div>
+                  )}
+                </div>
+                {epinPrice !== null && (
+                  <p className="text-xs text-green-600 mt-1 font-medium flex items-center gap-1">
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    E-pin Value: ${epinPrice}
+                  </p>
+                )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Select Product / Package</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Select Product / Package {epinPrice !== null && `(Max: $${epinPrice})`}
+                </label>
                 <select
                   value={selectedProductId}
                   onChange={(e) => setSelectedProductId(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
-                  disabled={isActivating || isProductLoading}
+                  disabled={isActivating || isProductLoading || epinPrice === null}
                 >
-                  <option value="">-- Select Product --</option>
-                  {product?.map((prod: any) => (
+                  <option value="">
+                    {epinPrice === null ? '-- Verify E-pin first --' : '-- Select Product --'}
+                  </option>
+                  {filteredProducts?.map((prod: any) => (
                     <option key={prod._id || prod.id} value={prod._id || prod.id}>
-                      {prod.name} - ${prod.price}
+                      {prod.name} - ${prod.discountedPrice || prod.price}
                     </option>
                   ))}
                 </select>
+                {epinPrice !== null && filteredProducts?.length === 0 && (
+                  <p className="text-xs text-red-500 mt-1">No products found within this E-pin's price range.</p>
+                )}
               </div>
 
               {activationError && (
@@ -222,58 +294,62 @@ console.log('product', product?.map(element => {
         </div>
       )}
 
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Dashboard</h1>
-      <p className="text-gray-600 mb-6">Welcome To ARC International</p>
+      <div className="flex items-center gap-4 mb-6">
+     
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Dashboard</h1>
+          <p className="text-gray-600 font-medium">Welcome To ARC International</p>
+        </div>
+      </div>
 
-      {/* Referral Links */}
-   <div className="space-y-4 mb-8">
-{[
-  { label: 'Left', link: leftRegistrationLink, key: 'left' },
-  { label: 'Right', link: rightRegistrationLink, key: 'right' },
-].map(({ label, link, key }) => (
-  <div
-    key={key}
-    className="bg-gradient-to-r from-blue-500 to-indigo-800 text-white px-3 py-2 rounded-md shadow flex items-center justify-between gap-2 text-xs"
-  >
-    {/* Link Section */}
-    <div className="flex items-center gap-2 truncate">
-      <span className="font-semibold">{label}:</span>
-      <span className="opacity-90 truncate max-w-[180px] sm:max-w-[260px]">
-        {link}
-      </span>
-    </div>
-
-    {/* Button */}
-    <button
-      onClick={() => copyLink(key)}
-      className="bg-green-500 hover:bg-green-600 px-2 py-1 rounded text-white flex items-center gap-1 transition text-xs"
-    >
-      {copied === key ? (
-        <>
-          <FaCheckCircle className="text-xs" /> Copied
-        </>
-      ) : (
-        <>
-          <FaCopy className="text-xs" /> Copy
-        </>
-      )}
-    </button>
-  </div>
-))}
-</div>
+      {/* Referral Link */}
+      <div className="mb-8">
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-xl shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm">
+              <FaNetworkWired className="text-2xl" />
+            </div>
+            <div>
+              <p className="text-xs font-bold opacity-80 uppercase tracking-widest">Your Registration Link</p>
+              <p className="font-mono text-sm break-all opacity-95">
+                {RegistrationLink}
+              </p>
+            </div>
+          </div>
+          
+          <button
+            onClick={() => copyLink('registration')}
+            className={`${
+              copied === 'registration' ? 'bg-green-500' : 'bg-white text-indigo-700 hover:bg-blue-50'
+            } px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap`}
+          >
+            {copied === 'registration' ? (
+              <>
+                <FaCheckCircle /> Copied!
+              </>
+            ) : (
+              <>
+                <FaCopy /> Copy Link
+              </>
+            )}
+          </button>
+        </div>
+      </div>
 
       {/* First Row - Team & Package Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
         {[
-          { title: 'My Package', value: formatCurrency(stats.myPackage), gradient: 'from-cyan-400 to-teal-500', icon: <FaBriefcase /> ,dollor:'$' },
-          { title: 'Direct Team', value: formatCount(stats.directTeam), gradient: 'from-purple-500 to-pink-600', icon: <FaUsers /> },
-          { 
+            { 
             title: 'Bonus Income', 
             value: 1000, 
             gradient: 'from-orange-400 to-red-500', 
             icon: <FaShoppingBag />,
             remaining: Math.max(0, 5 - (dashboardData?.directTeam ?? 0))
           },
+                    { title: 'Total Team', value: formatCount(stats.directTeam), gradient: 'from-purple-500 to-pink-600', icon: <FaUsers /> },
+
+         // { title: 'My Package', value: formatCurrency(stats.myPackage), gradient: 'from-cyan-400 to-teal-500', icon: <FaBriefcase /> ,dollor:'$' },
+        
         ].filter(card => card.title !== 'Bonus Income' || (card.remaining ?? 0) > 0).map((card, i) => (
           <div
             key={i}
@@ -303,11 +379,15 @@ console.log('product', product?.map(element => {
       {/* Second Row - Income & Wallet Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-10">
         {[
+           { title: 'Active Pin', value: formatCount(stats.activePin), gradient: 'from-green-400 to-emerald-500', icon: <FaKey /> },
+          { title: 'Inactive Pin', value: formatCount(stats.inactivePin), gradient: 'from-red-400 to-rose-500', icon: <FaKey /> },
+   { title: 'Genarational Income', value: formatCurrency(stats.binaryIncome), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
+          { title: 'Helping Income', value: formatCurrency(stats.binaryIncome), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling /> ,dollor:'$' },
+          { title: 'Rent Helping Income', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
+
           { title: 'ROI Income', value: formatCurrency(stats.roiIncome), gradient: 'from-amber-400 to-orange-600', icon: <GiTakeMyMoney /> ,dollor:'$' },
-          { title: 'Binary Income', value: formatCurrency(stats.binaryIncome), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling /> ,dollor:'$' },
-          { title: 'Total Earning', value: formatCurrency(stats.totalEarning), gradient: 'from-green-400 via-teal-500 to-cyan-600', icon: <FaMoneyBillWave /> ,dollor:'$' },
-          { title: 'Total Withdrawal', value: formatCurrency(stats.totalWithdrawal), gradient: 'from-purple-500 to-pink-600', icon: <FaMoneyBillWave /> ,dollor:'$' },
-          { title: 'Wallet Balance', value: formatCurrency(stats.walletBalance), gradient: 'from-pink-500 to-purple-700', icon: <FaWallet /> ,dollor:'$' },
+          // { title: 'Total Withdrawal', value: formatCurrency(stats.totalWithdrawal), gradient: 'from-purple-500 to-pink-600', icon: <FaMoneyBillWave /> ,dollor:'$' },
+         // { title: 'Wallet Balance', value: formatCurrency(stats.walletBalance), gradient: 'from-pink-500 to-purple-700', icon: <FaWallet /> ,dollor:'$' },
         ].map((card, i) => (
           <div
             key={i}
@@ -327,11 +407,12 @@ console.log('product', product?.map(element => {
       {/* Third Row - New Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-10">
         {[
-          { title: 'Customer Team', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
-          { title: 'Active Pin', value: formatCount(stats.activePin), gradient: 'from-green-400 to-emerald-500', icon: <FaKey /> },
-          { title: 'Inactive Pin', value: formatCount(stats.inactivePin), gradient: 'from-red-400 to-rose-500', icon: <FaKey /> },
-          { title: 'Generation Comm.', value: formatCurrency(stats.generationCommission), gradient: 'from-yellow-400 to-amber-500', icon: <FaMoneyBillWave />, dollor:'$' },
-          { title: 'Autopull Comm.', value: formatCurrency(stats.autopullCommission), gradient: 'from-indigo-400 to-purple-500', icon: <FaSeedling />, dollor:'$' },
+                    { title: 'Remaining Member for helping Income', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
+                    { title: 'Total Earning', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
+                    { title: 'Total Sales', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
+
+          // { title: 'Customer Team', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
+         
         ].map((card, i) => (
           <div
             key={i}
@@ -348,51 +429,7 @@ console.log('product', product?.map(element => {
         ))}
       </div>
 
-      {/* Profile Section – ideally also use real data from context / API */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main User Profile Card */}
-        <div className="bg-white rounded-xl shadow-lg p-6 lg:col-span-2">
-          <div className="flex justify-between items-center mb-6 border-b pb-3">
-            <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-              <FaUserCircle className="text-blue-600" />
-              User Profile
-            </h2>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
-            <div className="space-y-4">
-              <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-                <span className="font-medium text-gray-600 flex items-center gap-2">
-                  <FaUser className="text-blue-500" /> Full Name
-                </span>
-                <span className="font-semibold">{user?.fullname || dashboardData?.user?.fullname || '—'}</span>
-              </div>
-              <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-                <span className="font-medium text-gray-600 flex items-center gap-2">
-                  <FaEnvelope className="text-blue-500" /> Email
-                </span>
-                <span className="font-semibold break-all">{user?.email || dashboardData?.user?.email || '—'}</span>
-              </div>
-              <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-                <span className="font-medium text-gray-600 flex items-center gap-2">
-                  <FaPhone className="text-blue-500" /> Phone Number
-                </span>
-                <span className="font-semibold">{dashboardData?.user?.phoneNumber || '—'}</span>
-              </div>
-              <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-                <span className="font-medium text-gray-600 flex items-center gap-2">
-                  <FaIdCard className="text-blue-500" /> CRN / Sponsor ID
-                </span>
-                <span className="font-semibold">{dashboardData?.user?.sponcerId || user?.crnNo || crnNo || '—'}</span>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {/* You can add more profile fields here if needed */}
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

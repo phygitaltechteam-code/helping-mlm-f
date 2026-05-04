@@ -43,7 +43,13 @@ export const useCreateEPin = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: [ADMIN_EPIN_QUERY_KEYS.GET_ALL_EPINS], // Replace with the actual query key
+        queryKey: [ADMIN_EPIN_QUERY_KEYS.GET_ALL_EPINS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [ADMIN_EPIN_QUERY_KEYS.CUSTOMERS_EPINS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [ADMIN_EPIN_QUERY_KEYS.GET_EPIN_HISTORY],
       });
     },
   });
@@ -63,15 +69,19 @@ export const useCreateCustomerEPin = () => {
       createCustomerEPin(Count, price, crnNo),
     onSuccess: () => {
       toast.success('Customer E-Pin created successfully!');
+      queryClient.invalidateQueries({
+        queryKey: [ADMIN_EPIN_QUERY_KEYS.GET_ALL_EPINS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [ADMIN_EPIN_QUERY_KEYS.CUSTOMERS_EPINS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [ADMIN_EPIN_QUERY_KEYS.GET_EPIN_HISTORY],
+      });
     },
     onError: (error) => {
       console.error('Failed to create E-Pin:', error);
       toast.error(error.response?.data?.message || 'Failed to create E-Pin');
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: [ADMIN_EPIN_QUERY_KEYS.GET_ALL_EPINS],
-      });
     },
   });
 };

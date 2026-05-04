@@ -34,7 +34,7 @@ const EpinForm: React.FC = () => {
   const { handleSubmit, watch, setValue } = methods;
   const crnNo = watch('crnNo'); // Watch the CRN field for changes
 
-  const { mutate: createEPin, isPending } = useCreateCustomerEPin();
+  const { mutateAsync: createEPin, isPending } = useCreateCustomerEPin();
 
   // Effect to set customer name in form when it changes
   useEffect(() => {
@@ -85,14 +85,18 @@ const EpinForm: React.FC = () => {
   }, [crnNo]);
 
   const onSubmit = async (data: FormValues) => {
-    await createEPin({
-      Count: data.Count,
-      price: data.price,
-      crnNo: data.crnNo,
-    });
-    methods.reset();
-    setCustomerName('');
-    setCustomerData(null);
+    try {
+      await createEPin({
+        Count: data.Count,
+        price: data.price,
+        crnNo: data.crnNo,
+      });
+      methods.reset();
+      setCustomerName('');
+      setCustomerData(null);
+    } catch (error) {
+      // Error handled by mutation toast
+    }
   };
 
   return (
@@ -163,7 +167,6 @@ const EpinForm: React.FC = () => {
                     { label: '2000', value: '2000' },
                     { label: '1500', value: '1500' },
                     { label: '3500', value: '3500' },
-                    { label: '1500', value: '1500' }, // duplicate
                   ]}
                   onChange={field.onChange}
                 />
@@ -174,7 +177,7 @@ const EpinForm: React.FC = () => {
           <div className="col-span-12 md:col-span-6">
             {/* E-Pin Count */}
             <GenericInputField
-              name="transactionHash"
+              name="Count"
               label="E-Pin Count"
               placeholder="Enter E-Pin Count"
             />

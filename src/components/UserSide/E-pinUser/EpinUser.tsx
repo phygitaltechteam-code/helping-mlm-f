@@ -35,7 +35,22 @@ const EpinUser: React.FC = () => {
     value: product._id || product.id,
     label: product.name,
   })) || [];
+  const watchProduct = methods.watch('product');
   const watchFiles = methods.watch('imageFile');
+
+  // Automatically set paidAmount when product changes
+  useEffect(() => {
+    if (watchProduct && products) {
+      const selectedProduct = products.find(
+        (p: any) => (p._id || p.id) === watchProduct
+      );
+      if (selectedProduct) {
+        // Use discountedPrice for the paidAmount
+        const price = selectedProduct.discountedPrice || selectedProduct.price || 0;
+        methods.setValue('paidAmount', price.toString());
+      }
+    }
+  }, [watchProduct, products, methods]);
 
   const {
     mutate: createEpinRequest,
@@ -84,7 +99,7 @@ const EpinUser: React.FC = () => {
           className="w-full max-w-2xl space-y-8 rounded-2xl bg-white p-8 shadow-lg dark:bg-black"
         >
           <h1 className="text-center text-2xl font-semibold text-gray-800 dark:text-white">
-            Fund Request
+            E-pin Request
           </h1>
 
           {/* Amount & Transaction Hash - Stacked Full Width */}

@@ -4,7 +4,6 @@ import {
   getNewnetwork,
   getNewnetworkCustomer,
   getbinarynetwork,
-  getBinaryNetworkById,
 } from '../api/network';
 import {NETWORK_QUERY_KEYS, NEW_NETWORK_QUERY_KEYS} from './QueryKeys';
 

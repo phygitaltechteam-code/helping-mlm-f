@@ -43,6 +43,7 @@ import { Route as AppCustomerCustmerfundtransferRouteImport } from './routes/_ap
 import { Route as AppAdminWlcmletterRouteImport } from './routes/_app/admin/wlcmletter'
 import { Route as AppAdminRegistrationlandingRouteImport } from './routes/_app/admin/registrationlanding'
 import { Route as AppAdminInvoiceRouteImport } from './routes/_app/admin/invoice'
+import { Route as RegistrationRegisterNameCrnnoRouteImport } from './routes/_registration/register.$name.$crnno'
 import { Route as AppCustomerWalletWithdrawhistoryRouteImport } from './routes/_app/customer/_wallet/withdrawhistory'
 import { Route as AppCustomerWalletWithdrawRouteImport } from './routes/_app/customer/_wallet/withdraw'
 import { Route as AppCustomerWalletWalletincomeRouteImport } from './routes/_app/customer/_wallet/walletincome'
@@ -308,6 +309,12 @@ const AppAdminInvoiceRoute = AppAdminInvoiceRouteImport.update({
   path: '/admin/invoice',
   getParentRoute: () => AppRoute,
 } as any)
+const RegistrationRegisterNameCrnnoRoute =
+  RegistrationRegisterNameCrnnoRouteImport.update({
+    id: '/_registration/register/$name/$crnno',
+    path: '/register/$name/$crnno',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AppCustomerWalletWithdrawhistoryRoute =
   AppCustomerWalletWithdrawhistoryRouteImport.update({
     id: '/customer/_wallet/withdrawhistory',
@@ -719,9 +726,9 @@ const AppAdminEditEmailEditemailRoute =
   } as any)
 const RegistrationRegisterNameCrnnoIdRoute =
   RegistrationRegisterNameCrnnoIdRouteImport.update({
-    id: '/_registration/register/$name/$crnno/$id',
-    path: '/register/$name/$crnno/$id',
-    getParentRoute: () => rootRouteImport,
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => RegistrationRegisterNameCrnnoRoute,
   } as any)
 const AppAdminUpdatefeaturesRetirementfundRetirementRoute =
   AppAdminUpdatefeaturesRetirementfundRetirementRouteImport.update({
@@ -863,6 +870,7 @@ export interface FileRoutesByFullPath {
   '/customer/walletincome': typeof AppCustomerWalletWalletincomeRoute
   '/customer/withdraw': typeof AppCustomerWalletWithdrawRoute
   '/customer/withdrawhistory': typeof AppCustomerWalletWithdrawhistoryRoute
+  '/register/$name/$crnno': typeof RegistrationRegisterNameCrnnoRouteWithChildren
   '/admin/UpdateCustomer/$id': typeof AppAdminEditUpdateCustomerIdRoute
   '/admin/powerleg/$id': typeof AppAdminPowerlegPowerlegIdRoute
   '/admin/awardreward': typeof AppAdminUpdatefeaturesAwardrewardAwardrewardRoute
@@ -974,6 +982,7 @@ export interface FileRoutesByTo {
   '/customer/walletincome': typeof AppCustomerWalletWalletincomeRoute
   '/customer/withdraw': typeof AppCustomerWalletWithdrawRoute
   '/customer/withdrawhistory': typeof AppCustomerWalletWithdrawhistoryRoute
+  '/register/$name/$crnno': typeof RegistrationRegisterNameCrnnoRouteWithChildren
   '/admin/UpdateCustomer/$id': typeof AppAdminEditUpdateCustomerIdRoute
   '/admin/powerleg/$id': typeof AppAdminPowerlegPowerlegIdRoute
   '/admin/awardreward': typeof AppAdminUpdatefeaturesAwardrewardAwardrewardRoute
@@ -1089,6 +1098,7 @@ export interface FileRoutesById {
   '/_app/customer/_wallet/walletincome': typeof AppCustomerWalletWalletincomeRoute
   '/_app/customer/_wallet/withdraw': typeof AppCustomerWalletWithdrawRoute
   '/_app/customer/_wallet/withdrawhistory': typeof AppCustomerWalletWithdrawhistoryRoute
+  '/_registration/register/$name/$crnno': typeof RegistrationRegisterNameCrnnoRouteWithChildren
   '/_app/admin/_edit/UpdateCustomer/$id': typeof AppAdminEditUpdateCustomerIdRoute
   '/_app/admin/_powerleg/powerleg/$id': typeof AppAdminPowerlegPowerlegIdRoute
   '/_app/admin/_updatefeatures/_awardreward/awardreward': typeof AppAdminUpdatefeaturesAwardrewardAwardrewardRoute
@@ -1202,6 +1212,7 @@ export interface FileRouteTypes {
     | '/customer/walletincome'
     | '/customer/withdraw'
     | '/customer/withdrawhistory'
+    | '/register/$name/$crnno'
     | '/admin/UpdateCustomer/$id'
     | '/admin/powerleg/$id'
     | '/admin/awardreward'
@@ -1313,6 +1324,7 @@ export interface FileRouteTypes {
     | '/customer/walletincome'
     | '/customer/withdraw'
     | '/customer/withdrawhistory'
+    | '/register/$name/$crnno'
     | '/admin/UpdateCustomer/$id'
     | '/admin/powerleg/$id'
     | '/admin/awardreward'
@@ -1427,6 +1439,7 @@ export interface FileRouteTypes {
     | '/_app/customer/_wallet/walletincome'
     | '/_app/customer/_wallet/withdraw'
     | '/_app/customer/_wallet/withdrawhistory'
+    | '/_registration/register/$name/$crnno'
     | '/_app/admin/_edit/UpdateCustomer/$id'
     | '/_app/admin/_powerleg/powerleg/$id'
     | '/_app/admin/_updatefeatures/_awardreward/awardreward'
@@ -1441,7 +1454,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   LandingRoute: typeof LandingRouteWithChildren
   RegistrationRegistrationRoute: typeof RegistrationRegistrationRoute
-  RegistrationRegisterNameCrnnoIdRoute: typeof RegistrationRegisterNameCrnnoIdRoute
+  RegistrationRegisterNameCrnnoRoute: typeof RegistrationRegisterNameCrnnoRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -1690,6 +1703,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/invoice'
       preLoaderRoute: typeof AppAdminInvoiceRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/_registration/register/$name/$crnno': {
+      id: '/_registration/register/$name/$crnno'
+      path: '/register/$name/$crnno'
+      fullPath: '/register/$name/$crnno'
+      preLoaderRoute: typeof RegistrationRegisterNameCrnnoRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/customer/_wallet/withdrawhistory': {
       id: '/_app/customer/_wallet/withdrawhistory'
@@ -2183,10 +2203,10 @@ declare module '@tanstack/react-router' {
     }
     '/_registration/register/$name/$crnno/$id': {
       id: '/_registration/register/$name/$crnno/$id'
-      path: '/register/$name/$crnno/$id'
+      path: '/$id'
       fullPath: '/register/$name/$crnno/$id'
       preLoaderRoute: typeof RegistrationRegisterNameCrnnoIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof RegistrationRegisterNameCrnnoRoute
     }
     '/_app/admin/_updatefeatures/_retirementfund/retirement': {
       id: '/_app/admin/_updatefeatures/_retirementfund/retirement'
@@ -2497,12 +2517,27 @@ const LandingRouteChildren: LandingRouteChildren = {
 const LandingRouteWithChildren =
   LandingRoute._addFileChildren(LandingRouteChildren)
 
+interface RegistrationRegisterNameCrnnoRouteChildren {
+  RegistrationRegisterNameCrnnoIdRoute: typeof RegistrationRegisterNameCrnnoIdRoute
+}
+
+const RegistrationRegisterNameCrnnoRouteChildren: RegistrationRegisterNameCrnnoRouteChildren =
+  {
+    RegistrationRegisterNameCrnnoIdRoute: RegistrationRegisterNameCrnnoIdRoute,
+  }
+
+const RegistrationRegisterNameCrnnoRouteWithChildren =
+  RegistrationRegisterNameCrnnoRoute._addFileChildren(
+    RegistrationRegisterNameCrnnoRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
   LandingRoute: LandingRouteWithChildren,
   RegistrationRegistrationRoute: RegistrationRegistrationRoute,
-  RegistrationRegisterNameCrnnoIdRoute: RegistrationRegisterNameCrnnoIdRoute,
+  RegistrationRegisterNameCrnnoRoute:
+    RegistrationRegisterNameCrnnoRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
