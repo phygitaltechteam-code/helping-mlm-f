@@ -45,13 +45,18 @@ const Network = () => {
     return <div className="dottedBackground mx-8">Error loading network.</div>;
 
   return (
-    <>
-      {/* Tree Section */}
-      {isSuccess && (
-        <div className="dottedBackground mx-8">
-          {/* Top padding for distance */}
+  <>
+    {isSuccess && (
+      <div>
+        {/* Heading */}
+        <h1 className="text-2xl font-semibold mb-4">
+          Generation Tree
+        </h1>
+
+        {/* White Box */}
+        <div className="dottedBackground">
+          {/* Top padding */}
           <div className="pt-6 px-4">
-            {/* Search Bar - inside the white box */}
             <div className="mb-6 mt-2">
               <input
                 type="text"
@@ -62,15 +67,16 @@ const Network = () => {
               />
             </div>
           </div>
-          
-          {/* Tree Content with spacing */}
+
+          {/* Tree Content */}
           <div className="pb-6 px-4">
             <TreeNode network={filteredTree || data} />
           </div>
         </div>
-      )}
-    </>
-  );
+      </div>
+    )}
+  </>
+);
 };
 
 export default Network;

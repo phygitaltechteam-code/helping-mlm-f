@@ -1,19 +1,16 @@
-/*eslint-disable */
-import React, {useState} from 'react';
-import {user, userbw, golden, userRed} from '../../assets/images/user';
-import {FiPlus} from 'react-icons/fi';
-import {useNavigate} from '@tanstack/react-router';
+import React, { useState } from 'react';
+import { user, userbw, golden, userRed } from '../../assets/images/user';
+import { FiPlus } from 'react-icons/fi';
+import { useNavigate } from '@tanstack/react-router';
 
 const textLayout = {
   vertical: {
-    title: {textAnchor: 'start', x: 40},
-    attributes: {},
-    attribute: {x: 40, dy: '1.2em'},
+    title: { textAnchor: 'start', x: 40 },
+    attribute: { x: 40, dy: '1.2em' },
   },
   horizontal: {
-    title: {textAnchor: 'start', y: 40},
-    attributes: {x: 0, y: 40},
-    attribute: {x: 0, dy: '1.2em'},
+    title: { textAnchor: 'start', y: 40 },
+    attribute: { x: 0, dy: '1.2em' },
   },
 };
 
@@ -21,28 +18,40 @@ const PureSvgNodeElement = ({
   nodeDatum,
   orientation,
   toggleNode,
-  onNodeClick,
   matchedNode,
 }) => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
 
-  const filteredAttributes = Object.entries(nodeDatum.attributes || {})
-    .filter(([key]) => key !== 'IsGolden')
-    .map(([key, value]) => {
-      if (key === 'IsActive') {
-        return ['__status', value ? 'Active' : 'Inactive'];
-      }
-      return [key, value];
-    });
+  const attributes = nodeDatum.attributes || {};
 
-  const handleMouseEnter = () => {
-    setShowPopup(true);
-  };
-
-  const handleMouseLeave = () => {
-    setShowPopup(false);
-  };
+  // ✅ CLEAN CARD DATA ONLY
+  const filteredAttributes = [
+    {
+      key: 'CRN',
+      value: attributes.CRN || 'N/A',
+    },
+    {
+      key: 'Name',
+      value: attributes.FirstName || attributes.Name || nodeDatum.name || 'N/A',
+    },
+    {
+      key: 'JoiningDate',
+      value: attributes.JoiningDate || 'N/A',
+    },
+    {
+      key: 'DirectSponsorId',
+      value: attributes.DirectSponsorId || 'N/A',
+    },
+    {
+      key: 'TeamCount',
+      value: attributes.TeamCount ?? 0,
+    },
+    {
+      key: '__status',
+      value: attributes.IsActive ? 'Active' : 'Inactive',
+    },
+  ];
 
   if (nodeDatum._invisible) {
     return (
@@ -81,9 +90,9 @@ const PureSvgNodeElement = ({
     );
   }
 
-  const imageSource = !nodeDatum.attributes.IsActive
+  const imageSource = !attributes.IsActive
     ? userRed
-    : nodeDatum.attributes.IsGolden
+    : attributes.IsGolden
       ? golden
       : nodeDatum.children?.length
         ? user
@@ -92,9 +101,9 @@ const PureSvgNodeElement = ({
   return (
     <>
       <g
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        style={{cursor: 'pointer'}}
+        onMouseEnter={() => setShowPopup(true)}
+        onMouseLeave={() => setShowPopup(false)}
+        style={{ cursor: 'pointer' }}
       >
         <image
           href={imageSource}
@@ -103,7 +112,7 @@ const PureSvgNodeElement = ({
           onClick={toggleNode}
           style={{
             outline:
-              matchedNode?.attributes?.ID === nodeDatum.attributes?.ID
+              matchedNode?.attributes?.ID === attributes?.ID
                 ? '10px solid red'
                 : 'none',
             borderRadius: '50%',
@@ -116,51 +125,45 @@ const PureSvgNodeElement = ({
           className="rd3t-label__title"
           {...textLayout[orientation].title}
           style={{
-            fill: nodeDatum?.attributes?.IsActive ? '' : 'red',
+            fill: attributes?.IsActive ? '' : 'red',
           }}
         >
           <tspan x={textLayout[orientation].title.x} dy="0">
             {nodeDatum.name}
           </tspan>
           <tspan x={textLayout[orientation].title.x} dy="1.2em">
-            {nodeDatum.attributes?.ID}
+            {attributes?.ID}
           </tspan>
         </text>
 
         {showPopup && (
-          <foreignObject x={50} y={20} width={200} height={500}>
+          <foreignObject x={50} y={20} width={220} height={180}>
             <div
               xmlns="http://www.w3.org/1999/xhtml"
               style={{
                 background: 'white',
                 border: '1px solid gray',
-                borderRadius: 6,
-                padding: 8,
-                boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+                borderRadius: 8,
+                padding: 10,
                 fontSize: 12,
-                pointerEvents: 'none', // Prevents the popup from interfering with mouse events
+                boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
               }}
             >
-              {filteredAttributes.map(([key, value]) => (
-                <div
-                  key={key}
-                  style={{
-                    fontWeight: key === '__status' ? 'bold' : 'normal',
-                    color:
-                      key === '__status'
-                        ? value === 'Active'
-                          ? 'green'
-                          : 'red'
-                        : 'black',
-                  }}
-                >
-                  {key === '__status'
-                    ? value
-                    : key === 'ID'
-                      ? `CRN: ${value}`
-                      : `${key}: ${value}`}
-                </div>
-              ))}
+              {filteredAttributes.map(({ key, value }) => {
+                if (key === '__status') {
+                  return (
+                    <div key={key} style={{ fontWeight: 'bold' }}>
+                      {value}
+                    </div>
+                  );
+                }
+
+                return (
+                  <div key={key}>
+                    <strong>{key}:</strong> {value}
+                  </div>
+                );
+              })}
             </div>
           </foreignObject>
         )}

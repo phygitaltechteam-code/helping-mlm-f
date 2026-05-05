@@ -90,6 +90,7 @@ import { Route as AppAdminRegisterCustomerregisterRouteImport } from './routes/_
 import { Route as AppAdminProfileUpdateprofileRouteImport } from './routes/_app/admin/_profile/updateprofile'
 import { Route as AppAdminProductRecallepinRouteImport } from './routes/_app/admin/_product/recallepin'
 import { Route as AppAdminProductProductreportRouteImport } from './routes/_app/admin/_product/productreport'
+import { Route as AppAdminProductProductassignpageRouteImport } from './routes/_app/admin/_product/productassignpage'
 import { Route as AppAdminProductDeliverdproductsRouteImport } from './routes/_app/admin/_product/deliverdproducts'
 import { Route as AppAdminProductApprovedepinRouteImport } from './routes/_app/admin/_product/approvedepin'
 import { Route as AppAdminPowerlegcustlistPowerlegcustlistRouteImport } from './routes/_app/admin/_powerlegcustlist/powerlegcustlist'
@@ -585,6 +586,12 @@ const AppAdminProductProductreportRoute =
     path: '/admin/productreport',
     getParentRoute: () => AppRoute,
   } as any)
+const AppAdminProductProductassignpageRoute =
+  AppAdminProductProductassignpageRouteImport.update({
+    id: '/admin/_product/productassignpage',
+    path: '/admin/productassignpage',
+    getParentRoute: () => AppRoute,
+  } as any)
 const AppAdminProductDeliverdproductsRoute =
   AppAdminProductDeliverdproductsRouteImport.update({
     id: '/admin/_product/deliverdproducts',
@@ -824,6 +831,7 @@ export interface FileRoutesByFullPath {
   '/admin/powerlegcustlist': typeof AppAdminPowerlegcustlistPowerlegcustlistRoute
   '/admin/approvedepin': typeof AppAdminProductApprovedepinRoute
   '/admin/deliverdproducts': typeof AppAdminProductDeliverdproductsRoute
+  '/admin/productassignpage': typeof AppAdminProductProductassignpageRoute
   '/admin/productreport': typeof AppAdminProductProductreportRoute
   '/admin/recallepin': typeof AppAdminProductRecallepinRoute
   '/admin/updateprofile': typeof AppAdminProfileUpdateprofileRoute
@@ -936,6 +944,7 @@ export interface FileRoutesByTo {
   '/admin/powerlegcustlist': typeof AppAdminPowerlegcustlistPowerlegcustlistRoute
   '/admin/approvedepin': typeof AppAdminProductApprovedepinRoute
   '/admin/deliverdproducts': typeof AppAdminProductDeliverdproductsRoute
+  '/admin/productassignpage': typeof AppAdminProductProductassignpageRoute
   '/admin/productreport': typeof AppAdminProductProductreportRoute
   '/admin/recallepin': typeof AppAdminProductRecallepinRoute
   '/admin/updateprofile': typeof AppAdminProfileUpdateprofileRoute
@@ -1052,6 +1061,7 @@ export interface FileRoutesById {
   '/_app/admin/_powerlegcustlist/powerlegcustlist': typeof AppAdminPowerlegcustlistPowerlegcustlistRoute
   '/_app/admin/_product/approvedepin': typeof AppAdminProductApprovedepinRoute
   '/_app/admin/_product/deliverdproducts': typeof AppAdminProductDeliverdproductsRoute
+  '/_app/admin/_product/productassignpage': typeof AppAdminProductProductassignpageRoute
   '/_app/admin/_product/productreport': typeof AppAdminProductProductreportRoute
   '/_app/admin/_product/recallepin': typeof AppAdminProductRecallepinRoute
   '/_app/admin/_profile/updateprofile': typeof AppAdminProfileUpdateprofileRoute
@@ -1166,6 +1176,7 @@ export interface FileRouteTypes {
     | '/admin/powerlegcustlist'
     | '/admin/approvedepin'
     | '/admin/deliverdproducts'
+    | '/admin/productassignpage'
     | '/admin/productreport'
     | '/admin/recallepin'
     | '/admin/updateprofile'
@@ -1278,6 +1289,7 @@ export interface FileRouteTypes {
     | '/admin/powerlegcustlist'
     | '/admin/approvedepin'
     | '/admin/deliverdproducts'
+    | '/admin/productassignpage'
     | '/admin/productreport'
     | '/admin/recallepin'
     | '/admin/updateprofile'
@@ -1393,6 +1405,7 @@ export interface FileRouteTypes {
     | '/_app/admin/_powerlegcustlist/powerlegcustlist'
     | '/_app/admin/_product/approvedepin'
     | '/_app/admin/_product/deliverdproducts'
+    | '/_app/admin/_product/productassignpage'
     | '/_app/admin/_product/productreport'
     | '/_app/admin/_product/recallepin'
     | '/_app/admin/_profile/updateprofile'
@@ -2033,6 +2046,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminProductProductreportRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/_product/productassignpage': {
+      id: '/_app/admin/_product/productassignpage'
+      path: '/admin/productassignpage'
+      fullPath: '/admin/productassignpage'
+      preLoaderRoute: typeof AppAdminProductProductassignpageRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/_product/deliverdproducts': {
       id: '/_app/admin/_product/deliverdproducts'
       path: '/admin/deliverdproducts'
@@ -2292,6 +2312,7 @@ interface AppRouteChildren {
   AppAdminPowerlegcustlistPowerlegcustlistRoute: typeof AppAdminPowerlegcustlistPowerlegcustlistRoute
   AppAdminProductApprovedepinRoute: typeof AppAdminProductApprovedepinRoute
   AppAdminProductDeliverdproductsRoute: typeof AppAdminProductDeliverdproductsRoute
+  AppAdminProductProductassignpageRoute: typeof AppAdminProductProductassignpageRoute
   AppAdminProductProductreportRoute: typeof AppAdminProductProductreportRoute
   AppAdminProductRecallepinRoute: typeof AppAdminProductRecallepinRoute
   AppAdminProfileUpdateprofileRoute: typeof AppAdminProfileUpdateprofileRoute
@@ -2392,6 +2413,7 @@ const AppRouteChildren: AppRouteChildren = {
     AppAdminPowerlegcustlistPowerlegcustlistRoute,
   AppAdminProductApprovedepinRoute: AppAdminProductApprovedepinRoute,
   AppAdminProductDeliverdproductsRoute: AppAdminProductDeliverdproductsRoute,
+  AppAdminProductProductassignpageRoute: AppAdminProductProductassignpageRoute,
   AppAdminProductProductreportRoute: AppAdminProductProductreportRoute,
   AppAdminProductRecallepinRoute: AppAdminProductRecallepinRoute,
   AppAdminProfileUpdateprofileRoute: AppAdminProfileUpdateprofileRoute,

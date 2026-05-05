@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {FiEdit} from 'react-icons/fi';
-import {GrFormNext, GrFormPrevious} from 'react-icons/gr';
-import {MdDelete, MdLogin} from 'react-icons/md';
-import {AiOutlineEye} from 'react-icons/ai';
-import {BiCopy} from 'react-icons/bi';
+import React, { useState } from 'react';
+import { FiEdit } from 'react-icons/fi';
+import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
+import { MdDelete, MdLogin } from 'react-icons/md';
+import { AiOutlineEye } from 'react-icons/ai';
+import { BiCopy } from 'react-icons/bi';
 
 export type Column<T> = {
   header: string;
@@ -91,7 +91,7 @@ const GenericTable = <T,>({
     ) {
       direction = 'desc';
     }
-    setSortConfig({key, direction});
+    setSortConfig({ key, direction });
   };
 
   const filteredData = sortedData?.filter((item) =>
@@ -114,7 +114,7 @@ const GenericTable = <T,>({
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      {title && <h2 className="mb-4 text-xl font-bold">{title}</h2>}
+      {/* {title && <h2 className="mb-4 text-xl font-bold">{title}</h2>}
       {(searchAble || filterComponent) && (
         <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           {searchAble && (
@@ -130,7 +130,34 @@ const GenericTable = <T,>({
             <div className="w-full sm:w-auto">{filterComponent}</div>
           )}
         </div>
+      )} */}
+
+      {(title || searchAble || filterComponent) && (
+        <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-4">
+
+          {/* Title */}
+          {title && <h2 className="text-xl font-bold">{title}</h2>}
+
+          {/* Search + Filter beside title */}
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            {searchAble && (
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearch}
+                className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary dark:text-white sm:w-[300px]"
+              />
+            )}
+
+            {filterComponent && (
+              <div className="w-full sm:w-auto">{filterComponent}</div>
+            )}
+          </div>
+
+        </div>
       )}
+
 
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
@@ -145,7 +172,7 @@ const GenericTable = <T,>({
                       ? () => handleSort(column.accessor as keyof T)
                       : undefined
                   }
-                  style={{cursor: column.sortable ? 'pointer' : 'default'}}
+                  style={{ cursor: column.sortable ? 'pointer' : 'default' }}
                 >
                   {column.header}{' '}
                   {sortConfig?.key === column.accessor
@@ -243,14 +270,14 @@ const GenericTable = <T,>({
             onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
-            <GrFormPrevious style={{fontSize: '1.25rem'}} />
+            <GrFormPrevious style={{ fontSize: '1.25rem' }} />
           </button>
           <button
             className="rounded px-3 py-4"
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
-            <GrFormNext style={{fontSize: '1.25rem'}} />
+            <GrFormNext style={{ fontSize: '1.25rem' }} />
           </button>
         </div>
       </div>

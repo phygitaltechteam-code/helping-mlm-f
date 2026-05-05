@@ -1,9 +1,20 @@
 import {api} from '@/utils/axios';
 
 // Fetch all products
+// export const getAllProducts = async () => {
+//   try {
+//     const response = await api.get('/mlm-product');
+//     return response.data;
+//   } catch (error) {
+//     const err = error.response?.data || error;
+//     console.error('Error fetching products:', err.message);
+//     throw err;
+//   }
+// };
+
 export const getAllProducts = async () => {
   try {
-    const response = await api.get('/mlm-product');
+    const response = await api.get('/product'); // ✅ FIXED
     return response.data;
   } catch (error) {
     const err = error.response?.data || error;

@@ -54,12 +54,17 @@ const BinaryTree = () => {
   if (isError) return <div className="dottedBackground mx-8">Error loading network.</div>;
 
   return (
-    <>
-      {isSuccess && (
-        <div className="dottedBackground mx-8">
-          {/* Top padding/margin for distance */}
+  <>
+    {isSuccess && (
+      <div>
+        {/* Heading */}
+        <h1 className="text-2xl font-semibold mb-4">
+          Helping Tree
+        </h1>
+
+        <div className="dottedBackground">
+          {/* Top padding */}
           <div className="pt-6 px-4">
-            {/* Search Bar - inside the white box with spacing */}
             <div className="mb-6 mt-2">
               <input
                 type="text"
@@ -70,15 +75,16 @@ const BinaryTree = () => {
               />
             </div>
           </div>
-          
-          {/* Tree Content with top spacing */}
+
+          {/* Tree Content */}
           <div className="pb-6 px-4">
             <BinaryTreeNode network={filteredTree || data} />
           </div>
         </div>
-      )}
-    </>
-  );
+      </div>
+    )}
+  </>
+);
 };
 
 export default BinaryTree;

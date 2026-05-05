@@ -62,7 +62,7 @@ const TreeNode = ({network}) => {
         name: name,
         attributes: {
           ID: id,
-          CRN: crn_no,
+            ...(crn_no ? { CRN: crn_no } : {}), 
           Name: first_name,
           JoiningDate: joining_date,
 

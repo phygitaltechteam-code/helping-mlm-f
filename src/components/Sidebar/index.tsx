@@ -90,7 +90,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             path: '/admin/Epin',
             subRoutes: [
               // { label: 'Admin E-Pin', path: '/admin/Epin' },
-              { label: 'Customer E-Pin', path: '/admin/customerepin' },
+              { label: 'Customer E-Pin', path: '/admin/productassignpage' },
               { label: 'Recall E-pin', path: '/admin/recallepin' },
               { label: 'Requested E-pin', path: '/admin/approvedepin' },
             ],
