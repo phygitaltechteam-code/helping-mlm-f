@@ -113,7 +113,7 @@ const DisplayCommisionReport: React.FC = () => {
   if (isError) return <div>Error loading commission data</div>;
 
   return (
-    <div className="p-4">
+    <div className="p-2">
       <div className="mb-6">
         <h1 className="text-gray-800 text-2xl font-bold">
           Commission Report
