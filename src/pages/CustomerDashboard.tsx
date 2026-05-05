@@ -201,8 +201,8 @@ const CustomerDashboard = () => {
     customerTeam: dashboardData?.customerTeam ?? 0,
     activeTeam: activeTeamCount,
     inactiveTeam: inactiveTeamCount,
-    generationCommission: dashboardData?.generationCommission ?? 0,
-    autopullCommission: dashboardData?.autopullCommission ?? 0,
+    generationIncome: dashboardData?.generationIncome ?? 0,
+    helpingIncome: dashboardData?.helpCommission ?? 0,
     totalSales: dashboardData?.totalSales ?? dashboardData?.TotalSales ?? 0,
   };
 
@@ -388,8 +388,8 @@ const CustomerDashboard = () => {
         {[
           { title: 'Active Team', value: formatCount(stats.activeTeam), gradient: 'from-green-400 to-emerald-500', icon: <FaUsers /> },
           { title: 'Inactive Team', value: formatCount(stats.inactiveTeam), gradient: 'from-red-400 to-rose-500', icon: <FaUsers /> },
-          { title: 'Genarational Income', value: formatCurrency(stats.generationCommission), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
-          { title: 'Helping Income', value: formatCurrency(stats.autopullCommission), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
+          { title: 'Genarational Income', value: formatCurrency(stats.generationIncome), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
+          { title: 'Helping Income', value: formatCurrency(stats.helpingIncome), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
           { title: 'Rent Helping Income', value: formatCurrency(stats.binaryIncome), gradient: 'from-blue-400 to-indigo-500', icon: <GiTakeMyMoney />, dollor: '$' },
 
           { title: 'ROI Income', value: formatCurrency(stats.roiIncome), gradient: 'from-amber-400 to-orange-600', icon: <GiTakeMyMoney />, dollor: '$' },
