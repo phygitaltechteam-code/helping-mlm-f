@@ -1,24 +1,24 @@
 /*eslint-disable*/
-import {useEffect, useMemo, useState} from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import GenericInputField from '../Forms/Input/GenericInputField';
-import {FormProvider, useForm} from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import GenericButton from '../Forms/Buttons/GenericButton';
-import {z} from 'zod';
-import {useAuthContext} from '@/context/AuthContext';
+import { z } from 'zod';
+import { useAuthContext } from '@/context/AuthContext';
 import GenericDropdown from '../Forms/DropDown/GenericDropDown';
 import React from 'react';
-import {useNavigate} from '@tanstack/react-router';
-import {updateProfileSchema} from '@/lib/validation/customerListSchema';
-import {zodResolver} from '@hookform/resolvers/zod';
+import { useNavigate } from '@tanstack/react-router';
+import { updateProfileSchema } from '@/lib/validation/customerListSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   useGetCustomerProfile,
   useGetProfile,
   useUpdateCustomerProfile,
   useUpdateProfile,
 } from '@/lib/react-query/Admin/profile/profile';
-import {useUpdateCustomer} from '@/lib/react-query/updateCustomer';
+import { useUpdateCustomer } from '@/lib/react-query/updateCustomer';
 import toast from 'react-hot-toast';
-import {InfoIcon, LockIcon} from 'lucide-react';
+import { InfoIcon, LockIcon } from 'lucide-react';
 import { FaUserCircle, FaUser, FaEnvelope, FaPhone, FaIdCard } from 'react-icons/fa';
 
 type formValues = z.infer<typeof updateProfileSchema>;
@@ -27,9 +27,9 @@ const CustomerUpdateProfile: React.FC = () => {
     resolver: zodResolver(updateProfileSchema),
   });
   const navigate = useNavigate();
-  const {user, customer} = useAuthContext();
+  const { user, customer } = useAuthContext();
   const [isBankAccNoDisabled, setIsBankAccNoDisabled] = useState(true);
-  const {data: profileData} = useGetCustomerProfile();
+  const { data: profileData } = useGetCustomerProfile();
 
   // Check if bank account number exists and disable field if it does
   useEffect(() => {
@@ -50,7 +50,7 @@ const CustomerUpdateProfile: React.FC = () => {
   }, [user]);
 
   const crn = user?.crnNo;
-  const {mutateAsync: updateProfile, isSuccess} = useUpdateCustomerProfile();
+  const { mutateAsync: updateProfile, isSuccess } = useUpdateCustomerProfile();
 
   useEffect(() => {
     if (profileData) {
@@ -73,7 +73,7 @@ const CustomerUpdateProfile: React.FC = () => {
         bankIFSC: profileData?.bankIFSC ?? '',
         bankBranch: profileData?.bankBranch ?? '',
         upiId: profileData?.upiId ?? '',
-        
+
         password: profileData?.password ?? '',
       });
     }
@@ -104,7 +104,7 @@ const CustomerUpdateProfile: React.FC = () => {
     if (filteredData.bankIFSC) customerData.bankIFSC = filteredData.bankIFSC;
     if (filteredData.bankName) customerData.bankName = filteredData.bankName;
     if (filteredData.upiId) customerData.upiId = filteredData.upiId;
-    
+
     if (filteredData.areaName) customerData.areaName = filteredData.areaName;
     if (filteredData.city) customerData.city = filteredData.city;
     if (filteredData.dob)
@@ -123,8 +123,8 @@ const CustomerUpdateProfile: React.FC = () => {
       Object.keys(customerData).length > 0
     ) {
       updateProfile({
-        ...(Object.keys(userData).length > 0 && {user: userData}),
-        ...(Object.keys(customerData).length > 0 && {customer: customerData}),
+        ...(Object.keys(userData).length > 0 && { user: userData }),
+        ...(Object.keys(customerData).length > 0 && { customer: customerData }),
       });
     } else {
       toast.error('Please fill at least one field to update');
@@ -134,7 +134,7 @@ const CustomerUpdateProfile: React.FC = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success('Profile updated successfully');
-      navigate({to: '/customer/dashboard'});
+      navigate({ to: '/customer/dashboard' });
     }
   }, [isSuccess, navigate]);
 
@@ -143,51 +143,68 @@ const CustomerUpdateProfile: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4 bg-white p-6 dark:bg-black">
+    <div className="space-y-4 bg-white p-2 dark:bg-black">
       {/* Profile Details Card */}
-      <div className="bg-white  shadow-sm p-6 mb-8 ">
-        <div className="flex justify-between items-center mb-6 pb-3">
-          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-            <FaUserCircle className="text-blue-600" />
-            User Profile
-          </h2>
-        </div>
+     <div className="w-full bg-white shadow-sm p-6 mb-8 border border-gray-100 rounded-lg">
+  {/* Header - Stays full width */}
+  <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-100">
+    <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+      <FaUserCircle className="text-blue-600 text-3xl" />
+      User Profile
+    </h2>
+  </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
-          <div className="space-y-4">
-            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-              <span className="font-medium text-gray-600 flex items-center gap-2">
-                <FaUser className="text-blue-500" /> Full Name
-              </span>
-              <span className="font-semibold">{user?.fullname || profileData?.fullname || '—'}</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-              <span className="font-medium text-gray-600 flex items-center gap-2">
-                <FaEnvelope className="text-blue-500" /> Email
-              </span>
-              <span className="font-semibold break-all">{user?.email || profileData?.email || '—'}</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-              <span className="font-medium text-gray-600 flex items-center gap-2">
-                <FaPhone className="text-blue-500" /> Phone Number
-              </span>
-              <span className="font-semibold">{profileData?.phoneNumber || '—'}</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-gray-100 pb-2">
-              <span className="font-medium text-gray-600 flex items-center gap-2">
-                <FaIdCard className="text-blue-500" /> CRN / Sponsor ID
-              </span>
-              <span className="font-semibold">{profileData?.sponcerId || user?.crnNo || '—'}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+  {/* Grid - Set to 1 col on mobile, 2 cols on tablet/desktop */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 text-gray-700">
+    
+    {/* Full Name */}
+    <div className="flex flex-col space-y-2 border-b border-gray-50 pb-4">
+      <span className="text-sm font-semibold text-gray-500 flex items-center gap-2 uppercase tracking-wider">
+        <FaUser className="text-blue-500" /> Full Name
+      </span>
+      <span className="text-xl font-bold text-gray-900">
+        {user?.fullname || profileData?.fullname || '—'}
+      </span>
+    </div>
+
+    {/* Email */}
+    <div className="flex flex-col space-y-2 border-b border-gray-50 pb-4">
+      <span className="text-sm font-semibold text-gray-500 flex items-center gap-2 uppercase tracking-wider">
+        <FaEnvelope className="text-blue-500" /> Email Address
+      </span>
+      <span className="text-xl font-bold text-gray-900 break-all">
+        {user?.email || profileData?.email || '—'}
+      </span>
+    </div>
+
+    {/* Phone Number */}
+    <div className="flex flex-col space-y-2 border-b border-gray-50 pb-4">
+      <span className="text-sm font-semibold text-gray-500 flex items-center gap-2 uppercase tracking-wider">
+        <FaPhone className="text-blue-500" /> Phone Number
+      </span>
+      <span className="text-xl font-bold text-gray-900">
+        {profileData?.phoneNumber || '—'}
+      </span>
+    </div>
+
+    {/* ID Section */}
+    <div className="flex flex-col space-y-2 border-b border-gray-50 pb-4">
+      <span className="text-sm font-semibold text-gray-500 flex items-center gap-2 uppercase tracking-wider">
+        <FaIdCard className="text-blue-500" /> CRN / Sponsor ID
+      </span>
+      <span className="text-xl font-bold text-gray-900">
+        {profileData?.sponcerId || user?.crnNo || '—'}
+      </span>
+    </div>
+
+  </div>
+</div>
 
       <h1 className="mb-4 text-lg font-semibold">Update Profile </h1>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit, error)}>
           <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-12 md:col-span-6">
+            {/* <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="sponsorId"
                 label="Sponsor ID"
@@ -202,17 +219,17 @@ const CustomerUpdateProfile: React.FC = () => {
                 placeholder="your CRN No"
                 disabled
               />
-            </div>
+            </div> */}
 
             {/* 🧍 Personal Info */}
-            <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">
+            {/* <h2 className="col-span-12 mt-6 border-b pb-2 text-lg font-semibold">
               Personal Info
-            </h2>
+            </h2> */}
             <div className="col-span-12 md:col-span-6">
               <GenericInputField
                 name="fullname"
                 label="Full Name"
-                placeholder="Enter your full name"
+                placeholder={user?.fullname}
               />
             </div>
             <div className="col-span-12 md:col-span-6">
@@ -220,9 +237,9 @@ const CustomerUpdateProfile: React.FC = () => {
                 label="Gender"
                 name="gender"
                 options={[
-                  {label: 'Male', value: 'MALE'},
-                  {label: 'Female', value: 'FEMALE'},
-                  {label: 'Other', value: 'OTHER'},
+                  { label: 'Male', value: 'MALE' },
+                  { label: 'Female', value: 'FEMALE' },
+                  { label: 'Other', value: 'OTHER' },
                 ]}
               />
             </div>
@@ -331,7 +348,7 @@ const CustomerUpdateProfile: React.FC = () => {
                 placeholder="e.g. HDFC Bank"
               />
             </div>
-            
+
             <div className="relative col-span-12 md:col-span-6">
               <GenericInputField
                 name="bankAccNo"

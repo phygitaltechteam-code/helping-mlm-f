@@ -13,8 +13,7 @@ import { useGetProduct } from '@/lib/react-query/Admin/Product/products';
 
 const createEpinRequestSchema = z.object({
   paidAmount: z.string().min(1, { message: 'Paid amount is required' }),
-  transactionHash: z.string().min(1, { message: 'Transaction hash is required' }),
-  product: z.string().min(1, { message: 'Product is required' }),
+  price: z.string().min(1, { message: 'Product is required' }),
   quantity: z.string().min(1, { message: 'Quantity is required' }),
   imageFile: z.instanceof(FileList).refine((files) => files.length > 0, {
     message: 'Payment proof is required',
@@ -32,10 +31,10 @@ const EpinUser: React.FC = () => {
   console.log('Fetched products in EpinUser:', products);
 
   const productOptions = products?.map((product: any) => ({
-    value: product._id || product.id,
+    value: product.discountedPrice,
     label: product.name,
   })) || [];
-  const watchProduct = methods.watch('product');
+  const watchProduct = methods.watch('price');
   const watchFiles = methods.watch('imageFile');
 
   // Automatically set paidAmount when product changes
@@ -72,8 +71,7 @@ const EpinUser: React.FC = () => {
 
     const formData = new FormData();
     formData.append('paidAmount', data.paidAmount);
-    formData.append('transactionHash', data.transactionHash);
-    formData.append('product', data.product);
+    formData.append('price', data.price);
     formData.append('quantity', data.quantity);
     formData.append('imageFile', selectedFile[0]);
 
@@ -111,7 +109,7 @@ const EpinUser: React.FC = () => {
               type="number"
             />
             <GenericSelectField
-              name="product"
+              name="price"
               label="Product"
               options={productOptions}
               placeholder="Select product"
@@ -122,24 +120,24 @@ const EpinUser: React.FC = () => {
               placeholder="Enter quantity"
               type="number"
             />
-            <GenericInputField
+            {/* <GenericInputField
               name="transactionHash"
               label="Transaction Hash"
               placeholder="Enter transaction hash"
               type="text"
-            />
+            /> */}
           </div>
 
           {/* QR Payment Section */}
-          <div className="rounded-xl border border-gray bg-gray-50 p-6 text-center dark:border-gray-800 dark:bg-gray-900">
-            <img
+          {/* <div className="rounded-xl border border-gray bg-gray-50 p-6 text-center dark:border-gray-800 dark:bg-gray-900"> */}
+            {/* <img
               src={image}
               alt="PhonePe QR"
               className="mx-auto mb-4 h-70 w-70 rounded-lg border border-gray object-contain"
-            />
+            /> */}
 
             {/* Wallet Address */}
-            <div className="flex w-full flex-col items-center gap-2 sm:flex-row sm:justify-center">
+            {/* <div className="flex w-full flex-col items-center gap-2 sm:flex-row sm:justify-center">
               <span className="w-full break-all rounded-lg bg-gray px-3 py-2 text-center text-sm font-medium dark:bg-gray-800 sm:w-auto">
                 {address}
               </span>
@@ -150,8 +148,8 @@ const EpinUser: React.FC = () => {
               >
                 Copy
               </button>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
 
           {/* Upload Proof */}
           <div>
