@@ -138,7 +138,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
           fullname: item.fullname || item.customer?.user?.fullname || '-',
           email: item.email || item.customer?.user?.email || '-',
           dateOnly: dateOnly,
-          walletAddress:item.walletAddress,
+          // walletAddress:item.walletAddress,
         };
       })
       .sort(
@@ -308,7 +308,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
         Details: item.details,
         Type: item.type,
         Status: item.status,
-        wallet:item.walletAddress,
+        // wallet:item.walletAddress,
 
       })),
     );
@@ -523,9 +523,9 @@ const DisplayPendingCommisionReport: React.FC = () => {
                           <th className="px-4 py-4 text-left font-medium">
                             Status
                           </th> */}
-                          <th className="px-4 py-4 text-left font-medium">
+                          {/* <th className="px-4 py-4 text-left font-medium">
                             wallet
-                          </th>
+                          </th> */}
                           <th className="px-4 py-4 text-left font-medium">
                             Actions
                           </th>
@@ -569,11 +569,11 @@ const DisplayPendingCommisionReport: React.FC = () => {
                                 {row.status}
                               </span> 
                             </td>*/}
-                            <td className="px-4 py-2 text-left">
+                            {/* <td className="px-4 py-2 text-left">
                               <span className="rounded  px-2 py-1 text-xs font-medium ">
                                 {row.walletAddress}
                               </span>
-                            </td>
+                            </td> */}
                             <td className="px-4 py-2 text-left">
                               <button
                                 onClick={() => handlePayClick(row)}

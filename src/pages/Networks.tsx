@@ -46,21 +46,27 @@ const Network = () => {
 
   return (
     <>
-      {/* Search Bar */}
-      <div className="mx-8 my-4">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="Enter CRN ID, e.g. CRN0000000"
-          className="w-full rounded-md border px-3 py-2 md:w-1/3"
-        />
-      </div>
-
       {/* Tree Section */}
       {isSuccess && (
         <div className="dottedBackground mx-8">
-          <TreeNode network={filteredTree || data} />
+          {/* Top padding for distance */}
+          <div className="pt-6 px-4">
+            {/* Search Bar - inside the white box */}
+            <div className="mb-6 mt-2">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                placeholder="Enter CRN ID, e.g. CRN0000000"
+                className="w-full rounded-md border px-3 py-2 md:w-1/3"
+              />
+            </div>
+          </div>
+          
+          {/* Tree Content with spacing */}
+          <div className="pb-6 px-4">
+            <TreeNode network={filteredTree || data} />
+          </div>
         </div>
       )}
     </>

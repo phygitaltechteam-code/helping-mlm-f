@@ -1,10 +1,7 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React from 'react';
 import Tree from 'react-d3-tree';
 import PureSvgNodeElementG from './PureSvgNodeElementG';
-import { any } from 'zod';
-
-
 
 interface NetworkNode {
   name: string;
@@ -15,64 +12,62 @@ interface NetworkNode {
     sponserer_username?: string;
     isGolden?: boolean;
     isActive?: boolean;
+    joiningDate?: string;
   };
   children?: NetworkNode[];
 }
 
-interface Props {
-  network?: NetworkNode;
-}
+// ✅ Count all children recursively
+const countTeam = (node: NetworkNode): number => {
+  if (!node.children || node.children.length === 0) return 0;
 
-const transformToD3 = (node: NetworkNode): any => ({
-  name: node.name,
+  return node.children.reduce(
+    (total, child) => total + 1 + countTeam(child),
+    0
+  );
+};
+
+// ✅ Transform with EXTRA DATA
+const transformToD3 = (
+  node: NetworkNode,
+  parentName: string = ''
+): any => ({
+  name: node.data?.first_name || node.name || 'N/A',
   attributes: {
-    ID: node.data?.id,
-    CRN: node.data?.crnNo || '',
-    Sponsor: node.data?.sponserer_username || '',
+    ID: node.data?.crnNo || node.data?.id || '',
+    Name: node.data?.first_name || node.name || '',
+    JoiningDate: node.data?.joiningDate || 'N/A',
+    SponsorName: parentName || 'N/A',
+    TeamCount: countTeam(node),
+    Status: node.data?.isActive ? 'Active' : 'Inactive',
+
+    // KEEP THESE (IMPORTANT FOR COLORS)
     IsActive: node.data?.isActive,
     IsGolden: node.data?.isGolden,
   },
-  children: (node.children ?? []).map((child) => transformToD3(child)),
+  children: (node.children ?? []).map((child) =>
+    transformToD3(child, node.data?.first_name || node.name)
+  ),
 });
 
-const GenerationTreeView: React.FC<Props> = ({ network }) => {
-  const source = network;
-  const treeData = transformToD3(source as NetworkNode);
+const GenerationTreeView: React.FC<{ network?: NetworkNode }> = ({
+  network,
+}) => {
+  const treeData = transformToD3(network as NetworkNode);
 
-  const windowWidth = window.innerWidth;
-  const smallScreen = windowWidth <= 768;
-
-  const containerStyles: React.CSSProperties = {
-    width: '100%',
-    height: '100vh',
-    position: 'relative',
-  };
+  const smallScreen = window.innerWidth <= 768;
 
   return (
-    <div
-      className={`relative ${smallScreen ? 'mobileTree' : 'desktopTree'}`}
-      style={containerStyles}
-    >
-      <div className="flex items-center gap-3 p-4">
-        <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-          Direct children shown: {source?.children?.length ?? 0}
-        </span>
-      </div>
+    <div style={{ width: '100%', height: '100vh' }}>
       <Tree
         data={treeData}
         orientation="vertical"
-        centeringTransitionDuration={800}
-        translate={{ x: smallScreen ? 187 : 548, y: smallScreen ? 140 : 115 }}
-        collapsible={true}
-        initialDepth={2}
-        zoomable={true}
-        draggable={true}
-        zoom={1}
-        scaleExtent={{ min: 0.1, max: 2 }}
+        translate={{
+          x: smallScreen ? 187 : 548,
+          y: smallScreen ? 140 : 115,
+        }}
         nodeSize={{ x: 220, y: 180 }}
         separation={{ siblings: 2, nonSiblings: 2 }}
-        enableLegacyTransitions={false}
-        transitionDuration={500}
         renderCustomNodeElement={(rd3tProps) => (
           <PureSvgNodeElementG
             nodeDatum={rd3tProps.nodeDatum}
@@ -80,21 +75,6 @@ const GenerationTreeView: React.FC<Props> = ({ network }) => {
             orientation="vertical"
           />
         )}
-        styles={{
-          links: { stroke: '#9CA3AF', strokeWidth: 2 },
-          nodes: {
-            node: {
-              circle: { fill: 'transparent', stroke: '#000', strokeWidth: 2 },
-              attributes: { fill: '#000', fontSize: 14 },
-              name: { fill: '#000', fontWeight: 'bold' },
-            },
-            leafNode: {
-              circle: { fill: 'transparent', stroke: '#000', strokeWidth: 2 },
-              attributes: { fill: '#000', fontSize: 14 },
-              name: { fill: '#000', fontWeight: 'bold' },
-            },
-          },
-        }}
       />
     </div>
   );

@@ -53,11 +53,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           //   path: '/fundtransfer',
           //   icon: <FaMoneyBillTransfer size={18} />,
           // },
-          {
-            label: 'Share Link',
-            path: '/admin/sharelink',
-            icon: <PiShareLight size={18} />,
-          },
+          // {
+          //   label: 'Share Link',
+          //   path: '/admin/sharelink',
+          //   icon: <PiShareLight size={18} />,
+          // },
           // {
           //   label: 'Reports',
           //   path: '/admin/roi',
@@ -89,7 +89,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             icon: <PiSquaresFourLight size={18} />,
             path: '/admin/Epin',
             subRoutes: [
-              { label: 'Admin E-Pin', path: '/admin/Epin' },
+              // { label: 'Admin E-Pin', path: '/admin/Epin' },
               { label: 'Customer E-Pin', path: '/admin/customerepin' },
               { label: 'Recall E-pin', path: '/admin/recallepin' },
               { label: 'Requested E-pin', path: '/admin/approvedepin' },

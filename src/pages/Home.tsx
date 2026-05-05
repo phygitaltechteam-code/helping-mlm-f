@@ -8,12 +8,16 @@ import {
   FaUsers,
   FaUserCheck,
   FaUserTimes,
+  FaCopy,
+  FaCheckCircle,
+  FaNetworkWired,
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import StatCard from './StatCard';
 import { useFetchAdminHome } from '@/lib/react-query/Admin/Home/adminHome';
 import Loader from '@/components/common/Loader';
 import { FaKey, FaWallet } from 'react-icons/fa6';
+import { useAuthContext } from '@/context/AuthContext';
 
 interface StatCardProps {
   amount: string;
@@ -22,15 +26,39 @@ interface StatCardProps {
 }
 
 const Home: React.FC = () => {
-  const [fromDate, setFromDate] = useState<string>('');
-  const [toDate, setToDate] = useState<string>('');
-  const [appliedFrom, setAppliedFrom] = useState<string>('');
-  const [appliedTo, setAppliedTo] = useState<string>('');
+  const { user } = useAuthContext(); // Get user info for the link
+  // const [fromDate, setFromDate] = useState<string>('');
+  // const [toDate, setToDate] = useState<string>('');
+  // const [appliedFrom, setAppliedFrom] = useState<string>('');
+  // const [appliedTo, setAppliedTo] = useState<string>('');
+  const [copied, setCopied] = useState<boolean>(false);
 
-  const { data, isSuccess, isError, isPending } = useFetchAdminHome(
-    appliedFrom,
-    appliedTo
-  );
+  const [selectedDate, setSelectedDate] = useState<string>(() => {
+    return new Date().toISOString().split('T')[0];
+  });
+
+  const { data, isSuccess, isError, isPending } = useFetchAdminHome();
+  // Generate registration link (same as customer dashboard)
+  const fullname = user?.fullname
+    ? user.fullname.replace(/\s/g, '_')
+    : 'unknown_user';
+  const crnNo = user?.crnNo || 'CRN0000000';
+  const baseUrl = import.meta.env.VITE_LIVE_URL || 'https://f5z16x7l-5173.inc1.devtunnels.ms';
+  const registrationLink = `${baseUrl}/register/${fullname}/${crnNo}`;
+  const shortRegistrationLink = `.../register/${fullname}/${crnNo}`;
+
+  const currentDate = new Date().toLocaleDateString('en-IN', {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(registrationLink);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
 
   const [statsData, setStatsData] = useState<StatCardProps[]>([]);
 
@@ -51,14 +79,14 @@ const Home: React.FC = () => {
       const activeTeam = totalTeam - inactiveTeam;
 
       // Income & Commission
-      const helpIncomeGivers   = data?.autopoolIncome || 0;
+      const helpIncomeGivers = data?.autopoolIncome || 0;
       const totalBonusIncomeGivers = data?.bonusIncomeAchivers || 0;
       const totalGenerationIncomeGivers = data?.genrationIncome || 0;
-      const totalCommission    = data?.totalCommission || 0;
+      const totalCommission = data?.totalCommission || 0;
 
       // Pins
       const totalPinAlloted = data?.givenEpin || 0;
-      const totalPinUsed    = data?.usedEpin  || 0;
+      const totalPinUsed = data?.usedEpin || 0;
 
       setStatsData([
         {
@@ -115,17 +143,17 @@ const Home: React.FC = () => {
     }
   }, [isSuccess, data]);
 
-  const handleApplyFilter = () => {
-    setAppliedFrom(fromDate);
-    setAppliedTo(toDate);
-  };
+  // const handleApplyFilter = () => {
+  //   setAppliedFrom(fromDate);
+  //   setAppliedTo(toDate);
+  // };
 
-  const handleResetFilter = () => {
-    setFromDate('');
-    setToDate('');
-    setAppliedFrom('');
-    setAppliedTo('');
-  };
+  // const handleResetFilter = () => {
+  //   setFromDate('');
+  //   setToDate('');
+  //   setAppliedFrom('');
+  //   setAppliedTo('');
+  // };
 
   if (isError) {
     return (
@@ -147,8 +175,58 @@ const Home: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       className="p-4 md:p-6"
     >
+      <div className="mb-4 flex justify-end">
+        <div className="flex flex-col items-end gap-1">
+
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
+      {/* ===== NEW: Registration Link Section (Same as Customer Dashboard) ===== */}
+      <div className="mb-8">
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4 w-full sm:w-auto min-w-0">
+            <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm shrink-0">
+              <FaNetworkWired className="text-xl md:text-2xl" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-bold opacity-80 uppercase tracking-widest mb-0.5">
+                Your Registration Link
+              </p>
+              <p
+                className="font-mono text-sm opacity-95 truncate"
+                title={registrationLink}
+              >
+                {shortRegistrationLink}
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={copyLink}
+            className={`${copied ? 'bg-green-500' : 'bg-white text-indigo-700 hover:bg-blue-50'
+              } w-full sm:w-auto px-6 py-2.5 rounded-lg font-bold flex justify-center items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0`}
+          >
+            {copied ? (
+              <>
+                <FaCheckCircle /> Copied!
+              </>
+            ) : (
+              <>
+                <FaCopy /> Copy Link
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+
       {/* Date Filter */}
-      <div className="mb-6 flex flex-wrap items-end gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+      {/* <div className="mb-6 flex flex-wrap items-end gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
         <div className="flex flex-col gap-1">
           <label className="text-xs font-medium text-gray-500">From Date</label>
           <input
@@ -191,7 +269,7 @@ const Home: React.FC = () => {
             </span>
           </span>
         )}
-      </div>
+      </div> */}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5">

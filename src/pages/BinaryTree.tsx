@@ -55,21 +55,26 @@ const BinaryTree = () => {
 
   return (
     <>
-      {/* Search Bar */}
-      <div className="mx-8 my-4">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="Enter CRN ID, e.g. CRN0000000"
-          className="w-full rounded-md border px-3 py-2 md:w-1/3"
-        />
-      </div>
-
-      {/* Tree Section */}
       {isSuccess && (
         <div className="dottedBackground mx-8">
-          <BinaryTreeNode network={filteredTree || data} />
+          {/* Top padding/margin for distance */}
+          <div className="pt-6 px-4">
+            {/* Search Bar - inside the white box with spacing */}
+            <div className="mb-6 mt-2">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                placeholder="Enter CRN ID, e.g. CRN0000000"
+                className="w-full rounded-md border px-3 py-2 md:w-1/3"
+              />
+            </div>
+          </div>
+          
+          {/* Tree Content with top spacing */}
+          <div className="pb-6 px-4">
+            <BinaryTreeNode network={filteredTree || data} />
+          </div>
         </div>
       )}
     </>
