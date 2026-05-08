@@ -1,155 +1,167 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import GenericInputField from '@/components/Forms/Input/GenericInputField';
 import GenericButton from '@/components/Forms/Buttons/GenericButton';
 import ProductCards from './ProductCards';
 import { useAssignProducts } from '@/lib/react-query/Admin/Product/assignProduct';
 import { useGetAllProducts } from '@/lib/react-query/Admin/Product/products';
+import { useGetCustomerEpins } from '@/lib/react-query/Admin/Epin/epin';
 import toast from 'react-hot-toast';
 
 type FormValues = {
-    crnNo: string;
+  crnNo: string;
 };
 
 const ProductAssignForm: React.FC = () => {
-    const methods = useForm<FormValues>({
-        defaultValues: {
-            crnNo: '',
-        },
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      crnNo: '',
+    },
+  });
+
+  const { handleSubmit, watch, reset } = methods;
+  const crnNo = watch('crnNo');
+
+  const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
+
+  const { mutateAsync, isPending } = useAssignProducts();
+
+  const { data, isLoading, error } = useGetAllProducts();
+  const { data: epinData } = useGetCustomerEpins();
+
+  // PRODUCTS
+  const products: any[] =
+    (data as any)?.data?.products ||
+    (data as any)?.data ||
+    (data as any) ||
+    [];
+
+  // EPIN DATA NORMALIZATION
+  const epins = Array.isArray(epinData)
+    ? epinData
+    : (epinData as any)?.data || [];
+
+  // FIND CUSTOMER BY CRN
+  const matched = epins.find(
+    (item: any) => item?.customer?.crnNo === crnNo
+  );
+
+  const customer = matched?.customer || null;
+  const customerName = customer?.user?.fullname || '';
+
+  const isValidCustomer = !!customer?.crnNo && !!customer?.user?.fullname;
+
+  // SELECT PRODUCT (ONLY ONE)
+  const handleSelect = (product: any) => {
+    setSelectedProducts((prev) => {
+      const exists = prev.find((p) => p.id === product.id);
+      return exists ? [] : [product];
     });
+  };
 
-    const { handleSubmit, watch, reset } = methods;
-    const crnNo = watch('crnNo');
+  // SUBMIT
+  const onSubmit = async () => {
+    if (!isValidCustomer) {
+      toast.error('No customer found for this CRN');
+      return;
+    }
 
-    const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+    if (selectedProducts.length === 0) {
+      toast.error('Select a product');
+      return;
+    }
 
-    const { mutateAsync, isPending } = useAssignProducts();
+    const selected = selectedProducts[0];
 
-    // ✅ Fetch products automatically
-    const { data, isLoading, error } = useGetAllProducts();
-
-    // ✅ Debug logs for API
-    useEffect(() => {
-        console.log('🔥 RAW API DATA:', data);
-        console.log('⏳ Loading:', isLoading);
-        console.log('❌ Error:', error);
-    }, [data, isLoading, error]);
-
-    // ✅ Handle different API structures safely
-    const products: any[] =
-        (data as any)?.data?.products ||
-        (data as any)?.data ||
-        (data as any) ||
-        [];
-
-    console.log('✅ FINAL PRODUCTS ARRAY:', products);
-
-    // ✅ Select / Unselect
-    const handleSelect = (id: string) => {
-        console.log('🟢 CLICKED PRODUCT ID:', id);
-
-        setSelectedProducts((prev) => {
-            const updated = prev.includes(id)
-                ? prev.filter((item) => item !== id)
-                : [...prev, id];
-
-            console.log('📦 SELECTED PRODUCTS:', updated);
-            return updated;
-        });
+    const payload = {
+      crnNo,
+      productId: selected.id,
+      price: selected.discountedPrice,
     };
 
-    // ✅ Submit
-    const onSubmit = async () => {
-        console.log('🚀 SUBMIT CLICKED');
+    try {
+      await mutateAsync(payload);
 
-        if (!crnNo) {
-            alert('Enter CRN first');
-            return;
-        }
+      toast.success('Products assigned successfully');
 
-        if (selectedProducts.length === 0) {
-            alert('Select at least one product');
-            return;
-        }
+      setSelectedProducts([]);
+      reset();
+    } catch (err: any) {
+      toast.error(
+        err?.response?.data?.message || 'Failed to assign products'
+      );
+    }
+  };
 
-        const payload = {
-            crnNo,
-            productIds: selectedProducts,
-        };
+  const isFormValid =
+    !!crnNo && isValidCustomer && selectedProducts.length > 0;
 
-        console.log('📤 FINAL PAYLOAD:', payload);
+  return (
+    <FormProvider {...methods}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-6 bg-white p-6"
+      >
+        <h1 className="text-lg font-semibold">Assign Products</h1>
 
-        try {
-            const res = await mutateAsync(payload);
-            console.log('✅ ASSIGN RESPONSE:', res);
+        {/* CRN INPUT */}
+        <GenericInputField
+          name="crnNo"
+          label="CRN No"
+          placeholder="Enter CRN"
+        />
 
-            // ✅ SUCCESS MESSAGE
-            toast.success('Products assigned successfully 🎉');
+        {/* CUSTOMER STATUS */}
+        {crnNo && !isValidCustomer && (
+          <p className="text-red-500 text-sm">
+            No customer found
+          </p>
+        )}
 
-            // Reset
-            setSelectedProducts([]);
-            reset();
-        } catch (err: any) {
-            console.error('❌ FULL ERROR:', err);
+        {isValidCustomer && (
+          <p className="text-green-600 text-sm">
+            Customer Name: {customerName}
+          </p>
+        )}
 
-            console.log('❌ ERROR RESPONSE:', err?.response);
-            console.log('❌ ERROR DATA:', err?.response?.data);
+        {/* LOADING */}
+        {isLoading && (
+          <p className="text-gray-500">Loading products...</p>
+        )}
 
-            toast.error(err?.response?.data?.message || 'Failed to assign products ❌');
-        }
-    };
+        {/* ERROR */}
+        {error && (
+          <p className="text-red-500">Failed to load products</p>
+        )}
 
-    return (
-        <FormProvider {...methods}>
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="space-y-6 bg-white p-6"
-            >
-                <h1 className="text-lg font-semibold">Assign Products</h1>
+        {/* EMPTY */}
+        {!isLoading && products.length === 0 && (
+          <p className="text-gray-400">No products found</p>
+        )}
 
-                {/* CRN */}
-                <GenericInputField
-                    name="crnNo"
-                    label="CRN No"
-                    placeholder="Enter CRN"
-                />
+        {/* PRODUCTS */}
+        {products.length > 0 && (
+          <ProductCards
+            products={products}
+            selected={selectedProducts}
+            onSelect={handleSelect}
+          />
+        )}
 
-                {/* LOADING */}
-                {isLoading && <p className="text-gray-500">Loading products...</p>}
-
-                {/* ERROR */}
-                {error && (
-                    <p className="text-red-500">Failed to load products</p>
-                )}
-
-                {/* EMPTY */}
-                {!isLoading && products.length === 0 && (
-                    <p className="text-gray-400">No products found</p>
-                )}
-
-                {/* PRODUCTS */}
-                {products.length > 0 && (
-                    <ProductCards
-                        products={products}
-                        selected={selectedProducts}
-                        onSelect={handleSelect}
-                    />
-                )}
-
-                {/* SUBMIT */}
-                <div className="text-right">
-                    <GenericButton
-                        type="submit"
-                        disabled={isPending}
-                        className="bg-blue-600 text-white px-4 py-2"
-                    >
-                        {isPending ? 'Submitting...' : 'Submit'}
-                    </GenericButton>
-                </div>
-            </form>
-        </FormProvider>
-    );
+        {/* SUBMIT */}
+        <div className="text-right">
+          <GenericButton
+            type="submit"
+            disabled={isPending || !isFormValid}
+            className="bg-blue-600 text-white px-4 py-2"
+          >
+            {isPending ? 'Submitting...' : 'Submit'}
+          </GenericButton>
+        </div>
+      </form>
+    </FormProvider>
+  );
 };
 
 export default ProductAssignForm;

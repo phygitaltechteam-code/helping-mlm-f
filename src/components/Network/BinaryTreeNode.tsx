@@ -14,9 +14,6 @@ const BinaryTreeNode = ({network}: {network: any}) => {
   const getRootNode = (source: any) => {
     if (!source) return null;
 
-    // Supports both shapes:
-    // 1) direct tree node
-    // 2) API wrapper where actual tree is in source.data
     if (source?.data?.data && Array.isArray(source?.data?.children)) {
       return source.data;
     }
@@ -24,13 +21,20 @@ const BinaryTreeNode = ({network}: {network: any}) => {
     return source;
   };
 
-  useEffect(() => {
-    const transformedData = transformNode(getRootNode(network));
-    setData(transformedData);
-  }, [network]);
+  // ✅ NEW: count only real nodes (ignore invisible ones)
+  const countRealNodes = (node: any): number => {
+    if (!node || node._invisible) return 0;
 
-  const windowWidth = window.innerWidth;
-  const smallScreen = windowWidth <= 768;
+    let count = 0;
+
+    if (node.children && node.children.length > 0) {
+      node.children.forEach((child: any) => {
+        count += countRealNodes(child);
+      });
+    }
+
+    return 1 + count;
+  };
 
   const transformNode = (node: any) => {
     if (!node || !node.data) return null;
@@ -50,15 +54,17 @@ const BinaryTreeNode = ({network}: {network: any}) => {
     let children: any[] = [];
 
     const normalizedChildren = Array.isArray(node.children) ? node.children : [];
+
     const leftChildBySide = normalizedChildren.find(
       (child: any) => child?.data?.side === 'LEFT',
     );
+
     const rightChildBySide = normalizedChildren.find(
       (child: any) => child?.data?.side === 'RIGHT',
     );
 
-    // Fallback for payloads where children do not include side.
     const leftChild = leftChildBySide || normalizedChildren[0];
+
     const rightChild =
       rightChildBySide ||
       normalizedChildren.find((child: any) => child !== leftChild) ||
@@ -90,6 +96,14 @@ const BinaryTreeNode = ({network}: {network: any}) => {
           },
     );
 
+    // ✅ FIX: calculate real team count
+    const realChildren = children.filter((child) => !child?._invisible);
+
+    const teamCount = realChildren.reduce(
+      (acc, child) => acc + countRealNodes(child),
+      0
+    );
+
     return {
       name: first_name,
       attributes: {
@@ -102,10 +116,21 @@ const BinaryTreeNode = ({network}: {network: any}) => {
         LeftCount: leftCount,
         RightCount: rightCount,
         OrderStatus: orderStatus,
+
+        // ✅ THIS WAS MISSING
+        TeamCount: teamCount,
       },
       ...(children.length > 0 ? {children} : {}),
     };
   };
+
+  useEffect(() => {
+    const transformedData = transformNode(getRootNode(network));
+    setData(transformedData);
+  }, [network]);
+
+  const windowWidth = window.innerWidth;
+  const smallScreen = windowWidth <= 768;
 
   const countNodes = (node: any): number => {
     if (!node?.children || node?.children?.length === 0) {
@@ -123,19 +148,16 @@ const BinaryTreeNode = ({network}: {network: any}) => {
 
   const customNodeFnMapping: any = {
     svg: {
-      description: 'Default - Pure SVG node & label (IE11 compatible)',
       fn: (rd3tProps: any, appState: any) => (
         <PureSvgNodeElement
           nodeDatum={rd3tProps.nodeDatum}
           toggleNode={rd3tProps.toggleNode}
           orientation={appState.orientation}
-          onNodeClick={undefined}
           matchedNode={undefined}
         />
       ),
     },
     mixed: {
-      description: 'MixedNodeElement - SVG `circle` + `foreignObject` label',
       fn: ({nodeDatum, toggleNode}: any, appState: any) => (
         <MixedNodeElement
           nodeData={nodeDatum}
@@ -150,7 +172,6 @@ const BinaryTreeNode = ({network}: {network: any}) => {
       ),
     },
     input: {
-      description: 'MixedNodeElement - Interactive nodes with inputs',
       fn: ({nodeDatum, toggleNode}: any, appState: any) => (
         <MixedNodeInputElement
           nodeData={nodeDatum}
@@ -173,7 +194,6 @@ const BinaryTreeNode = ({network}: {network: any}) => {
     centeringTransitionDuration: 800,
     translateX: smallScreen ? 187 : 548,
     translateY: smallScreen ? 140 : 115,
-    pathFunc: '',
     collapsible: true,
     shouldCollapseNeighborNodes: false,
     initialDepth: 6,
@@ -186,26 +206,6 @@ const BinaryTreeNode = ({network}: {network: any}) => {
     enableLegacyTransitions: false,
     transitionDuration: 500,
     renderCustomNodeElement: customNodeFnMapping['svg'].fn,
-    styles: {
-      nodes: {
-        node: {
-          circle: {
-            fill: 'transparent',
-          },
-          attributes: {
-            stroke: '#000',
-          },
-        },
-        leafNode: {
-          circle: {
-            fill: 'transparent',
-          },
-          attributes: {
-            stroke: '#000',
-          },
-        },
-      },
-    },
   };
 
   if (!data) return <div>Loading...</div>;
@@ -222,19 +222,10 @@ const BinaryTreeNode = ({network}: {network: any}) => {
         className={`relative ${smallScreen ? 'mobileTree' : 'desktopTree'}`}
         style={containerStyles}
       >
-        <div className="flex items-center gap-2 p-4">
-          {/* <span>Total Members: {treeProps.totalNodeCount}</span> */}
-        </div>
-
         <Tree
           data={treeProps.data as any}
-          renderCustomNodeElement={
-            treeProps.renderCustomNodeElement
-              ? (rd3tProps: any) =>
-                  treeProps.renderCustomNodeElement(rd3tProps, {
-                    ...treeProps,
-                  })
-              : undefined
+          renderCustomNodeElement={(rd3tProps: any) =>
+            treeProps.renderCustomNodeElement(rd3tProps, {...treeProps})
           }
           orientation={treeProps.orientation as any}
           centeringTransitionDuration={treeProps.centeringTransitionDuration}
@@ -249,8 +240,6 @@ const BinaryTreeNode = ({network}: {network: any}) => {
           separation={treeProps.separation}
           enableLegacyTransitions={treeProps.enableLegacyTransitions}
           transitionDuration={treeProps.transitionDuration}
-          // @ts-ignore
-          styles={treeProps.styles}
           shouldCollapseNeighborNodes={treeProps.shouldCollapseNeighborNodes}
           onNodeClick={(node: any) => {
             setHoveredNode(node);

@@ -1,12 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { api } from '@/utils/axios';
 
-export const assignProducts = async (data: {
-  crnNo: string;
-  productIds: string[];
-}) => {
-//   const response = await api.post('/admin/assign-product', data);
-   const response = await api.post('/order/create', data);
+export const assignProducts = async (data: any) => {
+  const response = await api.post('/admin/customers/activate', data);
   return response.data;
 };
 
