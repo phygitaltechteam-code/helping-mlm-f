@@ -1,90 +1,54 @@
 import React from 'react';
-// Import your assets here with temporary names
+import { Shield, Zap, Target, Eye, Maximize, CheckCircle2, Play } from 'lucide-react';
 import aboutSideImage from '../../assets/images/header/newabout-bg.jpg';
 
 const About = () => {
-    // Array to handle the grid generation logic efficiently
     const features = [
-        {
-            id: 1,
-            title: 'EFFICIENCY',
-            iconColor: 'text-purple-600',
-            bgGlow: 'bg-purple-100 shadow-[0_0_15px_rgba(147,51,234,0.4)]',
-            icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
-        },
-        {
-            id: 2,
-            title: 'EXPIERENCE', // Note: Check spelling (EXPERIENCE)
-            iconColor: 'text-blue-500',
-            bgGlow: 'bg-blue-100 shadow-[0_0_15px_rgba(59,130,246,0.4)]',
-            icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-        },
-        {
-            id: 3,
-            title: 'SECURITY',
-            iconColor: 'text-orange-500',
-            bgGlow: 'bg-orange-100 shadow-[0_0_15px_rgba(249,115,22,0.4)]',
-            icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-        },
-        {
-            id: 4,
-            title: 'TRANSPARENT',
-            iconColor: 'text-pink-500',
-            bgGlow: 'bg-pink-100 shadow-[0_0_15px_rgba(236,72,153,0.4)]',
-            icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-        },
-        {
-            id: 5,
-            title: 'SIMPLE',
-            iconColor: 'text-indigo-500',
-            bgGlow: 'bg-indigo-100 shadow-[0_0_15px_rgba(99,102,241,0.4)]',
-            icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path></svg>
-        },
-        {
-            id: 6,
-            title: 'COMPLIANT',
-            iconColor: 'text-fuchsia-500',
-            bgGlow: 'bg-fuchsia-100 shadow-[0_0_15px_rgba(217,70,239,0.4)]',
-            icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-        }
+        { id: 1, title: 'EFFICIENCY', icon: <Zap className="w-6 h-6 text-emerald-400" />, color: 'group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30' },
+        { id: 2, title: 'EXPERIENCE', icon: <Target className="w-6 h-6 text-blue-400" />, color: 'group-hover:bg-blue-500/10 group-hover:border-blue-500/30' },
+        { id: 3, title: 'SECURITY', icon: <Shield className="w-6 h-6 text-purple-400" />, color: 'group-hover:bg-purple-500/10 group-hover:border-purple-500/30' },
+        { id: 4, title: 'TRANSPARENT', icon: <Eye className="w-6 h-6 text-cyan-400" />, color: 'group-hover:bg-cyan-500/10 group-hover:border-cyan-500/30' },
+        { id: 5, title: 'SIMPLE', icon: <Maximize className="w-6 h-6 text-amber-400" />, color: 'group-hover:bg-amber-500/10 group-hover:border-amber-500/30' },
+        { id: 6, title: 'COMPLIANT', icon: <CheckCircle2 className="w-6 h-6 text-rose-400" />, color: 'group-hover:bg-rose-500/10 group-hover:border-rose-500/30' }
     ];
 
     return (
-        <section id="about" className="w-full py-12 md:py-20 bg-white overflow-hidden">
-            <div className="max-w-7xl mx-auto lg:ml-40 px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-8">
+        <section id="about" className="w-full py-24 bg-slate-950 overflow-hidden relative">
+            {/* Subtle Grid Background */}
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 mix-blend-overlay pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 blur-[150px] rounded-full pointer-events-none"></div>
+            
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+                <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
 
                     {/* Left Column: Text and Features Grid */}
-                    <div className="w-full lg:w-1/2 flex flex-col pr-0 lg:pr-8">
+                    <div className="w-full lg:w-[55%] flex flex-col">
+                        
+                        <div className="inline-flex items-center space-x-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-6 backdrop-blur-md w-max">
+                           <span className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">Welcome To ARC International</span>
+                        </div>
 
-                        {/* Header Texts */}
-                        <h4 className="text-gray-800 font-semibold tracking-wider text-sm uppercase mb-2 text-center lg:text-left">
-                            WELCOME TO ARC INTERNATIONAL
-                        </h4>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#c61e3d] mb-6 uppercase tracking-wide text-center lg:text-left">
-                            A FEW WORDS ABOUT US
+                        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 uppercase tracking-tight leading-tight">
+                            A Few Words <br/>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">About Us</span>
                         </h2>
 
-                        {/* Paragraph Text */}
-                        <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-4 text-center lg:text-left">
-                            To meet <span className="text-[#f97316]">today's market challenges,</span> we have developed a unique and advanced fund management system.
+                        <p className="text-white text-lg md:text-xl leading-relaxed mb-4 font-medium">
+                            To meet <span className="text-emerald-400">today's market challenges,</span> we have developed a unique and advanced fund management system.
                         </p>
-                        <p className="text-gray-500 leading-relaxed mb-10 text-sm sm:text-base text-center lg:text-left">
-                            ARC International is a private financial company specializing in sports betting-based investment strategies. Our system is designed to significantly reduce risk through the continuous development and enhancement of a semi-automatic betting model. We have upgraded our automated system so that the final step before placing any bet is carefully reviewed and executed by our professional operators. This balance of technology and human expertise ensures greater accuracy, control, and consistency in performance.
+                        
+                        <p className="text-slate-400 leading-relaxed mb-12 text-base font-light">
+                            ARC International is a private financial company specializing in sports betting-based investment strategies. Our system is designed to significantly reduce risk through the continuous development and enhancement of a semi-automatic betting model. We have upgraded our automated system so that the final step before placing any bet is carefully reviewed and executed by our professional operators.
                         </p>
 
                         {/* Feature Grid */}
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-10 gap-x-6">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                             {features.map((feature) => (
-                                <div key={feature.id} className="flex flex-col items-center text-center">
-                                    {/* Icon Circle */}
-                                    <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mb-4 ${feature.bgGlow}`}>
-                                        <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white flex items-center justify-center ${feature.iconColor}`}>
-                                            {feature.icon}
-                                        </div>
+                                <div key={feature.id} className={`group flex flex-col items-center justify-center p-6 bg-slate-900/50 border border-white/5 rounded-2xl transition-all duration-300 ${feature.color}`}>
+                                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                                        {feature.icon}
                                     </div>
-                                    {/* Title */}
-                                    <span className="text-gray-800 font-bold text-xs sm:text-sm tracking-widest uppercase">
+                                    <span className="text-slate-300 group-hover:text-white font-bold text-xs tracking-widest uppercase transition-colors">
                                         {feature.title}
                                     </span>
                                 </div>
@@ -93,22 +57,37 @@ const About = () => {
                     </div>
 
                     {/* Right Column: Image with Play Button */}
-                    <div className="w-full lg:w-1/2 relative flex justify-center mt-12 lg:mt-0">
-                        <div className="relative w-full max-w-md lg:max-w-none flex justify-center lg:justify-end">
-                            {/* Main Graphic */}
+                    <div className="w-full lg:w-[45%] relative">
+                        <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] group">
+                            
+                            {/* Gradient Overlay for Image */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent z-10"></div>
+                            
                             <img
                                 src={aboutSideImage}
-                                alt="Abstract Sports Figure"
-                                className="w-full lg:w-[120%] h-auto object-cover z-10 relative lg:-right-[10%] rounded-2xl lg:rounded-none"
+                                alt="ARC International Concept"
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                onError={(e) => {
+                                    e.currentTarget.src = "https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=1000&auto=format&fit=crop";
+                                }}
                             />
 
-                            {/* Floating Play Button Overlay */}
-                            <button className="absolute top-1/2 left-1/2 lg:top-[60%] lg:left-auto lg:right-[30%] z-20 transform -translate-x-1/2 -translate-y-1/2 lg:translate-x-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-[#e65c00] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(230,92,0,0.5)] hover:scale-110 transition-transform duration-300 border-2 border-white">
-                                <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </button>
+                            {/* Floating Play Button */}
+                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+                                <div className="relative flex items-center justify-center w-20 h-20">
+                                    <div className="absolute inset-0 bg-emerald-500 rounded-full animate-ping opacity-30"></div>
+                                    <button className="relative w-16 h-16 bg-gradient-to-tr from-emerald-500 to-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(52,211,153,0.5)] hover:scale-110 transition-transform duration-300 text-slate-950 pl-1">
+                                        <Play fill="currentColor" className="w-6 h-6" />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Decorative Elements */}
+                            <div className="absolute bottom-6 left-6 right-6 z-20 p-6 bg-slate-950/80 backdrop-blur-md rounded-2xl border border-white/10">
+                                <p className="text-white text-sm font-medium tracking-wide">
+                                    "Balancing technology and human expertise ensures greater accuracy and consistency."
+                                </p>
+                            </div>
                         </div>
                     </div>
 

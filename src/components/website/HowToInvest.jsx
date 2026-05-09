@@ -1,117 +1,117 @@
 import React from 'react';
-// Import your map background asset here
+import { UserPlus, ArrowRightLeft, ArrowDownToLine, ArrowRight } from 'lucide-react';
 import mapBgImage from '../../assets/images/header/invest-bg.jpg'; 
 
 const HowToInvest = () => {
-  // Array to map over the steps, keeping the logic clean
   const processSteps = [
     {
       id: 1,
       stepText: 'FIRST STEP',
-      actionText: 'SING UP',
-      verticalOffset: 'mt-16 md:mt-24', 
-      icon: (
-        <svg className="w-12 h-12 text-[#c61e3d]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          <circle cx="12" cy="7" r="4" />
-        </svg>
-      )
+      actionText: 'SIGN UP',
+      offset: 'lg:translate-y-12',
+      icon: <UserPlus className="w-10 h-10 text-emerald-400" />
     },
     {
       id: 2,
       stepText: 'SECOND STEP',
       actionText: 'MAKE A DEPOSIT',
-      verticalOffset: 'mb-16 md:mb-24',
-      icon: (
-        <svg className="w-12 h-12 text-[#c61e3d]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      )
+      offset: 'lg:-translate-y-12',
+      icon: <ArrowRightLeft className="w-10 h-10 text-cyan-400" />
     },
     {
       id: 3,
       stepText: 'THIRD STEP',
       actionText: 'WITHDRAW',
-      verticalOffset: 'mt-16 md:mt-24',
-      icon: (
-        <svg className="w-12 h-12 text-[#c61e3d]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      )
+      offset: 'lg:translate-y-12',
+      icon: <ArrowDownToLine className="w-10 h-10 text-emerald-400" />
     }
   ];
 
   return (
-    <section className="w-full py-24 bg-white relative overflow-hidden">
+    <section className="w-full py-32 bg-slate-950 relative overflow-hidden border-t border-white/5">
       
-      {/* Background Map Image Overlay */}
+      {/* Background Effects */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[400px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none" />
       <div 
-        className="absolute inset-0 z-0 opacity-10 pointer-events-none bg-center bg-no-repeat bg-contain md:bg-cover"
+        className="absolute inset-0 opacity-5 mix-blend-screen bg-center bg-no-repeat bg-cover pointer-events-none"
         style={{ backgroundImage: `url(${mapBgImage})` }}
-      ></div>
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         
         {/* Header Text Section */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h4 className="text-[#1e1545] font-semibold text-xl mb-2">
-            How You Can Invest Your
-          </h4>
-          <h2 className="text-4xl md:text-6xl font-bold text-[#c61e3d] uppercase tracking-wide mb-6">
-            MONEY MORE SMARTLY
+        <div className="text-center max-w-3xl mx-auto mb-24">
+          <div className="inline-flex items-center space-x-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-4 py-1.5 mb-6 backdrop-blur-md w-max mx-auto">
+             <span className="text-xs font-semibold tracking-widest text-cyan-400 uppercase">Getting Started</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight mb-6">
+            Invest Your Money <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">More Smartly</span>
           </h2>
-          <p className="text-gray-600 text-lg leading-relaxed">
-            It's a simple way to start invest.You don't need a deep wallet to start behoof.
-            <br className="hidden md:block" /> Pick an amount you can afford, and build your behoof over time.
+          <p className="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto font-light">
+            It's a simple way to start investing. You don't need a deep wallet to start earning. Pick an amount you can afford, and build your portfolio over time.
           </p>
         </div>
 
-        {/* Steps and Dashed Line Container */}
-        <div className="relative w-full flex justify-center items-center mt-10">
+        {/* Steps Container */}
+        <div className="relative w-full flex justify-center items-center">
           
-          {/* Background Dashed Wavy Line */}
-          <div className="absolute top-1/2 left-0 w-full transform -translate-y-1/2 hidden md:block z-0 pointer-events-none">
+          {/* Connecting Line (Desktop Only) */}
+          <div className="absolute top-1/2 left-[10%] right-[10%] transform -translate-y-1/2 hidden lg:block z-0 pointer-events-none">
             <svg width="100%" height="200" viewBox="0 0 1000 200" fill="none" preserveAspectRatio="none">
               <path 
-                d="M -50 150 Q 150 250 300 100 T 700 100 T 1050 50" 
-                stroke="#ff7a7a" 
-                strokeWidth="2" 
-                strokeDasharray="10 10" 
+                d="M 0 100 C 250 -50, 750 250, 1000 100" 
+                stroke="url(#gradientLine)" 
+                strokeWidth="3" 
+                strokeDasharray="8 8" 
                 fill="none" 
               />
+              <defs>
+                <linearGradient id="gradientLine" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#34d399" stopOpacity="0.2" />
+                  <stop offset="50%" stopColor="#22d3ee" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#34d399" stopOpacity="0.2" />
+                </linearGradient>
+              </defs>
             </svg>
-            <div className="absolute top-0 right-0 transform -translate-y-6 text-[#c61e3d]">
-              <svg className="w-12 h-12 transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
-            </div>
           </div>
 
           {/* Process Steps */}
-          <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-5xl z-10">
-            {processSteps.map((item) => (
+          <div className="flex flex-col lg:flex-row justify-between items-center w-full z-10 gap-16 lg:gap-8">
+            {processSteps.map((item, index) => (
               <div 
                 key={item.id} 
-                className={`flex flex-col items-center text-center ${item.verticalOffset} mb-12 md:mb-0`}
+                className={`relative flex flex-col items-center text-center w-full lg:w-1/3 ${item.offset} group`}
               >
+                {/* Connecting Arrow for Mobile */}
+                {index !== processSteps.length - 1 && (
+                  <div className="absolute -bottom-10 lg:hidden text-slate-700">
+                    <ArrowDownToLine size={24} />
+                  </div>
+                )}
+
+                {/* Number Badge */}
+                <div className="absolute -top-4 -right-2 w-10 h-10 bg-slate-800 text-white font-bold rounded-full flex items-center justify-center border-2 border-slate-950 z-20 shadow-lg">
+                  {item.id}
+                </div>
+
                 {/* Circle Icon Container */}
-                <div className="w-40 h-40 bg-white rounded-full flex items-center justify-center shadow-[0_15px_40px_rgba(0,0,0,0.08)] mb-8 hover:scale-105 transition-transform duration-300 border border-gray-50">
+                <div className="w-32 h-32 bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(0,0,0,0.5)] mb-8 group-hover:scale-110 group-hover:border-emerald-500/50 transition-all duration-500 relative z-10 overflow-hidden">
+                  {/* Inner Glow */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent"></div>
                   {item.icon}
                 </div>
                 
-                {/* Step Subtitle */}
-                <div className="flex items-center text-gray-500 text-sm font-semibold tracking-widest uppercase mb-2">
-                  {item.stepText} 
-                  <svg className="w-5 h-5 ml-2 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
+                {/* Step Content */}
+                <div className="bg-slate-900/40 border border-white/5 px-8 py-6 rounded-2xl backdrop-blur-md w-full max-w-[280px]">
+                  <div className="flex items-center justify-center text-slate-400 text-xs font-bold tracking-widest uppercase mb-3">
+                    {item.stepText} 
+                  </div>
+                  <h3 className="text-white font-black text-xl uppercase tracking-wide">
+                    {item.actionText}
+                  </h3>
                 </div>
-                
-                {/* Action Text */}
-                <h3 className="text-[#e65c00] font-bold text-xl uppercase tracking-wide">
-                  {item.actionText}
-                </h3>
+
               </div>
             ))}
           </div>
