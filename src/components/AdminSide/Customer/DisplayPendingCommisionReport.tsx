@@ -468,7 +468,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
                     <span className="font-medium text-green-600">
                       Payable:{' '}
                       <span className="text-green-700">
-                        ${dateSummaries[date]?.totalPayable}
+                        ₹{dateSummaries[date]?.totalPayable}
                       </span>
                     </span>
                   </div>
@@ -550,13 +550,13 @@ const DisplayPendingCommisionReport: React.FC = () => {
                               {row.phoneNumber}
                             </td>
                             <td className="px-4 py-2 text-left text-sm font-medium">
-                              ${row.amount}
+                              ₹{row.amount}
                             </td>
                             <td className="px-4 py-2 text-left text-sm text-green-600">
-                              ${row.payableAmount}
+                              ₹{row.payableAmount}
                             </td>
                             <td className="px-4 py-2 text-left text-sm text-red-600">
-                              ${row.tdsAmount}
+                              ₹{row.tdsAmount}
                             </td>
                             {/* <td className="px-4 py-2 text-left text-sm">
                               {row.details}

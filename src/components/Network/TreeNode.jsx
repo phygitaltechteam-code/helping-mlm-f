@@ -64,7 +64,7 @@ const TreeNode = ({network}) => {
           ID: id,
             ...(crn_no ? { CRN: crn_no } : {}), 
           Name: first_name,
-          JoiningDate: joining_date,
+          // JoiningDate: joining_date,
 
           // ✅ FIX: sponsor = parent node name
           SponsorName: parent ? parent.name : 'N/A',
@@ -257,10 +257,10 @@ const TreeNode = ({network}) => {
             <p>
               <strong>CRN No:</strong> {hoveredNode.attributes.CRN}
             </p>
-            <p>
+            {/* <p>
               <strong>Joining Date:</strong>{' '}
               {hoveredNode.attributes.JoiningDate}
-            </p>
+            </p> */}
             <p>
               <strong>Sponsor:</strong> {hoveredNode.attributes.SponsorName}
             </p>

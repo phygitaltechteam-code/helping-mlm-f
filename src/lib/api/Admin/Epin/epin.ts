@@ -69,6 +69,19 @@ export const getAllEPins = async () => {
   }
 };
 
+export const getDaataaaa = async (crn:string) => {
+  try {
+    const response = await api.get(`/customerName/${crn}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      'Error in getAllEPins:',
+      error.response?.data.message || error.message,
+    );
+    throw error;
+  }
+};
+
 export const getAdminEpins = async () => {
   try {
     const response = await api.get(`/admin/epin/admin`);

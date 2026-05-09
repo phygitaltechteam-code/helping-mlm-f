@@ -52,6 +52,7 @@ const EpinHistory: React.FC = () => {
           <tbody>
             {paginatedData && paginatedData.length > 0 ? (
               paginatedData.map((item) => (
+                
                 <tr
                   key={item.id}
                   className="hover:bg-gray-50 dark:hover:bg-boxhoverdark"
@@ -72,7 +73,7 @@ const EpinHistory: React.FC = () => {
                     {item.customer?.crnNo || 'N/A'}
                   </td>
                   <td className="px-4 py-2 dark:text-white">
-                    ${item.paidAmount}
+                    ₹{item.paidAmount}
                   </td>
                   <td
                     className={`px-4 py-2 font-medium ${
@@ -92,6 +93,7 @@ const EpinHistory: React.FC = () => {
                   <td className="px-4 py-2 dark:text-white">
                     <img
                       src={item.image}
+                      
                       alt="Payment Proof"
                       className="h-12 w-12 cursor-pointer rounded object-cover"
                       onClick={() => window.open(item.image, '_blank')}

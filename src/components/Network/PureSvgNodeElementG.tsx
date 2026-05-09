@@ -27,6 +27,9 @@ const PureSvgNodeElementG = ({
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
 
+  console.log("PURE SVG COMPONENT LOADED");
+console.log(nodeDatum);
+
   const filteredAttributes = Object.entries(nodeDatum.attributes || {})
     .filter(([key]) => key !== 'IsGolden')
     .map(([key, value]) => {

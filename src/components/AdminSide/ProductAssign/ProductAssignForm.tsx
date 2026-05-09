@@ -1,12 +1,13 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import GenericInputField from '@/components/Forms/Input/GenericInputField';
 import GenericButton from '@/components/Forms/Buttons/GenericButton';
 import ProductCards from './ProductCards';
 import { useAssignProducts } from '@/lib/react-query/Admin/Product/assignProduct';
 import { useGetAllProducts } from '@/lib/react-query/Admin/Product/products';
-import { useGetCustomerEpins } from '@/lib/react-query/Admin/Epin/epin';
+// import { useGetCustomerEpins, useGetData } from '@/lib/react-query/Admin/Epin/epin';
+import { useGetData } from '@/lib/react-query/Admin/Epin/epin';
 import toast from 'react-hot-toast';
 
 type FormValues = {
@@ -20,16 +21,35 @@ const ProductAssignForm: React.FC = () => {
     },
   });
 
+//   const customerData = (dataaaa as any)?.data || null;
+
+// const customerName = customerData?.name || '';
+// const isValidCustomer = !!customerData?.MLMData?.crnNo;
+
   const { handleSubmit, watch, reset } = methods;
-  const crnNo = watch('crnNo');
+const crnNo = watch('crnNo');
 
-  const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
+const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
 
-  const { mutateAsync, isPending } = useAssignProducts();
+const { mutateAsync, isPending } = useAssignProducts();
 
-  const { data, isLoading, error } = useGetAllProducts();
-  const { data: epinData } = useGetCustomerEpins();
+const { data, isLoading, error } = useGetAllProducts();
 
+// ✅ FIRST: hook
+const { data: dataaaa, isLoading: isCustomerLoading } = useGetData(crnNo);
+
+// ✅ THEN: use data
+const customerData = dataaaa || null;
+
+const customerName = customerData?.name || '';
+const isValidCustomer = !!customerData?.MLMData?.crnNo;
+console.log("api ressss",dataaaa)
+
+  // useEffect(() => {
+  //   if (crnNo) {
+  //     refetch()
+  //   }
+  // }, [crnNo])
   // PRODUCTS
   const products: any[] =
     (data as any)?.data?.products ||
@@ -38,19 +58,19 @@ const ProductAssignForm: React.FC = () => {
     [];
 
   // EPIN DATA NORMALIZATION
-  const epins = Array.isArray(epinData)
-    ? epinData
-    : (epinData as any)?.data || [];
+  // const epins = Array.isArray(epinData)
+  //   ? epinData
+  //   : (epinData as any)?.data || [];
 
-  // FIND CUSTOMER BY CRN
-  const matched = epins.find(
-    (item: any) => item?.customer?.crnNo === crnNo
-  );
+  // // FIND CUSTOMER BY CRN
+  // const matched = epins.find(
+  //   (item: any) => item?.customer?.crnNo === crnNo
+  // );
 
-  const customer = matched?.customer || null;
-  const customerName = customer?.user?.fullname || '';
+  // const customer = matched?.customer || null;
+  // const customerName = customer?.user?.fullname || '';
 
-  const isValidCustomer = !!customer?.crnNo && !!customer?.user?.fullname;
+  // const isValidCustomer = !!customer?.crnNo && !!customer?.user?.fullname;
 
   // SELECT PRODUCT (ONLY ONE)
   const handleSelect = (product: any) => {
@@ -113,17 +133,25 @@ const ProductAssignForm: React.FC = () => {
         />
 
         {/* CUSTOMER STATUS */}
-        {crnNo && !isValidCustomer && (
-          <p className="text-red-500 text-sm">
-            No customer found
-          </p>
-        )}
+        {/* CUSTOMER STATUS */}
 
-        {isValidCustomer && (
-          <p className="text-green-600 text-sm">
-            Customer Name: {customerName}
-          </p>
-        )}
+{crnNo && isCustomerLoading && (
+  <p className="text-gray-500 text-sm">
+    Fetching customer...
+  </p>
+)}
+
+{crnNo && !isCustomerLoading && !isValidCustomer && (
+  <p className="text-red-500 text-sm">
+    No customer found
+  </p>
+)}
+
+{isValidCustomer && (
+  <p className="text-green-600 text-sm">
+    Customer Name: {customerName}
+  </p>
+)}
 
         {/* LOADING */}
         {isLoading && (

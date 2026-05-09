@@ -162,7 +162,7 @@ const EpinApproval = () => {
                           onClick={() => openModal(item.image)}
                           onError={(e) => {
                             console.log("IMAGE FAILED:", item.image);
-                            e.currentTarget.style.display = "none";
+                            e.currentTarget.style.display = "https://via.placeholder.com/100?text=No+Image";
                           }}
                         />
                       </td>

@@ -19,39 +19,61 @@ const PureSvgNodeElement = ({
   orientation,
   toggleNode,
   matchedNode,
+  fullTreeData,
 }) => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
 
   const attributes = nodeDatum.attributes || {};
 
+  // ✅ Build ID → Name map
+const buildIdNameMap = (node, map = {}) => {
+  if (!node) return map;
+
+  if (node.attributes?.ID) {
+    map[node.attributes.ID] = node.attributes.FirstName || node.name;
+  }
+
+  if (node.children) {
+    node.children.forEach((child) => buildIdNameMap(child, map));
+  }
+
+  return map;
+};
+
+const idNameMap = buildIdNameMap(fullTreeData);
+
+// ✅ Resolve sponsor name safely
+const sponsorId = attributes.DirectSponsorId;
+
+const sponsorName =
+  sponsorId && idNameMap[sponsorId]
+    ? idNameMap[sponsorId]
+    : sponsorId || 'N/A';
+
   // ✅ CLEAN CARD DATA ONLY
-  const filteredAttributes = [
-    {
-      key: 'CRN',
-      value: attributes.CRN || 'N/A',
-    },
-    {
-      key: 'Name',
-      value: attributes.FirstName || attributes.Name || nodeDatum.name || 'N/A',
-    },
-    {
-      key: 'JoiningDate',
-      value: attributes.JoiningDate || 'N/A',
-    },
-    {
-      key: 'DirectSponsorId',
-      value: attributes.DirectSponsorId || 'N/A',
-    },
-    {
-      key: 'TeamCount',
-      value: attributes.TeamCount ?? 0,
-    },
-    {
-      key: '__status',
-      value: attributes.IsActive ? 'Active' : 'Inactive',
-    },
-  ];
+ const filteredAttributes = [
+  {
+    key: 'CRN',
+    value: attributes.ID || 'N/A',
+  },
+  {
+    key: 'Name',
+    value: attributes.FirstName || nodeDatum.name || 'N/A',
+  },
+  {
+    key: 'Sponsor',
+    value: sponsorName, // ✅ FIXED
+  },
+  {
+    key: 'TeamCount',
+    value: attributes.TeamCount ?? 0,
+  },
+  {
+    key: '__status',
+    value: attributes.IsActive ? 'Active' : 'Inactive',
+  },
+];
 
   if (nodeDatum._invisible) {
     return (

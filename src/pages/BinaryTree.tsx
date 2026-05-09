@@ -8,11 +8,17 @@ import BinaryTreeNode from '@/components/Network/BinaryTreeNode';
 const findNodeById = (node: any, search: string): any => {
   if (!node) return null;
 
-  const term = search.toLowerCase();
+  const term = search.trim().toLowerCase();
 
-  const id = node.data?.id?.toLowerCase() || '';
-  const crnNo = node.data?.crnNo?.toLowerCase() || '';
-  const fullname = node.data?.fullname?.toLowerCase() || '';
+  const id = String(node.data?.id || '').toLowerCase();
+
+  const crnNo = String(node.data?.crnNo || '').toLowerCase();
+
+  const fullname = String(
+    node.data?.name ||
+    node.data?.first_name ||
+    ''
+  ).toLowerCase();
 
   if (
     id.includes(term) ||
@@ -23,7 +29,8 @@ const findNodeById = (node: any, search: string): any => {
   }
 
   for (const child of node.children || []) {
-    const found = findNodeById(child, search);
+    const found = findNodeById(child, term);
+
     if (found) return found;
   }
 

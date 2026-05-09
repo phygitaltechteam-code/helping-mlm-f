@@ -19,9 +19,9 @@ type Commission = {
 
 const columns: Column<Commission>[] = [
   {header: 'Date & Time', accessor: 'createdAt'},
-  {header: 'Amount ($)', accessor: 'amount', sortable: true},
-  {header: 'TDS ($)', accessor: 'tdsAmount', sortable: true},
-  {header: 'Payable ($)', accessor: 'payableAmount', sortable: true},
+  {header: 'Amount (₹)', accessor: 'amount', sortable: true},
+  {header: 'TDS (₹)', accessor: 'tdsAmount', sortable: true},
+  {header: 'Payable (₹)', accessor: 'payableAmount', sortable: true},
   {header: 'Type', accessor: 'type'},
   {header: 'Status', accessor: 'status'},
 ];

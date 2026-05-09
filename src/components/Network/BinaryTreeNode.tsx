@@ -109,7 +109,7 @@ const BinaryTreeNode = ({network}: {network: any}) => {
       attributes: {
         ID: id,
         FirstName: first_name,
-        DirectSponsorId: directSponsorId,
+       DirectSponsorId: directSponsorId || null,
         Side: side,
         IsGolden: isGolden,
         IsActive: isActive,
@@ -150,11 +150,12 @@ const BinaryTreeNode = ({network}: {network: any}) => {
     svg: {
       fn: (rd3tProps: any, appState: any) => (
         <PureSvgNodeElement
-          nodeDatum={rd3tProps.nodeDatum}
-          toggleNode={rd3tProps.toggleNode}
-          orientation={appState.orientation}
-          matchedNode={undefined}
-        />
+  nodeDatum={rd3tProps.nodeDatum}
+  toggleNode={rd3tProps.toggleNode}
+  orientation={appState.orientation}
+  matchedNode={undefined}
+  fullTreeData={data}
+/>
       ),
     },
     mixed: {

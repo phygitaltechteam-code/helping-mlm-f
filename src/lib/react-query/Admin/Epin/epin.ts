@@ -8,6 +8,7 @@ import {
   getAdminEpins,
   getAllEPins,
   getCustomerEpins,
+  getDaataaaa,
   getEpinRequest,
   getOtp,
   rejectEpinRequest,
@@ -123,6 +124,14 @@ export const useGetCustomerEpins = () => {
   return useQuery({
     queryKey: [ADMIN_EPIN_QUERY_KEYS.CUSTOMERS_EPINS],
     queryFn: () => getCustomerEpins(),
+  });
+};
+
+export const useGetData = (crn?:string) => {
+  return useQuery({
+    queryKey: ['data',crn],
+    queryFn: () => getDaataaaa(crn!),
+    enabled:!!crn
   });
 };
 
