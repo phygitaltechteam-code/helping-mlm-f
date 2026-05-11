@@ -1,188 +1,125 @@
 import React, { useRef, useState } from 'react';
-// Import your background asset here with a temporary name
+import { Wallet, Zap, LayoutDashboard, ShieldCheck, HeadphonesIcon, Globe2, BriefcaseBusiness, ChevronLeft, ChevronRight } from 'lucide-react';
 import featureBgImage from '../../assets/images/header/choose-bg.jpg';
 
 const WhyChooseUs = () => {
-  const carouselRef = useRef(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Expanded Array for Grid Generation Logic
   const features = [
-    {
-      id: 1,
-      title: 'DAILY INCOME',
-      description: 'Receive consistent daily returns on your strategic investments with our high-margin systems.',
-      icon: <svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4m0 0l-2-2m2 2l2-2"></path></svg>
-    },
-    {
-      id: 2,
-      title: 'FASTEST PAYMENTS',
-      description: 'Experience lightning-fast withdrawals processed automatically to your preferred method.',
-      icon: <svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-    },
-    {
-      id: 3,
-      title: 'EASY TO USE',
-      description: 'Our intuitive dashboard makes managing your portfolio simple, even for beginners.',
-      icon: <svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
-    },
-    {
-      id: 4,
-      title: 'HIGH SECURITY',
-      description: 'Bank-grade encryption and multi-layer protocols keep your funds and data safe.',
-      icon: <svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-    },
-    {
-      id: 5,
-      title: '24/7 SUPPORT',
-      description: 'Our global support team is available around the clock to assist you with any inquiries.',
-      icon: <svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-    },
-    {
-      id: 6,
-      title: 'GLOBAL ACCESS',
-      description: 'Invest and monitor your assets from anywhere in the world, on any device.',
-      icon: <svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-    },
-    {
-      id: 7,
-      title: 'EXPERT TEAM',
-      description: 'Benefit from strategies developed by industry veterans in high-margin sports investments.',
-      icon: <svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-    }
+    { id: 1, title: 'DAILY INCOME', desc: 'Consistent daily returns on strategic investments.', icon: <Wallet className="w-8 h-8" /> },
+    { id: 2, title: 'FAST PAYMENTS', desc: 'Lightning-fast automated withdrawals.', icon: <Zap className="w-8 h-8" /> },
+    { id: 3, title: 'EASY TO USE', desc: 'Intuitive dashboard for simple portfolio management.', icon: <LayoutDashboard className="w-8 h-8" /> },
+    { id: 4, title: 'HIGH SECURITY', desc: 'Bank-grade encryption keeps your funds safe.', icon: <ShieldCheck className="w-8 h-8" /> },
+    { id: 5, title: '24/7 SUPPORT', desc: 'Global support team available around the clock.', icon: <HeadphonesIcon className="w-8 h-8" /> },
+    { id: 6, title: 'GLOBAL ACCESS', desc: 'Invest and monitor assets from anywhere.', icon: <Globe2 className="w-8 h-8" /> },
+    { id: 7, title: 'EXPERT TEAM', desc: 'Strategies by industry veterans in sports investments.', icon: <BriefcaseBusiness className="w-8 h-8" /> }
   ];
 
-  // --- Carousel Logic ---
-  
-  // Update active dot based on scroll position
   const handleScroll = () => {
     if (carouselRef.current) {
       const scrollPosition = carouselRef.current.scrollLeft;
-      const cardWidth = carouselRef.current.children[0].offsetWidth + 24; // Card width + gap (24px for gap-6)
-      const newActiveIndex = Math.round(scrollPosition / cardWidth);
-      setActiveIndex(newActiveIndex);
+      const cardWidth = (carouselRef.current.children[0] as HTMLElement).offsetWidth + 24; 
+      setActiveIndex(Math.round(scrollPosition / cardWidth));
     }
   };
 
-  // Click handler to scroll to a specific card
-  const scrollToIndex = (index) => {
+  const scrollToIndex = (index: number) => {
     if (carouselRef.current) {
-      const cardWidth = carouselRef.current.children[0].offsetWidth + 24;
-      carouselRef.current.scrollTo({
-        left: index * cardWidth,
-        behavior: 'smooth'
-      });
+      const cardWidth = (carouselRef.current.children[0] as HTMLElement).offsetWidth + 24;
+      carouselRef.current.scrollTo({ left: index * cardWidth, behavior: 'smooth' });
       setActiveIndex(index);
     }
   };
 
-  // Next/Prev button handlers
-  const scrollNext = () => {
-    if (activeIndex < features.length - 1) scrollToIndex(activeIndex + 1);
-  };
-
-  const scrollPrev = () => {
-    if (activeIndex > 0) scrollToIndex(activeIndex - 1);
-  };
-
   return (
-    <section 
-      id="features" 
-      className="w-full py-16 lg:py-24 bg-cover bg-center bg-no-repeat relative bg-[#f4f7fb]"
-      style={{ backgroundImage: `url(${featureBgImage})` }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="features" className="w-full py-24 relative overflow-hidden bg-slate-950">
+      {/* Background with blend mode */}
+      <div 
+        className="absolute inset-0 opacity-10 mix-blend-luminosity bg-cover bg-center"
+        style={{ backgroundImage: `url(${featureBgImage})` }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/90 to-slate-950 z-0"></div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         
         {/* Header Section */}
-        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-          <h4 className="text-[#1e1545] font-semibold text-sm sm:text-base md:text-lg mb-2">
-            Boost Your Money
-          </h4>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#c61e3d] uppercase tracking-wide mb-4 md:mb-6">
-            WHY SHOULD CHOOSE US?
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-4 py-1.5 mb-6 backdrop-blur-md w-max mx-auto">
+             <span className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">Boost Your Wealth</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-6">
+            Why You Should <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Choose Us?</span>
           </h2>
-          <p className="text-gray-600 text-base md:text-lg leading-relaxed px-2">
-            Our service gives you better results and savings as per your requirements. You can manage your investments from anywhere—either from home or the workplace, at any time.
+          <p className="text-slate-400 text-lg leading-relaxed">
+            Our platform provides superior results and automation tailored to your requirements. Manage your portfolio seamlessly from anywhere, anytime.
           </p>
         </div>
 
-        {/* Carousel / Cards Grid */}
-        {/* Added standard padding-bottom to avoid box-shadow clipping */}
+        {/* Carousel Grid */}
         <div 
           ref={carouselRef}
           onScroll={handleScroll}
-          className="flex gap-4 md:gap-6 overflow-x-auto pb-10 pt-4 snap-x snap-mandatory hide-scrollbar"
+          className="flex gap-6 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 lg:mx-0 lg:px-0"
         >
-          {features.map((feature) => (
+          {features.map((feature, i) => (
             <div 
               key={feature.id} 
-              // w-[85vw] on mobile ensures the next card peeks into view
-              className="bg-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] p-6 md:p-8 flex flex-col items-center text-center w-[85vw] sm:w-[280px] md:w-[320px] snap-center transform transition-transform hover:-translate-y-2 duration-300 flex-shrink-0"
+              className={`bg-slate-900/50 border ${activeIndex === i ? 'border-emerald-500/50 shadow-[0_0_30px_rgba(52,211,153,0.15)]' : 'border-white/5'} rounded-3xl p-8 flex flex-col items-start w-[85vw] sm:w-[320px] shrink-0 snap-center transition-all duration-500 hover:-translate-y-2 hover:bg-slate-800/50 group`}
             >
-              <div className="text-[#b91c1c] mb-4 md:mb-6">
+              <div className={`p-4 rounded-2xl mb-6 transition-colors duration-300 ${activeIndex === i ? 'bg-emerald-500 text-slate-950' : 'bg-white/5 text-emerald-400 group-hover:bg-emerald-500/20'}`}>
                 {feature.icon}
               </div>
-              <h3 className="text-gray-800 font-bold text-base md:text-lg uppercase tracking-wide mb-3 md:mb-4">
+              <h3 className="text-white font-bold text-xl uppercase tracking-wide mb-3">
                 {feature.title}
               </h3>
-              <p className="text-gray-500 text-sm leading-relaxed">
-                {feature.description}
+              <p className="text-slate-400 text-sm leading-relaxed">
+                {feature.desc}
               </p>
             </div>
           ))}
         </div>
 
-        {/* Interactive Carousel Controls */}
-        <div className="flex items-center justify-center space-x-4 md:space-x-6 mt-2 md:mt-4">
-          
-          {/* Left Arrow */}
+        {/* Interactive Controls */}
+        <div className="flex items-center justify-center space-x-6 mt-4">
           <button 
-            onClick={scrollPrev}
+            onClick={() => scrollToIndex(Math.max(0, activeIndex - 1))}
             disabled={activeIndex === 0}
-            className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-md flex items-center justify-center transition-colors ${
-              activeIndex === 0 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:text-[#c61e3d]'
+            className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 border ${
+              activeIndex === 0 ? 'border-white/5 text-slate-600 cursor-not-allowed bg-slate-900/50' : 'border-white/20 text-white bg-slate-800 hover:bg-emerald-500 hover:border-emerald-500 hover:text-slate-950'
             }`}
           >
-            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+            <ChevronLeft size={20} />
           </button>
 
-          {/* Pagination Dots */}
-          <div className="flex space-x-1.5 sm:space-x-2">
+          <div className="flex space-x-2">
             {features.map((_, index) => (
               <button
                 key={index}
                 onClick={() => scrollToIndex(index)}
-                className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 ${
-                  activeIndex === index ? 'bg-[#f97316] w-5 sm:w-6' : 'bg-gray-400 hover:bg-gray-600 w-2 sm:w-2.5'
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  activeIndex === index ? 'bg-emerald-400 w-8' : 'bg-slate-700 hover:bg-slate-500 w-2'
                 }`}
-                aria-label={`Go to slide ${index + 1}`}
               ></button>
             ))}
           </div>
 
-          {/* Right Arrow */}
           <button 
-            onClick={scrollNext}
+            onClick={() => scrollToIndex(Math.min(features.length - 1, activeIndex + 1))}
             disabled={activeIndex === features.length - 1}
-            className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-md flex items-center justify-center transition-colors ${
-              activeIndex === features.length - 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:text-[#c61e3d]'
+            className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 border ${
+              activeIndex === features.length - 1 ? 'border-white/5 text-slate-600 cursor-not-allowed bg-slate-900/50' : 'border-white/20 text-white bg-slate-800 hover:bg-emerald-500 hover:border-emerald-500 hover:text-slate-950'
             }`}
           >
-            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+            <ChevronRight size={20} />
           </button>
         </div>
 
       </div>
       
-      {/* Hide scrollbar for webkit browsers for a cleaner look */}
       <style>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </section>
   );

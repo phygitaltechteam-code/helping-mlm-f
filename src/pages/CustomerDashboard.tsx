@@ -201,7 +201,7 @@ const CustomerDashboard = () => {
     customerTeam: dashboardData?.customerTeam ?? 0,
     activeTeam: activeTeamCount,
     inactiveTeam: inactiveTeamCount,
-    generationIncome: dashboardData?.generationIncome ?? 0,
+    generationIncome: dashboardData?.genrationIncome ?? 0,
     helpingIncome: dashboardData?.helpCommission ?? 0,
     totalSales: dashboardData?.totalSales ?? dashboardData?.TotalSales ?? 0,
   };
@@ -392,7 +392,7 @@ const CustomerDashboard = () => {
           { title: 'Helping Income', value: formatCurrency(stats.helpingIncome), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
           { title: 'Rent Helping Income', value: formatCurrency(stats.binaryIncome), gradient: 'from-blue-400 to-indigo-500', icon: <GiTakeMyMoney />, dollor: '$' },
 
-          { title: 'ROI Income', value: formatCurrency(stats.roiIncome), gradient: 'from-amber-400 to-orange-600', icon: <GiTakeMyMoney />, dollor: '$' },
+         // { title: 'ROI Income', value: formatCurrency(stats.roiIncome), gradient: 'from-amber-400 to-orange-600', icon: <GiTakeMyMoney />, dollor: '$' },
           // { title: 'Total Withdrawal', value: formatCurrency(stats.totalWithdrawal), gradient: 'from-purple-500 to-pink-600', icon: <FaMoneyBillWave /> ,dollor:'$' },
           // { title: 'Wallet Balance', value: formatCurrency(stats.walletBalance), gradient: 'from-pink-500 to-purple-700', icon: <FaWallet /> ,dollor:'$' },
         ].map((card, i) => (
