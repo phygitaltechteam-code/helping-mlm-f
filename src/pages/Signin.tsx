@@ -184,7 +184,7 @@ const SignIn: React.FC = () => {
                 <div className="flex justify-end">
                   <Link
                     to="/forget-password"
-                    className="text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-300 flex items-center gap-1 group/link"
+                    className="text-sm text-gray-400 hover:tin-h-screen bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-white relative overflow-hidden h-scrext-cyan-400 transition-colors duration-300 flex items-center gap-1 group/link"
                   >
                     Forgot password?
                     <FiArrowRight className="opacity-0 group-hover/link:opacity-100 transform translate-x-0 group-hover/link:translate-x-1 transition-all duration-300" />

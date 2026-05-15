@@ -1,5 +1,7 @@
 /* eslint-disable */
 
+// FROM TMS CHANGED
+
 import {motion} from 'framer-motion';
 import React from 'react';
 import {FaPhone} from 'react-icons/fa';
@@ -8,17 +10,16 @@ import {MdAlternateEmail} from 'react-icons/md';
 
 const Contact: React.FC = () => {
   return (
-    <div className="text-gray-600 body-font relative">
-      <h1 className="title-font text-purple text-center text-2xl font-semibold sm:text-3xl">
+    <div id="contact" className="text-gray-600 body-font relative">
+      <h1 className="title-font text-purple text-center text-2xl font-semibold sm:text-3xl pt-20 pb-8">
         Get in Touch
       </h1>
-      <p className="text-gray-500 mx-auto my-4 text-center text-base leading-relaxed lg:w-3/4 xl:w-2/4">
+      <p className="text-gray-500 mx-auto mb-8 text-center text-base leading-relaxed lg:w-3/4 xl:w-2/4">
         For inquiries and collaborations, feel free to reach out. We’re here to
         help you achieve your goals.
       </p>
       <section className="text-gray-600 body-font">
-        <div className="container mx-auto px-5 pb-14">
-          <div className="mb-20 text-center"></div>
+        <div className="container mx-auto px-5 pb-8">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <div className="flex flex-col items-center p-4 text-center">
               <div className="mb-5 inline-flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-4xl text-indigo-500">
@@ -69,7 +70,7 @@ const Contact: React.FC = () => {
         exit={{opacity: 0}}
         transition={{duration: 0.7, delay: 0.1}}
         viewport={{once: false, amount: 0.2}}
-        className="container mx-auto flex flex-wrap px-5 pb-24 pt-12 sm:flex-nowrap"
+        className="container mx-auto flex flex-wrap px-5 pb-24 pt-8 sm:flex-nowrap"
       >
         <div className="bg-gray-300 relative flex items-end justify-start overflow-hidden rounded-lg p-10 sm:mr-10 md:w-1/2 lg:w-2/3">
           <iframe

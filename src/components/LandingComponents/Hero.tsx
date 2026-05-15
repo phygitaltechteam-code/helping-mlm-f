@@ -52,7 +52,7 @@
 
 // export default Hero;
 
-//FROM TMS
+//FROM TMS CHANGED
 
 import hero from '@/assets/images/hero/hero.jpg';
 import {motion} from 'framer-motion';
@@ -60,8 +60,8 @@ import React from 'react';
 
 const Hero: React.FC = () => {
   return (
-    <section className="text-gray-600 body-font md:mx-20 md:mt-49">
-      <div className="container mx-auto flex flex-col-reverse items-center px-10 py-24 md:flex-row">
+    <section className="text-gray-600 body-font md:mx-20 md:mt-20">
+      <div className="container mx-auto flex flex-col-reverse items-center px-10 md:flex-row">
         <div className="flex flex-col items-center text-center md:w-1/2 md:items-start md:px-8 md:text-left lg:flex-grow">
           <h2 className="text-xl font-semibold text-blue-700">About Company</h2>
           <h1 className="title-font text-gray-900 mb-4 text-2xl font-medium md:text-4xl">
@@ -107,4 +107,3 @@ const Hero: React.FC = () => {
 };
 
 export default Hero;
-
