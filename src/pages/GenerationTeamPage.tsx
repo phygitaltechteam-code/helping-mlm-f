@@ -1,5 +1,7 @@
 /* eslint-disable */
+import GenericTable from '@/components/Forms/Table/GenericTable';
 import { useGetNetwotkTree } from '@/lib/react-query/network';
+import { Column } from '@/types';
 import React from 'react';
 
 // ─── Mock data (replace with real API) ───────────────────────────────────────
@@ -9,13 +11,66 @@ const MOCK_GENERATION_TEAM = [
   { sNo: 3, name: 'Gen Member C', crnNo: 'CRN2003', joinDate: '2024-03-22', generation: 1, status: 'Inactive' },
   { sNo: 4, name: 'Gen Member D', crnNo: 'CRN2004', joinDate: '2024-04-11', generation: 1, status: 'Active' },
 ];
-// ─────────────────────────────────────────────────────────────────────────────
 
+type Data = {
+  name:string,
+  crnNo:string,
+  joinDate:string,
+  generation:number,
+  status:string,
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+ 
 const GenerationTeamPage: React.FC = () => {
   const { data: apiResponse, isLoading, error } = useGetNetwotkTree();
 
-  const children = apiResponse?.children
-  console.log("memebr", children);
+
+   const genColumn: Column<Data>[] = [
+    {
+      header: 'Name',
+      accessor: 'name',
+    },
+    {
+      header: 'CRN No',
+      accessor: 'crnNo',
+    },
+    {
+      header: 'Join Date',
+      accessor: 'joinDate',
+    },
+    {
+      header: 'Generation',
+      accessor: 'generation',
+    },
+    {
+      header: 'Status',
+      accessor: 'status',
+      Cell: (value: string) => (
+        <span
+          className={`rounded-full px-2 py-1 text-xs font-semibold ${
+            value === 'Active'
+              ? 'bg-green-100 text-green-800'
+              : value === 'Inactive'
+                ? 'bg-red-100 text-red-800'
+                : 'bg-gray-100 text-gray-800'
+          }`}
+        >
+          {value}
+        </span>
+      ),
+    },
+  ];
+
+  const children = apiResponse?.children ||[]
+   const tableData = children.map((item):any => ({
+  crnNo: item?.data?.crnNo,
+  name: item?.name,
+  generation: 1,
+  status: item?.data?.isActive?"Active":"Inactive",
+  joinDate: item?.data?.createdAt==null?"-":item?.data?.createdAt,
+}));
+  console.log("memebr", tableData);
 
 
   return (
@@ -45,47 +100,19 @@ const GenerationTeamPage: React.FC = () => {
       </div>
 
       {/* Table */}
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-boxdark">
-        <div className="border-b px-6 py-4 dark:border-gray-700">
-          <h2 className="text-base font-semibold text-gray-800 dark:text-white">All Generation Team Members</h2>
+      <div className=" px-6 py-4 ">
+          <h2 className="text-base  text-xl font-bold text-gray-800 ">All Generation Team Members</h2>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:bg-gray-800 dark:text-gray-400">
-              <tr>
-                {['S.No', 'Name', 'CRN No', 'Join Date', 'Generation', 'Status'].map((h) => (
-                  <th key={h} className="px-5 py-3">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
-              {children?.map((row , index) => (
-                <tr key={row?.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
-                  <td className="px-5 py-3  text-gray-400">{index + 1}</td>
-                  <td className="px-5 py-3 font-medium text-gray-800 dark:text-white">{row.name}</td>
-                  <td className="px-5 py-3 font-mono text-gray-600 dark:text-gray-300">{row.data?.crnNo}</td>
-                  <td className="px-5 py-3 text-gray-600 dark:text-gray-300">{row.data?.joinDate}</td>
-                  <td className="px-5 py-3">
-                    <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">
-                      Gen {row.generation}
-                    </span>
-                  </td>
-                  <td className="px-5 py-3">
-                    <span className={`rounded-full px-3 py-1 text-xs font-semibold ${row.data?.isActive
-                        ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300'
-                        : 'bg-red-100 text-red-600 dark:bg-red-900/40 dark:text-red-300'
-                      }`}>
-                      {row.data?.isActive ? 'Active' : 'Inactive'}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="  bg-white shadow-sm  dark:bg-boxdark">
+        
     
+        {tableData?.length === 0 ? (
+        <p className="text-gray-500">No commission data available.</p>
+      ) : (
+        <GenericTable columns={genColumn} data={tableData} />
+      )}
       </div>
-    </div>
+   </div>
   );
 };
 

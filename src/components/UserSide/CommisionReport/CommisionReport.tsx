@@ -24,7 +24,7 @@ const CommissionReport: React.FC = () => {
   const {user} = useAuthContext();
   const id = user?.id;
 
-  const {data: apiData, isLoading, error} = useGetCommission();
+  const {data: apiData, isLoading, error} = useGetCommission(id?.toString() ||'');
   console.log('apiData', apiData);
 
   const [commissionData, setCommissionData] = useState<Data[]>([]);

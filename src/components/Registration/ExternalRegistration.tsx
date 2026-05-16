@@ -191,6 +191,7 @@ export const ExternalRegistration: React.FC = () => {
             <h1 className="col-span-12 mb-4 text-lg font-semibold">
               Sponsor Info
             </h1>
+           
             <p className="col-span-12 text-lg font-semibold">
               Name: &nbsp;{params.name}
             </p>
@@ -372,12 +373,12 @@ export const ExternalRegistration: React.FC = () => {
                   <h2 className="text-xl font-semibold text-white">
                     {data.purchasedProduct
                       ? 'Registration Complete'
-                      : 'Free Registration'}
+                      : 'Congratulations Successfully Register'}
                   </h2>
                   <p className="mt-0.5 text-sm text-blue-100/90">
                     {data.purchasedProduct
                       ? 'Your account is ready to use'
-                      : 'You now have free access'}
+                      : ''}
                   </p>
                 </div>
               </div>
@@ -390,6 +391,18 @@ export const ExternalRegistration: React.FC = () => {
               </div>
               <div className="text-gray-800 bg-gray-50 rounded-lg px-3 py-2 text-sm">
                 {data.fullname}
+              </div>
+               <div className="text-gray-500 flex items-center font-medium">
+                <UserIcon className="mr-2 h-4 w-4 opacity-70" /> Phone No.:
+              </div>
+              <div className="text-gray-800 bg-gray-50 rounded-lg px-3 py-2 text-sm">
+                {methods.getValues('phone')}
+              </div>
+               <div className="text-gray-500 flex items-center font-medium">
+                <UserIcon className="mr-2 h-4 w-4 opacity-70" /> Email Id:
+              </div>
+              <div className="text-gray-800 bg-gray-50 rounded-lg px-3 py-2 text-sm">
+                {methods.getValues('email')}
               </div>
               <div className="text-gray-500 flex items-center font-medium">
                 <KeyIcon className="mr-2 h-4 w-4 opacity-70" /> User ID:
@@ -406,7 +419,13 @@ export const ExternalRegistration: React.FC = () => {
               </div>
 
               <div className="text-gray-500 flex items-center font-medium">
-                <UsersIcon className="mr-2 h-4 w-4 opacity-70" /> Sponsor:
+                <UsersIcon className="mr-2 h-4 w-4 opacity-70" /> Sponsor Name:
+              </div>
+              <div className="text-gray-800 bg-gray-50 rounded-lg px-3 py-2 text-sm">
+                {params.name}
+              </div>
+              <div className="text-gray-500 flex items-center font-medium">
+                <UsersIcon className="mr-2 h-4 w-4 opacity-70" /> Sponsor ID:
               </div>
               <div className="text-gray-800 bg-gray-50 rounded-lg px-3 py-2 text-sm">
                 {data.sponsorId}

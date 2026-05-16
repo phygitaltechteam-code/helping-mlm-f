@@ -7,6 +7,7 @@ export const registerCustomer = async (
 ) => {
   const response = await api.post('/register', payload);
   return response.data;
+
 };
 
 // Login a user

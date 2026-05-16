@@ -11,10 +11,9 @@ const AuthLayout = () => {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center rounded-sm border border-stroke bg-gradient-to-b from-[#0f0c29] via-[#302b63] to-[#24243e] shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="flex w-full items-center justify-center">
-        <div className="w-full xl:w-1/2">
-          <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
+<div className="flex min-h-screen w-full overflow-hidden flex-col items-center justify-center rounded-sm border border-stroke bg-gradient-to-b from-[#0f0c29] via-[#302b63] to-[#24243e] shadow-default dark:border-strokedark dark:bg-boxdark">      <div className="flex w-full items-center justify-center ">
+        <div className="w-full xl:w-1/2 2xl:w-1/3 ">
+          <div className="w-full p-4 sm:p-8 lg:p-12">
             <Outlet />
           </div>
         </div>
