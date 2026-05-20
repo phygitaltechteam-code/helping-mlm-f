@@ -78,7 +78,7 @@ const WlcmLetter: React.FC = () => {
             effort you put to develop your business. For further details login
             on{' '}
             <strong className="text-[#e6860a]">
-              www.happilylife.co.in
+            https://happilylife.shop/
             </strong>{' '}
             with your userid and password.
           </p>

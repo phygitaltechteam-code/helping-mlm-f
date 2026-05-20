@@ -11,8 +11,8 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
   console.log('user', user);
 
   const displayDate = createdAt
-  ? new Date(createdAt).toLocaleDateString('en-GB')
-  : new Date().toLocaleDateString('en-GB');
+    ? new Date(createdAt).toLocaleDateString('en-GB')
+    : new Date().toLocaleDateString('en-GB');
   if (!user) return <p className="py-8 text-center">No user data found</p>;
 
   return (
@@ -21,9 +21,11 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
         {/* Logo */}
         <div className="flex flex-col items-center py-4">
           {/* <img alt="Logo" className="w-[193px] h-[70px] object-contain" /> */}
-          <h5 className="font-[Cambria] text-3xl text-[#1f7ca7]">HAPPILY LIFE</h5>
+          <h5 className="font-[Cambria] text-3xl text-[#1f7ca7]">
+            HAPPILY LIFE
+          </h5>
           <p className="font-[Cambria] text-[#000000]">
-            www.happilylife.co.in
+            https://happilylife.shop/
           </p>
         </div>
 
@@ -44,7 +46,8 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
                 <br />
                 HAPPILY LIFE
                 <br />
-                Flat No. S NO. 56 B wing Office No. 5 , Near Ambedkar Hotel , Mantra Essence Commercial Pri , Pune, Maharashtra 411028
+                Flat No. S NO. 56 B wing Office No. 5 , Near Ambedkar Hotel ,
+                Mantra Essence Commercial Pri , Pune, Maharashtra 411028
               </li>
             </ul>
           </div>
