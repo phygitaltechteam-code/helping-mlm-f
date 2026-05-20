@@ -62,6 +62,7 @@ export const deleteProduct = async (id) => {
 export const getAllProductsReport = async () => {
   try {
     const response = await api.get('/admin/product/report');
+    console.log('Fetched product report data:', response.data); // Debug log to check the structure of the response
     return response.data;
   } catch (error) {
     const err = error.response?.data || error;

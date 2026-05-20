@@ -44,7 +44,7 @@ export interface User {
   exp: number; // Expiration (timestamp in seconds)
   fullname: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   crnNo?: string;
   id: string;
   userId: string;
@@ -400,7 +400,8 @@ export interface ProductResponse {
   success: boolean;
   message: string;
   product?: Product; // For single product creation or update
-  data?: Product[]; // For fetching multiple products
+  data?: Product[];
+  id:string // For fetching multiple products
 }
 
 // Customer type

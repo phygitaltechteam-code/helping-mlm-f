@@ -54,12 +54,9 @@ const DisplayCustomerList: React.FC = () => {
         email: customer.email,
         sponsorId: customer.sponsorId,
         password: customer.password,
-isActive:
-  customer?.isActive === undefined
-    ? "-"
-    : customer.isActive
-    ? "Active"
-    : "Inactive",        action: 'Edit/Delete',
+        isActive:customer?.isActive
+    ? "Active": "Inactive",        
+    action: 'Edit/Delete',
       }));
       console.log('mappedData', mappedData);
       // Sort customers by creation date to show new customers at the top

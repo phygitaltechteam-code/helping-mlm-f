@@ -30,6 +30,10 @@ type PendingCommission = {
   email: string;
   dateOnly?: string;
   formattedTime?: string;
+  bankName?: string;
+  bankAccNo?: string;
+  bankIFSC?: string;
+  bankBranch?: string;
 };
 
 export const payCommissionBulkAll = async (ids: string[]) => {
@@ -57,7 +61,7 @@ export const usePayBulkCommission = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ['adminCommission'],
+        queryKey: ['admin-commission'],
       });
     },
   });
@@ -139,6 +143,10 @@ const DisplayPendingCommisionReport: React.FC = () => {
           email: item.email || item.customer?.user?.email || '-',
           dateOnly: dateOnly,
           // walletAddress:item.walletAddress,
+          bankName: item.bankName || item.customer?.bankName || '-',
+          bankAccNo: item.bankAccNo || item.customer?.bankAccNo || '-',
+          bankIFSC: item.bankIFSC || item.customer?.bankIFSC || '-',
+          bankBranch: item.bankBranch || item.customer?.bankBranch || '-',
         };
       })
       .sort(
@@ -198,7 +206,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
       {
         onSuccess: () => {
           toast.success('Commission paid successfully');
-          queryClient.invalidateQueries({queryKey: ['adminCommission']});
+          queryClient.invalidateQueries({queryKey: ['admin-commission']});
         },
         onError: (error) => {
           toast.error('Failed to pay commission');
@@ -248,7 +256,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
           toast.success(
             `Successfully paid ${ids.length} commissions for ${selectedDateForPayAll}`,
           );
-          queryClient.invalidateQueries({queryKey: ['adminCommission']});
+          queryClient.invalidateQueries({queryKey: ['admin-commission']});
           setIsProcessingBulk(false);
           setIsModalOpen(false);
           setSelectedDateForPayAll(null);
@@ -272,7 +280,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
         onSuccess: () => {
           toast.dismiss(loadingToast);
           toast.success('All commissions paid successfully');
-          queryClient.invalidateQueries({queryKey: ['adminCommission']});
+          queryClient.invalidateQueries({queryKey: ['admin-commission']});
           setIsProcessingBulk(false);
           setIsModalOpen(false);
         },
@@ -302,6 +310,10 @@ const DisplayPendingCommisionReport: React.FC = () => {
         'Full Name': item.fullname,
         Phone: item.phoneNumber,
         Email: item.email,
+        'Bank Name': item.bankName,
+        'Account No': item.bankAccNo,
+        'IFSC Code': item.bankIFSC,
+        'Branch': item.bankBranch,
         Amount: item.amount,
         Payable: item.payableAmount,
         TDS: item.tdsAmount,
@@ -506,6 +518,18 @@ const DisplayPendingCommisionReport: React.FC = () => {
                             Phone
                           </th>
                           <th className="px-4 py-4 text-left font-medium">
+                            Bank Name
+                          </th>
+                          <th className="px-4 py-4 text-left font-medium">
+                            Account No
+                          </th>
+                          <th className="px-4 py-4 text-left font-medium">
+                            IFSC Code
+                          </th>
+                          <th className="px-4 py-4 text-left font-medium">
+                            Branch
+                          </th>
+                          <th className="px-4 py-4 text-left font-medium">
                             Amount
                           </th>
                           <th className="px-4 py-4 text-left font-medium">
@@ -548,6 +572,18 @@ const DisplayPendingCommisionReport: React.FC = () => {
                             </td>
                             <td className="px-4 py-2 text-left text-sm">
                               {row.phoneNumber}
+                            </td>
+                            <td className="px-4 py-2 text-left text-sm">
+                              {row.bankName}
+                            </td>
+                            <td className="px-4 py-2 text-left text-sm font-mono">
+                              {row.bankAccNo}
+                            </td>
+                            <td className="px-4 py-2 text-left text-sm">
+                              {row.bankIFSC}
+                            </td>
+                            <td className="px-4 py-2 text-left text-sm">
+                              {row.bankBranch}
                             </td>
                             <td className="px-4 py-2 text-left text-sm font-medium">
                               ₹{row.amount}

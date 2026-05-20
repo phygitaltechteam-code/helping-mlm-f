@@ -40,6 +40,7 @@ export const epinSchema = z.object({
       {message: 'Amount must be at least 1 and greater than 0'},
     )
     .transform((val) => Number(val)),
+  crnNo: z.string().optional(),
 });
 
 // Validation schema

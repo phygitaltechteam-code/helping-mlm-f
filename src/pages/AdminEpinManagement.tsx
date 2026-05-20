@@ -10,8 +10,11 @@ const AdminEpinManagement: React.FC = () => {
         <div className="col-span-8">
           <Epin />
         </div>
-        <div className="col-span-8">
+        {/* <div className="col-span-8">
           <DisplayEpin />
+        </div> */}
+        <div className="col-span-8">
+          <CustomerEpins />
         </div>
       </div>
     </div>

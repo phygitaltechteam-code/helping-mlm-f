@@ -34,7 +34,9 @@ import { Route as AuthSigninRouteImport } from './routes/_auth/signin'
 import { Route as AppFundtransferRouteImport } from './routes/_app/fundtransfer'
 import { Route as AppNavbarroutesLoginRouteImport } from './routes/_app/navbarroutes/login'
 import { Route as AppNavbarroutesBusinessdocRouteImport } from './routes/_app/navbarroutes/businessdoc'
+import { Route as AppCustomerWlcletterRouteImport } from './routes/_app/customer/wlcletter'
 import { Route as AppCustomerProfileRouteImport } from './routes/_app/customer/profile'
+import { Route as AppCustomerMyInvoiceRouteImport } from './routes/_app/customer/myInvoice'
 import { Route as AppCustomerHistorypayoutRouteImport } from './routes/_app/customer/historypayout'
 import { Route as AppCustomerDownlinelistRouteImport } from './routes/_app/customer/downlinelist'
 import { Route as AppCustomerDirectcustomerRouteImport } from './routes/_app/customer/directcustomer'
@@ -42,6 +44,7 @@ import { Route as AppCustomerDashboardRouteImport } from './routes/_app/customer
 import { Route as AppCustomerCustmerfundtransferRouteImport } from './routes/_app/customer/custmerfundtransfer'
 import { Route as AppAdminWlcmletterRouteImport } from './routes/_app/admin/wlcmletter'
 import { Route as AppAdminRegistrationlandingRouteImport } from './routes/_app/admin/registrationlanding'
+import { Route as AppAdminProductapproveRouteImport } from './routes/_app/admin/productapprove'
 import { Route as AppAdminInvoiceRouteImport } from './routes/_app/admin/invoice'
 import { Route as RegistrationRegisterNameCrnnoRouteImport } from './routes/_registration/register.$name.$crnno'
 import { Route as AppCustomerWalletWithdrawhistoryRouteImport } from './routes/_app/customer/_wallet/withdrawhistory'
@@ -261,9 +264,19 @@ const AppNavbarroutesBusinessdocRoute =
     path: '/navbarroutes/businessdoc',
     getParentRoute: () => AppRoute,
   } as any)
+const AppCustomerWlcletterRoute = AppCustomerWlcletterRouteImport.update({
+  id: '/customer/wlcletter',
+  path: '/customer/wlcletter',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCustomerProfileRoute = AppCustomerProfileRouteImport.update({
   id: '/customer/profile',
   path: '/customer/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCustomerMyInvoiceRoute = AppCustomerMyInvoiceRouteImport.update({
+  id: '/customer/myInvoice',
+  path: '/customer/myInvoice',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCustomerHistorypayoutRoute =
@@ -305,6 +318,11 @@ const AppAdminRegistrationlandingRoute =
     path: '/admin/registrationlanding',
     getParentRoute: () => AppRoute,
   } as any)
+const AppAdminProductapproveRoute = AppAdminProductapproveRouteImport.update({
+  id: '/admin/productapprove',
+  path: '/admin/productapprove',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminInvoiceRoute = AppAdminInvoiceRouteImport.update({
   id: '/admin/invoice',
   path: '/admin/invoice',
@@ -797,6 +815,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AppDashboardLazyRoute
   '/landing': typeof LandingLandingLazyRoute
   '/admin/invoice': typeof AppAdminInvoiceRoute
+  '/admin/productapprove': typeof AppAdminProductapproveRoute
   '/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
@@ -804,7 +823,9 @@ export interface FileRoutesByFullPath {
   '/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
   '/customer/downlinelist': typeof AppCustomerDownlinelistRoute
   '/customer/historypayout': typeof AppCustomerHistorypayoutRoute
+  '/customer/myInvoice': typeof AppCustomerMyInvoiceRoute
   '/customer/profile': typeof AppCustomerProfileRoute
+  '/customer/wlcletter': typeof AppCustomerWlcletterRoute
   '/navbarroutes/businessdoc': typeof AppNavbarroutesBusinessdocRoute
   '/navbarroutes/login': typeof AppNavbarroutesLoginRoute
   '/admin/editemail': typeof AppAdminEditEmailEditemailRoute
@@ -910,6 +931,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AppDashboardLazyRoute
   '/landing': typeof LandingLandingLazyRoute
   '/admin/invoice': typeof AppAdminInvoiceRoute
+  '/admin/productapprove': typeof AppAdminProductapproveRoute
   '/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
@@ -917,7 +939,9 @@ export interface FileRoutesByTo {
   '/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
   '/customer/downlinelist': typeof AppCustomerDownlinelistRoute
   '/customer/historypayout': typeof AppCustomerHistorypayoutRoute
+  '/customer/myInvoice': typeof AppCustomerMyInvoiceRoute
   '/customer/profile': typeof AppCustomerProfileRoute
+  '/customer/wlcletter': typeof AppCustomerWlcletterRoute
   '/navbarroutes/businessdoc': typeof AppNavbarroutesBusinessdocRoute
   '/navbarroutes/login': typeof AppNavbarroutesLoginRoute
   '/admin/editemail': typeof AppAdminEditEmailEditemailRoute
@@ -1027,6 +1051,7 @@ export interface FileRoutesById {
   '/_landing/landing': typeof LandingLandingLazyRoute
   '/_app/': typeof AppIndexLazyRoute
   '/_app/admin/invoice': typeof AppAdminInvoiceRoute
+  '/_app/admin/productapprove': typeof AppAdminProductapproveRoute
   '/_app/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/_app/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/_app/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
@@ -1034,7 +1059,9 @@ export interface FileRoutesById {
   '/_app/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
   '/_app/customer/downlinelist': typeof AppCustomerDownlinelistRoute
   '/_app/customer/historypayout': typeof AppCustomerHistorypayoutRoute
+  '/_app/customer/myInvoice': typeof AppCustomerMyInvoiceRoute
   '/_app/customer/profile': typeof AppCustomerProfileRoute
+  '/_app/customer/wlcletter': typeof AppCustomerWlcletterRoute
   '/_app/navbarroutes/businessdoc': typeof AppNavbarroutesBusinessdocRoute
   '/_app/navbarroutes/login': typeof AppNavbarroutesLoginRoute
   '/_app/admin/_EditEmail/editemail': typeof AppAdminEditEmailEditemailRoute
@@ -1142,6 +1169,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/landing'
     | '/admin/invoice'
+    | '/admin/productapprove'
     | '/admin/registrationlanding'
     | '/admin/wlcmletter'
     | '/customer/custmerfundtransfer'
@@ -1149,7 +1177,9 @@ export interface FileRouteTypes {
     | '/customer/directcustomer'
     | '/customer/downlinelist'
     | '/customer/historypayout'
+    | '/customer/myInvoice'
     | '/customer/profile'
+    | '/customer/wlcletter'
     | '/navbarroutes/businessdoc'
     | '/navbarroutes/login'
     | '/admin/editemail'
@@ -1255,6 +1285,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/landing'
     | '/admin/invoice'
+    | '/admin/productapprove'
     | '/admin/registrationlanding'
     | '/admin/wlcmletter'
     | '/customer/custmerfundtransfer'
@@ -1262,7 +1293,9 @@ export interface FileRouteTypes {
     | '/customer/directcustomer'
     | '/customer/downlinelist'
     | '/customer/historypayout'
+    | '/customer/myInvoice'
     | '/customer/profile'
+    | '/customer/wlcletter'
     | '/navbarroutes/businessdoc'
     | '/navbarroutes/login'
     | '/admin/editemail'
@@ -1371,6 +1404,7 @@ export interface FileRouteTypes {
     | '/_landing/landing'
     | '/_app/'
     | '/_app/admin/invoice'
+    | '/_app/admin/productapprove'
     | '/_app/admin/registrationlanding'
     | '/_app/admin/wlcmletter'
     | '/_app/customer/custmerfundtransfer'
@@ -1378,7 +1412,9 @@ export interface FileRouteTypes {
     | '/_app/customer/directcustomer'
     | '/_app/customer/downlinelist'
     | '/_app/customer/historypayout'
+    | '/_app/customer/myInvoice'
     | '/_app/customer/profile'
+    | '/_app/customer/wlcletter'
     | '/_app/navbarroutes/businessdoc'
     | '/_app/navbarroutes/login'
     | '/_app/admin/_EditEmail/editemail'
@@ -1654,11 +1690,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNavbarroutesBusinessdocRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/customer/wlcletter': {
+      id: '/_app/customer/wlcletter'
+      path: '/customer/wlcletter'
+      fullPath: '/customer/wlcletter'
+      preLoaderRoute: typeof AppCustomerWlcletterRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/customer/profile': {
       id: '/_app/customer/profile'
       path: '/customer/profile'
       fullPath: '/customer/profile'
       preLoaderRoute: typeof AppCustomerProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customer/myInvoice': {
+      id: '/_app/customer/myInvoice'
+      path: '/customer/myInvoice'
+      fullPath: '/customer/myInvoice'
+      preLoaderRoute: typeof AppCustomerMyInvoiceRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/customer/historypayout': {
@@ -1708,6 +1758,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/registrationlanding'
       fullPath: '/admin/registrationlanding'
       preLoaderRoute: typeof AppAdminRegistrationlandingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/productapprove': {
+      id: '/_app/admin/productapprove'
+      path: '/admin/productapprove'
+      fullPath: '/admin/productapprove'
+      preLoaderRoute: typeof AppAdminProductapproveRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/admin/invoice': {
@@ -2278,6 +2335,7 @@ interface AppRouteChildren {
   AppDashboardLazyRoute: typeof AppDashboardLazyRoute
   AppIndexLazyRoute: typeof AppIndexLazyRoute
   AppAdminInvoiceRoute: typeof AppAdminInvoiceRoute
+  AppAdminProductapproveRoute: typeof AppAdminProductapproveRoute
   AppAdminRegistrationlandingRoute: typeof AppAdminRegistrationlandingRoute
   AppAdminWlcmletterRoute: typeof AppAdminWlcmletterRoute
   AppCustomerCustmerfundtransferRoute: typeof AppCustomerCustmerfundtransferRoute
@@ -2285,7 +2343,9 @@ interface AppRouteChildren {
   AppCustomerDirectcustomerRoute: typeof AppCustomerDirectcustomerRoute
   AppCustomerDownlinelistRoute: typeof AppCustomerDownlinelistRoute
   AppCustomerHistorypayoutRoute: typeof AppCustomerHistorypayoutRoute
+  AppCustomerMyInvoiceRoute: typeof AppCustomerMyInvoiceRoute
   AppCustomerProfileRoute: typeof AppCustomerProfileRoute
+  AppCustomerWlcletterRoute: typeof AppCustomerWlcletterRoute
   AppNavbarroutesBusinessdocRoute: typeof AppNavbarroutesBusinessdocRoute
   AppNavbarroutesLoginRoute: typeof AppNavbarroutesLoginRoute
   AppAdminEditEmailEditemailRoute: typeof AppAdminEditEmailEditemailRoute
@@ -2372,6 +2432,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDashboardLazyRoute: AppDashboardLazyRoute,
   AppIndexLazyRoute: AppIndexLazyRoute,
   AppAdminInvoiceRoute: AppAdminInvoiceRoute,
+  AppAdminProductapproveRoute: AppAdminProductapproveRoute,
   AppAdminRegistrationlandingRoute: AppAdminRegistrationlandingRoute,
   AppAdminWlcmletterRoute: AppAdminWlcmletterRoute,
   AppCustomerCustmerfundtransferRoute: AppCustomerCustmerfundtransferRoute,
@@ -2379,7 +2440,9 @@ const AppRouteChildren: AppRouteChildren = {
   AppCustomerDirectcustomerRoute: AppCustomerDirectcustomerRoute,
   AppCustomerDownlinelistRoute: AppCustomerDownlinelistRoute,
   AppCustomerHistorypayoutRoute: AppCustomerHistorypayoutRoute,
+  AppCustomerMyInvoiceRoute: AppCustomerMyInvoiceRoute,
   AppCustomerProfileRoute: AppCustomerProfileRoute,
+  AppCustomerWlcletterRoute: AppCustomerWlcletterRoute,
   AppNavbarroutesBusinessdocRoute: AppNavbarroutesBusinessdocRoute,
   AppNavbarroutesLoginRoute: AppNavbarroutesLoginRoute,
   AppAdminEditEmailEditemailRoute: AppAdminEditEmailEditemailRoute,
