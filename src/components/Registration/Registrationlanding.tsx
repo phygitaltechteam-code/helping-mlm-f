@@ -210,6 +210,9 @@ const RegistrationForm: React.FC = () => {
         }}
       >
         <div className="m-4 w-full max-w-2xl rounded-lg bg-[#F6F8FA] p-6 shadow-lg">
+                <button className='hover:cursor-pointer text-2xl text-blue-500  ' onClick={() => navigate({ to: '/signin' })}>
+            {  '<-back'}
+            </button>
           <div className="flex justify-center mb-6">
             <div className="bg-white p-3 rounded-2xl shadow-sm border border-gray-100">
               <img src={Logo} alt="ARC Logo" className="h-20 w-auto object-contain" />
@@ -220,6 +223,7 @@ const RegistrationForm: React.FC = () => {
             <h1 className="col-span-12 mb-4 text-lg font-semibold">
               Sponsor Info
             </h1>
+       
             <p className="col-span-12 text-lg font-semibold">
               Name: {sponcerIDName}
             </p>

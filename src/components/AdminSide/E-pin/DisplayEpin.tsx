@@ -13,11 +13,25 @@ type EpinData = {
   usedBy: string | null;
   type: string;
   price: number;
+  customer?: {
+    crnNo: string;
+    user?: {
+      fullname: string;
+    };
+  } | null;
 };
 
 const EpinColumn: Column<EpinData>[] = [
   {header: 'Created At', accessor: 'createdAt', sortable: true},
   {header: 'E-Pin No', accessor: 'epinNo'},
+  {
+    header: 'Customer Name',
+    accessor: (row) => row.customer?.user?.fullname || '-',
+  },
+  {
+    header: 'Customer ID (CRN)',
+    accessor: (row) => row.customer?.crnNo || '-',
+  },
   {
     header: 'Used',
     accessor: 'isUsed',

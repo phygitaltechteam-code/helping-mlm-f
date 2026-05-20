@@ -6,6 +6,14 @@ import {ArrowLeftIcon} from 'lucide-react';
 import React from 'react';
 import {useNavigate} from '@tanstack/react-router';
 
+// Format date function
+const formatDate = (dateString: string) => {
+  if (!dateString) return '-';
+
+  return new Date(dateString).toLocaleDateString('en-GB');
+  // Output: 19/05/2026
+};
+
 // Define the ProductColumns for the table
 const ProductColumns = [
   {header: 'Created At', accessor: 'createdAt'},
@@ -25,9 +33,14 @@ const DeliveredReport = () => {
   const {data: productData} = useGetAllProductsReport();
   const navigate = useNavigate();
 
-  // Filter data to only show items with orderStatus as "DELIVERED"
+  // Filter data and format date
   const deliveredData =
-    productData?.filter((item: any) => item.orderStatus === 'DELIVERED') || [];
+    productData
+      ?.filter((item: any) => item.orderStatus === 'DELIVERED')
+      ?.map((item: any) => ({
+        ...item,
+        createdAt: formatDate(item.createdAt),
+      })) || [];
 
   console.log('Delivered Products:', deliveredData);
 

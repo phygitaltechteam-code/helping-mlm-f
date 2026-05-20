@@ -343,100 +343,126 @@ const CustomerDashboard = () => {
         </div>
       </div>
 
-      {/* First Row - Team & Package Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
-        {[
-          {
-            title: 'Bonus Income',
-            value: 1000,
-            gradient: 'from-orange-400 to-red-500',
-            icon: <FaShoppingBag />,
-            remaining: Math.max(0, 5 - (dashboardData?.directTeam ?? 0))
-          },
-          { title: 'Total Team', value: formatCount(stats.directTeam), gradient: 'from-purple-500 to-pink-600', icon: <FaUsers /> },
+      {/* All Dashboard Cards */}
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 mb-10">
+  {[
+    // First Row Cards
+    {
+      title: 'Bonus Income',
+      value: 1000,
+      gradient: 'from-orange-400 to-red-500',
+      icon: <FaShoppingBag />,
+      remaining: Math.max(0, 5 - (dashboardData?.directTeam ?? 0))
+    },
 
-          // { title: 'My Package', value: formatCurrency(stats.myPackage), gradient: 'from-cyan-400 to-teal-500', icon: <FaBriefcase /> ,dollor:'$' },
+    {
+      title: 'Total Team',
+      value: formatCount(stats.directTeam),
+      gradient: 'from-purple-500 to-pink-600',
+      icon: <FaUsers />
+    },
 
-        ].filter(card => card.title !== 'Bonus Income' || (card.remaining ?? 0) > 0).map((card, i) => (
-          <div
-            key={i}
-            className={`bg-gradient-to-br ${card.gradient} rounded-lg shadow-lg p-4 text-white min-h-[120px] flex flex-col justify-between transition-transform hover:scale-[1.02]`}
-          >
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <p className="text-sm font-medium opacity-90 uppercase tracking-wider">{card.title}</p>
-                <div className="mt-1 flex items-baseline gap-1">
-                  <span className="text-xl font-bold opacity-80">{card.dollor}</span>
-                  <span className="text-3xl font-bold">{card.value}</span>
-                </div>
-                {card.remaining !== undefined && card.remaining > 0 && (
-                  <div className="mt-3">
-                    <span className="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full border border-white/10">
-                      {card.remaining} more to connect
-                    </span>
-                  </div>
-                )}
-              </div>
-              <div className="text-3xl opacity-40 bg-black/10 p-2 rounded-lg">{card.icon}</div>
+    // Second Row Cards
+    {
+      title: 'Active Team',
+      value: formatCount(stats.activeTeam),
+      gradient: 'from-green-400 to-emerald-500',
+      icon: <FaUsers />
+    },
+
+    {
+      title: 'Inactive Team',
+      value: formatCount(stats.inactiveTeam),
+      gradient: 'from-rose-400 to-pink-500',
+      icon: <FaUsers />
+    },
+
+    {
+      title: 'Genarational Income',
+      value: formatCurrency(stats.generationIncome),
+      gradient: 'from-indigo-500 to-purple-700',
+      icon: <FaSeedling />,
+      dollor: '$'
+    },
+
+    {
+      title: 'Helping Income',
+      value: formatCurrency(stats.helpingIncome),
+      gradient: 'from-cyan-500 to-blue-600',
+      icon: <FaSeedling />,
+      dollor: '$'
+    },
+
+    {
+      title: 'Rent Helping Income',
+      value: formatCurrency(stats.binaryIncome),
+      gradient: 'from-sky-500 to-indigo-600',
+      icon: <GiTakeMyMoney />,
+      dollor: '$'
+    },
+
+    // Third Row Cards
+    {
+      title: 'Remaining Member for helping Income',
+      value: formatCount(Math.max(0, 5 - stats.directTeam)),
+      gradient: 'from-yellow-400 to-orange-500',
+      icon: <FaUsers />
+    },
+
+    {
+      title: 'Total Earning',
+      value: formatCurrency(stats.totalEarning),
+      gradient: 'from-teal-500 to-green-600',
+      icon: <FaMoneyBillWave />,
+      dollor: '$'
+    },
+
+    {
+      title: 'Total Sales',
+      value: formatCurrency(stats.totalSales),
+      gradient: 'from-fuchsia-500 to-violet-600',
+      icon: <FaShoppingBag />,
+      dollor: '$'
+    },
+  ]
+    .filter(card => card.title !== 'Bonus Income' || (card.remaining ?? 0) > 0)
+    .map((card, i) => (
+      <div
+        key={i}
+        className={`bg-gradient-to-br ${card.gradient} rounded-lg shadow-lg p-4 text-white min-h-[120px] flex flex-col justify-between transition-transform hover:scale-[1.02]`}
+      >
+        <div className="flex justify-between items-start">
+          <div className="flex-1">
+            <p className="text-sm font-medium opacity-90 uppercase tracking-wider">
+              {card.title}
+            </p>
+
+            <div className="mt-1 flex items-baseline gap-1">
+              <span className="text-xl font-bold opacity-80">
+                {card.dollor}
+              </span>
+
+              <span className="text-3xl font-bold">
+                {card.value}
+              </span>
             </div>
-          </div>
-        ))}
-      </div>
 
-      {/* Second Row - Income & Wallet Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-10">
-        {[
-          { title: 'Active Team', value: formatCount(stats.activeTeam), gradient: 'from-green-400 to-emerald-500', icon: <FaUsers /> },
-          { title: 'Inactive Team', value: formatCount(stats.inactiveTeam), gradient: 'from-red-400 to-rose-500', icon: <FaUsers /> },
-          { title: 'Genarational Income', value: formatCurrency(stats.generationIncome), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
-          { title: 'Helping Income', value: formatCurrency(stats.helpingIncome), gradient: 'from-blue-600 to-purple-700', icon: <FaSeedling />, dollor: '$' },
-          { title: 'Rent Helping Income', value: formatCurrency(stats.binaryIncome), gradient: 'from-blue-400 to-indigo-500', icon: <GiTakeMyMoney />, dollor: '$' },
-
-         // { title: 'ROI Income', value: formatCurrency(stats.roiIncome), gradient: 'from-amber-400 to-orange-600', icon: <GiTakeMyMoney />, dollor: '$' },
-          // { title: 'Total Withdrawal', value: formatCurrency(stats.totalWithdrawal), gradient: 'from-purple-500 to-pink-600', icon: <FaMoneyBillWave /> ,dollor:'$' },
-          // { title: 'Wallet Balance', value: formatCurrency(stats.walletBalance), gradient: 'from-pink-500 to-purple-700', icon: <FaWallet /> ,dollor:'$' },
-        ].map((card, i) => (
-          <div
-            key={i}
-            className={`bg-gradient-to-br ${card.gradient} rounded-md shadow-lg p-3 text-white h-24 flex flex-col justify-between`}
-          >
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-base font-semibold">{card.title}</p>
-                <p className="text-3xl font-bold mt-1"> {card.dollor} {card.value}</p>
+            {card.remaining !== undefined && card.remaining > 0 && (
+              <div className="mt-3">
+                <span className="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full border border-white/10">
+                  {card.remaining} more to connect
+                </span>
               </div>
-              <div className="text-2xl opacity-90">{card.icon}</div>
-            </div>
+            )}
           </div>
-        ))}
-      </div>
 
-      {/* Third Row - New Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-10">
-        {[
-          { title: 'Remaining Member for helping Income', value: formatCount(Math.max(0, 5 - stats.directTeam)), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
-          { title: 'Total Earning', value: formatCurrency(stats.totalEarning), gradient: 'from-blue-400 to-indigo-500', icon: <FaMoneyBillWave />, dollor: '$' },
-          { title: 'Total Sales', value: formatCurrency(stats.totalSales), gradient: 'from-blue-400 to-indigo-500', icon: <FaShoppingBag />, dollor: '$' },
-
-          // { title: 'Customer Team', value: formatCount(stats.customerTeam), gradient: 'from-blue-400 to-indigo-500', icon: <FaUsers /> },
-
-        ].map((card, i) => (
-          <div
-            key={i}
-            className={`bg-gradient-to-br ${card.gradient} rounded-md shadow-lg p-3 text-white h-24 flex flex-col justify-between`}
-          >
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-base font-semibold">{card.title}</p>
-                <p className="text-3xl font-bold mt-1"> {card.dollor ? card.dollor : ''} {card.value}</p>
-              </div>
-              <div className="text-2xl opacity-90">{card.icon}</div>
-            </div>
+          <div className="text-3xl opacity-40 bg-black/10 p-2 rounded-lg">
+            {card.icon}
           </div>
-        ))}
+        </div>
       </div>
-
-
+    ))}
+</div>
     </div>
   );
 };

@@ -18,13 +18,15 @@ type Data = {
   type: string;
   details: string;
   walletAddress: string;
+ 
+
 };
 
 const CommissionReport: React.FC = () => {
   const {user} = useAuthContext();
   const id = user?.id;
-
-  const {data: apiData, isLoading, error} = useGetCommission();
+   
+  const {data: apiData, isLoading, error} = useGetCommission(id?.toString() ||'');
   console.log('apiData', apiData);
 
   const [commissionData, setCommissionData] = useState<Data[]>([]);
@@ -34,6 +36,7 @@ const CommissionReport: React.FC = () => {
       header: 'Date Time',
       accessor: 'dateTime',
     },
+   
     {
       header: 'Amount',
       accessor: 'amount',
@@ -110,6 +113,7 @@ const CommissionReport: React.FC = () => {
             type: item.type || 'N/A',
             details: item.details || 'N/A',
             walletAddress: item.customer?.wallet?.walletAddress || 'N/A',
+           
           };
         });
       setCommissionData(mappedData);
@@ -134,6 +138,9 @@ const CommissionReport: React.FC = () => {
           type: 'Referral',
           details: 'Direct referral bonus',
           walletAddress: '0xabc123...',
+          crnNo: 'CRN000001',
+          fullname: 'John Doe',
+          phoneNumber: '9876543210',
         },
         {
           id: 'MOCK002',
@@ -153,6 +160,9 @@ const CommissionReport: React.FC = () => {
           type: 'Level Income',
           details: 'Level 2 team bonus',
           walletAddress: '0xabc123...',
+          crnNo: 'CRN000002',
+          fullname: 'Jane Smith',
+          phoneNumber: '9876543211',
         },
       ]);
     }

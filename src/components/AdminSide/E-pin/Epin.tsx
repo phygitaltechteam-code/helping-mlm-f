@@ -1,23 +1,28 @@
-/* eslint-disable*/
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import GenericInputField from '@/components/Forms/Input/GenericInputField';
 import GenericButton from '@/components/Forms/Buttons/GenericButton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useAGetOtp, useCreateEPin } from '@/lib/react-query/Admin/Epin/epin';
+import { useAGetOtp, useCreateEPin, useCreateCustomerEPin } from '@/lib/react-query/Admin/Epin/epin';
 import toast from 'react-hot-toast';
 import GenericDropdown from '@/components/Forms/DropDown/GenericDropDown';
 import { epinSchema } from '@/lib/validation/epinSchema';
+import { unAuthenticatedApi } from '@/utils/axios';
 
 type FormValues = z.infer<typeof epinSchema>;
+
 export const Epin: React.FC = () => {
   const methods = useForm<FormValues>({
     resolver: zodResolver(epinSchema),
   });
-  const { mutate: createEPin, isSuccess, isPending, error } = useCreateEPin();
+  const { mutate: createEPin, isPending: isSelfPending } = useCreateEPin();
+  const { mutate: createCustomerEPin, isPending: isCustomerPending } = useCreateCustomerEPin();
   const [selectedType, setSelectedType] = useState('');
   const [countValue, setCountValue] = useState('');
+  const [customerName, setCustomerName] = useState<string>('');
+  const [isChecking, setIsChecking] = useState<boolean>(false);
   const {
     mutate: getOtp,
     isPending: isOtpPending,
@@ -25,41 +30,70 @@ export const Epin: React.FC = () => {
   } = useAGetOtp(); // assumes it uses .mutate
   const [isOtpRequested, setIsOtpRequested] = useState(false);
 
+  const crnNo = methods.watch('crnNo');
+
   const handleTypeChange = (value: string) => {
     setSelectedType(value);
   };
+
+  // 🔍 Check CRN
+  useEffect(() => {
+    const checkCRN = async () => {
+      if (crnNo && crnNo.length > 8) {
+        setIsChecking(true);
+        try {
+          const response = await unAuthenticatedApi.get(
+            `/customerName/${crnNo}`,
+          );
+
+          if (response.data?.data?.name) {
+            setCustomerName(response.data.data.name);
+          } else {
+            setCustomerName('Invalid format');
+          }
+        } catch {
+          setCustomerName('Invalid ID');
+        } finally {
+          setIsChecking(false);
+        }
+      } else {
+        setCustomerName('');
+      }
+    };
+
+    const timeoutId = setTimeout(checkCRN, 500);
+    return () => clearTimeout(timeoutId);
+  }, [crnNo]);
 
   console.log('count', countValue);
   console.log('price', selectedType);
 
   const onSubmit = (data: FormValues) => {
     console.log('dataaa123', data);
-    createEPin({
-      count: data.count,
-      price: data.price,
-    });
-    setSelectedType('');
+    if (data.crnNo && data.crnNo.trim() !== '') {
+      createCustomerEPin({
+        Count: data.count,
+        price: data.price,
+        crnNo: data.crnNo,
+      }, {
+        onSuccess: () => {
+          methods.reset();
+          setCustomerName('');
+          setSelectedType('');
+        }
+      });
+    } else {
+      createEPin({
+        count: data.count,
+        price: data.price,
+      }, {
+        onSuccess: () => {
+          methods.reset();
+          setSelectedType('');
+        }
+      });
+    }
   };
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     toast.success('E-Pin created successfully');
-  //     methods.reset();
-  //   }
-  //   if (error) {
-  //     toast.error('Error creating E-Pin');
-  //   }
-  // }, [isSuccess]);
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     toast.success('E-Pin created successfully');
-  //     methods.reset();
-  //   }
-  //   if (error) {
-  //     toast.error('Error creating E-Pin');
-  //   }
-  // }, [isSuccess]);
 
   return (
     <FormProvider {...methods}>
@@ -85,38 +119,54 @@ export const Epin: React.FC = () => {
               name="price"
               options={[
                 { label: '2000', value: '2000' },
-                { label: '1500', value: '1500' },
-                { label: '3500', value: '3500' },
+                { label: '2500', value: '2500' },
+                { label: '3000', value: '3000' },
               ]}
               onChange={handleTypeChange}
             />
           </div>
 
-          {/* {isOtpRequested && (
-            <div className="col-span-12 md:col-span-6">
-              <GenericInputField
-                name="OTP"
-                label="Otp"
-                placeholder="Enter OTP"
-              />
-            </div>0
-          )} */}
+          <div className="col-span-12 md:col-span-6">
+            <GenericInputField
+              name="crnNo"
+              label="CRN No (Optional - for Customer E-Pin)"
+              placeholder="Enter CRN No"
+            />
+            {isChecking && (
+              <div className="text-gray-500 mt-2 text-sm">
+                Checking customer...
+              </div>
+            )}
+            {customerName &&
+              customerName !== 'Invalid ID' &&
+              customerName !== 'Invalid format' && (
+                <div className="mt-4">
+                  <label className="block text-sm font-medium">
+                    Customer Name
+                  </label>
+                  <input
+                    value={customerName}
+                    disabled
+                    className="w-full border p-2 rounded bg-gray-100 dark:bg-gray-800 dark:text-white"
+                  />
+                </div>
+              )}
+            {customerName === 'Invalid ID' && (
+              <div className="mt-2 rounded bg-red-100 p-2 text-red-600 dark:bg-red-900/50 dark:text-red-200">
+                Invalid Customer CRN
+              </div>
+            )}
+            {customerName === 'Invalid format' && (
+              <div className="mt-2 rounded bg-yellow-100 p-2 text-yellow-600 dark:bg-yellow-900/50 dark:text-yellow-200">
+                Unexpected response format
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Form Buttons */}
-        {/* <div className="flex justify-end space-x-4">
-          <GenericButton type="submit">
-            {isOtpRequested
-              ? isPending
-                ? 'creating...'
-                : 'create'
-              : isOtpPending
-                ? 'getting...'
-                : 'get otp'}
-          </GenericButton>
-        </div> */}
-
-        <GenericButton type="submit">Submit</GenericButton>
+        <GenericButton type="submit">
+          {isSelfPending || isCustomerPending ? 'Submitting...' : 'Submit'}
+        </GenericButton>
       </form>
     </FormProvider>
   );

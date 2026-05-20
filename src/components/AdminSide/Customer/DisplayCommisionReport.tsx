@@ -15,10 +15,18 @@ type Commission = {
   payableAmount: number;
   tdsAmount: number;
   dateOnly?: string;
+  crnNo: string;
+  fullname: string;
+  phoneNumber: string;
+  email:string
 };
 
 const columns: Column<Commission>[] = [
   {header: 'Date & Time', accessor: 'createdAt'},
+  {header: 'CRN No', accessor: 'crnNo'},
+  {header: 'Full Name', accessor: 'fullname'},
+  {header: 'Contact Number', accessor: 'phoneNumber'},  
+  {header: 'Email', accessor: 'email'},
   {header: 'Amount (₹)', accessor: 'amount', sortable: true},
   {header: 'TDS (₹)', accessor: 'tdsAmount', sortable: true},
   {header: 'Payable (₹)', accessor: 'payableAmount', sortable: true},
@@ -38,9 +46,10 @@ const DisplayCommisionReport: React.FC = () => {
   const [expandedDates, setExpandedDates] = useState<Set<string>>(new Set());
 
   useEffect(() => {
+    console.log('commissionData', commissionData);
     if (isSuccess && commissionData) {
       const transformed: Commission[] = commissionData
-        .filter((item: any) => item.amount > 0 && item.status === 'PAID')
+      .filter((item: any) => item.amount > 0 && item.status === 'PAID')
         .map((item: any) => {
           const date = new Date(item.createdAt);
 
@@ -67,6 +76,10 @@ const DisplayCommisionReport: React.FC = () => {
             type: item.type,
             payableAmount: item.payableAmount,
             tdsAmount: item.tdsAmount,
+            crnNo: item.crnNo || item.customer?.crnNo || 'N/A',
+            fullname: item.fullname || item.customer?.user?.fullname || 'N/A',
+            phoneNumber: item.phoneNumber || item.customer?.user?.phoneNumber || 'N/A',
+            email: item.email || item.customer?.user?.email || 'N/A',
           };
         })
         .sort(

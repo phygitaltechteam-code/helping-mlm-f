@@ -10,8 +10,9 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
   const {user} = useAuthContext();
   console.log('user', user);
 
-  const displayDate = createdAt || new Date().toLocaleDateString();
-
+  const displayDate = createdAt
+  ? new Date(createdAt).toLocaleDateString('en-GB')
+  : new Date().toLocaleDateString('en-GB');
   if (!user) return <p className="py-8 text-center">No user data found</p>;
 
   return (
@@ -20,15 +21,15 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
         {/* Logo */}
         <div className="flex flex-col items-center py-4">
           {/* <img alt="Logo" className="w-[193px] h-[70px] object-contain" /> */}
-          <h5 className="font-[Cambria] text-3xl text-[#1f7ca7]">ARC</h5>
+          <h5 className="font-[Cambria] text-3xl text-[#1f7ca7]">HAPPILY LIFE</h5>
           <p className="font-[Cambria] text-[#000000]">
-            www.sjcgroupconsultant.co.in
+            www.happilylife.co.in
           </p>
         </div>
 
         {/* Receipt Info */}
         <div className="-mt-4 px-6 text-right font-[Cambria] text-[#000000]">
-          <p>Receipt No. : 1</p>
+          <p>Receipt No. : 1001</p>
           <p>Date : {displayDate}</p>
         </div>
 
@@ -41,9 +42,9 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
                 <br />
                 <b className="text-[#000000DE]">Regional Office:</b>
                 <br />
-                ARC CONSULTANT
+                HAPPILY LIFE
                 <br />
-                Near Union Bank at Post Peth, TAL-Walwa DIST-Sangli, 415407
+                Flat No. S NO. 56 B wing Office No. 5 , Near Ambedkar Hotel , Mantra Essence Commercial Pri , Pune, Maharashtra 411028
               </li>
             </ul>
           </div>
@@ -53,7 +54,7 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
               <li>Bill To,</li>
               <li>Member Code : {user.crnNo}</li>
               <li>Member Name : {user.fullname}</li>
-              <li>Mobile No : {user.phone || 'N/A'}</li>
+              <li>Mobile No : {user.phoneNumber || '-'}</li>
             </ul>
           </div>
         </div>

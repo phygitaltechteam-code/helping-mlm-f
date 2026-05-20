@@ -9,105 +9,66 @@ const WlcmLetter: React.FC = () => {
   if (!user) return <p className="py-8 text-center">No user data found</p>;
 
   return (
-    <div
-      style={{
-        width: '700px',
-        margin: '20px auto',
-        position: 'relative',
-        fontFamily: 'Arial, sans-serif',
-        backgroundColor: 'white',
-      }}
-    >
-      {/* Background Image */}
-      <img
-        src="https://npspension.co.in/MemberPanel/images/welcome.jpg"
-        alt="welcome"
-        style={{
-          width: '100%',
-          height: 'auto',
-          display: 'block',
-        }}
-      />
-
-      {/* Overlay Content */}
+    // Replaced fixed 700px with responsive w-full and max-w-[700px]
+    <div className="mx-auto w-full max-w-[700px] bg-white font-sans sm:p-4">
+      {/* 
+        Swapped <img> + absolute div for a background-image div.
+        This ensures the background stretches with the text on mobile screens. 
+      */}
       <div
+        className="relative w-full bg-cover bg-center bg-no-repeat px-5 py-10 shadow-sm sm:px-12 sm:py-12"
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          padding: '40px',
-          boxSizing: 'border-box',
+          backgroundImage: "url('https://npspension.co.in/MemberPanel/images/welcome.jpg')",
         }}
       >
         {/* Logo in center top */}
-        <div style={{textAlign: 'center', marginTop: '20px'}}>
-          <h5 className="mt-24 font-[Cambria] text-3xl text-[#1f7ca7]">
-            ARN
+        <div className="mt-8 text-center sm:mt-16">
+          {/* Responsive font sizing */}
+          <h5 className="font-[Cambria] text-2xl text-[#1f7ca7] sm:text-3xl">
+            HAPPILY LIFE
           </h5>
-          <p style={{margin: '5px 0', fontSize: '14px'}}>
-            www.scjgroupconsultant.co.in
-          </p>
+          <p className="mt-1 text-xs sm:text-sm">www.happilylife.co.in</p>
         </div>
 
         {/* Title */}
-        <h2
-          style={{
-            color: '#e6860a',
-            textAlign: 'center',
-            margin: '20px 0',
-          }}
-        >
+        <h2 className="my-6 text-center text-xl font-bold text-[#e6860a] sm:my-8 sm:text-2xl">
           Congratulations
         </h2>
 
         {/* Name + ID */}
-        <div
-          style={{textAlign: 'center', fontSize: '16px', marginBottom: '20px'}}
-        >
+        <div className="mb-6 text-center text-sm sm:text-base">
           <p>
-            <strong style={{color: 'black'}}>Name:</strong> {user.fullname}
+            <strong className="text-black">Name:</strong> {user.fullname}
           </p>
           {/* <p>
-            <strong style={{color: 'black'}}>ID:</strong> {user.crnNo}
+            <strong className="text-black">ID:</strong> {user.crnNo}
           </p> */}
         </div>
 
         {/* Letter Body */}
-        <div
-          style={{
-            fontSize: '14px',
-            lineHeight: '1.6',
-            textAlign: 'justify',
-            color: '#000',
-            backgroundColor: 'rgba(255,255,255,0.8)',
-            padding: '15px',
-            borderRadius: '8px',
-          }}
-        >
-          <p>
+        <div className="rounded-lg bg-white/80 p-4 text-justify text-sm leading-relaxed text-black sm:p-6 sm:text-base">
+          <p className="mb-4">
             Welcome to be a proud member of{' '}
-            <strong style={{color: '#e6860a'}}>SCJ Group Consultant</strong>. We
+            <strong className="text-[#e6860a]">HAPPILY LIFE</strong>. We
             really appreciate your faith in us. At{' '}
-            <strong style={{color: '#e6860a'}}>SCJ Group Consultant</strong> you
+            <strong className="text-[#e6860a]">HAPPILY LIFE</strong> you
             will now realise that dreams are not that difficult and success is
             within your sight. You are now a part of the opportunity of the
             millennium.
           </p>
 
-          <p>
-            <strong style={{color: '#e6860a'}}>SCJ Group Consultant</strong> is
+          <p className="mb-4">
+            <strong className="text-[#e6860a]">HAPPILY LIFE</strong> is
             an exciting "People Business". A business that has the potential to
             turn your dreams into reality. As you build your business, you will
             establish lifelong friendships and develop support systems
             unparalleled in any other business.
           </p>
 
-          <p>
+          <p className="mb-4">
             We are confident that you will receive gratification from your
             involvement with{' '}
-            <strong style={{color: '#e6860a'}}>SCJ Group Consultant </strong>{' '}
+            <strong className="text-[#e6860a]">HAPPILY LIFE </strong>
             and we wish you every success!
           </p>
 
@@ -116,25 +77,18 @@ const WlcmLetter: React.FC = () => {
             is optional, your earnings will depend directly on the amount of
             effort you put to develop your business. For further details login
             on{' '}
-            <strong style={{color: '#e6860a'}}>
-              www.scjgroupconsultant.co.in
+            <strong className="text-[#e6860a]">
+              www.happilylife.co.in
             </strong>{' '}
             with your userid and password.
           </p>
         </div>
 
         {/* Signature */}
-        <div style={{marginTop: '30px', textAlign: 'right'}}>
-          <h4 style={{margin: '0', fontSize: '16px'}}>Regards</h4>
-          <h3
-            style={{
-              color: '#e6860a',
-              fontWeight: 'bold',
-              margin: '5px 0 0 0',
-              fontSize: '16px',
-            }}
-          >
-            SCJ Group Consultant
+        <div className="mt-8 text-right sm:mt-12">
+          <h4 className="text-sm font-semibold sm:text-base">Regards</h4>
+          <h3 className="mt-1 text-base font-bold text-[#e6860a] sm:text-lg">
+            HAPPILY LIFE
           </h3>
         </div>
       </div>

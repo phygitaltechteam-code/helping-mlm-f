@@ -34,6 +34,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             icon: <BiListUl size={18} />,
           },
           {
+            label: 'Product Deliverd List',
+            path: '/admin/productapprove',
+            icon: <ProfileIcon size={18} />,
+          },
+          {
             label: 'Helping Tree',
             path: '/admin/binarytree',
             icon: <NetworkIcon size={18} />,
@@ -89,7 +94,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             icon: <PiSquaresFourLight size={18} />,
             path: '/admin/Epin',
             subRoutes: [
-              // { label: 'Admin E-Pin', path: '/admin/Epin' },
+               { label: 'Customer E-Pin', path: '/admin/Epin' },
               { label: 'Assign Products', path: '/admin/productassignpage' },
               { label: 'Recall E-pin', path: '/admin/recallepin' },
               { label: 'Requested E-pin', path: '/admin/approvedepin' },
@@ -103,7 +108,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             path: '/customer/dashboard',
             icon: <PiSquaresFourLight size={18} />,
           },
-          
+
+          {
+            label: 'My Invoice',
+            path: '/customer/myInvoice',
+            icon: <PiSquaresFourLight size={18} />,
+          },
+          {
+            label: 'Welcome Letter',
+            path: '/customer/wlcletter',
+            icon: <PiSquaresFourLight size={18} />,
+          },
           {
             label: 'My Tree',
             path: '/customer/generation-tree',

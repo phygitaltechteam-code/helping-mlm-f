@@ -42,6 +42,7 @@ const { data: dataaaa, isLoading: isCustomerLoading } = useGetData(crnNo);
 const customerData = dataaaa || null;
 
 const customerName = customerData?.name || '';
+const isActive = customerData?.MLMData?.isActive;
 const isValidCustomer = !!customerData?.MLMData?.crnNo;
 console.log("api ressss",dataaaa)
 
@@ -150,6 +151,15 @@ console.log("api ressss",dataaaa)
 {isValidCustomer && (
   <p className="text-green-600 text-sm">
     Customer Name: {customerName}
+    {isActive ? (
+      <span className="ml-4 font-bold text-green-600">
+        (Active)
+      </span>
+    ) : (
+      <span className="ml-4 font-bold text-red-600">
+        (Inactive)
+      </span>
+    )}
   </p>
 )}
 

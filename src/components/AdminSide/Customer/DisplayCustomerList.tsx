@@ -17,6 +17,7 @@ type CustomerData = {
   email: string;
   sponsorId: string;
   password: string;
+  isActive: boolean;
 };
 interface DecodedToken extends JwtPayload {
   user: {
@@ -29,6 +30,7 @@ const columns: Column<CustomerData>[] = [
   { header: 'Customer ID', accessor: 'crnNo' },
   { header: 'Mobile No', accessor: 'phoneNumber' },
   { header: 'Email', accessor: 'email' },
+  { header: 'Status', accessor: 'isActive' },
   // {header: 'Sponsor ID', accessor: 'sponsorId'},
   { header: 'Password', accessor: 'password' },
 ];
@@ -52,7 +54,9 @@ const DisplayCustomerList: React.FC = () => {
         email: customer.email,
         sponsorId: customer.sponsorId,
         password: customer.password,
-        action: 'Edit/Delete',
+        isActive:customer?.isActive
+    ? "Active": "Inactive",        
+    action: 'Edit/Delete',
       }));
       console.log('mappedData', mappedData);
       // Sort customers by creation date to show new customers at the top
