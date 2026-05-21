@@ -30,7 +30,8 @@ const Contact: React.FC = () => {
                   Our Location
                 </h2>
                 <p className="text-base leading-relaxed">
-                  College Corner, Sangli
+             Flat No. S NO. 56 B wing Office No. 5 , Near Ambedkar Hotel ,
+                Mantra Essence Commercial Pri , Pune, Maharashtra 411028
                 </p>
               </div>
             </div>
@@ -44,7 +45,7 @@ const Contact: React.FC = () => {
                   Our Email Address
                 </h2>
                 <p className="text-base leading-relaxed">
-                  Akadam5696@gmail.com
+                 Ganeshpirangute2151@gmail.com
                 </p>
               </div>
             </div>
@@ -57,7 +58,7 @@ const Contact: React.FC = () => {
                 <h2 className="text-gray-900 title-font mb-3 text-lg font-medium sm:text-xl">
                   Contact Number
                 </h2>
-                <p className="text-base leading-relaxed">9049305696</p>
+                <p className="text-base leading-relaxed">+91 77698 22034</p>
               </div>
             </div>
           </div>
@@ -96,12 +97,11 @@ const Contact: React.FC = () => {
                 EMAIL
               </h2>
               <a className="leading-relaxed text-indigo-500">
-                example@email.com
-              </a>
+Ganeshpirangute2151@gmail.com              </a>
               <h2 className="title-font text-gray-900 mt-4 text-xs font-semibold tracking-widest">
                 PHONE
               </h2>
-              <p className="leading-relaxed">123-456-7890</p>
+              <p className="leading-relaxed">+91 77698 22034</p>
             </div>
           </div>
         </div>

@@ -157,7 +157,6 @@ const EpinForm: React.FC = () => {
           <div className="col-span-12 md:col-span-6">
             <GenericInputField
               name="Count"
-              name="Count"
               label="E-Pin Count"
               placeholder="Enter E-Pin Count"
             />

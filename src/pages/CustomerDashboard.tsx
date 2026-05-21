@@ -306,7 +306,7 @@ const CustomerDashboard = () => {
 
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Dashboard</h1>
-          <p className="text-gray-600 font-medium">Welcome To ARC International</p>
+          <p className="text-gray-600 font-medium">Welcome To happily Life</p>
         </div>
       </div>
 
@@ -403,7 +403,7 @@ const CustomerDashboard = () => {
 
     // Third Row Cards
     {
-      title: 'Remaining Member for helping Income',
+      title: 'Remaining Member for Upgrade Income',
       value: formatCount(Math.max(0, 5 - stats.directTeam)),
       gradient: 'from-yellow-400 to-orange-500',
       icon: <FaUsers />

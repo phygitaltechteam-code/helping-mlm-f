@@ -60,7 +60,7 @@ import React from 'react';
 
 const Hero: React.FC = () => {
   return (
-    <section className="text-gray-600 body-font md:mx-20 md:mt-20">
+    <section className="text-gray-600 body-font md:mx-20 md:mt-20 ">
       <div className="container mx-auto flex flex-col-reverse items-center px-10 md:flex-row">
         <div className="flex flex-col items-center text-center md:w-1/2 md:items-start md:px-8 md:text-left lg:flex-grow">
           <h2 className="text-xl font-semibold text-blue-700">About Company</h2>
@@ -94,9 +94,9 @@ const Hero: React.FC = () => {
             </p>
           </p>
         </div>
-        <div className="mb-10 w-5/6 md:mb-0 md:w-1/2 lg:w-full lg:max-w-lg">
+        <div className="mb-10 w-5/6 md:mb-0 md:w-1/2 lg:w-full lg:max-w-lg ">
           <img
-            className="rounded object-cover object-center drop-shadow-2xl"
+            className="rounded object-cover object-center drop-shadow-2xl pt-4"
             alt="hero"
             src={hero}
           />

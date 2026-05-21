@@ -33,21 +33,52 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             path: '/admin/customerlist',
             icon: <BiListUl size={18} />,
           },
+           {
+            label: 'Generation Tree',
+            path: '/admin/network',
+            icon: <FaNetworkWired size={18} />,
+          },
+          {
+            label: 'Upgrade Tree',
+            path: '/admin/binarytree',
+            icon: <NetworkIcon size={18} />,
+          },
+          {
+            label: 'Payout',
+            path: '/admin/commisionreport',
+            icon: <BiRupee size={18} />,
+            subRoutes: [
+              {
+                label: 'Pending Commission',
+                path: '/admin/pendingcommisionreport',
+              },
+              {
+                label: 'Paid Commission',
+                path: '/admin/commisionreport',
+              },
+              
+            ],
+          },
+
+           {
+            label: 'E-Pin',
+            icon: <PiSquaresFourLight size={18} />,
+            path: '/admin/Epin',
+            subRoutes: [
+               { label: 'Assign E-Pin', path: '/admin/Epin' },
+              { label: 'Customer Activation', path: '/admin/productassignpage' },
+              { label: 'Recall E-pin', path: '/admin/recallepin' },
+              { label: 'Requested E-pin', path: '/admin/approvedepin' },
+            ],
+          },
+
           {
             label: 'Product Deliverd List',
             path: '/admin/productapprove',
             icon: <ProfileIcon size={18} />,
           },
-          {
-            label: 'Helping Tree',
-            path: '/admin/binarytree',
-            icon: <NetworkIcon size={18} />,
-          },
-          {
-            label: 'Generation Tree',
-            path: '/admin/network',
-            icon: <FaNetworkWired size={18} />,
-          },
+          
+         
           // {
           //   label: 'Fund Request',
           //   path: '/admin/epinrequest',
@@ -74,32 +105,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           //     },
           //   ],
           // },
-          {
-            label: 'Payout',
-            path: '/admin/commisionreport',
-            icon: <BiRupee size={18} />,
-            subRoutes: [
-              {
-                label: 'Paid Commission',
-                path: '/admin/commisionreport',
-              },
-              {
-                label: 'Pending Commission',
-                path: '/admin/pendingcommisionreport',
-              },
-            ],
-          },
-          {
-            label: 'E-Pin',
-            icon: <PiSquaresFourLight size={18} />,
-            path: '/admin/Epin',
-            subRoutes: [
-               { label: 'Customer E-Pin', path: '/admin/Epin' },
-              { label: 'Assign Products', path: '/admin/productassignpage' },
-              { label: 'Recall E-pin', path: '/admin/recallepin' },
-              { label: 'Requested E-pin', path: '/admin/approvedepin' },
-            ],
-          },
+          
+         
         ]
       : role === 'CUSTOMER'
         ? [
@@ -185,6 +192,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             label: 'E-Pin Request',
             path: '/customer/epinc',
             icon: <PiNavigationArrowFill size={18} />,
+          },
+          {
+            label: 'Customer Activation',
+            path: '/customer/customeractivation',
+            icon: <MdApproval size={18} />,
           },
         ]
         : [];

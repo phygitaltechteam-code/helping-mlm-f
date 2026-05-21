@@ -41,6 +41,7 @@ import { Route as AppCustomerHistorypayoutRouteImport } from './routes/_app/cust
 import { Route as AppCustomerDownlinelistRouteImport } from './routes/_app/customer/downlinelist'
 import { Route as AppCustomerDirectcustomerRouteImport } from './routes/_app/customer/directcustomer'
 import { Route as AppCustomerDashboardRouteImport } from './routes/_app/customer/dashboard'
+import { Route as AppCustomerCustomeractivationRouteImport } from './routes/_app/customer/customeractivation'
 import { Route as AppCustomerCustmerfundtransferRouteImport } from './routes/_app/customer/custmerfundtransfer'
 import { Route as AppAdminWlcmletterRouteImport } from './routes/_app/admin/wlcmletter'
 import { Route as AppAdminRegistrationlandingRouteImport } from './routes/_app/admin/registrationlanding'
@@ -301,6 +302,12 @@ const AppCustomerDashboardRoute = AppCustomerDashboardRouteImport.update({
   path: '/customer/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCustomerCustomeractivationRoute =
+  AppCustomerCustomeractivationRouteImport.update({
+    id: '/customer/customeractivation',
+    path: '/customer/customeractivation',
+    getParentRoute: () => AppRoute,
+  } as any)
 const AppCustomerCustmerfundtransferRoute =
   AppCustomerCustmerfundtransferRouteImport.update({
     id: '/customer/custmerfundtransfer',
@@ -819,6 +826,7 @@ export interface FileRoutesByFullPath {
   '/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
+  '/customer/customeractivation': typeof AppCustomerCustomeractivationRoute
   '/customer/dashboard': typeof AppCustomerDashboardRoute
   '/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
   '/customer/downlinelist': typeof AppCustomerDownlinelistRoute
@@ -935,6 +943,7 @@ export interface FileRoutesByTo {
   '/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
+  '/customer/customeractivation': typeof AppCustomerCustomeractivationRoute
   '/customer/dashboard': typeof AppCustomerDashboardRoute
   '/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
   '/customer/downlinelist': typeof AppCustomerDownlinelistRoute
@@ -1055,6 +1064,7 @@ export interface FileRoutesById {
   '/_app/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/_app/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/_app/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
+  '/_app/customer/customeractivation': typeof AppCustomerCustomeractivationRoute
   '/_app/customer/dashboard': typeof AppCustomerDashboardRoute
   '/_app/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
   '/_app/customer/downlinelist': typeof AppCustomerDownlinelistRoute
@@ -1173,6 +1183,7 @@ export interface FileRouteTypes {
     | '/admin/registrationlanding'
     | '/admin/wlcmletter'
     | '/customer/custmerfundtransfer'
+    | '/customer/customeractivation'
     | '/customer/dashboard'
     | '/customer/directcustomer'
     | '/customer/downlinelist'
@@ -1289,6 +1300,7 @@ export interface FileRouteTypes {
     | '/admin/registrationlanding'
     | '/admin/wlcmletter'
     | '/customer/custmerfundtransfer'
+    | '/customer/customeractivation'
     | '/customer/dashboard'
     | '/customer/directcustomer'
     | '/customer/downlinelist'
@@ -1408,6 +1420,7 @@ export interface FileRouteTypes {
     | '/_app/admin/registrationlanding'
     | '/_app/admin/wlcmletter'
     | '/_app/customer/custmerfundtransfer'
+    | '/_app/customer/customeractivation'
     | '/_app/customer/dashboard'
     | '/_app/customer/directcustomer'
     | '/_app/customer/downlinelist'
@@ -1737,6 +1750,13 @@ declare module '@tanstack/react-router' {
       path: '/customer/dashboard'
       fullPath: '/customer/dashboard'
       preLoaderRoute: typeof AppCustomerDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customer/customeractivation': {
+      id: '/_app/customer/customeractivation'
+      path: '/customer/customeractivation'
+      fullPath: '/customer/customeractivation'
+      preLoaderRoute: typeof AppCustomerCustomeractivationRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/customer/custmerfundtransfer': {
@@ -2339,6 +2359,7 @@ interface AppRouteChildren {
   AppAdminRegistrationlandingRoute: typeof AppAdminRegistrationlandingRoute
   AppAdminWlcmletterRoute: typeof AppAdminWlcmletterRoute
   AppCustomerCustmerfundtransferRoute: typeof AppCustomerCustmerfundtransferRoute
+  AppCustomerCustomeractivationRoute: typeof AppCustomerCustomeractivationRoute
   AppCustomerDashboardRoute: typeof AppCustomerDashboardRoute
   AppCustomerDirectcustomerRoute: typeof AppCustomerDirectcustomerRoute
   AppCustomerDownlinelistRoute: typeof AppCustomerDownlinelistRoute
@@ -2436,6 +2457,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminRegistrationlandingRoute: AppAdminRegistrationlandingRoute,
   AppAdminWlcmletterRoute: AppAdminWlcmletterRoute,
   AppCustomerCustmerfundtransferRoute: AppCustomerCustmerfundtransferRoute,
+  AppCustomerCustomeractivationRoute: AppCustomerCustomeractivationRoute,
   AppCustomerDashboardRoute: AppCustomerDashboardRoute,
   AppCustomerDirectcustomerRoute: AppCustomerDirectcustomerRoute,
   AppCustomerDownlinelistRoute: AppCustomerDownlinelistRoute,

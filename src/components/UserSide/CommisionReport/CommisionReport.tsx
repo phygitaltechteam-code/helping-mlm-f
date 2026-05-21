@@ -117,54 +117,6 @@ const CommissionReport: React.FC = () => {
           };
         });
       setCommissionData(mappedData);
-    } else {
-      // Add Mock Data for testing when backend has no data
-      setCommissionData([
-        {
-          id: 'MOCK001',
-          dateTime: new Intl.DateTimeFormat('en-IN', {
-            year: 'numeric',
-            month: 'long',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-          }).format(new Date()),
-          amount: 500,
-          payableAmount: 450,
-          tdsAmount: 25,
-          adminCharges: 25,
-          status: 'PAID',
-          type: 'Referral',
-          details: 'Direct referral bonus',
-          walletAddress: '0xabc123...',
-          crnNo: 'CRN000001',
-          fullname: 'John Doe',
-          phoneNumber: '9876543210',
-        },
-        {
-          id: 'MOCK002',
-          dateTime: new Intl.DateTimeFormat('en-IN', {
-            year: 'numeric',
-            month: 'long',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-          }).format(new Date(Date.now() - 86400000)), // Yesterday
-          amount: 250,
-          payableAmount: 225,
-          tdsAmount: 12.5,
-          adminCharges: 12.5,
-          status: 'PENDING',
-          type: 'Level Income',
-          details: 'Level 2 team bonus',
-          walletAddress: '0xabc123...',
-          crnNo: 'CRN000002',
-          fullname: 'Jane Smith',
-          phoneNumber: '9876543211',
-        },
-      ]);
     }
   }, [apiData]);
 

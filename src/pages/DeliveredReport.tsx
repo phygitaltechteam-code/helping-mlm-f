@@ -21,11 +21,10 @@ const ProductColumns = [
   {header: 'Customer Name', accessor: 'fullname'},
   {header: 'Phone Number', accessor: 'phoneNumber'},
   {header: 'Product Name', accessor: 'name'},
-  {header: 'Description', accessor: 'description'},
-  {header: 'Actual Price', accessor: 'actualPrice'},
-  {header: 'Discounted Price', accessor: 'discountedPrice'},
+  // {header: 'Actual Price', accessor: 'actualPrice'},
+  {header: 'Price', accessor: 'discountedPrice'},
   {header: 'Total Amount', accessor: 'totalAmount'},
-  {header: 'Delivery Charges', accessor: 'deliveryCharges'},
+  // {header: 'Delivery Charges', accessor: 'deliveryCharges'},
   {header: 'Status', accessor: 'orderStatus'},
 ];
 
