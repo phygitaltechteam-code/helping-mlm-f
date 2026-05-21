@@ -146,7 +146,7 @@ const CustomerDashboard = () => {
 
   const crnNo = user?.crnNo || 'CRN0000000';
 
-  const baseUrl = import.meta.env.VITE_LIVE_URL || 'https://f5z16x7l-5173.inc1.devtunnels.ms';
+  const baseUrl = import.meta.env.VITE_LIVE_URL || 'https://happilylife.online';
   const RegistrationLink = `${baseUrl}/register/${fullname}/${crnNo}`;
   const shortRegistrationLink = `.../register/${fullname}/${crnNo}`;
 

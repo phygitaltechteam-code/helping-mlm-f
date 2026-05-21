@@ -43,7 +43,7 @@ const Home: React.FC = () => {
     ? user.fullname.replace(/\s/g, '_')
     : 'unknown_user';
   const crnNo = user?.crnNo || 'CRN0000000';
-  const baseUrl = import.meta.env.VITE_LIVE_URL || 'https://f5z16x7l-5173.inc1.devtunnels.ms';
+  const baseUrl = import.meta.env.VITE_LIVE_URL || 'https://happilylife.online';
   const registrationLink = `${baseUrl}/register/${fullname}/${crnNo}`;
   const shortRegistrationLink = `.../register/${fullname}/${crnNo}`;
 
