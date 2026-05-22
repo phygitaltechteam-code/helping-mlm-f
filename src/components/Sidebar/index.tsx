@@ -135,6 +135,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 label: 'Generation Tree',
                 path: '/customer/generation-tree',
               },
+              {
+                label: 'Helping Tree',
+                path: '/customer/helping-tree',
+              }
             ],
           },
           {

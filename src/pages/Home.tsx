@@ -80,7 +80,7 @@ const Home: React.FC = () => {
 
       // Income & Commission
       const helpIncomeGivers = data?.autopoolIncome || 0;
-      const totalBonusIncomeGivers = data?.bonusIncomeAchivers || 0;
+      const totalBonusIncomeGivers = data?.bonusIncomeAchivers*1000 || 0;
       const totalGenerationIncomeGivers = data?.genrationIncome || 0;
       const totalCommission = data?.totalCommission || 0;
 

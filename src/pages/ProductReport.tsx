@@ -204,20 +204,7 @@ const ProductReport = () => {
           >
             Show History
           </button>
-          <button
-            className="rounded border border-blue-500 px-3 py-1.5 text-sm sm:text-base text-blue-500 transition-colors hover:bg-primary/5"
-            onClick={async () => {
-              console.log('Manual refresh: fetching product report');
-              try {
-                const res = await refetchProductReport();
-                console.log('Refetch result:', res);
-              } catch (err) {
-                console.error('Refetch failed:', err);
-              }
-            }}
-          >
-            Refresh
-          </button>
+          
         </div>
       </div>
 
@@ -385,8 +372,7 @@ const ProductReport = () => {
                               className="flex transform items-center gap-2 rounded bg-secondary px-3 py-2 text-sm font-medium text-white shadow transition-all hover:bg-secondary/80 active:scale-95"
                               title="Confirm you have given the product to the user"
                             >
-                              <CheckmarkIcon className="h-4 w-4" />
-                              Confirm
+                              Deliverd
                             </button>
                           ) : (
                             <span className="text-gray-500 text-sm font-medium italic">

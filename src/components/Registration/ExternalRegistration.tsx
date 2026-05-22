@@ -350,7 +350,7 @@ export const ExternalRegistration: React.FC = () => {
           <div className="mx-4 w-full max-w-md scale-[0.98] transform rounded-xl bg-white p-0 shadow-2xl transition-all duration-300 hover:scale-100">
             {/* Header with gradient */}
             <div
-              className={`bg-gradient-to-r ${data.purchasedProduct ? 'from-blue-600 to-indigo-700' : 'from-blue-500 to-blue-600'} rounded-t-xl px-6 py-5`}
+              className={`bg-primary ${data.purchasedProduct ? 'from-blue-600 to-indigo-700' : 'from-blue-500 to-blue-600'} rounded-t-xl px-6 py-5`}
             >
               <div className="flex items-center space-x-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
