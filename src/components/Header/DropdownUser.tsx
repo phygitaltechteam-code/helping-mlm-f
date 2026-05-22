@@ -152,7 +152,7 @@ const DropdownUser = () => {
               </div>
               <Link
                 to="/Customer/profile"
-                className="inline-block px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-200"
+                className="inline-block px-4 py-2 text-sm font-semibold text-white bg-secondary rounded-lg hover:bg-secondary/90 transition duration-200"
               >
                 Edit Profile/View Profile
               </Link>
@@ -182,7 +182,7 @@ const DropdownUser = () => {
             {decoded?.role === 'ADMIN' && (
               <Link
                 to="/admin/updateprofile"
-                className="flex items-center gap-1 px-2 text-blue-600"
+                className="flex items-center gap-1 px-2 text-primary"
               >
                 <FiEdit />
                 Edit

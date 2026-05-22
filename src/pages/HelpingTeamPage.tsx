@@ -29,9 +29,9 @@ const HelpingTeamPage: React.FC = () => {
 
       {/* Summary Cards */}
       <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-blue-100 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-900/20">
+        <div className="rounded-xl border border-blue-100 bg-primary/5 p-4 dark:border-blue-900 dark:bg-blue-900/20">
           <p className="text-xs font-medium uppercase text-blue-500">Total Members</p>
-          <p className="mt-1 text-2xl font-bold text-blue-700 dark:text-blue-400">{MOCK_HELPING_TEAM.length}</p>
+          <p className="mt-1 text-2xl font-bold text-blue-700 dark:text-primary/80">{MOCK_HELPING_TEAM.length}</p>
         </div>
         <div className="rounded-xl border border-green-100 bg-green-50 p-4 dark:border-green-900 dark:bg-green-900/20">
           <p className="text-xs font-medium uppercase text-green-500">Left Side</p>
@@ -71,7 +71,7 @@ const HelpingTeamPage: React.FC = () => {
                   <td className="px-5 py-3">
                     <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
                       row.side === 'LEFT'
-                        ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
+                        ? 'bg-primary/10 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
                         : 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300'
                     }`}>
                       {row.side}

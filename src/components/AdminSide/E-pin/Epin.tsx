@@ -102,30 +102,7 @@ export const Epin: React.FC = () => {
         className="space-y-8 bg-white p-8 dark:bg-black"
       >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
-          <h1 className="col-span-12 mb-4 text-lg font-semibold">E-Pin</h1>
-
-          <div className="col-span-12 md:col-span-6">
-            <GenericInputField
-              name="count"
-              label="Count"
-              placeholder="Count"
-              onChange={(val: string) => setCountValue(val)}
-            />
-          </div>
-
-          <div className="col-span-12 md:col-span-6">
-            <GenericDropdown
-              label="Price"
-              name="price"
-              options={[
-                { label: '2000', value: '2000' },
-                { label: '2500', value: '2500' },
-                { label: '3000', value: '3000' },
-              ]}
-              onChange={handleTypeChange}
-            />
-          </div>
-
+          <h1 className="col-span-12 mb-4 text-lg font-semibold"> Assign E-Pin</h1>
           <div className="col-span-12 md:col-span-6">
             <GenericInputField
               name="crnNo"
@@ -162,6 +139,30 @@ export const Epin: React.FC = () => {
               </div>
             )}
           </div>
+
+          <div className="col-span-12 md:col-span-6">
+            <GenericInputField
+              name="count"
+              label="Count"
+              placeholder="Count"
+              onChange={(val: string) => setCountValue(val)}
+            />
+          </div>
+
+          <div className="col-span-12 md:col-span-6">
+            <GenericDropdown
+              label="Price"
+              name="price"
+              options={[
+                { label: '2000', value: '2000' },
+                { label: '2500', value: '2500' },
+                { label: '3000', value: '3000' },
+              ]}
+              onChange={handleTypeChange}
+            />
+          </div>
+
+          
         </div>
 
         <GenericButton type="submit">

@@ -124,7 +124,7 @@ console.log("api ressss",dataaaa)
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-6 bg-white p-6"
       >
-        <h1 className="text-lg font-semibold">Assign Products</h1>
+        <h1 className="text-lg font-semibold">Customer Activation</h1>
 
         {/* CRN INPUT */}
         <GenericInputField
@@ -192,7 +192,7 @@ console.log("api ressss",dataaaa)
           <GenericButton
             type="submit"
             disabled={isPending || !isFormValid}
-            className="bg-blue-600 text-white px-4 py-2"
+            className="bg-secondary text-white px-4 py-2"
           >
             {isPending ? 'Submitting...' : 'Submit'}
           </GenericButton>

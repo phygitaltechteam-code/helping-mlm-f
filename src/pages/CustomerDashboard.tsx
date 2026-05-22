@@ -158,14 +158,14 @@ const CustomerDashboard = () => {
 
   // Helper to format currency
   const formatCurrency = (value: number | undefined) =>
-    value != null ? `${value.toLocaleString('en-US')}` : '$0';
+    value != null ? `${value.toLocaleString('en-US')}` : '0';
 
   const formatCount = (value: number | undefined) => value?.toLocaleString() ?? '0';
 
   if (isPending) {
     return (
       <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center">
-        <HiOutlineRefresh className="animate-spin text-4xl text-blue-600 mr-3" />
+        <HiOutlineRefresh className="animate-spin text-4xl text-primary mr-3" />
         <div className="text-xl text-gray-600">Loading dashboard...</div>
       </div>
     );
@@ -177,7 +177,7 @@ const CustomerDashboard = () => {
         <div className="text-xl text-red-600">Failed to load dashboard data</div>
         <button
           onClick={() => refetch()}
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 flex items-center gap-2"
+          className="bg-secondary text-white px-6 py-2 rounded hover:bg-secondary/90 flex items-center gap-2"
         >
           <HiOutlineRefresh className="text-lg" />
           Retry
@@ -241,14 +241,14 @@ const CustomerDashboard = () => {
                 {epinPrice !== null && (
                   <p className="text-xs text-green-600 mt-1 font-medium flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    E-pin Value: ${epinPrice}
+                    E-pin Value: Rs. {epinPrice}
                   </p>
                 )}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Select Product / Package {epinPrice !== null && `(Max: $${epinPrice})`}
+                  Select Product / Package {epinPrice !== null && `(Max: Rs. ${epinPrice})`}
                 </label>
                 <select
                   value={selectedProductId}
@@ -261,7 +261,7 @@ const CustomerDashboard = () => {
                   </option>
                   {filteredProducts?.map((prod: any) => (
                     <option key={prod._id || prod.id} value={prod._id || prod.id}>
-                      {prod.name} - ${prod.discountedPrice || prod.price}
+                      {prod.name} - Rs. {prod.discountedPrice || prod.price}
                     </option>
                   ))}
                 </select>
@@ -288,7 +288,7 @@ const CustomerDashboard = () => {
                 <button
                   type="submit"
                   disabled={isActivating || !epinInput || !selectedProductId}
-                  className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center"
+                  className="flex-1 px-4 py-2 bg-secondary hover:bg-secondary/90 text-white font-medium rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center"
                 >
                   {isActivating ? (
                     <HiOutlineRefresh className="animate-spin text-xl" />
@@ -306,13 +306,13 @@ const CustomerDashboard = () => {
 
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Dashboard</h1>
-          <p className="text-gray-600 font-medium">Welcome To ARC International</p>
+          <p className="text-gray-600 font-medium">Welcome To happily Life</p>
         </div>
       </div>
 
       {/* Referral Link */}
       <div className="mb-8">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="bg-gradient-to-r from-primary to-secondary text-white p-4 rounded-xl shadow-lg shadow-primary/20 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4 w-full sm:w-auto min-w-0">
             <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm shrink-0">
               <FaNetworkWired className="text-xl md:text-2xl" />
@@ -327,8 +327,11 @@ const CustomerDashboard = () => {
 
           <button
             onClick={() => copyLink('registration')}
-            className={`${copied === 'registration' ? 'bg-green-500' : 'bg-white text-indigo-700 hover:bg-blue-50'
-              } w-full sm:w-auto px-6 py-2.5 rounded-lg font-bold flex justify-center items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0`}
+            className={`${
+              copied === 'registration'
+                ? 'bg-white text-secondary'
+                : 'bg-white/20 hover:bg-white/30 text-white border border-white/30'
+            } w-full sm:w-auto px-6 py-2.5 rounded-lg font-bold flex justify-center items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0`}
           >
             {copied === 'registration' ? (
               <>
@@ -344,125 +347,112 @@ const CustomerDashboard = () => {
       </div>
 
       {/* All Dashboard Cards */}
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 mb-10">
-  {[
-    // First Row Cards
-    {
-      title: 'Bonus Income',
-      value: 1000,
-      gradient: 'from-orange-400 to-red-500',
-      icon: <FaShoppingBag />,
-      remaining: Math.max(0, 5 - (dashboardData?.directTeam ?? 0))
-    },
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 mb-10">
+        {[
+          // First Row Cards
+         
 
-    {
-      title: 'Total Team',
-      value: formatCount(stats.directTeam),
-      gradient: 'from-purple-500 to-pink-600',
-      icon: <FaUsers />
-    },
+          {
+            title: 'Total Team',
+            value: formatCount(stats.directTeam),
+            icon: <FaUsers className="text-2xl text-blue-500" />
+          },
 
-    // Second Row Cards
-    {
-      title: 'Active Team',
-      value: formatCount(stats.activeTeam),
-      gradient: 'from-green-400 to-emerald-500',
-      icon: <FaUsers />
-    },
+          // Second Row Cards
+          {
+            title: 'Active Team',
+            value: formatCount(stats.activeTeam),
+            icon: <FaUsers className="text-2xl text-green-500" />
+          },
 
-    {
-      title: 'Inactive Team',
-      value: formatCount(stats.inactiveTeam),
-      gradient: 'from-rose-400 to-pink-500',
-      icon: <FaUsers />
-    },
+          {
+            title: 'Inactive Team',
+            value: formatCount(stats.inactiveTeam),
+            icon: <FaUsers className="text-2xl text-red-500" />
+          },
+               {
+            title: 'Total Sales',
+            value: formatCurrency(stats.totalSales),
+            icon: <FaShoppingBag className="text-2xl text-emerald-500" />,
+            dollor: 'Rs.'
+          },
+            {
+            title: 'Total Earning',
+            value: formatCurrency(stats.totalEarning),
+            icon: <FaMoneyBillWave className="text-2xl text-teal-500" />,
+            dollor: 'Rs.'
+          },
 
-    {
-      title: 'Genarational Income',
-      value: formatCurrency(stats.generationIncome),
-      gradient: 'from-indigo-500 to-purple-700',
-      icon: <FaSeedling />,
-      dollor: '$'
-    },
+          {
+            title: 'Genarational Income',
+            value: formatCurrency(stats.generationIncome),
+            icon: <FaSeedling className="text-2xl text-indigo-500" />,
+            dollor: 'Rs.'
+          },
+           {
+            title: 'Bonus Income',
+            value: 1000,
+            icon: <FaShoppingBag className="text-2xl text-pink-500" />,
+            remaining: Math.max(0, 5 - activeTeamCount)
+          },
 
-    {
-      title: 'Helping Income',
-      value: formatCurrency(stats.helpingIncome),
-      gradient: 'from-cyan-500 to-blue-600',
-      icon: <FaSeedling />,
-      dollor: '$'
-    },
+          {
+            title: 'Upgrade Income',
+            value: formatCurrency(stats.helpingIncome),
+            icon: <FaSeedling className="text-2xl text-yellow-500" />,
+            dollor: 'Rs.'
+          },
 
-    {
-      title: 'Rent Helping Income',
-      value: formatCurrency(stats.binaryIncome),
-      gradient: 'from-sky-500 to-indigo-600',
-      icon: <GiTakeMyMoney />,
-      dollor: '$'
-    },
+          {
+            title: 'Next Upgrade Income',
+            value: formatCurrency(stats.binaryIncome),
+            icon: <GiTakeMyMoney className="text-2xl text-sky-500" />,
+            dollor: 'Rs.'
+          },
 
-    // Third Row Cards
-    {
-      title: 'Remaining Member for helping Income',
-      value: formatCount(Math.max(0, 5 - stats.directTeam)),
-      gradient: 'from-yellow-400 to-orange-500',
-      icon: <FaUsers />
-    },
+          // Third Row Cards
+          {
+            title: 'Upgrade Members',
+            value: formatCount(Math.max(0, 5 - activeTeamCount)),
+            icon: <FaUsers className="text-2xl text-orange-500" />
+          },
 
-    {
-      title: 'Total Earning',
-      value: formatCurrency(stats.totalEarning),
-      gradient: 'from-teal-500 to-green-600',
-      icon: <FaMoneyBillWave />,
-      dollor: '$'
-    },
 
-    {
-      title: 'Total Sales',
-      value: formatCurrency(stats.totalSales),
-      gradient: 'from-fuchsia-500 to-violet-600',
-      icon: <FaShoppingBag />,
-      dollor: '$'
-    },
-  ]
-    .filter(card => card.title !== 'Bonus Income' || (card.remaining ?? 0) > 0)
-    .map((card, i) => (
-      <div
-        key={i}
-        className={`bg-gradient-to-br ${card.gradient} rounded-lg shadow-lg p-4 text-white min-h-[120px] flex flex-col justify-between transition-transform hover:scale-[1.02]`}
-      >
-        <div className="flex justify-between items-start">
-          <div className="flex-1">
-            <p className="text-sm font-medium opacity-90 uppercase tracking-wider">
-              {card.title}
-            </p>
-
-            <div className="mt-1 flex items-baseline gap-1">
-              <span className="text-xl font-bold opacity-80">
-                {card.dollor}
-              </span>
-
-              <span className="text-3xl font-bold">
-                {card.value}
-              </span>
-            </div>
-
-            {card.remaining !== undefined && card.remaining > 0 && (
-              <div className="mt-3">
-                <span className="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full border border-white/10">
-                  {card.remaining} more to connect
-                </span>
+        ]
+          .filter(card => card.title !== 'Bonus Income' || (card.remaining ?? 0) > 0)
+          .map((card, i) => (
+            <div
+              key={i}
+              className="dark:bg-gray-800 bg-white p-4 shadow-default dark:bg-black flex flex-col justify-between h-[140px] transition-transform hover:scale-[1.02]"
+            >
+              <div className="flex items-center justify-between">
+                <div className="dark:bg-gray-700 flex h-10 w-10 items-center justify-center rounded-full bg-gray dark:bg-primary">
+                  {card.icon}
+                </div>
+                {card.remaining !== undefined && card.remaining > 0 && (
+                  <span className="bg-primary/5 text-primary dark:bg-blue-900/30 dark:text-primary/80 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-blue-100 dark:border-blue-800">
+                    {card.remaining} more
+                  </span>
+                )}
               </div>
-            )}
-          </div>
-
-          <div className="text-3xl opacity-40 bg-black/10 p-2 rounded-lg">
-            {card.icon}
-          </div>
-        </div>
+              <div className="mt-2">
+                <p className="text-gray-800 text-xl font-semibold dark:text-white flex items-baseline gap-0.5">
+                  {card.dollor && (
+                    <span className="text-lg font-bold opacity-80">
+                      {card.dollor}
+                    </span>
+                  )}
+                  {card.value}
+                </p>
+                <div className="align-center flex flex-row justify-between">
+                  <p className="text-gray-500 dark:text-gray-400 text-sm truncate" title={card.title}>
+                    {card.title}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
       </div>
-    ))}
-</div>
     </div>
   );
 };

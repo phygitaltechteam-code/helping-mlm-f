@@ -86,7 +86,7 @@ export const SelectProduct: React.FC<SponserInfoProps> = ({onNext}) => {
                   >
                     {/* Selected Indicator */}
                     {count > 0 && (
-                      <div className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-xs font-bold text-white">
+                      <div className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-xs font-bold text-white">
                         {count}
                       </div>
                     )}

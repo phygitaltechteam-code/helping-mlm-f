@@ -190,7 +190,7 @@ const DisplayHelping = () => {
                   key={profile.id}
                   className={`hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer px-4 py-2 text-sm ${
                     selectedId === profile.id
-                      ? 'bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-white'
+                      ? 'bg-primary/10 text-blue-900 dark:bg-blue-900 dark:text-white'
                       : 'text-gray-700 dark:text-gray-200'
                   }`}
                   onClick={() => handleProfileChange(profile.id)}

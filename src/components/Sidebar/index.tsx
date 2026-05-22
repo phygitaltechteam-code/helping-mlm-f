@@ -33,21 +33,52 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             path: '/admin/customerlist',
             icon: <BiListUl size={18} />,
           },
+           {
+            label: 'Generation Tree',
+            path: '/admin/network',
+            icon: <FaNetworkWired size={18} />,
+          },
+          {
+            label: 'Upgrade Tree',
+            path: '/admin/binarytree',
+            icon: <NetworkIcon size={18} />,
+          },
+          {
+            label: 'Payout',
+            path: '/admin/commisionreport',
+            icon: <BiRupee size={18} />,
+            subRoutes: [
+              {
+                label: 'Pending Commission',
+                path: '/admin/pendingcommisionreport',
+              },
+              {
+                label: 'Paid Commission',
+                path: '/admin/commisionreport',
+              },
+              
+            ],
+          },
+
+           {
+            label: 'E-Pin',
+            icon: <PiSquaresFourLight size={18} />,
+            path: '/admin/Epin',
+            subRoutes: [
+               { label: 'Assign E-Pin', path: '/admin/Epin' },
+              { label: 'Customer Activation', path: '/admin/productassignpage' },
+              { label: 'Recall E-pin', path: '/admin/recallepin' },
+              { label: 'Requested E-pin', path: '/admin/approvedepin' },
+            ],
+          },
+
           {
             label: 'Product Deliverd List',
             path: '/admin/productapprove',
             icon: <ProfileIcon size={18} />,
           },
-          {
-            label: 'Helping Tree',
-            path: '/admin/binarytree',
-            icon: <NetworkIcon size={18} />,
-          },
-          {
-            label: 'Generation Tree',
-            path: '/admin/network',
-            icon: <FaNetworkWired size={18} />,
-          },
+          
+         
           // {
           //   label: 'Fund Request',
           //   path: '/admin/epinrequest',
@@ -74,32 +105,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           //     },
           //   ],
           // },
-          {
-            label: 'Payout',
-            path: '/admin/commisionreport',
-            icon: <BiRupee size={18} />,
-            subRoutes: [
-              {
-                label: 'Paid Commission',
-                path: '/admin/commisionreport',
-              },
-              {
-                label: 'Pending Commission',
-                path: '/admin/pendingcommisionreport',
-              },
-            ],
-          },
-          {
-            label: 'E-Pin',
-            icon: <PiSquaresFourLight size={18} />,
-            path: '/admin/Epin',
-            subRoutes: [
-               { label: 'Customer E-Pin', path: '/admin/Epin' },
-              { label: 'Assign Products', path: '/admin/productassignpage' },
-              { label: 'Recall E-pin', path: '/admin/recallepin' },
-              { label: 'Requested E-pin', path: '/admin/approvedepin' },
-            ],
-          },
+          
+         
         ]
       : role === 'CUSTOMER'
         ? [
@@ -128,6 +135,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 label: 'Generation Tree',
                 path: '/customer/generation-tree',
               },
+              {
+                label: 'Upgrade Tree',
+                path: '/customer/helping-tree',
+              }
             ],
           },
           {
@@ -186,6 +197,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             path: '/customer/epinc',
             icon: <PiNavigationArrowFill size={18} />,
           },
+          {
+            label: 'Customer Activation',
+            path: '/customer/customeractivation',
+            icon: <MdApproval size={18} />,
+          },
         ]
         : [];
 
@@ -237,11 +253,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-[9999] flex h-screen w-64 flex-col bg-white shadow-xl duration-300 lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      className={`absolute left-0 top-0 z-[9999] flex h-screen w-64 flex-col bg-white dark:bg-boxdark border-r border-stroke dark:border-strokedark shadow-xl duration-300 lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b">
+      <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-stroke dark:border-strokedark bg-white dark:bg-boxdark">
         <Link to="/" className="flex items-center gap-2">
           <img
             src={logo}
@@ -253,7 +269,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <button
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="lg:hidden p-2 text-lg"
+          className="lg:hidden p-2 text-lg text-primary"
         >
           <FaArrowLeftLong />
         </button>
@@ -262,10 +278,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       {/* Menu */}
       <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6 overflow-y-auto max-h-[calc(100vh-80px)]">
         <div>
-          <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+          <h3 className="mb-4 ml-4 text-xs font-bold tracking-widest uppercase text-primary/60 dark:text-bodydark2">
             MENU
           </h3>
-          <ul className="flex flex-col gap-1.5">
+          <ul className="flex flex-col gap-1">
             {sidebarRoutes.map((route, index) =>
               route.subRoutes ? (
                 <SidebarLinkGroup
@@ -278,37 +294,55 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-meta-4 ${(pathname === route.path ||
-                          pathname.includes(route.path!)) &&
-                          'bg-gray-100 dark:bg-meta-4'
+                        className={`group relative flex items-center gap-2.5 rounded-lg px-4 py-2.5 font-medium duration-200 ease-in-out
+                          hover:bg-primary/10 hover:text-primary
+                          dark:text-bodydark dark:hover:bg-primary/20 dark:hover:text-white
+                          ${
+                            (pathname === route.path || pathname.includes(route.path!))
+                              ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-white font-semibold'
+                              : 'text-graydark dark:text-bodydark'
                           }`}
                         onClick={(e) => {
                           e.preventDefault();
                           handleClick();
                         }}
                       >
-                        {route.icon}
+                        <span className={`${
+                          (pathname === route.path || pathname.includes(route.path!))
+                            ? 'text-primary'
+                            : 'text-gray-400 group-hover:text-primary'
+                        } transition-colors`}>
+                          {route.icon}
+                        </span>
                         {route.label}
                         <IoIosArrowDown
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && 'rotate-180'
-                            }`}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-transform duration-200 ${
+                            open ? 'rotate-180 text-primary' : 'text-gray-400'
+                          }`}
                         />
                       </Link>
 
                       {/* Dropdown Menu */}
                       <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
-                          }`}
+                        className={`translate transform overflow-hidden transition-all duration-200 ${!open && 'hidden'}`}
                       >
-                        <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
+                        <ul className="mb-3 mt-2 flex flex-col gap-1 pl-8 border-l-2 border-primary/20 ml-6">
                           {route.subRoutes.map((sub, i) => (
                             <li key={i}>
                               <Link
                                 to={sub.path}
                                 onClick={handleLinkClick}
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-black duration-300 ease-in-out hover:text-primary ${pathname === sub.path && 'text-primary'
+                                className={`group relative flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium duration-200 ease-in-out
+                                  hover:text-secondary
+                                  ${
+                                    pathname === sub.path
+                                      ? 'text-secondary font-semibold'
+                                      : 'text-graydark dark:text-bodydark'
                                   }`}
                               >
+                                <span className={`h-1 w-1 rounded-full ${
+                                  pathname === sub.path ? 'bg-secondary' : 'bg-gray-300 group-hover:bg-secondary'
+                                } transition-colors`} />
                                 {sub.label}
                               </Link>
                             </li>
@@ -323,10 +357,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <Link
                     to={route.path}
                     onClick={handleLinkClick}
-                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-meta-4 ${pathname === route.path && 'bg-gray-100 dark:bg-meta-4'
+                    className={`group relative flex items-center gap-2.5 rounded-lg px-4 py-2.5 font-medium duration-200 ease-in-out
+                      hover:bg-primary/10 hover:text-primary
+                      dark:text-bodydark dark:hover:bg-primary/20 dark:hover:text-white
+                      ${
+                        pathname === route.path
+                          ? 'bg-primary text-white shadow-md shadow-primary/30 dark:bg-primary dark:text-white'
+                          : 'text-graydark dark:text-bodydark'
                       }`}
                   >
-                    {route.icon}
+                    <span className={`${
+                      pathname === route.path
+                        ? 'text-white'
+                        : 'text-gray-400 group-hover:text-primary'
+                    } transition-colors`}>
+                      {route.icon}
+                    </span>
                     {route.label}
                   </Link>
                 </li>

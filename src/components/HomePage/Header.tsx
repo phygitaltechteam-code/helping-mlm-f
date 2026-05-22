@@ -1,20 +1,20 @@
 /* eslint-disable */
-import {useState} from 'react';
-import {FiMenu, FiX} from 'react-icons/fi';
+import { useState } from 'react';
+import { FiMenu, FiX } from 'react-icons/fi';
 import React from 'react';
-import {Link} from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const toggleMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
 
   const menuItems = [
-    {path: '/', label: 'Home'},
-    {path: '/about', label: 'About Us'},
-    {path: '/contact', label: 'Contact Us'},
-    {path: '/gallery', label: 'Gallery'},
-    {path: '/signin', label: 'Login'},
-    {path: '/registrationform', label: 'Registration'},
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About Us' },
+    { path: '/contact', label: 'Contact Us' },
+    { path: '/gallery', label: 'Gallery' },
+    { path: '/signin', label: 'Login' },
+    { path: '/registrationform', label: 'Registration' },
   ];
 
   return (
@@ -67,9 +67,8 @@ const Header: React.FC = () => {
       </div>
 
       <div
-        className={`fixed right-0 top-0 z-40 h-full w-3/4 bg-white p-6 shadow-lg transition-transform duration-300 md:hidden ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed right-0 top-0 z-40 h-full w-3/4 bg-white p-6 shadow-lg transition-transform duration-300 md:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         <div className="mb-6 flex justify-end">
           <button onClick={toggleMenu}>

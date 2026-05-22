@@ -22,32 +22,33 @@ export const theme = {
       black: '#1C2434',
       'black-2': '#010101',
       body: '#64748B',
-      bodydark: '#AEB7C0',
-      bodydark1: '#DEE4EE',
-      bodydark2: '#8A99AF',
-      primary: '#2E6F40',
-      secondary: '#80CAEE',
-      stroke: '#E2E8F0',
-      gray: '#EFF4FB',
-      graydark: '#333A48',
-      'gray-2': '#F7F9FC',
-      'gray-3': '#FAFAFA',
-      whiten: '#F1F5F9',
-      whiter: '#F5F7FD',
-      boxdark: '#24303F',
-      'boxdark-2': '#1A222C',
-      strokedark: '#2E3A47',
-      'form-strokedark': '#3d4d60',
-      'form-input': '#1d2a39',
+      bodydark: '#C9B8D4',
+      bodydark1: '#E8D8F0',
+      bodydark2: '#B09ABE',
+      // Palette 1 — Modern Vibrant
+      primary: '#711A94',       // Primary Purple — headings, navbar, active states
+      secondary: '#C70D8A',     // Hot Pink — CTA buttons, highlights
+      stroke: '#E2D6EC',        // Purple-tinted border
+      gray: '#F3E8FA',          // Lilac — page backgrounds
+      graydark: '#3D2448',      // Deep purple-dark text
+      'gray-2': '#F9F3FD',      // Very light lilac
+      'gray-3': '#FBF7FE',      // Near-white lilac
+      whiten: '#F3E8FA',        // Lilac (same as gray — page bg)
+      whiter: '#F9F3FD',        // Lighter lilac
+      boxdark: '#2A1235',       // Deep purple dark bg (dark mode sidebar)
+      'boxdark-2': '#1E0C27',   // Deeper purple (dark mode bg-2)
+      strokedark: '#4A2560',    // Purple-tinted dark border
+      'form-strokedark': '#5C3070', // Form border dark
+      'form-input': '#2D1040',  // Form input dark bg
       'meta-1': '#DC3545',
-      'meta-2': '#EFF2F7',
+      'meta-2': '#F3E8FA',
       'meta-3': '#10B981',
-      'meta-4': '#313D4A',
-      'meta-5': '#259AE6',
+      'meta-4': '#3A1A4E',      // Purple-dark panel bg
+      'meta-5': '#C70D8A',      // Hot pink accent
       'meta-6': '#FFBA00',
       'meta-7': '#FF6766',
       'meta-8': '#F0950C',
-      'meta-9': '#E5E7EB',
+      'meta-9': '#E8D8F0',
       success: '#219653',
       danger: '#D34053',
       warning: '#FFA70B',

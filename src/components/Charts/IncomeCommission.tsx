@@ -56,7 +56,7 @@ const IncomeCommission: React.FC = () => {
                 type="text"
                 value="100.00"
                 disabled
-                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-blue-100 bg-transparent text-center font-bold text-primary focus:outline-none"
+                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-primary/10 bg-transparent text-center font-bold text-primary focus:outline-none"
               />
             </div>
             <div className="flex items-center justify-between border-b-2 border-gray py-2 dark:border-graydark">
@@ -65,7 +65,7 @@ const IncomeCommission: React.FC = () => {
                 type="text"
                 value="50.00"
                 disabled
-                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-blue-100 bg-transparent text-center font-bold text-primary focus:outline-none"
+                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-primary/10 bg-transparent text-center font-bold text-primary focus:outline-none"
               />
             </div>
             <div className="flex items-center justify-between border-b-2 border-gray py-2 dark:border-graydark">
@@ -74,7 +74,7 @@ const IncomeCommission: React.FC = () => {
                 type="text"
                 value="30.00"
                 disabled
-                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-blue-100 bg-transparent text-center font-bold text-primary focus:outline-none"
+                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-primary/10 bg-transparent text-center font-bold text-primary focus:outline-none"
               />
             </div>
             <div className="flex items-center justify-between border-b-2 border-gray py-2 dark:border-graydark">
@@ -83,7 +83,7 @@ const IncomeCommission: React.FC = () => {
                 type="text"
                 value="150.00"
                 disabled
-                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-blue-100 bg-transparent text-center font-bold text-primary focus:outline-none"
+                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-primary/10 bg-transparent text-center font-bold text-primary focus:outline-none"
               />
             </div>
           </>
@@ -97,7 +97,7 @@ const IncomeCommission: React.FC = () => {
                 type="text"
                 value="200.00"
                 disabled
-                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-blue-100 bg-transparent text-center font-bold text-primary focus:outline-none"
+                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-primary/10 bg-transparent text-center font-bold text-primary focus:outline-none"
               />
             </div>
             <div className="flex items-center justify-between border-b-2 border-gray py-2 dark:border-graydark">
@@ -106,7 +106,7 @@ const IncomeCommission: React.FC = () => {
                 type="text"
                 value="75.00"
                 disabled
-                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-blue-100 bg-transparent text-center font-bold text-primary focus:outline-none"
+                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-primary/10 bg-transparent text-center font-bold text-primary focus:outline-none"
               />
             </div>
             <div className="flex items-center justify-between border-b-2 border-gray py-2 dark:border-graydark">
@@ -115,7 +115,7 @@ const IncomeCommission: React.FC = () => {
                 type="text"
                 value="120.00"
                 disabled
-                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-blue-100 bg-transparent text-center font-bold text-primary focus:outline-none"
+                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-primary/10 bg-transparent text-center font-bold text-primary focus:outline-none"
               />
             </div>
             <div className="flex items-center justify-between border-b-2 border-gray py-2 dark:border-graydark">
@@ -124,7 +124,7 @@ const IncomeCommission: React.FC = () => {
                 type="text"
                 value="50.00"
                 disabled
-                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-blue-100 bg-transparent text-center font-bold text-primary focus:outline-none"
+                className="dark:border-gray-600 w-1/4 rounded-lg border-b border-gray bg-primary/10 bg-transparent text-center font-bold text-primary focus:outline-none"
               />
             </div>
           </>

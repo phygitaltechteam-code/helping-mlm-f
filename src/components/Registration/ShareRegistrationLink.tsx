@@ -105,11 +105,11 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({ onNext }) =>
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="space-y-6 rounded-xl border border-blue-100 bg-gradient-to-br from-white to-blue-50 p-8 shadow-lg dark:border-strokedark dark:bg-gradient-to-br dark:from-black dark:to-black"
+        className="space-y-6 rounded-xl border border-primary/20 bg-gradient-to-br from-white to-primary/5 p-8 shadow-lg dark:border-strokedark dark:bg-gradient-to-br dark:from-boxdark dark:to-boxdark-2"
       >
         <div className="mb-6 text-center">
-          <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full dark:bg-meta-4">
-            <FiShare2 className="text-2xl text-blue-600 dark:text-blue-400" />
+          <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 dark:bg-meta-4">
+            <FiShare2 className="text-2xl text-primary dark:text-primary/80" />
           </div>
           <h1 className="text-gray-800 text-2xl font-bold dark:text-white">
             Share Registration Links
@@ -121,35 +121,11 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({ onNext }) =>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Left Side Link */}
-          <div className="space-y-3 rounded-lg border border-blue-100 bg-white p-4 dark:border-blue-800/50 dark:bg-black/50">
+          <div className="space-y-3 rounded-lg border border-primary/20 bg-white p-4 dark:border-strokedark dark:bg-boxdark/50">
             <div>
               <label className="text-gray-700 dark:text-gray-300 mb-1 block text-sm font-medium">
                 Left Side Referral Link
               </label>
-              {/* <div className="relative">
-                <GenericInputField name="leftLink" disabled />
-                <div className="absolute inset-y-0 right-0 flex">
-                  <motion.button
-                    type="button"
-                    onClick={handleCopyLeft}
-                    className="text-gray-500 flex items-center px-4 hover:text-blue-600 dark:hover:text-blue-400"
-                    whileHover={{scale: 1.05}}
-                    whileTap={{scale: 0.95}}
-                  >
-                    {copiedLeft ? (
-                      <motion.span
-                        initial={{opacity: 0, scale: 0.8}}
-                        animate={{opacity: 1, scale: 1}}
-                        className="text-sm font-medium text-green-600"
-                      >
-                        Copied!
-                      </motion.span>
-                    ) : (
-                      <FiCopy className="text-lg" />
-                    )}
-                  </motion.button>
-                </div>
-              </div> */}
               <div className="relative w-full">
                 <div className="pr-12">
                   <GenericInputField name="leftLink" disabled />
@@ -158,12 +134,12 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({ onNext }) =>
                 <motion.button
                   type="button"
                   onClick={handleCopyLeft}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary dark:hover:text-primary/80 transition-colors"
                   whileHover={{}}
                   whileTap={{}}
                 >
                   {copiedLeft ? (
-                    <span className="text-xs font-medium text-green-600">
+                    <span className="text-xs font-medium text-secondary">
                       Copied!
                     </span>
                   ) : (
@@ -176,7 +152,7 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({ onNext }) =>
             <motion.button
               type="button"
               onClick={handleShareLeft}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 px-4 py-2.5 font-medium text-white shadow-md transition-shadow hover:shadow-lg"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary to-secondary px-4 py-2.5 font-medium text-white shadow-md transition-shadow hover:shadow-lg hover:shadow-primary/25"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -186,35 +162,11 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({ onNext }) =>
           </div>
 
           {/* Right Side Link */}
-          <div className="space-y-3 rounded-lg border border-blue-100 bg-white p-4 dark:border-blue-800/50 dark:bg-black/50">
+          <div className="space-y-3 rounded-lg border border-primary/20 bg-white p-4 dark:border-strokedark dark:bg-boxdark/50">
             <div>
               <label className="text-gray-700 dark:text-gray-300 mb-1 block text-sm font-medium">
                 Right Side Referral Link
               </label>
-              {/* <div className="relative">
-                <GenericInputField name="rightLink" disabled />
-                <div className="absolute inset-y-0 right-0 flex">
-                  <motion.button
-                    type="button"
-                    onClick={handleCopyRight}
-                    className="text-gray-500 flex items-center px-4 hover:text-blue-600 dark:hover:text-blue-400"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {copiedRight ? (
-                      <motion.span
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="text-sm font-medium text-green-600"
-                      >
-                        Copied!
-                      </motion.span>
-                    ) : (
-                      <FiCopy className="text-lg" />
-                    )}
-                  </motion.button>
-                </div>
-              </div> */}
               <div className="relative w-full">
                 <div className="pr-12">
                   <GenericInputField name="rightLink" disabled />
@@ -223,12 +175,12 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({ onNext }) =>
                 <motion.button
                   type="button"
                   onClick={handleCopyRight}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary dark:hover:text-primary/80 transition-colors"
                   whileHover={{}}
                   whileTap={{}}
                 >
                   {copiedRight ? (
-                    <span className="text-xs font-medium text-green-600">
+                    <span className="text-xs font-medium text-secondary">
                       Copied!
                     </span>
                   ) : (
@@ -241,7 +193,7 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({ onNext }) =>
             <motion.button
               type="button"
               onClick={handleShareRight}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 px-4 py-2.5 font-medium text-white shadow-md transition-shadow hover:shadow-lg"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary to-secondary px-4 py-2.5 font-medium text-white shadow-md transition-shadow hover:shadow-lg hover:shadow-primary/25"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -251,12 +203,12 @@ export const ShareRegistrationLink: React.FC<SponsorInfoProps> = ({ onNext }) =>
           </div>
         </div>
 
-        <div className="mt-6 rounded-lg border border-blue-100 bg-blue-50 p-4 dark:border-blue-800/50 dark:bg-blue-900/20">
-          <h3 className="flex items-center gap-2 font-medium text-blue-800 dark:text-blue-200">
+        <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 p-4 dark:border-strokedark dark:bg-primary/10">
+          <h3 className="flex items-center gap-2 font-medium text-primary dark:text-primary/80">
             <FiShare2 className="text-lg" />
             Sharing Tips
           </h3>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-blue-700 dark:text-blue-300">
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-graydark dark:text-bodydark">
             <li>Share via WhatsApp, Email or Social Media</li>
             <li>Explain the benefits of joining your network</li>
             <li>Choose LEFT or RIGHT side based on your strategy</li>

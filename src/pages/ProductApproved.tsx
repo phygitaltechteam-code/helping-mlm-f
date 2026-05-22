@@ -64,7 +64,7 @@ export const ProductApproved = () => {
           className={`px-3 py-1 text-sm rounded text-white ${
             product.status === 'Approved'
               ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700'
+              : 'bg-secondary hover:bg-secondary/90'
           }`}
         >
           {product.status === 'Approved' ? 'Approved' : 'Confirm'}

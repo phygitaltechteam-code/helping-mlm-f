@@ -115,7 +115,7 @@ const MyNetworkPage: React.FC = () => {
               <div>
                 <div className="flex items-center gap-2 border-b px-6 py-3 dark:border-gray-700">
                   <h2 className="text-base font-semibold text-gray-700 dark:text-gray-200">
-                    Helping Tree — Binary View (Left / Right)
+                    Upgrade Tree — Binary View (Left / Right)
                   </h2>
                 </div>
                 {binaryLoading ? <Loader /> : (binaryData && Object.keys(binaryData).length > 0 ? <BinaryTreeNode network={binaryData} /> : <div className="p-6 text-center text-gray-500">No tree data found.</div>)}
@@ -190,7 +190,7 @@ const MyNetworkPage: React.FC = () => {
                         <td className="px-5 py-3">
                           <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
                             row.side === 'LEFT'
-                              ? 'bg-blue-100 text-blue-700'
+                              ? 'bg-primary/10 text-blue-700'
                               : 'bg-purple-100 text-purple-700'
                           }`}>{row.side}</span>
                         </td>

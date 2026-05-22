@@ -66,7 +66,7 @@ const BinaryTree = () => {
       <div>
         {/* Heading */}
         <h1 className="text-2xl font-semibold mb-4">
-          Helping Tree
+          Upgrade Tree
         </h1>
 
         <div className="dottedBackground">

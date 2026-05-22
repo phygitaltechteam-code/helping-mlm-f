@@ -1,15 +1,15 @@
 import logo from '/logo.png';
-import { useAuthContext } from '@/context/AuthContext';
-import { useCustomerLogin } from '@/lib/react-query/Auth/auth';
-import { signInSchema } from '@/lib/validation/signInSchema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, useNavigate } from '@tanstack/react-router';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { FiEye, FiMail, FiLock, FiUser, FiArrowRight } from 'react-icons/fi';
-import { LuEyeOff } from 'react-icons/lu';
-import { z } from 'zod';
+import {useAuthContext} from '@/context/AuthContext';
+import {useCustomerLogin} from '@/lib/react-query/Auth/auth';
+import {signInSchema} from '@/lib/validation/signInSchema';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {Link, useNavigate} from '@tanstack/react-router';
+import {jwtDecode, JwtPayload} from 'jwt-decode';
+import React, {useState, useEffect} from 'react';
+import {useForm} from 'react-hook-form';
+import {FiEye, FiMail, FiLock, FiUser, FiArrowRight} from 'react-icons/fi';
+import {LuEyeOff} from 'react-icons/lu';
+import {z} from 'zod';
 import logoImage from '../assets/images/header/logo.png';
 
 type SignInFormValues = z.infer<typeof signInSchema>;
@@ -20,11 +20,11 @@ interface DecodedToken extends JwtPayload {
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
-  const { mutateAsync: signIn, isError, isPending } = useCustomerLogin();
+  const {mutateAsync: signIn, isError, isPending} = useCustomerLogin();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: {errors, isSubmitting},
   } = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -33,7 +33,7 @@ const SignIn: React.FC = () => {
     },
   });
 
-  const { setUser, setIsAuthenticated, setToken, setCustomer } = useAuthContext();
+  const {setUser, setIsAuthenticated, setToken, setCustomer} = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -69,20 +69,24 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-white text-slate-800 flex items-center justify-center">
-      <div className="w-full max-w-md px-4 py-8 mx-auto">
+    <div className="relative flex min-h-screen w-full items-center justify-center bg-white text-slate-800">
+      <button
+        className="absolute top-6 left-6 group mb-6 flex cursor-pointer items-center gap-1.5 p-2 text-sm font-medium text-slate-400 transition-colors duration-200 hover:text-slate-800"
+        onClick={() => navigate({to: '/landing'})}
+      >
+        <span className="transform transition-transform group-hover:-translate-x-1">
+          ←
+        </span>{' '}
+        Back to home
+      </button>
+
+      <div className="mx-auto w-full max-w-md px-4 py-8">
         <div
           className={`w-full transform transition-all duration-700 ${
             mounted ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
           }`}
         >
           {/* Back Button */}
-          <button
-            className="group cursor-pointer mb-6 p-2 text-sm font-medium text-slate-400 transition-colors duration-200 hover:text-slate-800 flex items-center gap-1.5"
-            onClick={() => navigate({ to: '/landing' })}
-          >
-            <span className="transform transition-transform group-hover:-translate-x-1">←</span> Back to home
-          </button>
 
           {/* Logo and Header */}
           <div className="mb-8 text-center">
@@ -97,18 +101,17 @@ const SignIn: React.FC = () => {
             <h2 className="mb-2 text-3xl font-bold tracking-tight text-slate-900">
               Welcome Back
             </h2>
-            <p className="text-slate-400 text-sm font-medium">
+            <p className="text-sm font-medium text-slate-400">
               Sign in to continue your journey
             </p>
           </div>
 
           {/* Main Card */}
-          <div className="bg-white border border-slate-100 rounded-2xl p-8 shadow-sm md:p-10">
+          <div className="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm md:p-10">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-              
               {/* Identifier / CRN */}
               <div className="space-y-1.5">
-                <label className="text-slate-500 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider">
+                <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
                   <FiUser className="text-slate-400" />
                   CRN Number
                 </label>
@@ -117,7 +120,7 @@ const SignIn: React.FC = () => {
                     type="text"
                     placeholder="Enter your CRN number"
                     {...register('identifier')}
-                    className={`bg-slate-50 placeholder-slate-400 w-full rounded-xl border px-4 py-3.5 text-slate-900 outline-none transition-all duration-200 ${
+                    className={`w-full rounded-xl border bg-slate-50 px-4 py-3.5 text-slate-900 placeholder-slate-400 outline-none transition-all duration-200 ${
                       errors.identifier
                         ? 'border-red-300 focus:border-red-500 focus:bg-white'
                         : 'border-slate-100 focus:border-slate-400 focus:bg-white'
@@ -138,7 +141,7 @@ const SignIn: React.FC = () => {
 
               {/* Password */}
               <div className="space-y-1.5">
-                <label className="text-slate-500 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider">
+                <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
                   <FiLock className="text-slate-400" />
                   Password
                 </label>
@@ -147,7 +150,7 @@ const SignIn: React.FC = () => {
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Enter your password"
                     {...register('password')}
-                    className={`bg-slate-50 placeholder-slate-400 w-full rounded-xl border px-4 py-3.5 text-slate-900 outline-none transition-all duration-200 ${
+                    className={`w-full rounded-xl border bg-slate-50 px-4 py-3.5 text-slate-900 placeholder-slate-400 outline-none transition-all duration-200 ${
                       errors.password
                         ? 'border-red-300 focus:border-red-500 focus:bg-white'
                         : 'border-slate-100 focus:border-slate-400 focus:bg-white'
@@ -156,9 +159,13 @@ const SignIn: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="text-slate-400 absolute right-4 top-1/2 -translate-y-1/2 transition-colors duration-200 hover:text-slate-700"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition-colors duration-200 hover:text-slate-700"
                   >
-                    {showPassword ? <LuEyeOff size={18} /> : <FiEye size={18} />}
+                    {showPassword ? (
+                      <LuEyeOff size={18} />
+                    ) : (
+                      <FiEye size={18} />
+                    )}
                   </button>
                 </div>
                 {errors.password && (
@@ -224,7 +231,7 @@ const SignIn: React.FC = () => {
               </button>
 
               {/* Sign Up Link */}
-              <p className="text-slate-400 mt-4 text-center text-sm font-medium">
+              <p className="mt-4 text-center text-sm font-medium text-slate-400">
                 Don't have an account?{' '}
                 <Link
                   to="/registrationform"
@@ -238,7 +245,7 @@ const SignIn: React.FC = () => {
           </div>
 
           {/* Footer */}
-          <p className="text-slate-400 mt-8 text-center text-xs font-medium">
+          <p className="mt-8 text-center text-xs font-medium text-slate-400">
             © 2026 Your Company. All rights reserved.
           </p>
         </div>

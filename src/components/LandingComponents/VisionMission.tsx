@@ -5,7 +5,7 @@ import React from 'react';
 const VisionMission: React.FC = () => {
   return (
     <section className="text-gray-600 body-font mx-0 md:mx-20 md:mt-5">
-      <div className="container mx-auto flex flex-col-reverse items-center px-10 md:flex-row">
+      <div className="container mx-auto flex flex-col-reverse items-center px-6 md:flex-row">
         <div className="m-5 flex w-full flex-col items-center bg-blue-100 py-8 text-center md:w-1/2 md:items-start md:px-8 md:text-left lg:flex-grow">
           <h2 className="text-2xl font-semibold text-black">Our Vision</h2>
 

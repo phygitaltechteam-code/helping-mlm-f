@@ -80,7 +80,7 @@ const Home: React.FC = () => {
 
       // Income & Commission
       const helpIncomeGivers = data?.autopoolIncome || 0;
-      const totalBonusIncomeGivers = data?.bonusIncomeAchivers || 0;
+      const totalBonusIncomeGivers = data?.bonusIncomeAchivers*1000 || 0;
       const totalGenerationIncomeGivers = data?.genrationIncome || 0;
       const totalCommission = data?.totalCommission || 0;
 
@@ -110,17 +110,17 @@ const Home: React.FC = () => {
           icon: <FaUserTimes className="text-2xl text-red-500" />,
         },
         {
-          title: 'Help Income Givers',
+          title: 'Upgrade Income Given',
           amount: String(helpIncomeGivers),
           icon: <FaHandHoldingUsd className="text-2xl text-yellow-500" />,
         },
         {
-          title: 'Total Bonus Income Givers',
+          title: 'Total Bonus Income Given',
           amount: String(totalBonusIncomeGivers),
           icon: <FaAward className="text-2xl text-pink-500" />,
         },
         {
-          title: 'Total Generation Income Givers',
+          title: 'Total Generation Income Given',
           amount: String(totalGenerationIncomeGivers),
           icon: <FaSitemap className="text-2xl text-indigo-500" />,
         },
@@ -178,18 +178,13 @@ const Home: React.FC = () => {
       <div className="mb-4 flex justify-end">
         <div className="flex flex-col items-end gap-1">
 
-          <input
-            type="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-          />
+        
         </div>
       </div>
 
       {/* ===== NEW: Registration Link Section (Same as Customer Dashboard) ===== */}
       <div className="mb-8">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="bg-gradient-to-r from-primary to-secondary text-white p-4 rounded-xl shadow-lg shadow-primary/20 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4 w-full sm:w-auto min-w-0">
             <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm shrink-0">
               <FaNetworkWired className="text-xl md:text-2xl" />
@@ -209,8 +204,11 @@ const Home: React.FC = () => {
 
           <button
             onClick={copyLink}
-            className={`${copied ? 'bg-green-500' : 'bg-white text-indigo-700 hover:bg-blue-50'
-              } w-full sm:w-auto px-6 py-2.5 rounded-lg font-bold flex justify-center items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0`}
+            className={`${
+              copied
+                ? 'bg-white text-secondary'
+                : 'bg-white/20 hover:bg-white/30 text-white border border-white/30'
+            } w-full sm:w-auto px-6 py-2.5 rounded-lg font-bold flex justify-center items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0`}
           >
             {copied ? (
               <>
@@ -249,7 +247,7 @@ const Home: React.FC = () => {
 
         <button
           onClick={handleApplyFilter}
-          className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+          className="rounded-lg bg-secondary px-5 py-2 text-sm font-medium text-white hover:bg-secondary/90 transition-colors"
         >
           Apply
         </button>

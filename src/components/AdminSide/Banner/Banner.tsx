@@ -128,7 +128,7 @@ const Banner: React.FC = () => {
             <input
               type="file"
               {...methods.register('imageFile')}
-              className="mt-10 bg-white file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100 dark:bg-black"
+              className="mt-10 bg-white file:mr-4 file:rounded-full file:border-0 file:bg-primary/5 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-primary/10 dark:bg-black"
               multiple={false} // Allow only one file upload
             />
             {imageError && (

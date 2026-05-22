@@ -16,16 +16,17 @@ const formatDate = (dateString: string) => {
 
 // Define the ProductColumns for the table
 const ProductColumns = [
-  {header: 'Created At', accessor: 'createdAt'},
+  {header: 'Sr. No.', accessor: 'srNo'},
   {header: 'CRN No', accessor: 'crnNo', sortable: true},
   {header: 'Customer Name', accessor: 'fullname'},
   {header: 'Phone Number', accessor: 'phoneNumber'},
   {header: 'Product Name', accessor: 'name'},
-  {header: 'Description', accessor: 'description'},
-  {header: 'Actual Price', accessor: 'actualPrice'},
-  {header: 'Discounted Price', accessor: 'discountedPrice'},
+    {header: 'Created At', accessor: 'createdAt'},
+
+  // {header: 'Actual Price', accessor: 'actualPrice'},
+  {header: 'Price', accessor: 'discountedPrice'},
   {header: 'Total Amount', accessor: 'totalAmount'},
-  {header: 'Delivery Charges', accessor: 'deliveryCharges'},
+  // {header: 'Delivery Charges', accessor: 'deliveryCharges'},
   {header: 'Status', accessor: 'orderStatus'},
 ];
 
@@ -37,8 +38,9 @@ const DeliveredReport = () => {
   const deliveredData =
     productData
       ?.filter((item: any) => item.orderStatus === 'DELIVERED')
-      ?.map((item: any) => ({
+      ?.map((item: any, index: number) => ({
         ...item,
+        srNo: index + 1,
         createdAt: formatDate(item.createdAt),
       })) || [];
 

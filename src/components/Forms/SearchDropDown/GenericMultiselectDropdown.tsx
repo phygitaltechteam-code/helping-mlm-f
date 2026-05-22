@@ -108,7 +108,7 @@ const GenericMultiselectDropdown: React.FC<GenericMultiselectDropdownProps> = ({
                       onClick={() => handleSelect(option)}
                       className={`cursor-pointer p-2 ${
                         selectedOptions.includes(option.value)
-                          ? 'bg-blue-100 dark:bg-blue-600'
+                          ? 'bg-primary/10 dark:bg-secondary'
                           : 'hover:bg-gray-200 dark:hover:bg-gray-600'
                       }`}
                       role="option"

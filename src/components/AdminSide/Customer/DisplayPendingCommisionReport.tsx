@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 import {ChevronDown, ChevronRight, Calendar} from 'lucide-react';
 import {api} from '@/utils/axios';
 import {ApiError} from '@/types';
+import GenericTable from '@/components/Forms/Table/GenericTable';
 
 type PendingCommission = {
   id: string;
@@ -23,6 +24,7 @@ type PendingCommission = {
   details: string;
   type: string;
   payableAmount: number;
+  adminAmount: number;
   tdsAmount: number;
   crnNo: string;
   phoneNumber: string;
@@ -97,9 +99,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
 
     if (!filter || filter === 'All') return filteredData;
 
-    
-        return filteredData;
-  
+    return filteredData;
   };
 
   // Transform and group data
@@ -135,14 +135,15 @@ const DisplayPendingCommisionReport: React.FC = () => {
           details: item.details,
           type: item.type,
           payableAmount: item.payableAmount,
-          tdsAmount: item.tdsAmount,
+          // Split 10% TDS from API into Admin 5% + TDS 5%
+          adminAmount: parseFloat((item.amount * 0.05).toFixed(2)),
+          tdsAmount: parseFloat((item.amount * 0.05).toFixed(2)),
           crnNo: item.crnNo || 'N/A',
           phoneNumber:
             item.phoneNumber || item.customer?.user?.phoneNumber || '-',
           fullname: item.fullname || item.customer?.user?.fullname || '-',
           email: item.email || item.customer?.user?.email || '-',
           dateOnly: dateOnly,
-          // walletAddress:item.walletAddress,
           bankName: item.bankName || item.customer?.bankName || '-',
           bankAccNo: item.bankAccNo || item.customer?.bankAccNo || '-',
           bankIFSC: item.bankIFSC || item.customer?.bankIFSC || '-',
@@ -177,6 +178,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
         totalAmount: number;
         totalPayable: number;
         totalTDS: number;
+        totalAdmin: number;
         count: number;
       };
     } = {};
@@ -186,6 +188,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
         totalAmount: items.reduce((sum, item) => sum + item.amount, 0),
         totalPayable: items.reduce((sum, item) => sum + item.payableAmount, 0),
         totalTDS: items.reduce((sum, item) => sum + item.tdsAmount, 0),
+        totalAdmin: items.reduce((sum, item) => sum + item.adminAmount, 0),
         count: items.length,
       };
     });
@@ -313,7 +316,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
         'Bank Name': item.bankName,
         'Account No': item.bankAccNo,
         'IFSC Code': item.bankIFSC,
-        'Branch': item.bankBranch,
+        Branch: item.bankBranch,
         Amount: item.amount,
         Payable: item.payableAmount,
         TDS: item.tdsAmount,
@@ -321,7 +324,6 @@ const DisplayPendingCommisionReport: React.FC = () => {
         Type: item.type,
         Status: item.status,
         // wallet:item.walletAddress,
-
       })),
     );
 
@@ -396,18 +398,15 @@ const DisplayPendingCommisionReport: React.FC = () => {
   }
 
   return (
-    <div className="flex auto-rows-max flex-col p-4">
+    <div className="flex auto-rows-max flex-col p-2">
       {/* Header with Filters and Export */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-gray-800 text-2xl font-bold">
             {selectedFilter
               ? `${selectedFilter} Pending Commissions`
-              : 'All Pending Withdrawl Commissions'}
+              : 'Pending Commissions'}
           </h1>
-          <p className="text-gray-500 text-sm">
-            {totalRecords} pending records across {totalDays} days
-          </p>
         </div>
 
         <div className="flex items-center gap-4">
@@ -415,7 +414,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
           {totalRecords > 0 && (
             <button
               onClick={handlePayAllClick}
-              className="rounded bg-green-600 px-4 py-2 text-sm text-white transition-colors hover:bg-green-700"
+              className="rounded bg-secondary px-4 py-2 text-sm text-white transition-colors hover:bg-secondary"
             >
               Pay All ({totalRecords})
             </button>
@@ -425,7 +424,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
           {totalRecords > 0 && (
             <button
               onClick={handleExportToExcel}
-              className="rounded bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600"
+              className="rounded bg-primary px-4 py-2 text-sm text-white transition-colors hover:bg-secondary"
             >
               Export to Excel
             </button>
@@ -435,14 +434,42 @@ const DisplayPendingCommisionReport: React.FC = () => {
 
       {totalRecords === 0 ? (
         <div className="rounded-sm border border-stroke bg-white p-8 text-center shadow-default dark:border-strokedark dark:bg-boxdark">
-          <h3 className="text-lg font-medium text-black dark:text-white">
-            No commissions found
-          </h3>
-          <p className="text-gray-500 mt-2">
-            {selectedFilter
-              ? `No ${selectedFilter} commissions available`
-              : 'No pending commissions available'}
-          </p>
+          {/* <h3 className="text-lg font-medium text-black dark:text-white">
+    No commissions found
+  </h3>
+  <p className="text-gray-500 mt-2">
+    {selectedFilter
+      ? `No ${selectedFilter} commissions available`
+      : 'No pending commissions available'}
+  </p> */}
+          <GenericTable
+            columns={[
+              {header: 'Date', accessor: 'formattedDate'},
+              {header: 'Time', accessor: 'formattedTime'},
+              {header: 'CRN No', accessor: 'crnNo'},
+              {header: 'Full Name', accessor: 'fullname'},
+              {header: 'Phone', accessor: 'phoneNumber'},
+              {header: 'Email', accessor: 'email'},
+              {header: 'Bank Name', accessor: 'bankName'},
+              {header: 'Account No', accessor: 'bankAccNo'},
+              {header: 'IFSC Code', accessor: 'bankIFSC'},
+              {header: 'Branch', accessor: 'bankBranch'},
+              {header: 'Amount', accessor: 'amount'},
+              {header: 'Payable', accessor: 'payableAmount'},
+              {header: 'TDS', accessor: 'tdsAmount'},
+              {header: 'Details', accessor: 'details'},
+              {header: 'Type', accessor: 'type'},
+              {header: 'Status', accessor: 'status'},
+              // {header:'Wallet',accessor:'walletAddress'},
+            ]}
+            data={[]}
+
+                      itemsPerPage={5}
+          searchAble={false}
+          title="No commission data available"
+          />
+
+          {/* <-- Added the closing tag here */}
         </div>
       ) : (
         <div className="space-y-4">
@@ -473,14 +500,26 @@ const DisplayPendingCommisionReport: React.FC = () => {
                   <div className="flex items-center gap-4 text-sm">
                     <span className="text-gray-600 font-medium">
                       Amount:{' '}
-                      <span className="text-gray-900">
-                        {dateSummaries[date]?.totalAmount}
+                      <span className="font-semibold text-gray-900">
+                        ₹{dateSummaries[date]?.totalAmount}
                       </span>
                     </span>
-                    <span className="font-medium text-green-600">
+                    <span className="font-medium text-primary">
                       Payable:{' '}
-                      <span className="text-green-700">
+                      <span className="font-semibold">
                         ₹{dateSummaries[date]?.totalPayable}
+                      </span>
+                    </span>
+                    <span className="font-medium text-orange-500">
+                      Admin (5%):{' '}
+                      <span className="font-semibold">
+                        ₹{dateSummaries[date]?.totalAdmin?.toFixed(2)}
+                      </span>
+                    </span>
+                    <span className="font-medium text-red-500">
+                      TDS (5%):{' '}
+                      <span className="font-semibold">
+                        ₹{dateSummaries[date]?.totalTDS?.toFixed(2)}
                       </span>
                     </span>
                   </div>
@@ -491,7 +530,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
                       e.stopPropagation();
                       handlePayAllForDate(date);
                     }}
-                    className="rounded bg-green-500 px-3 py-1 text-xs text-white transition-colors hover:bg-green-600"
+                    className="rounded  bg-secondary px-3 py-1 text-xs text-white transition-colors hover:bg-primary"
                   >
                     Pay All ({items.length})
                   </button>
@@ -505,54 +544,19 @@ const DisplayPendingCommisionReport: React.FC = () => {
                     <table className="w-full table-auto border-collapse">
                       <thead>
                         <tr className="bg-gray-2 dark:bg-meta-4">
-                          <th className="px-4 py-4 text-left font-medium">
-                            Time
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            CRN No
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            Full Name
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            Phone
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            Bank Name
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            Account No
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            IFSC Code
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            Branch
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            Amount
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            Payable
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            TDS
-                          </th>
-                          {/* <th className="px-4 py-4 text-left font-medium">
-                            Details
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            Type
-                          </th>
-                          <th className="px-4 py-4 text-left font-medium">
-                            Status
-                          </th> */}
-                          {/* <th className="px-4 py-4 text-left font-medium">
-                            wallet
-                          </th> */}
-                          <th className="px-4 py-4 text-left font-medium">
-                            Actions
-                          </th>
+                          <th className="px-4 py-4 text-left font-medium">Time</th>
+                          <th className="px-4 py-4 text-left font-medium">CRN No</th>
+                          <th className="px-4 py-4 text-left font-medium">Full Name</th>
+                          <th className="px-4 py-4 text-left font-medium">Phone</th>
+                          <th className="px-4 py-4 text-left font-medium">Bank Name</th>
+                          <th className="px-4 py-4 text-left font-medium">Account No</th>
+                          <th className="px-4 py-4 text-left font-medium">IFSC Code</th>
+                          <th className="px-4 py-4 text-left font-medium">Branch</th>
+                          <th className="px-4 py-4 text-left font-medium">Amount</th>
+                          <th className="px-4 py-4 text-left font-medium text-primary">Payable</th>
+                          <th className="px-4 py-4 text-left font-medium text-orange-500">Admin Charges (5%)</th>
+                          <th className="px-4 py-4 text-left font-medium text-red-500">TDS (5%)</th>
+                          <th className="px-4 py-4 text-left font-medium">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -561,59 +565,26 @@ const DisplayPendingCommisionReport: React.FC = () => {
                             key={row.id || index}
                             className="hover:bg-gray-50 border-b border-stroke dark:border-strokedark"
                           >
-                            <td className="px-4 py-2 text-left text-sm">
-                              {row.formattedTime}
+                            <td className="px-4 py-2 text-left text-sm">{row.formattedTime}</td>
+                            <td className="px-4 py-2 text-left text-sm">{row.crnNo}</td>
+                            <td className="px-4 py-2 text-left text-sm">{row.fullname}</td>
+                            <td className="px-4 py-2 text-left text-sm">{row.phoneNumber}</td>
+                            <td className="px-4 py-2 text-left text-sm">{row.bankName}</td>
+                            <td className="font-mono px-4 py-2 text-left text-sm">{row.bankAccNo}</td>
+                            <td className="px-4 py-2 text-left text-sm">{row.bankIFSC}</td>
+                            <td className="px-4 py-2 text-left text-sm">{row.bankBranch}</td>
+                            <td className="px-4 py-2 text-left text-sm font-semibold">₹{row.amount}</td>
+                            <td className="px-4 py-2 text-left text-sm font-medium text-primary">₹{row.payableAmount}</td>
+                            <td className="px-4 py-2 text-left text-sm font-medium text-orange-500">
+                              ₹{row.adminAmount?.toFixed(2)}
                             </td>
-                            <td className="px-4 py-2 text-left text-sm">
-                              {row.crnNo}
+                            <td className="px-4 py-2 text-left text-sm font-medium text-red-500">
+                              ₹{row.tdsAmount?.toFixed(2)}
                             </td>
-                            <td className="px-4 py-2 text-left text-sm">
-                              {row.fullname}
-                            </td>
-                            <td className="px-4 py-2 text-left text-sm">
-                              {row.phoneNumber}
-                            </td>
-                            <td className="px-4 py-2 text-left text-sm">
-                              {row.bankName}
-                            </td>
-                            <td className="px-4 py-2 text-left text-sm font-mono">
-                              {row.bankAccNo}
-                            </td>
-                            <td className="px-4 py-2 text-left text-sm">
-                              {row.bankIFSC}
-                            </td>
-                            <td className="px-4 py-2 text-left text-sm">
-                              {row.bankBranch}
-                            </td>
-                            <td className="px-4 py-2 text-left text-sm font-medium">
-                              ₹{row.amount}
-                            </td>
-                            <td className="px-4 py-2 text-left text-sm text-green-600">
-                              ₹{row.payableAmount}
-                            </td>
-                            <td className="px-4 py-2 text-left text-sm text-red-600">
-                              ₹{row.tdsAmount}
-                            </td>
-                            {/* <td className="px-4 py-2 text-left text-sm">
-                              {row.details}
-                            </td>
-                            <td className="px-4 py-2 text-left text-sm">
-                              {row.type}
-                            </td>
-                            <td className="px-4 py-2 text-left">
-                              <span className="rounded bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800">
-                                {row.status}
-                              </span> 
-                            </td>*/}
-                            {/* <td className="px-4 py-2 text-left">
-                              <span className="rounded  px-2 py-1 text-xs font-medium ">
-                                {row.walletAddress}
-                              </span>
-                            </td> */}
                             <td className="px-4 py-2 text-left">
                               <button
                                 onClick={() => handlePayClick(row)}
-                                className="rounded bg-green-500 px-3 py-1 text-xs text-white transition-colors hover:bg-green-600"
+                                className="rounded bg-secondary px-3 py-1 text-xs text-white transition-colors hover:bg-secondary"
                                 disabled={isProcessingBulk}
                               >
                                 Pay

@@ -24,55 +24,46 @@ const Contact: React.FC = () => {
       </p>
 
       <section className="text-gray-600 body-font">
-        <div className="px-4 pb-8 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-              {/* Location Card */}
-              <div className="flex flex-col items-center rounded-xl bg-white p-5 text-center shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-6">
-                <div className="mb-4 inline-flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-3xl text-indigo-500 sm:mb-5 sm:h-20 sm:w-20 sm:text-4xl">
-                  <FaLocationDot />
-                </div>
-                <div className="flex-grow">
-                  <h2 className="text-gray-900 title-font mb-2 text-base font-medium sm:mb-3 sm:text-lg md:text-xl">
-                    Our Location
-                  </h2>
-                  <p className="text-gray-600 text-sm leading-relaxed sm:text-base">
-                    Flat No. S NO. 56 B wing Office No. 5, <br />
-                    Near Ambedkar Hotel, <br />
-                    Mantra Essence Commercial Pri, <br />
-                    Pune, Maharashtra 411028
-                  </p>
-                </div>
+        <div className="container mx-auto px-5 pb-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+            <div className="flex flex-col items-center p-4 text-center">
+              <div className="mb-5 inline-flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-4xl text-indigo-500">
+                <FaLocationDot />
               </div>
-
-              {/* Email Card */}
-              <div className="flex flex-col items-center rounded-xl bg-white p-5 text-center shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-6">
-                <div className="mb-4 inline-flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-3xl text-indigo-500 sm:mb-5 sm:h-20 sm:w-20 sm:text-4xl">
-                  <MdAlternateEmail />
-                </div>
-                <div className="flex-grow">
-                  <h2 className="text-gray-900 title-font mb-2 text-base font-medium sm:mb-3 sm:text-lg md:text-xl">
-                    Our Email Address
-                  </h2>
-                  <p className="text-gray-600 break-all text-sm leading-relaxed sm:text-base">
-                    Ganeshpirangute2151@gmail.com
-                  </p>
-                </div>
+              <div className="flex-grow">
+                <h2 className="text-gray-900 title-font mb-3 text-lg font-medium sm:text-xl">
+                  Our Location
+                </h2>
+                <p className="text-base leading-relaxed">
+             Flat No. S NO. 56 B wing Office No. 5 , Near Ambedkar Hotel ,
+                Mantra Essence Commercial Pri , Pune, Maharashtra 411028
+                </p>
               </div>
+            </div>
 
-              {/* Phone Card */}
-              <div className="flex flex-col items-center rounded-xl bg-white p-5 text-center shadow-sm transition-shadow duration-300 hover:shadow-md sm:col-span-2 sm:p-6 lg:col-span-1">
-                <div className="mb-4 inline-flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-3xl text-indigo-500 sm:mb-5 sm:h-20 sm:w-20 sm:text-4xl">
-                  <FaPhone />
-                </div>
-                <div className="flex-grow">
-                  <h2 className="text-gray-900 title-font mb-2 text-base font-medium sm:mb-3 sm:text-lg md:text-xl">
-                    Contact Number
-                  </h2>
-                  <p className="text-gray-600 text-sm leading-relaxed sm:text-base">
-                    +91 77698 22034
-                  </p>
-                </div>
+            <div className="flex flex-col items-center p-4 text-center">
+              <div className="mb-5 inline-flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-4xl text-indigo-500">
+                <MdAlternateEmail />
+              </div>
+              <div className="flex-grow">
+                <h2 className="text-gray-900 title-font mb-3 text-lg font-medium sm:text-xl">
+                  Our Email Address
+                </h2>
+                <p className="text-base leading-relaxed">
+                 Ganeshpirangute2151@gmail.com
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center p-4 text-center">
+              <div className="mb-5 inline-flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-4xl text-indigo-500">
+                <FaPhone />
+              </div>
+              <div className="flex-grow">
+                <h2 className="text-gray-900 title-font mb-3 text-lg font-medium sm:text-xl">
+                  Contact Number
+                </h2>
+                <p className="text-base leading-relaxed">+91 77698 22034</p>
               </div>
             </div>
           </div>
@@ -85,29 +76,40 @@ const Contact: React.FC = () => {
         exit={{opacity: 0}}
         transition={{duration: 0.7, delay: 0.1}}
         viewport={{once: false, amount: 0.2}}
-        className="px-4 pb-16 pt-6 sm:px-6 md:pb-20 lg:px-8"
+        className="container mx-auto flex flex-wrap px-5 pb-24 pt-8 sm:flex-nowrap"
       >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
-            {/* Map Section */}
-            <div className="w-full lg:w-2/3">
-              <div className="h-full overflow-hidden rounded-xl bg-white shadow-md">
-                <div className="relative h-80 w-full sm:h-96 md:h-[450px]">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    className="absolute inset-0"
-                    frameBorder="0"
-                    title="Location Map - Pune, Maharashtra"
-                    scrolling="no"
-                    src={mapUrl}
-                    style={{border: 0}}
-                    allowFullScreen
-                    loading="lazy"
-                  ></iframe>
-                </div>
-              </div>
+        <div className="bg-gray-300 relative flex items-end justify-start overflow-hidden rounded-lg p-10 sm:mr-10 md:w-1/2 lg:w-2/3">
+          <iframe
+            width="100%"
+            height="100%"
+            className="absolute inset-0"
+            frameBorder="0"
+            title="map"
+            scrolling="no"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3115.8820888753867!2d74.4594743!3d18.1402177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2938d7ff0d9b5%3A0x9f7f9e43a99f7c8e!2s18%C2%B008'24.8%22N%2074%C2%B027'43.4%22E!5e0!3m2!1sen!2sin!4v1724909582026!5m2!1sen!2sin"
+          ></iframe>
+          <div className="relative flex flex-wrap rounded bg-white py-6 shadow-md">
+            <div className="px-6 lg:w-1/2">
+              <h2 className="title-font text-gray-900 text-xs font-semibold tracking-widest">
+                ADDRESS
+              </h2>
+              <p className="mt-1">
+                18°08'24.8"N 74°27'43.4"E, Maharashtra, India
+              </p>
             </div>
+            <div className="mt-4 px-6 lg:mt-0 lg:w-1/2">
+              <h2 className="title-font text-gray-900 text-xs font-semibold tracking-widest">
+                EMAIL
+              </h2>
+              <a className="leading-relaxed text-indigo-500">
+Ganeshpirangute2151@gmail.com              </a>
+              <h2 className="title-font text-gray-900 mt-4 text-xs font-semibold tracking-widest">
+                PHONE
+              </h2>
+              <p className="leading-relaxed">+91 77698 22034</p>
+            </div>
+          </div>
+        </div>
 
             {/* Feedback Form */}
             <div className="w-full lg:w-1/3">
