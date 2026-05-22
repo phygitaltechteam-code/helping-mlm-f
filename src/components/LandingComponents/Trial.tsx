@@ -13,7 +13,7 @@ const Trial = () => {
             <p className="text-gray-600 font-pj text-lg font-medium">
               2,157 people have said how good Happyly MLM
             </p>
-            <h2 className="text-gray-900 font-pj mt-4 text-3xl font-bold sm:text-4xl xl:text-5xl">
+            <h2 className="text-black font-pj mt-4 text-3xl font-bold sm:text-4xl xl:text-5xl">
               Our happy clients say about us
             </h2>
           </div>

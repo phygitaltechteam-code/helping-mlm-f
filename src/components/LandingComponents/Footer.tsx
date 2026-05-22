@@ -1,4 +1,3 @@
-
 //FROM TMS CHANGED
 
 import React from 'react';
@@ -20,20 +19,6 @@ const Footer: React.FC = () => {
         <p className="text-gray-500 sm:border-gray-200 mt-4 text-sm sm:ml-4 sm:mt-0 sm:border-l-2 sm:py-2 sm:pl-4">
           © 2024 HappylyMLM — All Rights Reserved
         </p>
-        <span className="mt-4 inline-flex justify-center sm:ml-auto sm:mt-0 sm:justify-start">
-          <a className="text-gray-500">
-            <FaFacebook />
-          </a>
-          <a className="text-gray-500 ml-3">
-            <FaXTwitter />
-          </a>
-          <a className="text-gray-500 ml-3">
-            <FaInstagram />
-          </a>
-          <a className="text-gray-500 ml-3">
-            <FaLinkedinIn />
-          </a>
-        </span>
       </div>
     </footer>
   );

@@ -35,7 +35,7 @@ const LandingPage: React.FC = () => {
       <Element name="hero">
         <Hero />
       </Element>
-      <Element name="hero">
+      <Element name="products">
         <Products />
       </Element>
       <VisionMission />

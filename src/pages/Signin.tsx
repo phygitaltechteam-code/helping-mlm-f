@@ -90,7 +90,7 @@ const SignIn: React.FC = () => {
               <img
                 src="logo.png"
                 alt="Company Logo"
-                className="relative mx-auto h-20 w-20 transform rounded-full border border-slate-100 bg-white p-1 transition-transform duration-300 hover:scale-105"
+                className="relativ h-20 w-50 transform rounded-full bg-white p-1 transition-transform duration-300 hover:scale-105"
               />
             </div>
 

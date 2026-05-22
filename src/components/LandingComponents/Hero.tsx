@@ -64,7 +64,7 @@ const Hero: React.FC = () => {
       <div className="container mx-auto flex flex-col-reverse items-center px-10 md:flex-row">
         <div className="flex flex-col items-center text-center md:w-1/2 md:items-start md:px-8 md:text-left lg:flex-grow">
           <h2 className="text-xl font-semibold text-blue-700">About Company</h2>
-          <h1 className="title-font text-gray-900 mb-4 text-2xl font-medium md:text-4xl">
+          <h1 className="title-font text-black mb-4 text-2xl font-medium md:text-4xl">
             Welcome to the Happyly MLM Family
           </h1>
 
@@ -89,7 +89,7 @@ const Hero: React.FC = () => {
               family, you are stepping into a future of health, wealth, and
               unparalleled opportunities.
             </p>
-            <p className="text-xl font-semibold">
+            <p className="text-xl text-black font-semibold">
               Together, let’s build a prosperous tomorrow.
             </p>
           </p>
