@@ -161,7 +161,7 @@ const CustomerFundTransfer = () => {
           {/* Customer Verification Section */}
           <div className="rounded-xl bg-white p-6 shadow-lg border border-gray-100">
             <h2 className="mb-4 text-lg font-semibold text-gray-700 flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-sm text-blue-600">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-sm text-primary">
                 1
               </span>
               Customer Verification
@@ -236,7 +236,7 @@ const CustomerFundTransfer = () => {
           {isVerified && (
             <div className="rounded-xl bg-white p-6 shadow-lg border border-gray-100">
               <h2 className="mb-4 text-lg font-semibold text-gray-700 flex items-center gap-2">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-sm text-blue-600">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-sm text-primary">
                   2
                 </span>
                 Transfer Details
@@ -274,16 +274,16 @@ const CustomerFundTransfer = () => {
 
               {/* Transfer Summary */}
               {isVerified && amount && Number(amount) > 0 && (
-                <div className="mt-6 rounded-lg bg-blue-50 p-4 border border-blue-100">
+                <div className="mt-6 rounded-lg bg-primary/5 p-4 border border-blue-100">
                   <h3 className="text-sm font-medium text-blue-800 mb-2">Transfer Summary</h3>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <p className="text-blue-600">From</p>
+                      <p className="text-primary">From</p>
                       <p className="font-medium text-gray-700">{customerName}</p>
                       <p className="text-xs text-gray-500">CRN: {crnNo}</p>
                     </div>
                     <div>
-                      <p className="text-blue-600">Amount</p>
+                      <p className="text-primary">Amount</p>
                       <p className="font-medium text-green-600 text-lg">
                         ${Number(amount).toLocaleString()}
                       </p>

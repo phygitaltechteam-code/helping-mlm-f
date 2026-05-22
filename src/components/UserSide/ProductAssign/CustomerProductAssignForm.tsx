@@ -35,7 +35,6 @@ const CustomerProductAssignForm: React.FC = () => {
   const { mutateAsync: topUpMutation, isPending: isSubmitting } = useAddTopUp();
 
   // State Variables
-  const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
   const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
 
   const customerName = customerData?.name || '';
@@ -47,21 +46,9 @@ const CustomerProductAssignForm: React.FC = () => {
     ? epinData.filter((epin: any) => !epin.isUsed)
     : [];
 
-  // Group unused E-pins by price
-  const epinsByPrice = unusedEpins.reduce((groups: Record<number, any[]>, epin: any) => {
-    const price = Number(epin.price);
-    if (!groups[price]) {
-      groups[price] = [];
-    }
-    groups[price].push(epin);
-    return groups;
-  }, {});
-
-  // List of available price categories
-  const priceCategories = Object.keys(epinsByPrice).map(Number).sort((a, b) => a - b);
-
-  // E-pins for the selected price category
-  const epinsForSelectedPrice = selectedPrice ? epinsByPrice[selectedPrice] || [] : [];
+  // Derive selectedPrice from selected E-Pin
+  const selectedEpin = unusedEpins.find((epin: any) => epin.epinNo === watchedEpinNo);
+  const selectedPrice = selectedEpin ? Number(selectedEpin.price) : null;
 
   // Products matching the selected price category
   const products: any[] =
@@ -73,10 +60,10 @@ const CustomerProductAssignForm: React.FC = () => {
     ? products.filter((product: any) => Number(product.discountedPrice) === selectedPrice)
     : [];
 
-  // Reset product selection if price category or E-Pin selection changes
+  // Reset product selection if E-Pin selection changes
   useEffect(() => {
     setSelectedProducts([]);
-  }, [selectedPrice, watchedEpinNo]);
+  }, [watchedEpinNo]);
 
   // Select a product package (only one)
   const handleSelectProduct = (product: any) => {
@@ -90,6 +77,11 @@ const CustomerProductAssignForm: React.FC = () => {
   const onSubmit = async (data: FormValues) => {
     if (!isValidCustomer) {
       toast.error('No customer found for this CRN');
+      return;
+    }
+
+    if (isActive) {
+      toast.error('This customer is already active');
       return;
     }
 
@@ -115,7 +107,6 @@ const CustomerProductAssignForm: React.FC = () => {
       await topUpMutation(payload);
       toast.success('Customer activated successfully');
       setSelectedProducts([]);
-      setSelectedPrice(null);
       reset({ crnNo: '', epinNo: '' });
       refetchEpins();
     } catch (err: any) {
@@ -128,6 +119,7 @@ const CustomerProductAssignForm: React.FC = () => {
   const isFormValid =
     !!crnNo &&
     isValidCustomer &&
+    !isActive &&
     !!selectedPrice &&
     !!watchedEpinNo &&
     selectedProducts.length > 0;
@@ -147,7 +139,7 @@ const CustomerProductAssignForm: React.FC = () => {
           </p>
         </div>
 
-        <div className="p-6.5 space-y-6">
+        <div className="p-1 space-y-6">
           {/* TARGET CUSTOMER CRN */}
           <div>
             <GenericInputField
@@ -199,11 +191,18 @@ const CustomerProductAssignForm: React.FC = () => {
             </div>
           )}
 
-          {/* AVAILABLE E-PINS GROUPED BY PRICE */}
-          {isValidCustomer && (
-            <div className="space-y-4 border-t border-stroke pt-6 dark:border-strokedark">
+          {/* CUSTOMER ALREADY ACTIVE WARNING */}
+          {isValidCustomer && isActive && (
+            <div className="mt-4 p-4 rounded-lg bg-yellow-50 text-yellow-800 dark:bg-yellow-900/10 dark:text-yellow-500 text-sm border border-yellow-200">
+              ⚠️ This customer is already active. No further activation process is required.
+            </div>
+          )}
+
+          {/* AVAILABLE E-PINS & PRODUCT SELECTION */}
+          {isValidCustomer && !isActive && (
+            <div className="space-y-6 border-t border-stroke pt-6 dark:border-strokedark">
               <label className="block text-black dark:text-white font-medium text-base">
-                Your Available E-Pins (Grouped by Price)
+                Select E-Pin
               </label>
 
               {isEpinsLoading && (
@@ -220,51 +219,19 @@ const CustomerProductAssignForm: React.FC = () => {
               )}
 
               {!isEpinsLoading && unusedEpins.length > 0 && (
-                <div className="grid grid-cols-3 gap-2.5 max-w-md">
-                  {priceCategories.map((price) => {
-                    const count = epinsByPrice[price].length;
-                    const isPriceSelected = selectedPrice === price;
-
-                    return (
-                      <div
-                        key={price}
-                        onClick={() => {
-                          setSelectedPrice(price);
-                          setValue('epinNo', ''); // reset epin select on category change
-                        }}
-                        className={`border py-2 px-3 rounded-lg cursor-pointer transition-all duration-200 text-center
-                          ${
-                            isPriceSelected
-                              ? 'bg-primary/10 border-primary text-primary shadow-sm scale-102 font-medium'
-                              : 'bg-white border-stroke hover:border-primary/50 text-black dark:bg-boxdark dark:border-strokedark dark:text-white'
-                          }`}
-                      >
-                        <h4 className="font-semibold text-sm">₹{price}</h4>
-                        <p className="text-xs mt-0.5 opacity-80">{count} Pin{count > 1 ? 's' : ''}</p>
-                      </div>
-                    );
-                  })}
+                <div className="max-w-md">
+                  <GenericDropdown
+                    label="Select Available E-Pin"
+                    name="epinNo"
+                    defaultOption="Choose an E-Pin Number"
+                    options={unusedEpins.map((epin: any) => ({
+                      label: `${epin.epinNo} (₹${epin.price})`,
+                      value: epin.epinNo,
+                    }))}
+                    onChange={(val: string) => setValue('epinNo', val)}
+                  />
                 </div>
               )}
-            </div>
-          )}
-
-          {/* E-PIN SELECTOR & PRODUCT SELECTION */}
-          {isValidCustomer && selectedPrice && (
-            <div className="space-y-6 border-t border-stroke pt-6 dark:border-strokedark">
-              {/* E-Pin dropdown */}
-              <div className="max-w-md">
-                <GenericDropdown
-                  label="Select Available E-Pin"
-                  name="epinNo"
-                  defaultOption="Choose an E-Pin Number"
-                  options={epinsForSelectedPrice.map((epin: any) => ({
-                    label: `${epin.epinNo} (₹${epin.price})`,
-                    value: epin.epinNo,
-                  }))}
-                  onChange={(val: string) => setValue('epinNo', val)}
-                />
-              </div>
 
               {/* Product cards */}
               {watchedEpinNo && (

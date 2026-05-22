@@ -149,7 +149,7 @@ const CustomerUpdateProfile: React.FC = () => {
   {/* Header - Stays full width */}
   <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-100">
     <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-      <FaUserCircle className="text-blue-600 text-3xl" />
+      <FaUserCircle className="text-primary text-3xl" />
       User Profile
     </h2>
   </div>

@@ -192,7 +192,7 @@ console.log("api ressss",dataaaa)
           <GenericButton
             type="submit"
             disabled={isPending || !isFormValid}
-            className="bg-blue-600 text-white px-4 py-2"
+            className="bg-secondary text-white px-4 py-2"
           >
             {isPending ? 'Submitting...' : 'Submit'}
           </GenericButton>

@@ -156,7 +156,7 @@ export const LoginInfo: React.FC = () => {
           </form>
 
           {/* Security Note */}
-          <div className="mt-6 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+          <div className="mt-6 rounded-lg bg-primary/5 p-4 dark:bg-blue-900/20">
             <p className="text-sm text-blue-700 dark:text-blue-300">
               <strong>Security note:</strong> Your password is encrypted and
               never stored in plain text.
@@ -267,7 +267,7 @@ export const LoginInfo: React.FC = () => {
                     to: role === 'ADMIN' ? '/dashboard' : '/customer/dashboard',
                   });
                 }}
-                className="flex w-full items-center justify-center rounded-lg bg-blue-600 py-3 font-medium text-white transition-all duration-200 hover:bg-blue-700 hover:shadow-lg"
+                className="flex w-full items-center justify-center rounded-lg bg-secondary py-3 font-medium text-white transition-all duration-200 hover:bg-secondary/90 hover:shadow-lg"
               >
                 Continue
                 <ArrowRightIcon className="ml-2 h-4 w-4" />

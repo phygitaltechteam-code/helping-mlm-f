@@ -88,13 +88,13 @@ const GenerationTeamPage: React.FC = () => {
 
       {/* Summary Cards */}
       <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-4 dark:border-indigo-900 dark:bg-indigo-900/20">
-          <p className="text-xs font-medium uppercase text-indigo-500">Total Direct Members</p>
-          <p className="mt-1 text-2xl font-bold text-indigo-700 dark:text-indigo-400">{children?.length}</p>
+        <div className="rounded-xl border border-indigo-100 bg-secondary/10 p-4 dark:border-indigo-900 dark:bg-indigo-900/20">
+          <p className="text-xs font-medium uppercase text-secondary">Total Direct Members</p>
+          <p className="mt-1 text-2xl font-bold text-secondary dark:text-secondary">{children?.length}</p>
         </div>
-        <div className="rounded-xl border border-green-100 bg-green-50 p-4 dark:border-green-900 dark:bg-green-900/20">
-          <p className="text-xs font-medium uppercase text-green-500">Active Members</p>
-          <p className="mt-1 text-2xl font-bold text-green-700 dark:text-green-400">
+        <div className="rounded-xl border border-green-100 bg-primary/10 p-4 dark:border-green-900 dark:bg-green-900/20">
+          <p className="text-xs font-medium uppercase text-primary">Active Members</p>
+          <p className="mt-1 text-2xl font-bold text-primary dark:text-primary">
             {children?.filter((child) => child.data?.isActive)?.length}          </p>
         </div>
       </div>

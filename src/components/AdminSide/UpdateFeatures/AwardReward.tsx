@@ -82,7 +82,7 @@ const AwardReward = () => {
       <div className="mt-6">
         <p className="text-lg">
           <strong>Your Current Pairs:</strong>{' '}
-          <span className="font-bold text-blue-600">{userPairCount}</span>
+          <span className="font-bold text-primary">{userPairCount}</span>
         </p>
       </div>
     </div>

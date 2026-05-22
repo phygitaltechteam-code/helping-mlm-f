@@ -137,7 +137,7 @@ export const ContactInfo: React.FC<SponserInfoProps> = ({onNext}) => {
               Need help?{' '}
               <a
                 href="#"
-                className="text-blue-600 transition-colors duration-200 hover:underline dark:text-blue-400"
+                className="text-primary transition-colors duration-200 hover:underline dark:text-primary/80"
               >
                 Contact support
               </a>

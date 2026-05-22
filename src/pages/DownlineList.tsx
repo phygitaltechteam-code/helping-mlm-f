@@ -78,7 +78,7 @@
 //       <span
 //         className={`rounded-full px-2 py-1 text-xs font-medium ${
 //           value === 'LEFT'
-//             ? 'bg-blue-100 text-blue-800'
+//             ? 'bg-primary/10 text-blue-800'
 //             : 'bg-purple-100 text-purple-800'
 //         }`}
 //       >
@@ -500,7 +500,7 @@ const columns: Column<CustomerData>[] = [
       <span
         className={`rounded-full px-2 py-1 text-xs font-medium ${
           value === "LEFT"
-            ? "bg-blue-100 text-blue-800"
+            ? "bg-primary/10 text-blue-800"
             : "bg-purple-100 text-purple-800"
         }`}
       >

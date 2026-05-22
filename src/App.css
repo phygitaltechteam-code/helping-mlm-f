@@ -1,6 +1,6 @@
 .dottedBackground {
   --dot-bg: rgb(255, 255, 255);
-  --dot-color: rgb(168, 200, 242);
+  --dot-color: rgb(197, 162, 220);
   --dot-size: 0.8px;
   --dot-space: 8px;
   background:
@@ -19,8 +19,8 @@
 }
 
 .darkdottedBackground {
-  --dot-bg: rgb(0, 0, 0);
-  --dot-color: rgb(168, 200, 242);
+  --dot-bg: rgb(26, 12, 39);
+  --dot-color: rgb(74, 37, 96);
   --dot-size: 0.8px;
   --dot-space: 8px;
   background:

@@ -249,7 +249,7 @@ export const ExternalRegistration: React.FC = () => {
                         } dark:bg-gray-800`}
                       >
                         {count > 0 && (
-                          <div className="absolute right-3 top-3 rounded-full bg-blue-500 px-2 py-1 text-xs font-bold text-white">
+                          <div className="absolute right-3 top-3 rounded-full bg-secondary px-2 py-1 text-xs font-bold text-white">
                             {count} selected
                           </div>
                         )}
@@ -350,7 +350,7 @@ export const ExternalRegistration: React.FC = () => {
           <div className="mx-4 w-full max-w-md scale-[0.98] transform rounded-xl bg-white p-0 shadow-2xl transition-all duration-300 hover:scale-100">
             {/* Header with gradient */}
             <div
-              className={`bg-gradient-to-r ${data.purchasedProduct ? 'from-blue-600 to-indigo-700' : 'from-blue-500 to-blue-600'} rounded-t-xl px-6 py-5`}
+              className={`bg-primary ${data.purchasedProduct ? 'from-blue-600 to-indigo-700' : 'from-blue-500 to-blue-600'} rounded-t-xl px-6 py-5`}
             >
               <div className="flex items-center space-x-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
@@ -462,7 +462,7 @@ export const ExternalRegistration: React.FC = () => {
                onClick={() => {
   navigate({ to: '/signin' });
 }}
-                className="flex w-full items-center justify-center rounded-lg bg-blue-600 py-3 font-medium text-white transition-all duration-200 hover:bg-blue-700 hover:shadow-lg"
+                className="flex w-full items-center justify-center rounded-lg bg-secondary py-3 font-medium text-white transition-all duration-200 hover:bg-secondary/90 hover:shadow-lg"
               >
                 Continue
                 <ArrowRightIcon className="ml-2 h-4 w-4" />

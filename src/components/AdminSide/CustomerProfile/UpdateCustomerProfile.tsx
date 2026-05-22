@@ -190,7 +190,7 @@ const UpdateCustomerProfile: React.FC = () => {
         className="space-y-8 bg-white p-8 dark:bg-black"
       >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
-          <button onClick={() => navigate({to: '/admin/customerlist'})} className="bg-gray-100 inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-blue-600 shadow-sm transition-all duration-200 hover:bg-blue-50 hover:text-blue-700 active:scale-95 sm:text-base">
+          <button onClick={() => navigate({to: '/admin/customerlist'})} className="bg-gray-100 inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-primary shadow-sm transition-all duration-200 hover:bg-primary/5 hover:text-blue-700 active:scale-95 sm:text-base">
             ← Back
           </button>
           <h1 className="col-span-12 mb-4 text-lg font-semibold">

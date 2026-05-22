@@ -166,7 +166,7 @@ const EpinForm: React.FC = () => {
           <div className="col-span-12 text-right">
             <GenericButton
               type="submit"
-              className="rounded-md bg-blue-600 px-4 py-2 text-white"
+              className="rounded-md bg-secondary px-4 py-2 text-white"
             >
               {isPending ? 'Submitting...' : 'Submit'}
             </GenericButton>

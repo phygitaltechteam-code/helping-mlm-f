@@ -45,7 +45,7 @@ const HistoryPayout: React.FC = () => {
   ];
 
   if (isLoading) {
-    return <p className="text-center text-blue-600">Loading payout data...</p>;
+    return <p className="text-center text-primary">Loading payout data...</p>;
   }
 
   if (error) {

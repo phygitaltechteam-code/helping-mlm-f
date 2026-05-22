@@ -165,7 +165,7 @@ const CustomerDashboard = () => {
   if (isPending) {
     return (
       <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center">
-        <HiOutlineRefresh className="animate-spin text-4xl text-blue-600 mr-3" />
+        <HiOutlineRefresh className="animate-spin text-4xl text-primary mr-3" />
         <div className="text-xl text-gray-600">Loading dashboard...</div>
       </div>
     );
@@ -177,7 +177,7 @@ const CustomerDashboard = () => {
         <div className="text-xl text-red-600">Failed to load dashboard data</div>
         <button
           onClick={() => refetch()}
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 flex items-center gap-2"
+          className="bg-secondary text-white px-6 py-2 rounded hover:bg-secondary/90 flex items-center gap-2"
         >
           <HiOutlineRefresh className="text-lg" />
           Retry
@@ -288,7 +288,7 @@ const CustomerDashboard = () => {
                 <button
                   type="submit"
                   disabled={isActivating || !epinInput || !selectedProductId}
-                  className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center"
+                  className="flex-1 px-4 py-2 bg-secondary hover:bg-secondary/90 text-white font-medium rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center"
                 >
                   {isActivating ? (
                     <HiOutlineRefresh className="animate-spin text-xl" />
@@ -312,7 +312,7 @@ const CustomerDashboard = () => {
 
       {/* Referral Link */}
       <div className="mb-8">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="bg-gradient-to-r from-primary to-secondary text-white p-4 rounded-xl shadow-lg shadow-primary/20 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4 w-full sm:w-auto min-w-0">
             <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm shrink-0">
               <FaNetworkWired className="text-xl md:text-2xl" />
@@ -327,8 +327,11 @@ const CustomerDashboard = () => {
 
           <button
             onClick={() => copyLink('registration')}
-            className={`${copied === 'registration' ? 'bg-green-500' : 'bg-white text-indigo-700 hover:bg-blue-50'
-              } w-full sm:w-auto px-6 py-2.5 rounded-lg font-bold flex justify-center items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0`}
+            className={`${
+              copied === 'registration'
+                ? 'bg-white text-secondary'
+                : 'bg-white/20 hover:bg-white/30 text-white border border-white/30'
+            } w-full sm:w-auto px-6 py-2.5 rounded-lg font-bold flex justify-center items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0`}
           >
             {copied === 'registration' ? (
               <>
@@ -427,7 +430,7 @@ const CustomerDashboard = () => {
                   {card.icon}
                 </div>
                 {card.remaining !== undefined && card.remaining > 0 && (
-                  <span className="bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-blue-100 dark:border-blue-800">
+                  <span className="bg-primary/5 text-primary dark:bg-blue-900/30 dark:text-primary/80 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-blue-100 dark:border-blue-800">
                     {card.remaining} more
                   </span>
                 )}

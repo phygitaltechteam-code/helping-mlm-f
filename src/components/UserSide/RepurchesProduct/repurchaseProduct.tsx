@@ -130,7 +130,7 @@ const RepurchaseProduct: React.FC = () => {
           <input
             type="file"
             {...methods.register('imageFile')}
-            className="text-gray-500 block w-full text-sm file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
+            className="text-gray-500 block w-full text-sm file:mr-4 file:rounded-full file:border-0 file:bg-primary/5 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-primary/10"
             multiple
           />
         </div>
