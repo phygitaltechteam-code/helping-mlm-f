@@ -190,7 +190,7 @@ const MyNetworkPage: React.FC = () => {
                         <td className="px-5 py-3">
                           <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
                             row.side === 'LEFT'
-                              ? 'bg-blue-100 text-blue-700'
+                              ? 'bg-primary/10 text-blue-700'
                               : 'bg-purple-100 text-purple-700'
                           }`}>{row.side}</span>
                         </td>

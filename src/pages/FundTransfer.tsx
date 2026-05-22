@@ -295,7 +295,7 @@ const FundTransfer = () => {
                     onClick={handleSendOtp}
                     disabled={isSendingOtp}
                     variant="outline"
-                    className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                    className="border-primary text-primary hover:bg-primary/5"
                   >
                     {isSendingOtp ? 'Sending...' : 'Resend OTP'}
                   </GenericButton>
@@ -316,7 +316,7 @@ const FundTransfer = () => {
                   <GenericButton
                     type="submit"
                     disabled={isTransferring}
-                    className="w-full bg-blue-600 py-3 text-lg hover:bg-blue-700 md:w-auto md:px-8"
+                    className="w-full bg-secondary py-3 text-lg hover:bg-secondary/90 md:w-auto md:px-8"
                   >
                     {isTransferring ? 'Processing...' : 'Transfer Fund'}
                   </GenericButton>
@@ -330,12 +330,12 @@ const FundTransfer = () => {
             <div className="mt-6 flex items-center gap-2">
               <div
                 className={`h-2 w-8 rounded-full ${
-                  step >= 1 ? 'bg-blue-600' : 'bg-gray-300'
+                  step >= 1 ? 'bg-secondary' : 'bg-gray-300'
                 }`}
               ></div>
               <div
                 className={`h-2 w-8 rounded-full ${
-                  step >= 2 ? 'bg-blue-600' : 'bg-gray-300'
+                  step >= 2 ? 'bg-secondary' : 'bg-gray-300'
                 }`}
               ></div>
               <span className="text-gray-500 ml-2 text-sm">

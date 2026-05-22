@@ -101,7 +101,7 @@ const Popup: React.FC<PopupProps> = ({}) => {
                   <GenericButton
                     type="submit"
                     disabled={isPending}
-                    className="w-full justify-center rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-blue-600 dark:hover:bg-blue-700"
+                    className="w-full justify-center rounded-lg bg-secondary px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-secondary/90 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-secondary dark:hover:bg-secondary/90"
                   >
                     {isPending ? (
                       <span className="flex items-center justify-center">

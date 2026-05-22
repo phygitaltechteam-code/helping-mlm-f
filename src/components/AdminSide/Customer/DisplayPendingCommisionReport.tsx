@@ -410,7 +410,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
           {totalRecords > 0 && (
             <button
               onClick={handlePayAllClick}
-              className="rounded bg-green-600 px-4 py-2 text-sm text-white transition-colors hover:bg-green-700"
+              className="rounded bg-secondary px-4 py-2 text-sm text-white transition-colors hover:bg-secondary"
             >
               Pay All ({totalRecords})
             </button>
@@ -420,7 +420,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
           {totalRecords > 0 && (
             <button
               onClick={handleExportToExcel}
-              className="rounded bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-600"
+              className="rounded bg-secondary px-4 py-2 text-sm text-white transition-colors hover:bg-secondary"
             >
               Export to Excel
             </button>
@@ -514,7 +514,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
                       e.stopPropagation();
                       handlePayAllForDate(date);
                     }}
-                    className="rounded bg-green-500 px-3 py-1 text-xs text-white transition-colors hover:bg-green-600"
+                    className="rounded  bg-secondary px-3 py-1 text-xs text-white transition-colors hover:bg-primary"
                   >
                     Pay All ({items.length})
                   </button>
@@ -636,7 +636,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
                             <td className="px-4 py-2 text-left">
                               <button
                                 onClick={() => handlePayClick(row)}
-                                className="rounded bg-green-500 px-3 py-1 text-xs text-white transition-colors hover:bg-green-600"
+                                className="rounded bg-secondary px-3 py-1 text-xs text-white transition-colors hover:bg-secondary"
                                 disabled={isProcessingBulk}
                               >
                                 Pay

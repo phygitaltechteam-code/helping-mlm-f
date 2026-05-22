@@ -193,7 +193,7 @@ const RecallEpin = () => {
                 <div className="text-gray-700 px-1 text-sm font-medium">
                   <p>
                     Total Unused E-pins:{' '}
-                    <span className="font-bold text-blue-600">
+                    <span className="font-bold text-primary">
                       {totalUnusedCount}
                     </span>
                   </p>

@@ -72,7 +72,7 @@ const ProductSalesReport: React.FC = () => {
         </h1>
         <button
           onClick={handleExport}
-          className="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
+          className="rounded bg-secondary px-4 py-2 text-white transition hover:bg-secondary"
         >
           Export to Excel
         </button>

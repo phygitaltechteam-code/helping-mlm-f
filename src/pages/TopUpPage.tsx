@@ -224,7 +224,7 @@ const TopUpPage = () => {
                       } dark:bg-gray-800`}
                     >
                       {count > 0 && (
-                        <div className="absolute right-3 top-3 rounded-full bg-blue-500 px-2 py-1 text-xs font-bold text-white">
+                        <div className="absolute right-3 top-3 rounded-full bg-secondary px-2 py-1 text-xs font-bold text-white">
                           Selected
                         </div>
                       )}

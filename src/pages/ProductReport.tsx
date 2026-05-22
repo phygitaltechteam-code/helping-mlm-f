@@ -193,19 +193,19 @@ const ProductReport = () => {
             className="
               w-full sm:w-auto
               rounded
-              bg-blue-500
+              bg-secondary
               px-3 py-1.5
               text-sm sm:text-base
               text-white
               transition-colors
-              hover:bg-blue-600
+              hover:bg-secondary
             "
             onClick={() => navigate({to: '/admin/deliverdproducts'})}
           >
             Show History
           </button>
           <button
-            className="rounded border border-blue-500 px-3 py-1.5 text-sm sm:text-base text-blue-500 transition-colors hover:bg-blue-50"
+            className="rounded border border-blue-500 px-3 py-1.5 text-sm sm:text-base text-blue-500 transition-colors hover:bg-primary/5"
             onClick={async () => {
               console.log('Manual refresh: fetching product report');
               try {
@@ -382,7 +382,7 @@ const ProductReport = () => {
                               onClick={() =>
                                 handleDelivery(item.id || id, fullname)
                               }
-                              className="flex transform items-center gap-2 rounded bg-green-600 px-3 py-2 text-sm font-medium text-white shadow transition-all hover:bg-green-700 active:scale-95"
+                              className="flex transform items-center gap-2 rounded bg-secondary px-3 py-2 text-sm font-medium text-white shadow transition-all hover:bg-secondary/80 active:scale-95"
                               title="Confirm you have given the product to the user"
                             >
                               <CheckmarkIcon className="h-4 w-4" />

@@ -222,19 +222,19 @@ const ChartOne: React.FC = () => {
       <h4 className="mb-4 text-lg font-semibold">Total Joinings</h4>
       <div className="flex gap-3">
         <button
-          className={`px-4 py-2 ${timePeriod === 'week' ? 'bg-blue-500 text-white' : ''}`}
+          className={`px-4 py-2 ${timePeriod === 'week' ? 'bg-secondary text-white' : ''}`}
           onClick={() => handlePeriodChange('week')}
         >
           Week
         </button>
         <button
-          className={`px-4 py-2 ${timePeriod === 'month' ? 'bg-blue-500 text-white' : ''}`}
+          className={`px-4 py-2 ${timePeriod === 'month' ? 'bg-secondary text-white' : ''}`}
           onClick={() => handlePeriodChange('month')}
         >
           Month
         </button>
         <button
-          className={`px-4 py-2 ${timePeriod === 'year' ? 'bg-blue-500 text-white' : ''}`}
+          className={`px-4 py-2 ${timePeriod === 'year' ? 'bg-secondary text-white' : ''}`}
           onClick={() => handlePeriodChange('year')}
         >
           Year
