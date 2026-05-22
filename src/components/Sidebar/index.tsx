@@ -136,7 +136,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 path: '/customer/generation-tree',
               },
               {
-                label: 'Helping Tree',
+                label: 'Upgrade Tree',
                 path: '/customer/helping-tree',
               }
             ],
