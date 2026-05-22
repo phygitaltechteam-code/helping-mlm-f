@@ -125,48 +125,60 @@ const DisplayCommisionReport: React.FC = () => {
   if (isPending) return <Loader />;
   if (isError) return <div>Error loading commission data</div>;
 
-  return (
+ return (
     <div className="p-2">
       <div className="mb-6">
         <h1 className="text-gray-800 text-2xl font-bold">
           Commission Report
         </h1>
       </div>
-
-      <div className="space-y-4">
-        {Object.entries(groupedData).map(([date, items]) => (
-          <div
-            key={date}
-            className="overflow-hidden rounded-lg border border-stroke bg-white shadow"
-          >
-            {/* Header */}
+      
+      {/* 1. Added curly braces around the whole logic block */}
+      {/* 2. Changed condition to check the length of your filtered data array */}
+      {data.length === 0 ? (
+        <GenericTable
+          data={[]}
+          columns={columns}
+          itemsPerPage={5}
+          searchAble={false}
+          title="No commission data available"
+        />
+      ) : ( 
+        <div className="space-y-4">
+          {Object.entries(groupedData).map(([date, items]) => (
             <div
-              onClick={() => toggleDate(date)}
-              className="bg-gray-50 hover:bg-gray-100 flex cursor-pointer items-center gap-2 px-4 py-3"
+              key={date}
+              className="overflow-hidden rounded-lg border border-stroke bg-white shadow"
             >
-              {expandedDates.has(date) ? (
-                <ChevronDown size={20} />
-              ) : (
-                <ChevronRight size={20} />
-              )}
-              <Calendar size={18} />
-              <h2 className="text-lg font-semibold">{date}</h2>
-            </div>
-
-            {/* Table */}
-            {expandedDates.has(date) && (
-              <div className="border-t border-stroke">
-                <GenericTable
-                  data={items}
-                  columns={columns}
-                  itemsPerPage={items.length}
-                  searchAble={false}
-                />
+              {/* Header */}
+              <div
+                onClick={() => toggleDate(date)}
+                className="bg-gray-50 hover:bg-gray-100 flex cursor-pointer items-center gap-2 px-4 py-3"
+              >
+                {expandedDates.has(date) ? (
+                  <ChevronDown size={20} />
+                ) : (
+                  <ChevronRight size={20} />
+                )}
+                <Calendar size={18} />
+                <h2 className="text-lg font-semibold">{date}</h2>
               </div>
-            )}
-          </div>
-        ))}
-      </div>
+
+              {/* Table */}
+              {expandedDates.has(date) && (
+                <div className="border-t border-stroke">
+                  <GenericTable
+                    data={items}
+                    columns={columns}
+                    itemsPerPage={items.length}
+                    searchAble={false}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )} {/* <-- Make sure to close the curly brace here */}
     </div>
   );
 };

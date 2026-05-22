@@ -25,7 +25,7 @@ const About = () => {
                     <div className="w-full lg:w-[55%] flex flex-col">
                         
                         <div className="inline-flex items-center space-x-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-6 backdrop-blur-md w-max">
-                           <span className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">Welcome To ARC International</span>
+                           <span className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">Welcome happily Life</span>
                         </div>
 
                         <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 uppercase tracking-tight leading-tight">

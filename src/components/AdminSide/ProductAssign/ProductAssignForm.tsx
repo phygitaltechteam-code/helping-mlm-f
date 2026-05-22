@@ -124,7 +124,7 @@ console.log("api ressss",dataaaa)
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-6 bg-white p-6"
       >
-        <h1 className="text-lg font-semibold">Assign Products</h1>
+        <h1 className="text-lg font-semibold">Customer Activation</h1>
 
         {/* CRN INPUT */}
         <GenericInputField

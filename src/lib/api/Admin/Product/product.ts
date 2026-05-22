@@ -15,6 +15,7 @@ import {api} from '@/utils/axios';
 export const getAllProducts = async () => {
   try {
     const response = await api.get('/product'); // ✅ FIXED
+    console.log('Fetched products data:', response.data); // Debug log to check the structure of the response
     return response.data;
   } catch (error) {
     const err = error.response?.data || error;

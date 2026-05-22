@@ -2,35 +2,35 @@
 //FROM TMS CHANGED
 
 import React from 'react';
-import p1 from '@/assets/images/product/product 1.jpg';
-import p2 from '@/assets/images/product/Product 2.png';
+import p  from '@/assets/images/product/product 1.jpg';
+import p1 from '@/assets/images/banner/pad1.png';
+import p2 from '@/assets/images/banner/pad3.png';
 import p3 from '@/assets/images/product/Product 3.png';
+import p4 from '@/assets/images/product/combo.png';
+
 // import p4 from '@/assets/images/product/p4.jpg';
 import p5 from '@/assets/images/product/p5.jpeg';
 
 const Products: React.FC = () => {
   // Product data
   const products = [
+     {
+      name: 'Happily Parsana Acupressure Therapy Plate',
+      image: p,
+      price:'2000 rs 1 plate'
+    },
     {
-      name: 'Parsana Acupressure Therapy Plate',
+      name: 'Happily Pad',
       image: p1,
+      price:' 2500 rs  20 box'
     },
+   
     {
-      name: 'Happily',
-      image: p2,
+      name: 'Combo Pack',
+      image: p4,
+      price:'3000 rs'
     },
-    {
-      name: 'Happily',
-      image: p3,
-    },
-    // {
-    //   name: 'Spiruboost',
-    //   image: p4,
-    // },
-    // {
-    //   name: 'StepWell',
-    //   image: p5,
-    // },
+   
   ];
 
   return (
@@ -51,6 +51,9 @@ const Products: React.FC = () => {
             />
             <h2 className="text-lg font-semibold text-black">
               {product.name}
+
+              <p>Price: {product.price}</p>
+
             </h2>
           </div>
         ))}

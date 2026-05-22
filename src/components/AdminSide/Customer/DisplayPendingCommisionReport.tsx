@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 import {ChevronDown, ChevronRight, Calendar} from 'lucide-react';
 import {api} from '@/utils/axios';
 import {ApiError} from '@/types';
+import GenericTable from '@/components/Forms/Table/GenericTable';
 
 type PendingCommission = {
   id: string;
@@ -97,9 +98,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
 
     if (!filter || filter === 'All') return filteredData;
 
-    
-        return filteredData;
-  
+    return filteredData;
   };
 
   // Transform and group data
@@ -313,7 +312,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
         'Bank Name': item.bankName,
         'Account No': item.bankAccNo,
         'IFSC Code': item.bankIFSC,
-        'Branch': item.bankBranch,
+        Branch: item.bankBranch,
         Amount: item.amount,
         Payable: item.payableAmount,
         TDS: item.tdsAmount,
@@ -321,7 +320,6 @@ const DisplayPendingCommisionReport: React.FC = () => {
         Type: item.type,
         Status: item.status,
         // wallet:item.walletAddress,
-
       })),
     );
 
@@ -396,18 +394,15 @@ const DisplayPendingCommisionReport: React.FC = () => {
   }
 
   return (
-    <div className="flex auto-rows-max flex-col p-4">
+    <div className="flex auto-rows-max flex-col p-2">
       {/* Header with Filters and Export */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-gray-800 text-2xl font-bold">
             {selectedFilter
               ? `${selectedFilter} Pending Commissions`
-              : 'All Pending Withdrawl Commissions'}
+              : 'Pending Commissions'}
           </h1>
-          <p className="text-gray-500 text-sm">
-            {totalRecords} pending records across {totalDays} days
-          </p>
         </div>
 
         <div className="flex items-center gap-4">
@@ -435,14 +430,42 @@ const DisplayPendingCommisionReport: React.FC = () => {
 
       {totalRecords === 0 ? (
         <div className="rounded-sm border border-stroke bg-white p-8 text-center shadow-default dark:border-strokedark dark:bg-boxdark">
-          <h3 className="text-lg font-medium text-black dark:text-white">
-            No commissions found
-          </h3>
-          <p className="text-gray-500 mt-2">
-            {selectedFilter
-              ? `No ${selectedFilter} commissions available`
-              : 'No pending commissions available'}
-          </p>
+          {/* <h3 className="text-lg font-medium text-black dark:text-white">
+    No commissions found
+  </h3>
+  <p className="text-gray-500 mt-2">
+    {selectedFilter
+      ? `No ${selectedFilter} commissions available`
+      : 'No pending commissions available'}
+  </p> */}
+          <GenericTable
+            columns={[
+              {header: 'Date', accessor: 'formattedDate'},
+              {header: 'Time', accessor: 'formattedTime'},
+              {header: 'CRN No', accessor: 'crnNo'},
+              {header: 'Full Name', accessor: 'fullname'},
+              {header: 'Phone', accessor: 'phoneNumber'},
+              {header: 'Email', accessor: 'email'},
+              {header: 'Bank Name', accessor: 'bankName'},
+              {header: 'Account No', accessor: 'bankAccNo'},
+              {header: 'IFSC Code', accessor: 'bankIFSC'},
+              {header: 'Branch', accessor: 'bankBranch'},
+              {header: 'Amount', accessor: 'amount'},
+              {header: 'Payable', accessor: 'payableAmount'},
+              {header: 'TDS', accessor: 'tdsAmount'},
+              {header: 'Details', accessor: 'details'},
+              {header: 'Type', accessor: 'type'},
+              {header: 'Status', accessor: 'status'},
+              // {header:'Wallet',accessor:'walletAddress'},
+            ]}
+            data={[]}
+
+                      itemsPerPage={5}
+          searchAble={false}
+          title="No commission data available"
+          />
+
+          {/* <-- Added the closing tag here */}
         </div>
       ) : (
         <div className="space-y-4">
@@ -576,7 +599,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
                             <td className="px-4 py-2 text-left text-sm">
                               {row.bankName}
                             </td>
-                            <td className="px-4 py-2 text-left text-sm font-mono">
+                            <td className="font-mono px-4 py-2 text-left text-sm">
                               {row.bankAccNo}
                             </td>
                             <td className="px-4 py-2 text-left text-sm">

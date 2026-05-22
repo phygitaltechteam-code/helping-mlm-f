@@ -110,17 +110,17 @@ const Home: React.FC = () => {
           icon: <FaUserTimes className="text-2xl text-red-500" />,
         },
         {
-          title: 'Help Income Givers',
+          title: 'Help Income Given',
           amount: String(helpIncomeGivers),
           icon: <FaHandHoldingUsd className="text-2xl text-yellow-500" />,
         },
         {
-          title: 'Total Bonus Income Givers',
+          title: 'Total Bonus Income Given',
           amount: String(totalBonusIncomeGivers),
           icon: <FaAward className="text-2xl text-pink-500" />,
         },
         {
-          title: 'Total Generation Income Givers',
+          title: 'Total Generation Income Given',
           amount: String(totalGenerationIncomeGivers),
           icon: <FaSitemap className="text-2xl text-indigo-500" />,
         },
@@ -178,12 +178,7 @@ const Home: React.FC = () => {
       <div className="mb-4 flex justify-end">
         <div className="flex flex-col items-end gap-1">
 
-          <input
-            type="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-          />
+        
         </div>
       </div>
 

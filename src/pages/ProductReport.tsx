@@ -6,7 +6,6 @@ import {
 } from '@/lib/react-query/Admin/Product/products';
 import {CheckmarkIcon} from 'react-hot-toast';
 import {useNavigate} from '@tanstack/react-router';
-import { late } from 'zod';
 
 const ProductReport = () => {
   const navigate = useNavigate();
@@ -25,8 +24,11 @@ const ProductReport = () => {
   const recordsPerPage = 10;
   const [sortField, setSortField] = useState<string>('createdAt');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  
+  // NEW: State for search query
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // --- EXTRACT ALL DATA (NO FILTERING) ---
+  // --- EXTRACT ALL DATA (NO FILTERING YET) ---
   let allData: any[] = [];
 
   if (Array.isArray(productData)) {
@@ -39,8 +41,25 @@ const ProductReport = () => {
     allData = [productData];
   }
 
-  // Assigning to filteredData so we don't have to change the sorting logic below
-  const filteredData = allData;
+  // --- NEW: FILTER DATA BASED ON SEARCH QUERY ---
+  const filteredData = allData.filter((item: any) => {
+    if (!searchQuery) return true; // If no search, show all
+    
+    const query = searchQuery.toLowerCase();
+    
+    // Safely extract the same fields you use in the table to search against them
+    const crnNo = String(item?.crnNo || item?.customer?.crnNo || item?.customer?.MLMData?.crnNo || '').toLowerCase();
+    const fullname = String(item?.fullname || item?.customer?.user?.fullname || item?.customer?.name || '').toLowerCase();
+    const phoneNumber = String(item?.phoneNumber || item?.customer?.user?.phoneNumber || '').toLowerCase();
+    const name = String(item?.name || item?.product?.name || item?.description || '').toLowerCase();
+
+    return (
+      crnNo.includes(query) ||
+      fullname.includes(query) ||
+      phoneNumber.includes(query) ||
+      name.includes(query)
+    );
+  });
 
   // Debug: log raw data to help trace missing rows
   console.log('ProductReport - raw productData:', productData);
@@ -90,14 +109,6 @@ const ProductReport = () => {
   const paginatedData = sortedData?.slice(
     (currentPage - 1) * recordsPerPage,
     currentPage * recordsPerPage,
-  );
-
-  // Debug: log sorted and paginated data
-  console.log('ProductReport - sortedData length:', sortedData?.length);
-  console.log(
-    'ProductReport - paginatedData length:',
-    paginatedData?.length,
-    paginatedData,
   );
 
   // Detect items missing expected fields
@@ -159,29 +170,42 @@ const ProductReport = () => {
 
   return (
     <div className="p-1">
-      {/* Header with title and button */}
-      <div className="mb-4 flex items-center justify-between">
+      {/* Header with title, search, and buttons */}
+      <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-xl font-bold dark:text-white">
-          Product Report - All Deliveries
+          Product Deliverd List
         </h1>
-        <div className="flex items-center gap-2">
-         <button
-  className="
-    w-full sm:w-auto
-    rounded
-    bg-blue-500
-    px-1 py-1
-    text-sm sm:text-base
-    text-white
-    transition-colors
-    hover:bg-blue-600
-  "
-  onClick={() => navigate({to: '/admin/deliverdproducts'})}
->
-  Show History
-</button>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          
+          {/* NEW: Search Bar Input */}
+          <input
+            type="text"
+            placeholder="Search CRN, Name, Phone..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1); // Reset to page 1 when searching
+            }}
+            className="rounded border border-stroke bg-white px-3 py-1.5 text-sm outline-none focus:border-primary dark:border-strokedark dark:bg-boxdark dark:focus:border-primary"
+          />
+
           <button
-            className="rounded border border-blue-500 px-1 py-1 text-blue-500 transition-colors hover:bg-blue-50"
+            className="
+              w-full sm:w-auto
+              rounded
+              bg-blue-500
+              px-3 py-1.5
+              text-sm sm:text-base
+              text-white
+              transition-colors
+              hover:bg-blue-600
+            "
+            onClick={() => navigate({to: '/admin/deliverdproducts'})}
+          >
+            Show History
+          </button>
+          <button
+            className="rounded border border-blue-500 px-3 py-1.5 text-sm sm:text-base text-blue-500 transition-colors hover:bg-blue-50"
             onClick={async () => {
               console.log('Manual refresh: fetching product report');
               try {
@@ -200,7 +224,7 @@ const ProductReport = () => {
       <div className="rounded-sm bg-white px-5 pb-2.5 pt-6 shadow-default dark:bg-boxdark">
         {filteredData.length === 0 ? (
           <div className="text-gray-500 dark:text-gray-400 py-8 text-center">
-            No deliveries found in the database.
+            {searchQuery ? 'No deliveries match your search.' : 'No deliveries found in the database.'}
           </div>
         ) : (
           <>
@@ -216,7 +240,7 @@ const ProductReport = () => {
                       {label: 'Product Name', key: 'name'},
                       {label: 'Date & Time', key: 'createdAt'},
                       {label: 'Price', key: 'discountedPrice'},
-                      {label: 'Status', key: 'orderStatus'}, // NEW: Status Column
+                      {label: 'Status', key: 'orderStatus'},
                       {label: 'Action', key: 'action'},
                     ].map((column) => (
                       <th
@@ -240,7 +264,6 @@ const ProductReport = () => {
                 </thead>
                 <tbody>
                   {paginatedData.map((item: any, index: number) => {
-                    // Fallbacks for various shapes the API may return
                     const id =
                       item?.id ||
                       item?._id ||
@@ -271,7 +294,6 @@ const ProductReport = () => {
                     const status =
                       item?.orderStatus || item?.status || 'PENDING';
 
-                    // Safe createdAt formatting with multiple fallbacks and heuristics
                     let createdAtStr = 'N/A';
                     const createdCandidates = [
                       item?.assignedAt,
@@ -285,13 +307,11 @@ const ProductReport = () => {
 
                     const parseDateValue = (val: any) => {
                       if (!val && val !== 0) return null;
-                      // If numeric string, coerce
                       let n =
                         typeof val === 'string' && /^\d+$/.test(val)
                           ? Number(val)
                           : val;
                       if (typeof n === 'number') {
-                        // If looks like seconds (10 digits) convert to ms
                         if (n < 1e11) n = n * 1000;
                         const dd = new Date(n);
                         return isNaN(dd.getTime()) ? null : dd;
@@ -328,38 +348,23 @@ const ProductReport = () => {
                         key={id}
                         className="hover:bg-gray-50 dark:hover:bg-boxhoverdark"
                       >
-                        {/* 1. Sr */}
                         <td className="px-4 py-4 dark:text-white font-medium">
                           {(currentPage - 1) * recordsPerPage + index + 1}
                         </td>
-                        
-                        {/* 2. CRN No */}
                         <td className="px-4 py-4 dark:text-white">{crnNo}</td>
-                        
-                        {/* 3. Customer Name */}
                         <td className="px-4 py-4 font-medium dark:text-white">
                           {fullname}
                         </td>
-                        
-                        {/* 4. Phone Number */}
                         <td className="px-4 py-4 dark:text-white">
                           {phoneNumber}
                         </td>
-                        
-                        {/* 5. Product Name */}
                         <td className="px-4 py-4 dark:text-white">{name}</td>
-
-                        {/* 6. Date & Time */}
                         <td className="px-4 py-4 dark:text-white">
                           {createdAtStr}
                         </td>
-
-                        {/* 7. Price */}
                         <td className="px-4 py-4 dark:text-white">
                           {formatCurrency(Number(discountedPrice) || 0)}
                         </td>
-
-                        {/* 8. Status Badge */}
                         <td className="px-4 py-4 dark:text-white">
                           <span
                             className={`rounded-full px-2 py-1 text-xs font-medium ${
@@ -371,8 +376,6 @@ const ProductReport = () => {
                             {String(status).toUpperCase()}
                           </span>
                         </td>
-
-                        {/* 9. Action */}
                         <td className="px-4 py-4 dark:text-white">
                           {isPending ? (
                             <button
@@ -398,7 +401,6 @@ const ProductReport = () => {
               </table>
             </div>
 
-            {/* Pagination Controls */}
             <div className="mt-4 flex items-center justify-between">
               <div className="text-gray-600 dark:text-gray-400 text-sm">
                 Showing {(currentPage - 1) * recordsPerPage + 1} to{' '}
@@ -407,19 +409,19 @@ const ProductReport = () => {
               </div>
               <div className="flex space-x-2">
                 <button
-                  className="border-gray-300 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 rounded border bg-white px-3 py-1 dark:bg-boxdark"
+                  className="border-gray-300 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 rounded border bg-white px-2 py-0.5 text-sm dark:bg-boxdark"
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
                   Previous
                 </button>
-                <span className="border-gray-300 bg-gray-100 text-gray-700 dark:text-gray-300 dark:border-gray-600 rounded border px-3 py-1 dark:bg-boxdark">
-                  Page {currentPage} of {totalPages}
+                <span className="border-gray-300 bg-gray-100 text-gray-700 dark:text-gray-300 dark:border-gray-600 rounded border px-2 py-0.5 text-sm dark:bg-boxdark">
+                  Page {currentPage} of {totalPages || 1}
                 </span>
                 <button
-                  className="border-gray-300 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 rounded border bg-white px-3 py-1 dark:bg-boxdark"
+                  className="border-gray-300 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 rounded border bg-white px-2 py-0.5 text-sm dark:bg-boxdark"
                   onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
+                  disabled={currentPage === totalPages || totalPages === 0}
                 >
                   Next
                 </button>
