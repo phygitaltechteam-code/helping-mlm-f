@@ -135,11 +135,7 @@ const CommissionReport: React.FC = () => {
   return (
     <div className="p-1">
       <h1 className="mb-4 mt-4 text-xl font-bold">Commission Report </h1>
-      {commissionData.length === 0 ? (
-        <p className="text-gray-500">No commission data available.</p>
-      ) : (
-        <GenericTable columns={commissionColumns} data={commissionData} />
-      )}
+      <GenericTable columns={commissionColumns} data={commissionData} />
     </div>
   );
 };
