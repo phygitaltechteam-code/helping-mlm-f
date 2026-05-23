@@ -18,9 +18,14 @@ import {
   FaPhone,
   FaIdCard,
   FaKey,
-  FaNetworkWired
+  FaNetworkWired,
+  FaStar,
+  FaGem,
+  FaCrown,
+  FaMedal,
+  FaTrophy,
 } from 'react-icons/fa';
-import { GiTakeMyMoney } from 'react-icons/gi';
+import { GiTakeMyMoney, GiDiamondRing, GiLaurelCrown } from 'react-icons/gi';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { boolean } from 'zod';
 import { useGetProduct } from '@/lib/react-query/Admin/Product/products';
@@ -28,6 +33,63 @@ import { useCheckEpin } from '@/lib/react-query/Admin/Epin/epin';
 import { useGetNetwotkTree } from '@/lib/react-query/network';
 import Logo from '../../public/logo.png';
 import toast from 'react-hot-toast';
+import { getCustomerRank } from '@/lib/react-query/Customer/ranking';
+
+// ─── Rank System ────────────────────────────────────────────────────────────
+
+
+
+
+// ─── Rank Badge Strip Component ──────────────────────────────────────────────
+const RankBadgeStrip: React.FC<{ directTeam: number; totalEarning: number }> = ({ directTeam, totalEarning }) => {
+  const rank = getCustomerRank(directTeam, totalEarning);
+
+  return (
+    <div
+      style={{
+        background: rank.gradient,
+        boxShadow: `0 4px 24px ${rank.glow}`,
+      }}
+      className="mb-4 rounded-xl p-4 flex items-center justify-between gap-4 transition-all duration-500"
+    >
+      <div className="flex items-center gap-3">
+        <div
+          className="w-12 h-12 rounded-full flex items-center justify-center text-2xl shrink-0"
+          style={{ background: 'rgba(255,255,255,0.25)', backdropFilter: 'blur(6px)' }}
+        >
+          {rank.type === 'star' ? (
+            <span className="flex gap-0.5">
+              {Array.from({ length: rank.starCount ?? 1 }).map((_, i) => (
+                <FaStar key={i} style={{ color: '#f59e0b', filter: 'drop-shadow(0 0 4px #fde68a)' }} />
+              ))}
+            </span>
+          ) : (
+            <span style={{ lineHeight: 1 }}>{rank.emoji}</span>
+          )}
+        </div>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest opacity-70" style={{ color: rank.textColor }}>
+            Your Current Rank
+          </p>
+          {rank.type === 'star' ? (
+            <p className="text-xl font-extrabold flex items-center gap-2" style={{ color: rank.textColor }}>
+              {rank.label}
+            </p>
+          ) : (
+            <p className="text-xl font-extrabold tracking-wide" style={{ color: rank.textColor }}>
+              {rank.label}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="text-right shrink-0">
+        <p className="text-xs opacity-70 font-semibold" style={{ color: rank.textColor }}>Direct Team</p>
+        <p className="text-lg font-bold" style={{ color: rank.textColor }}>{directTeam}</p>
+      </div>
+    </div>
+  );
+};
 
 const CustomerDashboard = () => {
   const { user, setUser } = useAuthContext();
@@ -309,6 +371,12 @@ const CustomerDashboard = () => {
           <p className="text-gray-600 font-medium">Welcome To happily Life</p>
         </div>
       </div>
+
+      {/* Rank Badge Strip */}
+      <RankBadgeStrip
+        directTeam={stats.directTeam}
+        totalEarning={stats.totalEarning}
+      />
 
       {/* Referral Link */}
       <div className="mb-8">

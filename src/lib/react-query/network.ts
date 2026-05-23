@@ -4,6 +4,7 @@ import {
   getNewnetwork,
   getNewnetworkCustomer,
   getbinarynetwork,
+  getnetworkdownlineList,
 } from '../api/network';
 import {NETWORK_QUERY_KEYS, NEW_NETWORK_QUERY_KEYS} from './QueryKeys';
 
@@ -13,7 +14,12 @@ export const useGetNetwotkTree = () => {
     queryFn: () => getnetwork(),
   });
 };
-
+export const useGetNetwotkDownlineTreeList = () => {
+  return useQuery({
+    queryKey: [NETWORK_QUERY_KEYS.NETWORK, 'generation'],
+    queryFn: () => getnetworkdownlineList(),
+  });
+};
 export const useGetNetwotkBinaryTree = () => {
   return useQuery({
     queryKey: [NETWORK_QUERY_KEYS.NETWORK, 'binary'],

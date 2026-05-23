@@ -142,15 +142,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             ],
           },
           {
-            label: 'My Team',
-            path: '/customer/generation-team',
+         
             icon: <FaNetworkWired size={18} />,
-            subRoutes: [
-              {
+           
+              
                 label: 'Generation Team',
                 path: '/customer/generation-team',
-              },
-            ],
+              
+            
           },
           {
             label: 'Commission Report',

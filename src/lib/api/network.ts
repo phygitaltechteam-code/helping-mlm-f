@@ -12,7 +12,18 @@ export const getnetwork = async () => {
     throw error;
   }
 };
+export const getnetworkdownlineList = async () => {
+  try {
+    console.log('Fetching network data...');
+    const response = await api.get('/customers/downline');
 
+    console.log('Network data fetched getnetwok', response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 export const getbinarynetwork = async () => {
   try {
     console.log('Fetching network data...');
