@@ -1,13 +1,13 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
-import { useForm, FormProvider, Controller } from 'react-hook-form';
+import React, {useEffect, useState} from 'react';
+import {useForm, FormProvider, Controller} from 'react-hook-form';
 import GenericInputField from '@/components/Forms/Input/GenericInputField';
 import GenericDropdown from '@/components/Forms/DropDown/GenericDropDown';
 import GenericButton from '@/components/Forms/Buttons/GenericButton';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useCreateCustomerEPin } from '@/lib/react-query/Admin/Epin/epin';
-import { unAuthenticatedApi } from '@/utils/axios';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {z} from 'zod';
+import {useCreateCustomerEPin} from '@/lib/react-query/Admin/Epin/epin';
+import {unAuthenticatedApi} from '@/utils/axios';
 
 export const epinCustomerSchema = z.object({
   Count: z.coerce.number().min(1, 'E-Pin Count is required'),
@@ -30,10 +30,10 @@ const EpinForm: React.FC = () => {
     },
   });
 
-  const { handleSubmit, watch, control } = methods;
+  const {handleSubmit, watch, control} = methods;
   const crnNo = watch('crnNo');
 
-  const { mutateAsync: createEPin, isPending } = useCreateCustomerEPin();
+  const {mutateAsync: createEPin, isPending} = useCreateCustomerEPin();
 
   // 🔍 Check CRN
   useEffect(() => {
@@ -65,11 +65,11 @@ const EpinForm: React.FC = () => {
   }, [crnNo]);
 
   const onSubmit = (data: FormValues) => {
-    console.log("SUBMIT DATA:", data); // keep this for debug
+    console.log('SUBMIT DATA:', data); // keep this for debug
 
     createEPin({
-      Count: Number(data.Count),   // ✅ force number
-      price: Number(data.price),   // ✅ force number
+      Count: Number(data.Count), // ✅ force number
+      price: Number(data.price), // ✅ force number
       crnNo: data.crnNo,
     });
 
@@ -113,7 +113,7 @@ const EpinForm: React.FC = () => {
                   <input
                     value={customerName}
                     disabled
-                    className="w-full border p-2 rounded bg-gray-100"
+                    className="bg-gray-100 w-full rounded border p-2"
                   />
                 </div>
               )}
@@ -136,17 +136,17 @@ const EpinForm: React.FC = () => {
             <Controller
               name="price"
               control={control}
-              render={({ field }) => (
+              render={({field}) => (
                 <GenericDropdown
                   label="Price"
                   name="price"
                   // value={field.value}
                   onChange={field.onChange}
                   options={[
-                    { label: '2000', value: '2000' },
-                    { label: '1500', value: '1500' },
-                    { label: '3500', value: '3500' },
-                    { label: '1500', value: '1500' }, // kept as requested
+                    {label: '2000', value: '2000'},
+                    {label: '1500', value: '1500'},
+                    {label: '3500', value: '3500'},
+                    {label: '1500', value: '1500'}, // kept as requested
                   ]}
                 />
               )}

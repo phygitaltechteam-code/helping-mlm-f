@@ -35,7 +35,7 @@ const Products: React.FC = () => {
 
   return (
     <div className="p-6">
-      <h1 className="title-font text-purple mb-8 text-center text-2xl font-semibold sm:text-3xl">
+      <h1 className="title-font text-black mb-8 text-center text-2xl font-semibold sm:text-3xl">
         Products
       </h1>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">

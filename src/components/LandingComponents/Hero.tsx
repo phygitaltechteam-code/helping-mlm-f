@@ -89,7 +89,7 @@ const Hero: React.FC = () => {
               family, you are stepping into a future of health, wealth, and
               unparalleled opportunities.
             </p>
-            <p className="text-xl font-semibold">
+            <p className="text-xl text-black font-semibold">
               Together, let’s build a prosperous tomorrow.
             </p>
           </p>
