@@ -11,7 +11,7 @@ const Trial = () => {
         <div className="flex flex-col items-center">
           <div className="text-center">
             <p className="text-gray-600 font-pj text-lg font-medium">
-              2,157 people have said how good Happyly MLM
+              2,157 people have said how good Happily MLM
             </p>
             <h2 className="text-black font-pj mt-4 text-3xl font-bold sm:text-4xl xl:text-5xl">
               Our happy clients say about us

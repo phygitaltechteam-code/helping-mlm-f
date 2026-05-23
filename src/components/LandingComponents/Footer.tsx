@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
           {/* <img src={Logo} alt="Logo" width={60} /> */}
         </a>
         <p className="text-gray-500 sm:border-gray-200 mt-4 text-sm sm:ml-4 sm:mt-0 sm:border-l-2 sm:py-2 sm:pl-4">
-          © 2024 HappylyMLM — All Rights Reserved
+          © 2026 Happily MLM — All Rights Reserved
         </p>
       </div>
     </footer>
