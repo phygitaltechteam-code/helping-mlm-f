@@ -176,8 +176,7 @@ Ganeshpirangute2151@gmail.com              </a>
                 </p>
               </div>
             </div>
-          </div>
-        </div>
+
       </motion.div>
     </div>
   );
