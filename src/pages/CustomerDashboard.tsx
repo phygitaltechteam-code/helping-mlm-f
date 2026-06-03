@@ -1,7 +1,7 @@
-import { useAuthContext } from '@/context/AuthContext';
-import { useFetchCustomerHome } from '@/lib/react-query/Customer/home';
-import { assignEpin } from '@/lib/api/updateCustomer';
-import React, { useState, useEffect } from 'react';
+import {useAuthContext} from '@/context/AuthContext';
+import {useFetchCustomerHome} from '@/lib/react-query/Customer/home';
+import {assignEpin} from '@/lib/api/updateCustomer';
+import React, {useState, useEffect} from 'react';
 import {
   FaBriefcase,
   FaUsers,
@@ -25,24 +25,26 @@ import {
   FaMedal,
   FaTrophy,
 } from 'react-icons/fa';
-import { GiTakeMyMoney, GiDiamondRing, GiLaurelCrown } from 'react-icons/gi';
-import { HiOutlineRefresh } from 'react-icons/hi';
-import { boolean } from 'zod';
-import { useGetProduct } from '@/lib/react-query/Admin/Product/products';
-import { useCheckEpin } from '@/lib/react-query/Admin/Epin/epin';
-import { useGetNetwotkTree } from '@/lib/react-query/network';
+import {GiTakeMyMoney, GiDiamondRing, GiLaurelCrown} from 'react-icons/gi';
+import {HiOutlineRefresh} from 'react-icons/hi';
+import {boolean} from 'zod';
+import {useGetProduct} from '@/lib/react-query/Admin/Product/products';
+import {useCheckEpin} from '@/lib/react-query/Admin/Epin/epin';
+import {useGetNetwotkTree} from '@/lib/react-query/network';
 import Logo from '../../public/logo.png';
 import toast from 'react-hot-toast';
-import { getCustomerRank } from '@/lib/react-query/Customer/ranking';
+import {getCustomerRank} from '@/lib/react-query/Customer/ranking';
 
 // ─── Rank System ────────────────────────────────────────────────────────────
 
-
-
-
 // ─── Rank Badge Strip Component ──────────────────────────────────────────────
-const RankBadgeStrip: React.FC<{ directTeam: number; totalEarning: number }> = ({ directTeam, totalEarning }) => {
+const RankBadgeStrip: React.FC<{
+  directTeam: number;
+  totalEarning: number;
+  activeTeam: number;
+}> = ({directTeam, totalEarning, activeTeam}) => {
   const rank = getCustomerRank(directTeam, totalEarning);
+  const isStarRank = rank.type === 'star';
 
   return (
     <div
@@ -50,57 +52,83 @@ const RankBadgeStrip: React.FC<{ directTeam: number; totalEarning: number }> = (
         background: rank.gradient,
         boxShadow: `0 4px 24px ${rank.glow}`,
       }}
-      className="mb-4 rounded-xl p-4 flex items-center justify-between gap-4 transition-all duration-500"
+      className="mb-4 flex items-center justify-between gap-4 rounded-xl p-4 transition-all duration-500"
     >
       <div className="flex items-center gap-3">
         <div
-          className="w-12 h-12 rounded-full flex items-center justify-center text-2xl shrink-0"
-          style={{ background: 'rgba(255,255,255,0.25)', backdropFilter: 'blur(6px)' }}
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-2xl"
+          style={{
+            background: 'rgba(255,255,255,0.25)',
+            backdropFilter: 'blur(6px)',
+          }}
         >
-          {rank.type === 'star' ? (
+          {isStarRank ? (
             <span className="flex gap-0.5">
-              {Array.from({ length: rank.starCount ?? 1 }).map((_, i) => (
-                <FaStar key={i} style={{ color: '#f59e0b', filter: 'drop-shadow(0 0 4px #fde68a)' }} />
+              {Array.from({length: rank.starCount ?? 1}).map((_, i) => (
+                <FaStar
+                  key={i}
+                  style={{
+                    color: '#f59e0b',
+                    filter: 'drop-shadow(0 0 4px #fde68a)',
+                  }}
+                />
               ))}
             </span>
           ) : (
-            <span style={{ lineHeight: 1 }}>{rank.emoji}</span>
+            <span style={{lineHeight: 1}}>{rank.emoji}</span>
           )}
         </div>
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest opacity-70" style={{ color: rank.textColor }}>
+          <p
+            className="text-xs font-bold uppercase tracking-widest opacity-70"
+            style={{color: rank.textColor}}
+          >
             Your Current Rank
           </p>
-          {rank.type === 'star' ? (
-            <p className="text-xl font-extrabold flex items-center gap-2" style={{ color: rank.textColor }}>
+          {isStarRank ? (
+            <p
+              className="flex items-center gap-2 text-xl font-extrabold"
+              style={{color: rank.textColor}}
+            >
               {rank.label}
             </p>
           ) : (
-            <p className="text-xl font-extrabold tracking-wide" style={{ color: rank.textColor }}>
+            <p
+              className="text-xl font-extrabold tracking-wide"
+              style={{color: rank.textColor}}
+            >
               {rank.label}
             </p>
           )}
         </div>
       </div>
 
-      <div className="text-right shrink-0">
-        <p className="text-xs opacity-70 font-semibold" style={{ color: rank.textColor }}>Direct Team</p>
-        <p className="text-lg font-bold" style={{ color: rank.textColor }}>{directTeam}</p>
+      <div className="shrink-0 text-right">
+        <p
+          className="text-xs font-semibold opacity-70"
+          style={{color: rank.textColor}}
+        >
+          {isStarRank ? 'Active Team' : 'Direct Team'}
+        </p>
+        <p className="text-lg font-bold" style={{color: rank.textColor}}>
+          {isStarRank ? activeTeam : directTeam}
+        </p>
       </div>
     </div>
   );
 };
-
 const CustomerDashboard = () => {
-  const { user, setUser } = useAuthContext();
-  const { data: product, isLoading: isProductLoading } = useGetProduct();
+  const {user, setUser} = useAuthContext();
+  const {data: product, isLoading: isProductLoading} = useGetProduct();
 
-  console.log('product', product?.map(element => {
-    console.log('element', element.name);
-  }));
+  console.log(
+    'product',
+    product?.map((element) => {
+      console.log('element', element.name);
+    }),
+  );
 
   let isActive = user?.isActive;
-
 
   const {
     data: dashboardData,
@@ -110,10 +138,14 @@ const CustomerDashboard = () => {
     isSuccess,
   } = useFetchCustomerHome();
 
-  const { data: networkData } = useGetNetwotkTree();
+  const {data: networkData} = useGetNetwotkTree();
   const children = networkData?.children || [];
-  const activeTeamCount = children.filter((child: any) => child.data?.isActive).length;
-  const inactiveTeamCount = children.filter((child: any) => !child.data?.isActive).length;
+  const activeTeamCount = children.filter(
+    (child: any) => child.data?.isActive,
+  ).length;
+  const inactiveTeamCount = children.filter(
+    (child: any) => !child.data?.isActive,
+  ).length;
 
   console.log('dashboardData', dashboardData);
 
@@ -128,7 +160,7 @@ const CustomerDashboard = () => {
   const [isActivating, setIsActivating] = useState(false);
   const [activationError, setActivationError] = useState('');
 
-  const { mutate: checkEpinMutate } = useCheckEpin();
+  const {mutate: checkEpinMutate} = useCheckEpin();
 
   useEffect(() => {
     if (!epinInput.trim()) {
@@ -156,7 +188,7 @@ const CustomerDashboard = () => {
           setEpinPrice(null);
           setActivationError(err?.response?.data?.message || 'Invalid E-pin');
           setIsCheckingEpin(false);
-        }
+        },
       });
     };
 
@@ -190,12 +222,16 @@ const CustomerDashboard = () => {
       await assignEpin(epinInput, selectedProductId);
       // On success, update user context to reflect active state
       if (user) {
-        setUser({ ...user, isActive: true });
+        setUser({...user, isActive: true});
       }
       setShowInactivePopup(false);
       refetch(); // Refetch dashboard data
     } catch (err: any) {
-      setActivationError(err?.response?.data?.message || err.message || 'Failed to activate account. Please try again.');
+      setActivationError(
+        err?.response?.data?.message ||
+          err.message ||
+          'Failed to activate account. Please try again.',
+      );
     } finally {
       setIsActivating(false);
     }
@@ -222,24 +258,27 @@ const CustomerDashboard = () => {
   const formatCurrency = (value: number | undefined) =>
     value != null ? `${value.toLocaleString('en-US')}` : '0';
 
-  const formatCount = (value: number | undefined) => value?.toLocaleString() ?? '0';
+  const formatCount = (value: number | undefined) =>
+    value?.toLocaleString() ?? '0';
 
   if (isPending) {
     return (
-      <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center">
-        <HiOutlineRefresh className="animate-spin text-4xl text-primary mr-3" />
-        <div className="text-xl text-gray-600">Loading dashboard...</div>
+      <div className="bg-gray-100 flex min-h-screen items-center justify-center p-6">
+        <HiOutlineRefresh className="mr-3 animate-spin text-4xl text-primary" />
+        <div className="text-gray-600 text-xl">Loading dashboard...</div>
       </div>
     );
   }
 
   if (isError) {
     return (
-      <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center justify-center gap-4">
-        <div className="text-xl text-red-600">Failed to load dashboard data</div>
+      <div className="bg-gray-100 flex min-h-screen flex-col items-center justify-center gap-4 p-6">
+        <div className="text-xl text-red-600">
+          Failed to load dashboard data
+        </div>
         <button
           onClick={() => refetch()}
-          className="bg-secondary text-white px-6 py-2 rounded hover:bg-secondary/90 flex items-center gap-2"
+          className="flex items-center gap-2 rounded bg-secondary px-6 py-2 text-white hover:bg-secondary/90"
         >
           <HiOutlineRefresh className="text-lg" />
           Retry
@@ -269,29 +308,34 @@ const CustomerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 md:p-6 font-sans relative">
+    <div className="bg-gray-100 font-sans relative min-h-screen md:p-6">
       {/* Inactive Account Popup */}
       {!isActive && showInactivePopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-          <div className="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl transform transition-all animate-slideIn">
-            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-amber-600 text-3xl">⚠️</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
+          <div className="animate-slideIn w-full max-w-md transform rounded-2xl bg-white p-6 shadow-2xl transition-all md:p-8">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-100">
+              <span className="text-3xl text-amber-600">⚠️</span>
             </div>
-            <h3 className="text-2xl font-bold text-gray-800 text-center mb-2">Account Inactive</h3>
-            <p className="text-gray-600 text-center mb-6">
-              Your account is not Active. Please enter your E-pin and select a package to activate your account.
+            <h3 className="text-gray-800 mb-2 text-center text-2xl font-bold">
+              Account Inactive
+            </h3>
+            <p className="text-gray-600 mb-6 text-center">
+              Your account is not Active. Please enter your E-pin and select a
+              package to activate your account.
             </p>
 
             <form onSubmit={handleActivateAccount} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">E-Pin Number</label>
+                <label className="text-gray-700 mb-1 block text-sm font-medium">
+                  E-Pin Number
+                </label>
                 <div className="relative">
                   <input
                     type="text"
                     value={epinInput}
                     onChange={(e) => setEpinInput(e.target.value)}
                     placeholder="Enter E-pin"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    className="border-gray-300 w-full rounded-lg border px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
                     disabled={isActivating}
                   />
                   {isCheckingEpin && (
@@ -301,48 +345,58 @@ const CustomerDashboard = () => {
                   )}
                 </div>
                 {epinPrice !== null && (
-                  <p className="text-xs text-green-600 mt-1 font-medium flex items-center gap-1">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  <p className="mt-1 flex items-center gap-1 text-xs font-medium text-green-600">
+                    <span className="h-2 w-2 rounded-full bg-green-500"></span>
                     E-pin Value: Rs. {epinPrice}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Select Product / Package {epinPrice !== null && `(Max: Rs. ${epinPrice})`}
+                <label className="text-gray-700 mb-1 block text-sm font-medium">
+                  Select Product / Package{' '}
+                  {epinPrice !== null && `(Max: Rs. ${epinPrice})`}
                 </label>
                 <select
                   value={selectedProductId}
                   onChange={(e) => setSelectedProductId(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
-                  disabled={isActivating || isProductLoading || epinPrice === null}
+                  className="border-gray-300 w-full rounded-lg border bg-white px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                  disabled={
+                    isActivating || isProductLoading || epinPrice === null
+                  }
                 >
                   <option value="">
-                    {epinPrice === null ? '-- Verify E-pin first --' : '-- Select Product --'}
+                    {epinPrice === null
+                      ? '-- Verify E-pin first --'
+                      : '-- Select Product --'}
                   </option>
                   {filteredProducts?.map((prod: any) => (
-                    <option key={prod._id || prod.id} value={prod._id || prod.id}>
+                    <option
+                      key={prod._id || prod.id}
+                      value={prod._id || prod.id}
+                    >
                       {prod.name} - Rs. {prod.discountedPrice || prod.price}
                     </option>
                   ))}
                 </select>
                 {epinPrice !== null && filteredProducts?.length === 0 && (
-                  <p className="text-xs text-red-500 mt-1">No products found within this E-pin's price range.</p>
+                  <p className="mt-1 text-xs text-red-500">
+                    No products found within this E-pin's price range.
+                  </p>
                 )}
               </div>
 
               {activationError && (
-                <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">
+                <div className="rounded bg-red-50 p-2 text-center text-sm text-red-500">
                   {activationError}
                 </div>
               )}
 
-              <div className="pt-2 flex gap-3">
+              <div className="flex gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowInactivePopup(false)}
-                  className="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded-lg transition-colors"
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 flex-1 rounded-lg px-4 py-2 font-medium transition-colors"
                   disabled={isActivating}
                 >
                   Later
@@ -350,7 +404,7 @@ const CustomerDashboard = () => {
                 <button
                   type="submit"
                   disabled={isActivating || !epinInput || !selectedProductId}
-                  className="flex-1 px-4 py-2 bg-secondary hover:bg-secondary/90 text-white font-medium rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center"
+                  className="flex flex-1 items-center justify-center rounded-lg bg-secondary px-4 py-2 font-medium text-white transition-colors hover:bg-secondary/90 disabled:opacity-50"
                 >
                   {isActivating ? (
                     <HiOutlineRefresh className="animate-spin text-xl" />
@@ -364,30 +418,38 @@ const CustomerDashboard = () => {
         </div>
       )}
 
-      <div className="flex items-center gap-4 mb-6">
-
+      <div className="mb-6 flex items-center gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Dashboard</h1>
+          <h1 className="text-gray-800 text-2xl font-bold md:text-3xl">
+            Dashboard
+          </h1>
           <p className="text-gray-600 font-medium">Welcome To happily Life</p>
         </div>
       </div>
 
       {/* Rank Badge Strip */}
+      {/* Rank Badge Strip */}
       <RankBadgeStrip
         directTeam={stats.directTeam}
         totalEarning={stats.totalEarning}
+        activeTeam={stats.activeTeam}
       />
 
       {/* Referral Link */}
       <div className="mb-8">
-        <div className="bg-gradient-to-r from-primary to-secondary text-white p-4 rounded-xl shadow-lg shadow-primary/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4 w-full sm:w-auto min-w-0">
-            <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm shrink-0">
+        <div className="flex flex-col items-center justify-between gap-4 rounded-xl bg-gradient-to-r from-primary to-secondary p-4 text-white shadow-lg shadow-primary/20 sm:flex-row">
+          <div className="flex w-full min-w-0 items-center gap-4 sm:w-auto">
+            <div className="shrink-0 rounded-lg bg-white/20 p-3 backdrop-blur-sm">
               <FaNetworkWired className="text-xl md:text-2xl" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold opacity-80 uppercase tracking-widest mb-0.5">Your Registration Link</p>
-              <p className="font-mono text-sm opacity-95 truncate" title={RegistrationLink}>
+              <p className="mb-0.5 text-xs font-bold uppercase tracking-widest opacity-80">
+                Your Registration Link
+              </p>
+              <p
+                className="font-mono truncate text-sm opacity-95"
+                title={RegistrationLink}
+              >
                 {shortRegistrationLink}
               </p>
             </div>
@@ -398,8 +460,8 @@ const CustomerDashboard = () => {
             className={`${
               copied === 'registration'
                 ? 'bg-white text-secondary'
-                : 'bg-white/20 hover:bg-white/30 text-white border border-white/30'
-            } w-full sm:w-auto px-6 py-2.5 rounded-lg font-bold flex justify-center items-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0`}
+                : 'border border-white/30 bg-white/20 text-white hover:bg-white/30'
+            } flex w-full shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-6 py-2.5 font-bold shadow-md transition-all active:scale-95 sm:w-auto`}
           >
             {copied === 'registration' ? (
               <>
@@ -414,97 +476,149 @@ const CustomerDashboard = () => {
         </div>
       </div>
 
+      {/* Bonus Income and Total Earning Section - Two column grid on all screens */}
+      <div className="mb-8">
+        <div className="grid grid-cols-2 gap-3">
+          {/* Bonus Income Card - Auto remove when completed (5 active members) */}
+          {Math.max(0, 5 - activeTeamCount) > 0 && (
+            <div className="rounded-xl bg-gradient-to-r from-pink-50 to-pink-100/50 p-3 shadow-sm transition-all hover:shadow-md">
+              <div className="mb-2 flex items-center gap-2">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-pink-200">
+                  <FaShoppingBag className="text-sm text-pink-600" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-gray-500 truncate text-xs font-medium">
+                    Bonus Income
+                  </p>
+                  <p className="text-sm font-bold text-pink-600">Rs. 1,000</p>
+                </div>
+              </div>
+              {/* Progress bar - only show when not completed */}
+              {Math.max(0, 5 - activeTeamCount) > 0 && (
+                <div className="mt-2">
+                  <div className="bg-gray-200 h-1.5 w-full rounded-full">
+                    <div
+                      className="h-1.5 rounded-full bg-pink-500 transition-all duration-500"
+                      style={{width: `${(activeTeamCount / 5) * 100}%`}}
+                    ></div>
+                  </div>
+                  <p className="text-gray-400 mt-1 text-[10px]">
+                    {activeTeamCount}/5 active
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Total Earning Card - Always visible */}
+          <div className="rounded-xl bg-gradient-to-r from-teal-50 to-teal-100/50 p-3 shadow-sm transition-all hover:shadow-md">
+            <div className="flex items-center gap-2">
+              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-teal-200">
+                <FaMoneyBillWave className="text-sm text-teal-600" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-gray-500 truncate text-xs font-medium">
+                  Total Earning
+                </p>
+                <p className="truncate text-sm font-bold text-teal-600">
+                  Rs. {formatCurrency(stats.totalEarning)}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* All Dashboard Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 mb-10">
+      <div className="mb-10 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {[
           // First Row Cards
-         
 
           {
             title: 'Total Team',
             value: formatCount(stats.directTeam),
-            icon: <FaUsers className="text-2xl text-blue-500" />
+            icon: <FaUsers className="text-2xl text-blue-500" />,
           },
 
           // Second Row Cards
           {
             title: 'Active Team',
             value: formatCount(stats.activeTeam),
-            icon: <FaUsers className="text-2xl text-green-500" />
+            icon: <FaUsers className="text-2xl text-green-500" />,
           },
 
           {
             title: 'Inactive Team',
             value: formatCount(stats.inactiveTeam),
-            icon: <FaUsers className="text-2xl text-red-500" />
+            icon: <FaUsers className="text-2xl text-red-500" />,
           },
-               {
+          {
             title: 'Total Sales',
             value: formatCurrency(stats.totalSales),
             icon: <FaShoppingBag className="text-2xl text-emerald-500" />,
-            dollor: 'Rs.'
+            dollor: 'Rs.',
           },
-            {
+          {
             title: 'Total Earning',
             value: formatCurrency(stats.totalEarning),
             icon: <FaMoneyBillWave className="text-2xl text-teal-500" />,
-            dollor: 'Rs.'
+            dollor: 'Rs.',
           },
 
           {
             title: 'Genarational Income',
             value: formatCurrency(stats.generationIncome),
             icon: <FaSeedling className="text-2xl text-indigo-500" />,
-            dollor: 'Rs.'
+            dollor: 'Rs.',
           },
-           {
+          {
             title: 'Bonus Income',
             value: 1000,
             icon: <FaShoppingBag className="text-2xl text-pink-500" />,
-            remaining: Math.max(0, 5 - activeTeamCount)
+            remaining: Math.max(0, 5 - activeTeamCount),
           },
 
           {
-            title: 'Upgrade Income',
+            title: 'Auto Income',
             value: formatCurrency(stats.helpingIncome),
             icon: <FaSeedling className="text-2xl text-yellow-500" />,
-            dollor: 'Rs.'
+            dollor: 'Rs.',
           },
 
           {
-            title: 'Next Upgrade Income',
+            title: 'Next Auto Income',
             value: formatCurrency(stats.binaryIncome),
             icon: <GiTakeMyMoney className="text-2xl text-sky-500" />,
-            dollor: 'Rs.'
+            dollor: 'Rs.',
           },
 
           // Third Row Cards
           {
             title: 'Upgrade Members',
             value: formatCount(Math.max(0, 5 - activeTeamCount)),
-            icon: <FaUsers className="text-2xl text-orange-500" />
+            icon: <FaUsers className="text-2xl text-orange-500" />,
           },
-
-
         ]
-          .filter(card => card.title !== 'Bonus Income' || (card.remaining ?? 0) > 0)
+          .filter(
+            (card) =>
+              card.title !== 'Bonus Income' || (card.remaining ?? 0) > 0,
+          )
           .map((card, i) => (
             <div
               key={i}
-              className="dark:bg-gray-800 bg-white p-4 shadow-default dark:bg-black flex flex-col justify-between h-[140px] transition-transform hover:scale-[1.02]"
+              className="dark:bg-gray-800 flex h-[140px] flex-col justify-between bg-white p-4 shadow-default transition-transform hover:scale-[1.02] dark:bg-black"
             >
               <div className="flex items-center justify-between">
                 <div className="dark:bg-gray-700 flex h-10 w-10 items-center justify-center rounded-full bg-gray dark:bg-primary">
                   {card.icon}
                 </div>
                 {card.remaining !== undefined && card.remaining > 0 && (
-                  <span className="bg-primary/5 text-primary dark:bg-blue-900/30 dark:text-primary/80 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-blue-100 dark:border-blue-800">
+                  <span className="rounded-full border border-blue-100 bg-primary/5 px-2.5 py-0.5 text-xs font-semibold text-primary dark:border-blue-800 dark:bg-blue-900/30 dark:text-primary/80">
                     {card.remaining} more
                   </span>
                 )}
               </div>
               <div className="mt-2">
-                <p className="text-gray-800 text-xl font-semibold dark:text-white flex items-baseline gap-0.5">
+                <p className="text-gray-800 flex items-baseline gap-0.5 text-xl font-semibold dark:text-white">
                   {card.dollor && (
                     <span className="text-lg font-bold opacity-80">
                       {card.dollor}
@@ -513,7 +627,10 @@ const CustomerDashboard = () => {
                   {card.value}
                 </p>
                 <div className="align-center flex flex-row justify-between">
-                  <p className="text-gray-500 dark:text-gray-400 text-sm truncate" title={card.title}>
+                  <p
+                    className="text-gray-500 dark:text-gray-400 truncate text-sm"
+                    title={card.title}
+                  >
                     {card.title}
                   </p>
                 </div>

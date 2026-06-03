@@ -13,25 +13,28 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
   const displayDate = createdAt
     ? new Date(createdAt).toLocaleDateString('en-GB')
     : new Date().toLocaleDateString('en-GB');
+
   if (!user) return <p className="py-8 text-center">No user data found</p>;
+
+  // Extract only the number from CRN for receipt number
+  const getReceiptNumber = (crnNo: string) => {
+    if (!crnNo) return '-';
+    return crnNo.replace(/^CRN/i, '');
+  };
 
   return (
     <div className="flex justify-center py-8">
       <div className="w-full max-w-3xl overflow-hidden rounded-xl border-4 border-primary/30 bg-white shadow-xl shadow-primary/10">
-
         {/* Header Banner */}
         <div className="bg-gradient-to-r from-primary to-secondary px-6 py-5 text-center text-white">
           <h5 className="font-[Cambria] text-3xl font-bold tracking-widest">
-            HAPPILY LIFE
+            HAPPILYLIFE
           </h5>
-          <p className="mt-1 text-sm opacity-80">
-            https://happilylife.online/
-          </p>
         </div>
 
         {/* Receipt Info */}
-        <div className="bg- px-6 py-3 text-right font-[Cambria] text-black text-sm">
-          <p>Receipt No. : 1001</p>
+        <div className="bg- px-6 py-3 text-right font-[Cambria] text-sm text-black">
+          <p>Receipt No. : {getReceiptNumber(user?.crnNo || '')}</p>
           <p>Date : {displayDate}</p>
         </div>
 
@@ -55,8 +58,8 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
           <div className="border-primary/30 pl-4 md:border-l-2">
             <ul className="list-none space-y-1">
               <li className="font-semibold text-primary">Bill To,</li>
-              <li>Member Code : {user.crnNo}</li>
-              <li>Member Name : {user.fullname}</li>
+              <li>Member Code : {user.crnNo || '-'}</li>
+              <li>Member Name : {user.fullname || '-'}</li>
               <li>Mobile No : {user.phoneNumber || '-'}</li>
             </ul>
           </div>
@@ -70,7 +73,7 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
           <p className="text-lg font-semibold text-primary">
             Terms &amp; Condition :
           </p>
-          <ol className="list-decimal pl-6 text-sm text-gray-700 mt-2">
+          <ol className="text-gray-700 mt-2 list-decimal pl-6 text-sm">
             <li>
               Amount paid towards purchase of product shall not be refunded at
               any circumstances.

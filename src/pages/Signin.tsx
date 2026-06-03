@@ -1,4 +1,3 @@
-import logo from '/logo.png';
 import {useAuthContext} from '@/context/AuthContext';
 import {useCustomerLogin} from '@/lib/react-query/Auth/auth';
 import {signInSchema} from '@/lib/validation/signInSchema';
@@ -10,7 +9,7 @@ import {useForm} from 'react-hook-form';
 import {FiEye, FiMail, FiLock, FiUser, FiArrowRight} from 'react-icons/fi';
 import {LuEyeOff} from 'react-icons/lu';
 import {z} from 'zod';
-import logoImage from '../assets/images/header/logo.png';
+import logo from '../../public/logo.png';
 
 type SignInFormValues = z.infer<typeof signInSchema>;
 
@@ -71,7 +70,7 @@ const SignIn: React.FC = () => {
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center bg-white text-slate-800">
       <button
-        className="absolute top-6 left-6 group mb-6 flex cursor-pointer items-center gap-1.5 p-2 text-sm font-medium text-slate-400 transition-colors duration-200 hover:text-slate-800"
+        className="group absolute left-6 top-6 mb-6 flex cursor-pointer items-center gap-1.5 p-2 text-sm font-medium text-slate-400 transition-colors duration-200 hover:text-slate-800"
         onClick={() => navigate({to: '/landing'})}
       >
         <span className="transform transition-transform group-hover:-translate-x-1">
@@ -92,9 +91,9 @@ const SignIn: React.FC = () => {
           <div className="mb-8 text-center">
             <div className="relative mb-4 inline-block">
               <img
-                src="logo.png"
-                alt="Company Logo"
-                className="relativ h-20 w-50 transform rounded-full bg-white p-1 transition-transform duration-300 hover:scale-105"
+                src={logo}
+                alt="Logo"
+                className="h-12 w-auto object-contain sm:h-14 md:h-16 lg:h-20 xl:h-24"
               />
             </div>
 

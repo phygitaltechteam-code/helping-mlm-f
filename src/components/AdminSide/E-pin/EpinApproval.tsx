@@ -113,6 +113,7 @@ const EpinApproval = () => {
                   { label: 'Customer Name' },
                   { label: 'CRN' },
                   { label: 'Requested Amount' },
+                  { label: 'Transaction ID' },
                   { label: 'Image' },
                   { label: 'Approve Count' },
                   { label: 'Transaction ID' },
@@ -153,6 +154,10 @@ const EpinApproval = () => {
 
                       <td className="px-4 py-2 dark:text-white">
                         {item.paidAmount}
+                      </td>
+
+                      <td className="px-4 py-2 dark:text-white">
+                        {item.transactionId || 'N/A'}
                       </td>
 
                       <td className="px-4 py-2 dark:text-white">

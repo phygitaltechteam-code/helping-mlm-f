@@ -110,7 +110,7 @@ const Home: React.FC = () => {
           icon: <FaUserTimes className="text-2xl text-red-500" />,
         },
         {
-          title: 'Upgrade Income Given',
+          title: 'Auto Income Given',
           amount: String(helpIncomeGivers),
           icon: <FaHandHoldingUsd className="text-2xl text-yellow-500" />,
         },

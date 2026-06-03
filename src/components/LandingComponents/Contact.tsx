@@ -50,7 +50,7 @@ const Contact: React.FC = () => {
                   Our Email Address
                 </h2>
                 <p className="text-base leading-relaxed">
-                 Ganeshpirangute2151@gmail.com
+                 happilylife2026@gmail.com
                 </p>
               </div>
             </div>
@@ -102,7 +102,7 @@ const Contact: React.FC = () => {
                 EMAIL
               </h2>
               <a className="leading-relaxed text-indigo-500">
-Ganeshpirangute2151@gmail.com              </a>
+happilylife2026@gmail.com              </a>
               <h2 className="title-font text-gray-900 mt-4 text-xs font-semibold tracking-widest">
                 PHONE
               </h2>

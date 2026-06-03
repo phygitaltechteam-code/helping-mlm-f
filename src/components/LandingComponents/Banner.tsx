@@ -4,9 +4,14 @@ import Loader from '../common/Loader';
 // Import your 3 images
 import pad3 from '@/assets/images/banner/pad3.png';
 import pad4 from '@/assets/images/banner/pad4.png';
+import pad5 from '@/assets/images/banner1.png';
+import pad6 from '@/assets/images/banner2.png';
+import pad7 from '@/assets/images/banner3.png';
+import pad8 from '@/assets/images/banner4.png';
+
 
 const Banner: React.FC = () => {
-  const images = [pad3, pad4];
+  const images = [pad3, pad4, pad5, pad6, pad7, pad8];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Auto-play functionality (changes slide every 5 seconds)

@@ -1,19 +1,17 @@
-
-
 //FROM TMS CHANGED
 
 import React from 'react';
 
 const Trial = () => {
   return (
-    <section className="bg-gray-50 py-12 sm:py-16 lg:py-1 ">
+    <section className="bg-gray-50 py-12 sm:py-16 lg:py-1">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           <div className="text-center">
             <p className="text-gray-600 font-pj text-lg font-medium">
-              2,157 people have said how good Happily MLM
+              2,157 people have said how good HappilyLife
             </p>
-            <h2 className="text-black font-pj mt-4 text-3xl font-bold sm:text-4xl xl:text-5xl">
+            <h2 className="font-pj mt-4 text-3xl font-bold text-black sm:text-4xl xl:text-5xl">
               Our happy clients say about us
             </h2>
           </div>
@@ -74,7 +72,7 @@ const Trial = () => {
                       <p className="text-gray-900 font-pj text-lg leading-relaxed">
                         “This platform has completely transformed how we manage
                         our business! The user-friendly interface and seamless
-                        tools make it a game-changer for MLM systems.”
+                        tools make it a game-changer for systems.”
                       </p>
                     </blockquote>
                   </div>
@@ -90,7 +88,7 @@ const Trial = () => {
                         Sumit Pandey
                       </p>
                       <p className="font-pj text-gray-600 mt-0.5 text-sm">
-                        MLM expert
+                        expert
                       </p>
                     </div>
                   </div>
