@@ -23,91 +23,96 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const sidebarRoutes =
     role === 'ADMIN'
       ? [
-          {
-            label: 'Dashboard',
-            path: '/dashboard',
-            icon: <PiSquaresFourLight size={18} />,
-          },
-          {
-            label: 'Customer List',
-            path: '/admin/customerlist',
-            icon: <BiListUl size={18} />,
-          },
-           {
-            label: 'Generation Tree',
-            path: '/admin/network',
-            icon: <FaNetworkWired size={18} />,
-          },
-          {
-            label: 'Upgrade Tree',
-            path: '/admin/binarytree',
-            icon: <NetworkIcon size={18} />,
-          },
-          {
-            label: 'Payout',
-            path: '/admin/commisionreport',
-            icon: <BiRupee size={18} />,
-            subRoutes: [
-              {
-                label: 'Pending Commission',
-                path: '/admin/pendingcommisionreport',
-              },
-              {
-                label: 'Paid Commission',
-                path: '/admin/commisionreport',
-              },
-              
-            ],
-          },
+        {
+          label: 'Dashboard',
+          path: '/dashboard',
+          icon: <PiSquaresFourLight size={18} />,
+        },
+        {
+          label: 'Customer List',
+          path: '/admin/customerlist',
+          icon: <BiListUl size={18} />,
+        },
+        {
+          label: 'Generation Tree',
+          path: '/admin/network',
+          icon: <FaNetworkWired size={18} />,
+        },
+        {
+          label: 'Upgrade Tree',
+          path: '/admin/binarytree',
+          icon: <NetworkIcon size={18} />,
+        },
+        {
+          label: 'Payout',
+          path: '/admin/commisionreport',
+          icon: <BiRupee size={18} />,
+          subRoutes: [
+            {
+              label: 'Pending Commission',
+              path: '/admin/pendingcommisionreport',
+            },
+            {
+              label: 'Paid Commission',
+              path: '/admin/commisionreport',
+            },
 
-           {
-            label: 'E-Pin',
-            icon: <PiSquaresFourLight size={18} />,
-            path: '/admin/Epin',
-            subRoutes: [
-               { label: 'Assign E-Pin', path: '/admin/Epin' },
-              { label: 'Customer Activation', path: '/admin/productassignpage' },
-              { label: 'Recall E-pin', path: '/admin/recallepin' },
-              { label: 'Requested E-pin', path: '/admin/approvedepin' },
-            ],
-          },
+          ],
+        },
 
-          {
-            label: 'Product Deliverd List',
-            path: '/admin/productapprove',
-            icon: <ProfileIcon size={18} />,
-          },
-          
-         
-          // {
-          //   label: 'Fund Request',
-          //   path: '/admin/epinrequest',
-          //   icon: <MdApproval size={18} />,
-          // },
-          // {
-          //   label: 'Fund Transfer',
-          //   path: '/fundtransfer',
-          //   icon: <FaMoneyBillTransfer size={18} />,
-          // },
-          // {
-          //   label: 'Share Link',
-          //   path: '/admin/sharelink',
-          //   icon: <PiShareLight size={18} />,
-          // },
-          // {
-          //   label: 'Reports',
-          //   path: '/admin/roi',
-          //   icon: <PiShareLight size={18} />,
-          //   subRoutes: [
-          //     {
-          //       label: 'ROI Income',
-          //       path: '/admin/roi',
-          //     },
-          //   ],
-          // },
-          
-         
-        ]
+        {
+          label: 'E-Pin',
+          icon: <PiSquaresFourLight size={18} />,
+          path: '/admin/Epin',
+          subRoutes: [
+            { label: 'Assign E-Pin', path: '/admin/Epin' },
+            { label: 'Customer Activation', path: '/admin/productassignpage' },
+            { label: 'Recall E-pin', path: '/admin/recallepin' },
+            { label: 'Requested E-pin', path: '/admin/approvedepin' },
+          ],
+        },
+
+        {
+          label: 'Product Deliverd List',
+          path: '/admin/productapprove',
+          icon: <ProfileIcon size={18} />,
+        },
+
+        {
+          label: 'Customer Achievemet List',
+          path: '/admin/achievementlist',
+          icon: <ProfileIcon size={18} />,
+        },
+
+        // {
+        //   label: 'Fund Request',
+        //   path: '/admin/epinrequest',
+        //   icon: <MdApproval size={18} />,
+        // },
+        // {
+        //   label: 'Fund Transfer',
+        //   path: '/fundtransfer',
+        //   icon: <FaMoneyBillTransfer size={18} />,
+        // },
+        // {
+        //   label: 'Share Link',
+        //   path: '/admin/sharelink',
+        //   icon: <PiShareLight size={18} />,
+        // },
+        // {
+        //   label: 'Reports',
+        //   path: '/admin/roi',
+        //   icon: <PiShareLight size={18} />,
+        //   subRoutes: [
+        //     {
+        //       label: 'ROI Income',
+        //       path: '/admin/roi',
+        //     },
+        //   ],
+        // },
+
+
+      ]
       : role === 'CUSTOMER'
         ? [
           {
@@ -142,14 +147,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             ],
           },
           {
-         
+
             icon: <FaNetworkWired size={18} />,
-           
-              
-                label: 'Generation Team',
-                path: '/customer/generation-team',
-              
-            
+
+
+            label: 'Generation Team',
+            path: '/customer/generation-team',
+
+
           },
           {
             label: 'Commission Report',
@@ -296,28 +301,25 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         className={`group relative flex items-center gap-2.5 rounded-lg px-4 py-2.5 font-medium duration-200 ease-in-out
                           hover:bg-primary/10 hover:text-primary
                           dark:text-bodydark dark:hover:bg-primary/20 dark:hover:text-white
-                          ${
-                            (pathname === route.path || pathname.includes(route.path!))
-                              ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-white font-semibold'
-                              : 'text-graydark dark:text-bodydark'
+                          ${(pathname === route.path || pathname.includes(route.path!))
+                            ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-white font-semibold'
+                            : 'text-graydark dark:text-bodydark'
                           }`}
                         onClick={(e) => {
                           e.preventDefault();
                           handleClick();
                         }}
                       >
-                        <span className={`${
-                          (pathname === route.path || pathname.includes(route.path!))
+                        <span className={`${(pathname === route.path || pathname.includes(route.path!))
                             ? 'text-primary'
                             : 'text-gray-400 group-hover:text-primary'
-                        } transition-colors`}>
+                          } transition-colors`}>
                           {route.icon}
                         </span>
                         {route.label}
                         <IoIosArrowDown
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-transform duration-200 ${
-                            open ? 'rotate-180 text-primary' : 'text-gray-400'
-                          }`}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-transform duration-200 ${open ? 'rotate-180 text-primary' : 'text-gray-400'
+                            }`}
                         />
                       </Link>
 
@@ -333,15 +335,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 onClick={handleLinkClick}
                                 className={`group relative flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium duration-200 ease-in-out
                                   hover:text-secondary
-                                  ${
-                                    pathname === sub.path
-                                      ? 'text-secondary font-semibold'
-                                      : 'text-graydark dark:text-bodydark'
+                                  ${pathname === sub.path
+                                    ? 'text-secondary font-semibold'
+                                    : 'text-graydark dark:text-bodydark'
                                   }`}
                               >
-                                <span className={`h-1 w-1 rounded-full ${
-                                  pathname === sub.path ? 'bg-secondary' : 'bg-gray-300 group-hover:bg-secondary'
-                                } transition-colors`} />
+                                <span className={`h-1 w-1 rounded-full ${pathname === sub.path ? 'bg-secondary' : 'bg-gray-300 group-hover:bg-secondary'
+                                  } transition-colors`} />
                                 {sub.label}
                               </Link>
                             </li>
@@ -359,17 +359,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     className={`group relative flex items-center gap-2.5 rounded-lg px-4 py-2.5 font-medium duration-200 ease-in-out
                       hover:bg-primary/10 hover:text-primary
                       dark:text-bodydark dark:hover:bg-primary/20 dark:hover:text-white
-                      ${
-                        pathname === route.path
-                          ? 'bg-primary text-white shadow-md shadow-primary/30 dark:bg-primary dark:text-white'
-                          : 'text-graydark dark:text-bodydark'
+                      ${pathname === route.path
+                        ? 'bg-primary text-white shadow-md shadow-primary/30 dark:bg-primary dark:text-white'
+                        : 'text-graydark dark:text-bodydark'
                       }`}
                   >
-                    <span className={`${
-                      pathname === route.path
+                    <span className={`${pathname === route.path
                         ? 'text-white'
                         : 'text-gray-400 group-hover:text-primary'
-                    } transition-colors`}>
+                      } transition-colors`}>
                       {route.icon}
                     </span>
                     {route.label}

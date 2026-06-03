@@ -47,6 +47,7 @@ import { Route as AppAdminWlcmletterRouteImport } from './routes/_app/admin/wlcm
 import { Route as AppAdminRegistrationlandingRouteImport } from './routes/_app/admin/registrationlanding'
 import { Route as AppAdminProductapproveRouteImport } from './routes/_app/admin/productapprove'
 import { Route as AppAdminInvoiceRouteImport } from './routes/_app/admin/invoice'
+import { Route as AppAdminAchievementlistRouteImport } from './routes/_app/admin/achievementlist'
 import { Route as RegistrationRegisterNameCrnnoRouteImport } from './routes/_registration/register.$name.$crnno'
 import { Route as AppCustomerWalletWithdrawhistoryRouteImport } from './routes/_app/customer/_wallet/withdrawhistory'
 import { Route as AppCustomerWalletWithdrawRouteImport } from './routes/_app/customer/_wallet/withdraw'
@@ -333,6 +334,11 @@ const AppAdminProductapproveRoute = AppAdminProductapproveRouteImport.update({
 const AppAdminInvoiceRoute = AppAdminInvoiceRouteImport.update({
   id: '/admin/invoice',
   path: '/admin/invoice',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminAchievementlistRoute = AppAdminAchievementlistRouteImport.update({
+  id: '/admin/achievementlist',
+  path: '/admin/achievementlist',
   getParentRoute: () => AppRoute,
 } as any)
 const RegistrationRegisterNameCrnnoRoute =
@@ -821,6 +827,7 @@ export interface FileRoutesByFullPath {
   '/registration': typeof RegistrationRegistrationRoute
   '/dashboard': typeof AppDashboardLazyRoute
   '/landing': typeof LandingLandingLazyRoute
+  '/admin/achievementlist': typeof AppAdminAchievementlistRoute
   '/admin/invoice': typeof AppAdminInvoiceRoute
   '/admin/productapprove': typeof AppAdminProductapproveRoute
   '/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
@@ -938,6 +945,7 @@ export interface FileRoutesByTo {
   '/registration': typeof RegistrationRegistrationRoute
   '/dashboard': typeof AppDashboardLazyRoute
   '/landing': typeof LandingLandingLazyRoute
+  '/admin/achievementlist': typeof AppAdminAchievementlistRoute
   '/admin/invoice': typeof AppAdminInvoiceRoute
   '/admin/productapprove': typeof AppAdminProductapproveRoute
   '/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
@@ -1059,6 +1067,7 @@ export interface FileRoutesById {
   '/_app/dashboard': typeof AppDashboardLazyRoute
   '/_landing/landing': typeof LandingLandingLazyRoute
   '/_app/': typeof AppIndexLazyRoute
+  '/_app/admin/achievementlist': typeof AppAdminAchievementlistRoute
   '/_app/admin/invoice': typeof AppAdminInvoiceRoute
   '/_app/admin/productapprove': typeof AppAdminProductapproveRoute
   '/_app/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
@@ -1178,6 +1187,7 @@ export interface FileRouteTypes {
     | '/registration'
     | '/dashboard'
     | '/landing'
+    | '/admin/achievementlist'
     | '/admin/invoice'
     | '/admin/productapprove'
     | '/admin/registrationlanding'
@@ -1295,6 +1305,7 @@ export interface FileRouteTypes {
     | '/registration'
     | '/dashboard'
     | '/landing'
+    | '/admin/achievementlist'
     | '/admin/invoice'
     | '/admin/productapprove'
     | '/admin/registrationlanding'
@@ -1415,6 +1426,7 @@ export interface FileRouteTypes {
     | '/_app/dashboard'
     | '/_landing/landing'
     | '/_app/'
+    | '/_app/admin/achievementlist'
     | '/_app/admin/invoice'
     | '/_app/admin/productapprove'
     | '/_app/admin/registrationlanding'
@@ -1792,6 +1804,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/invoice'
       fullPath: '/admin/invoice'
       preLoaderRoute: typeof AppAdminInvoiceRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/achievementlist': {
+      id: '/_app/admin/achievementlist'
+      path: '/admin/achievementlist'
+      fullPath: '/admin/achievementlist'
+      preLoaderRoute: typeof AppAdminAchievementlistRouteImport
       parentRoute: typeof AppRoute
     }
     '/_registration/register/$name/$crnno': {
@@ -2354,6 +2373,7 @@ interface AppRouteChildren {
   AppFundtransferRoute: typeof AppFundtransferRoute
   AppDashboardLazyRoute: typeof AppDashboardLazyRoute
   AppIndexLazyRoute: typeof AppIndexLazyRoute
+  AppAdminAchievementlistRoute: typeof AppAdminAchievementlistRoute
   AppAdminInvoiceRoute: typeof AppAdminInvoiceRoute
   AppAdminProductapproveRoute: typeof AppAdminProductapproveRoute
   AppAdminRegistrationlandingRoute: typeof AppAdminRegistrationlandingRoute
@@ -2452,6 +2472,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppFundtransferRoute: AppFundtransferRoute,
   AppDashboardLazyRoute: AppDashboardLazyRoute,
   AppIndexLazyRoute: AppIndexLazyRoute,
+  AppAdminAchievementlistRoute: AppAdminAchievementlistRoute,
   AppAdminInvoiceRoute: AppAdminInvoiceRoute,
   AppAdminProductapproveRoute: AppAdminProductapproveRoute,
   AppAdminRegistrationlandingRoute: AppAdminRegistrationlandingRoute,
