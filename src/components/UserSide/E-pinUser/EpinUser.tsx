@@ -18,6 +18,7 @@ const createEpinRequestSchema = z.object({
   imageFile: z.instanceof(FileList).refine((files) => files.length > 0, {
     message: 'Payment proof is required',
   }),
+  transactionId: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof createEpinRequestSchema>;
@@ -76,6 +77,9 @@ const EpinUser: React.FC = () => {
     formData.append('price', data.price);
     formData.append('quantity', data.quantity);
     formData.append('imageFile', selectedFile[0]);
+    if (data.transactionId) {
+      formData.append('transactionId', data.transactionId);
+    }
 
     createEpinRequest(formData);
   };
@@ -153,6 +157,11 @@ const EpinUser: React.FC = () => {
                   label="Quantity"
                   placeholder="Enter quantity"
                   type="number"
+                />
+                <GenericInputField
+                  name="transactionId"
+                  label="Transaction ID"
+                  placeholder="Enter transaction ID"
                 />
               </div>
 

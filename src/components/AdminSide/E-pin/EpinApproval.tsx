@@ -115,6 +115,7 @@ const EpinApproval = () => {
                   { label: 'Requested Amount' },
                   { label: 'Image' },
                   { label: 'Approve Count' },
+                  { label: 'Transaction ID' },
                   { label: 'Actions' },
                 ].map((col, index) => (
                   <th
@@ -178,6 +179,9 @@ const EpinApproval = () => {
                           }
                           className="w-20 rounded border px-2 py-1 text-black"
                         />
+                      </td>
+                      <td className="px-4 py-2 dark:text-white">
+                        {item.transactionId}
                       </td>
 
                       <td className="px-4 py-2 dark:text-white">
