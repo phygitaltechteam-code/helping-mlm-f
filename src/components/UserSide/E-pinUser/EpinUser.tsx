@@ -18,6 +18,7 @@ import {
   FaTimes,
 } from 'react-icons/fa';
 
+// Fixed schema - removed duplicate transactionId field
 const createEpinRequestSchema = z.object({
   paidAmount: z.string().min(1, {message: 'Paid amount is required'}),
   price: z.string().min(1, {message: 'Product is required'}),
@@ -29,7 +30,6 @@ const createEpinRequestSchema = z.object({
   imageFile: z.instanceof(FileList).refine((files) => files.length > 0, {
     message: 'Payment proof is required',
   }),
-  transactionId: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof createEpinRequestSchema>;
@@ -145,7 +145,7 @@ const EpinUser: React.FC = () => {
               encType="multipart/form-data"
               className="space-y-6"
             >
-              <h1 className="text-center text-2xl font-semibold text-gray-800 dark:text-white">
+              <h1 className="text-gray-800 text-center text-2xl font-semibold dark:text-white">
                 E-pin Request
               </h1>
 
@@ -169,11 +169,17 @@ const EpinUser: React.FC = () => {
                   placeholder="Enter quantity"
                   type="number"
                 />
+                <GenericInputField
+                  name="transactionId"
+                  label="Transaction ID"
+                  placeholder="Enter 10-digit transaction ID"
+                  type="text"
+                />
               </div>
 
               {/* Upload Proof */}
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label className="text-gray-700 dark:text-gray-300 mb-2 block text-sm font-medium">
                   Upload Payment Screenshot
                 </label>
 
@@ -181,7 +187,7 @@ const EpinUser: React.FC = () => {
                   type="file"
                   {...methods.register('imageFile')}
                   accept="image/*"
-                  className="w-full rounded-lg border border-gray bg-white p-2 text-sm file:mr-4 file:rounded-lg file:border-0 file:bg-primary file:px-4 file:py-2 file:text-white hover:file:bg-primary/90 dark:border-gray-700 dark:bg-black"
+                  className="dark:border-gray-700 w-full rounded-lg border border-gray bg-white p-2 text-sm file:mr-4 file:rounded-lg file:border-0 file:bg-primary file:px-4 file:py-2 file:text-white hover:file:bg-primary/90 dark:bg-black"
                 />
 
                 {methods.formState.errors.imageFile && (
@@ -308,7 +314,7 @@ const EpinUser: React.FC = () => {
                   {isPending ? 'Processing...' : 'Request Fund'}
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       )}
