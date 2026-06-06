@@ -1,244 +1,143 @@
 //FROM TMS CHANGED
 
-import React from 'react';
+import React, { useState } from 'react';
+import customer1 from '@/assets/images/customer1.jpeg';
+import customer2 from '@/assets/images/customer2.jpeg';
+import customer3 from '@/assets/images/customer3.jpeg';
+import customer4 from '@/assets/images/customer4.jpeg';
 
 const Trial = () => {
+  const images = [customer1, customer2, customer3, customer4];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // For mobile: show 1 card, for desktop: show 2 cards
+  const getCardsToShow = () => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768 ? 1 : 2;
+    }
+    return 2;
+  };
+
+  const [cardsToShow, setCardsToShow] = useState(2);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      const newCardsToShow = window.innerWidth < 768 ? 1 : 2;
+      setCardsToShow(newCardsToShow);
+      // Reset index when switching between 1 and 2 cards
+      setCurrentIndex(0);
+    };
+    
+    handleResize(); // Set initial value
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + cardsToShow) % images.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - cardsToShow + images.length) % images.length);
+  };
+
+  const visibleImages = () => {
+    const visible = [];
+    for (let i = 0; i < cardsToShow; i++) {
+      const index = (currentIndex + i) % images.length;
+      visible.push(images[index]);
+    }
+    return visible;
+  };
+
+  const testimonialTexts = [
+    "The acupressure plate has relieved my back pain significantly! Feeling much better after daily use.",
+    "Amazing product! My sleep quality has improved and stress levels have reduced dramatically.",
+    "Best investment for my health! My headaches and neck pain are almost gone now.",
+    "Life-changing therapy plate! My energy levels are up and body feels more relaxed."
+  ];
+
   return (
-    <section className="bg-gray-50 py-12 sm:py-16 lg:py-1">
+    <section className="bg-gray-50 py-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
-          <div className="text-center">
+          <div className="text-center mb-8">
             <p className="text-gray-600 font-pj text-lg font-medium">
               2,157 people have said how good HappilyLife
             </p>
-            <h2 className="font-pj mt-4 text-3xl font-bold text-black sm:text-4xl xl:text-5xl">
+            <h2 className="font-pj mt-2 text-3xl font-bold text-black sm:text-4xl xl:text-5xl">
               Our happy clients say about us
             </h2>
           </div>
 
-          <div className="relative mt-10 md:order-2 md:mt-24">
-            <div className="absolute -inset-x-1 inset-y-16 md:-inset-x-2 md:-inset-y-6">
-              <div className="mx-auto h-full w-full max-w-5xl rounded-3xl opacity-30 blur-lg filter"></div>
-            </div>
+          <div className="relative w-full">
+            <div className="relative mx-auto max-w-5xl">
+              <div className="relative flex items-center justify-center">
+                <button
+                  onClick={prevSlide}
+                  className="absolute -left-4 md:-left-16 z-10 rounded-full bg-white p-2 md:p-3 shadow-lg hover:bg-gray-100 transition-all"
+                >
+                  <svg className="h-4 w-4 md:h-6 md:w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
 
-            <div className="relative mx-auto grid max-w-lg grid-cols-1 gap-6 md:max-w-none md:grid-cols-3 lg:gap-10">
-              <div className="flex flex-col overflow-hidden shadow-xl">
-                <div className="flex flex-1 flex-col justify-between bg-white p-6 lg:px-7 lg:py-8">
-                  <div className="flex-1">
-                    <div className="flex items-center">
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    </div>
+                <div className="flex gap-4 md:gap-8 justify-center px-8 md:px-0">
+                  {visibleImages().map((image, idx) => {
+                    const actualIndex = (currentIndex + idx) % images.length;
+                    return (
+                      <div key={idx} className="flex flex-col overflow-hidden shadow-xl w-72 md:w-80">
+                        <div className="flex flex-1 flex-col justify-between bg-white p-4 md:p-6">
+                          <div className="flex-1">
+                            <div className="flex items-center justify-center bg-gray-50 rounded-lg">
+                              <img
+                                className="w-40 h-40 md:w-48 md:h-48 object-contain"
+                                src={image}
+                                alt={`Customer ${actualIndex + 1}`}
+                              />
+                            </div>
 
-                    <blockquote className="mt-8 flex-1">
-                      <p className="text-gray-900 font-pj text-lg leading-relaxed">
-                        “This platform has completely transformed how we manage
-                        our business! The user-friendly interface and seamless
-                        tools make it a game-changer for systems.”
-                      </p>
-                    </blockquote>
-                  </div>
+                            <blockquote className="mt-4 md:mt-6 flex-1 text-center">
+                              <p className="text-gray-600 font-pj text-xs md:text-sm leading-relaxed">
+                                "{testimonialTexts[actualIndex]}"
+                              </p>
+                            </blockquote>
+                          </div>
 
-                  <div className="mt-8 flex items-center">
-                    {/* <img
-                      className="h-11 w-11 flex-shrink-0 rounded-full object-cover"
-                      src="https://cdn.rareblocks.xyz/collection/clarity/images/testimonial/4/avatar-male-1.png"
-                      alt=""
-                    /> */}
-                    <div className="ml-4">
-                      <p className="text-gray-900 font-pj text-base font-bold">
-                        Sumit Pandey
-                      </p>
-                      <p className="font-pj text-gray-600 mt-0.5 text-sm">
-                        expert
-                      </p>
-                    </div>
-                  </div>
+                          <div className="mt-3 md:mt-6 text-center">
+                            <p className="font-pj text-gray-500 text-xs">
+                              ⭐⭐⭐⭐⭐
+                            </p>
+                            <p className="font-pj text-gray-600 mt-1 text-xs">
+                              Verified User
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
+
+                <button
+                  onClick={nextSlide}
+                  className="absolute -right-4 md:-right-16 z-10 rounded-full bg-white p-2 md:p-3 shadow-lg hover:bg-gray-100 transition-all"
+                >
+                  <svg className="h-4 w-4 md:h-6 md:w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
 
-              <div className="flex flex-col overflow-hidden shadow-xl">
-                <div className="flex flex-1 flex-col justify-between bg-white p-6 lg:px-7 lg:py-8">
-                  <div className="flex-1">
-                    <div className="flex items-center">
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    </div>
-
-                    <blockquote className="mt-8 flex-1">
-                      <p className="text-gray-900 font-pj text-lg leading-relaxed">
-                        “The customization options allowed us to tailor the
-                        platform perfectly for our business needs. Highly
-                        recommend it!”
-                      </p>
-                    </blockquote>
-                  </div>
-
-                  <div className="mt-8 flex items-center">
-                    {/* <img
-                      className="h-11 w-11 flex-shrink-0 rounded-full object-cover"
-                      src="https://cdn.rareblocks.xyz/collection/clarity/images/testimonial/4/avatar-male-2.png"
-                      alt=""
-                    /> */}
-                    <div className="ml-4">
-                      <p className="text-gray-900 font-pj text-base font-bold">
-                        Abhishek Kumar
-                      </p>
-                      <p className="font-pj text-gray-600 mt-0.5 text-sm">
-                        Digital Marketer
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col overflow-hidden shadow-xl">
-                <div className="flex flex-1 flex-col justify-between bg-white p-6 lg:px-7 lg:py-8">
-                  <div className="flex-1">
-                    <div className="flex items-center">
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <svg
-                        className="h-5 w-5 text-[#FDB241]"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    </div>
-
-                    <blockquote className="mt-8 flex-1">
-                      <p className="text-gray-900 font-pj text-lg leading-relaxed">
-                        “Amazing experience! The analytics and reports have
-                        helped us make informed decisions and grow our team
-                        strategically.”
-                      </p>
-                    </blockquote>
-                  </div>
-
-                  <div className="mt-8 flex items-center">
-                    {/* <img
-                      className="h-11 w-11 flex-shrink-0 rounded-full object-cover"
-                      src="https://cdn.rareblocks.xyz/collection/clarity/images/testimonial/4/avatar-female.png"
-                      alt=""
-                    /> */}
-                    <div className="ml-4">
-                      <p className="text-gray-900 font-pj text-base font-bold">
-                        Anusha
-                      </p>
-                      <p className="font-pj text-gray-600 mt-0.5 text-sm">
-                        Team Leader
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              <div className="mt-6 flex justify-center gap-2">
+                {[...Array(Math.ceil(images.length / cardsToShow))].map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentIndex(idx * cardsToShow)}
+                    className={`h-2 rounded-full transition-all ${
+                      Math.floor(currentIndex / cardsToShow) === idx ? 'w-6 bg-blue-500' : 'w-2 bg-gray-300'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>

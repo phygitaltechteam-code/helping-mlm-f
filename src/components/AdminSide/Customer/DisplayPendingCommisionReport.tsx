@@ -31,6 +31,7 @@ type PendingCommission = {
   fullname: string;
   email: string;
   dateOnly?: string;
+  weekRange?: string;
   formattedTime?: string;
   bankName?: string;
   bankAccNo?: string;
@@ -40,7 +41,6 @@ type PendingCommission = {
 
 export const payCommissionBulkAll = async (ids: string[]) => {
   try {
-    // Send just the array of IDs as the request body
     const response = await api.put(`/admin/commission`, ids);
     return response.data;
   } catch (error: unknown) {
@@ -68,6 +68,45 @@ export const usePayBulkCommission = () => {
     },
   });
 };
+
+// Helper function to get week range from a date
+const getWeekRange = (date: Date): string => {
+  const startOfWeek = new Date(date);
+  const day = startOfWeek.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const diffToMonday = day === 0 ? 6 : day - 1; // Adjust to Monday as start of week
+  
+  startOfWeek.setDate(date.getDate() - diffToMonday);
+  startOfWeek.setHours(0, 0, 0, 0);
+  
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+  endOfWeek.setHours(23, 59, 59, 999);
+  
+  const formatDate = (d: Date) => {
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    }).format(d);
+  };
+  
+  return `${formatDate(startOfWeek)} - ${formatDate(endOfWeek)}`;
+};
+
+// Helper function to get week number and year for sorting
+const getWeekKey = (date: Date): string => {
+  const weekRange = getWeekRange(date);
+  const year = date.getFullYear();
+  const weekNumber = getWeekNumber(date);
+  return `${year}-W${weekNumber.toString().padStart(2, '0')}`;
+};
+
+const getWeekNumber = (date: Date): number => {
+  const startOfYear = new Date(date.getFullYear(), 0, 1);
+  const days = Math.floor((date.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
+  return Math.ceil((days + startOfYear.getDay() + 1) / 7);
+};
+
 const DisplayPendingCommisionReport: React.FC = () => {
   const queryClient = useQueryClient();
 
@@ -78,15 +117,12 @@ const DisplayPendingCommisionReport: React.FC = () => {
   const {mutate: payBulkCommission} = usePayBulkCommission();
 
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
-  const [expandedDates, setExpandedDates] = useState<Set<string>>(new Set());
+  const [expandedWeeks, setExpandedWeeks] = useState<Set<string>>(new Set());
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedDateForPayAll, setSelectedDateForPayAll] = useState<
-    string | null
-  >(null);
+  const [selectedWeekForPayAll, setSelectedWeekForPayAll] = useState<string | null>(null);
   const [isProcessingBulk, setIsProcessingBulk] = useState(false);
   const [bulkPaymentIds, setBulkPaymentIds] = useState<string[]>([]);
 
-  // Process data with useMemo - this is safe as it's a hook, not a conditional return
   const filterData = (data: any[], filter: string | null) => {
     if (!data) return [];
 
@@ -102,7 +138,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
     return filteredData;
   };
 
-  // Transform and group data
+  // Transform and group data by week
   const processedData = useMemo(() => {
     if (!data) return [];
 
@@ -111,11 +147,8 @@ const DisplayPendingCommisionReport: React.FC = () => {
     return filtered
       .map((item: any) => {
         const date = new Date(item.createdAt);
-        const dateOnly = new Intl.DateTimeFormat('en-US', {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric',
-        }).format(date);
+        const weekRange = getWeekRange(date);
+        const weekKey = getWeekKey(date);
 
         const formattedTime = new Intl.DateTimeFormat('en-US', {
           hour: '2-digit',
@@ -123,27 +156,31 @@ const DisplayPendingCommisionReport: React.FC = () => {
           hour12: true,
         }).format(date);
 
-        console.log(item);
+        const fullDate = new Intl.DateTimeFormat('en-US', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+        }).format(date);
+
         return {
           id: item.id,
           customerId: item.customerId,
           createdAt: item.createdAt,
-          formattedDate: dateOnly,
+          weekRange: weekRange,
+          weekKey: weekKey,
+          fullDate: fullDate,
           formattedTime: formattedTime,
           amount: item.amount,
           status: item.status,
           details: item.details,
           type: item.type,
           payableAmount: item.payableAmount,
-          // Split 10% TDS from API into Admin 5% + TDS 5%
           adminAmount: parseFloat((item.amount * 0.05).toFixed(2)),
           tdsAmount: parseFloat((item.amount * 0.05).toFixed(2)),
           crnNo: item.crnNo || 'N/A',
-          phoneNumber:
-            item.phoneNumber || item.customer?.user?.phoneNumber || '-',
+          phoneNumber: item.phoneNumber || item.customer?.user?.phoneNumber || '-',
           fullname: item.fullname || item.customer?.user?.fullname || '-',
           email: item.email || item.customer?.user?.email || '-',
-          dateOnly: dateOnly,
           bankName: item.bankName || item.customer?.bankName || '-',
           bankAccNo: item.bankAccNo || item.customer?.bankAccNo || '-',
           bankIFSC: item.bankIFSC || item.customer?.bankIFSC || '-',
@@ -156,23 +193,42 @@ const DisplayPendingCommisionReport: React.FC = () => {
       );
   }, [data, selectedFilter]);
 
-  // Group data by date
+  // Group data by week
   const groupedData = useMemo(() => {
     const groups: {[key: string]: any[]} = {};
 
     processedData.forEach((item: any) => {
-      const date = item.dateOnly;
-      if (!groups[date]) {
-        groups[date] = [];
+      const weekKey = item.weekKey;
+      if (!groups[weekKey]) {
+        groups[weekKey] = [];
       }
-      groups[date].push(item);
+      groups[weekKey].push(item);
     });
 
-    return groups;
+    // Sort weeks in descending order (most recent first)
+    const sortedGroups: {[key: string]: any[]} = {};
+    Object.keys(groups)
+      .sort((a, b) => b.localeCompare(a))
+      .forEach(key => {
+        sortedGroups[key] = groups[key];
+      });
+
+    return sortedGroups;
   }, [processedData]);
 
-  // Calculate summaries for each date
-  const dateSummaries = useMemo(() => {
+  // Get week display name for each group
+  const weekDisplayNames = useMemo(() => {
+    const names: {[key: string]: string} = {};
+    Object.entries(groupedData).forEach(([weekKey, items]) => {
+      if (items.length > 0) {
+        names[weekKey] = items[0].weekRange;
+      }
+    });
+    return names;
+  }, [groupedData]);
+
+  // Calculate summaries for each week
+  const weekSummaries = useMemo(() => {
     const summaries: {
       [key: string]: {
         totalAmount: number;
@@ -183,8 +239,8 @@ const DisplayPendingCommisionReport: React.FC = () => {
       };
     } = {};
 
-    Object.entries(groupedData).forEach(([date, items]) => {
-      summaries[date] = {
+    Object.entries(groupedData).forEach(([weekKey, items]) => {
+      summaries[weekKey] = {
         totalAmount: items.reduce((sum, item) => sum + item.amount, 0),
         totalPayable: items.reduce((sum, item) => sum + item.payableAmount, 0),
         totalTDS: items.reduce((sum, item) => sum + item.tdsAmount, 0),
@@ -196,10 +252,9 @@ const DisplayPendingCommisionReport: React.FC = () => {
     return summaries;
   }, [groupedData]);
 
-  // useEffect must be called at the top level, not after conditional returns
   useEffect(() => {
     if (Object.keys(groupedData).length > 0) {
-      setExpandedDates(new Set(Object.keys(groupedData)));
+      setExpandedWeeks(new Set(Object.keys(groupedData)));
     }
   }, [groupedData]);
 
@@ -219,50 +274,49 @@ const DisplayPendingCommisionReport: React.FC = () => {
     );
   };
 
-  const handlePayAllForDate = (date: string) => {
-    const dateItems = groupedData[date] || [];
-    const ids = dateItems.map((item) => item.id);
+  const handlePayAllForWeek = (weekKey: string) => {
+    const weekItems = groupedData[weekKey] || [];
+    const ids = weekItems.map((item) => item.id);
 
     setBulkPaymentIds(ids);
-    setSelectedDateForPayAll(date);
+    setSelectedWeekForPayAll(weekKey);
     setIsModalOpen(true);
   };
 
   const handlePayAllClick = () => {
     setBulkPaymentIds([]);
-    setSelectedDateForPayAll(null);
+    setSelectedWeekForPayAll(null);
     setIsModalOpen(true);
   };
 
   const confirmPayAll = () => {
     setIsProcessingBulk(true);
 
-    if (selectedDateForPayAll) {
+    if (selectedWeekForPayAll) {
       const ids = bulkPaymentIds;
 
       if (ids.length === 0) {
-        toast.error('No commissions found for this date');
+        toast.error('No commissions found for this week');
         setIsProcessingBulk(false);
         setIsModalOpen(false);
         return;
       }
 
+      const weekDisplay = weekDisplayNames[selectedWeekForPayAll];
       const loadingToast = toast.loading(
-        `Paying ${ids.length} commissions for ${selectedDateForPayAll}...`,
+        `Paying ${ids.length} commissions for week of ${weekDisplay}...`,
       );
 
-      // Send just the IDs array, not an object
       payBulkCommission(ids, {
-        // First parameter is ids array
         onSuccess: (data) => {
           toast.dismiss(loadingToast);
           toast.success(
-            `Successfully paid ${ids.length} commissions for ${selectedDateForPayAll}`,
+            `Successfully paid ${ids.length} commissions for week of ${weekDisplay}`,
           );
           queryClient.invalidateQueries({queryKey: ['admin-commission']});
           setIsProcessingBulk(false);
           setIsModalOpen(false);
-          setSelectedDateForPayAll(null);
+          setSelectedWeekForPayAll(null);
           setBulkPaymentIds([]);
         },
         onError: (error) => {
@@ -271,12 +325,11 @@ const DisplayPendingCommisionReport: React.FC = () => {
           console.error('Bulk payment error:', error);
           setIsProcessingBulk(false);
           setIsModalOpen(false);
-          setSelectedDateForPayAll(null);
+          setSelectedWeekForPayAll(null);
           setBulkPaymentIds([]);
         },
       });
     } else {
-      // Pay all commissions across all dates
       const loadingToast = toast.loading('Paying all commissions...');
 
       payAllCommission(undefined, {
@@ -300,15 +353,16 @@ const DisplayPendingCommisionReport: React.FC = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedDateForPayAll(null);
+    setSelectedWeekForPayAll(null);
     setBulkPaymentIds([]);
   };
 
   const handleExportToExcel = () => {
-    const exportData = Object.entries(groupedData).flatMap(([date, items]) =>
+    const exportData = Object.entries(groupedData).flatMap(([weekKey, items]) =>
       items.map((item) => ({
-        Date: date,
-        Time: item.formattedTime,
+        'Week': weekDisplayNames[weekKey],
+        'Date': item.fullDate,
+        'Time': item.formattedTime,
         'CRN No': item.crnNo,
         'Full Name': item.fullname,
         Phone: item.phoneNumber,
@@ -323,7 +377,6 @@ const DisplayPendingCommisionReport: React.FC = () => {
         Details: item.details,
         Type: item.type,
         Status: item.status,
-        // wallet:item.walletAddress,
       })),
     );
 
@@ -342,31 +395,30 @@ const DisplayPendingCommisionReport: React.FC = () => {
     }
   };
 
-  const toggleDate = (date: string) => {
-    setExpandedDates((prev) => {
+  const toggleWeek = (weekKey: string) => {
+    setExpandedWeeks((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(date)) {
-        newSet.delete(date);
+      if (newSet.has(weekKey)) {
+        newSet.delete(weekKey);
       } else {
-        newSet.add(date);
+        newSet.add(weekKey);
       }
       return newSet;
     });
   };
 
   const expandAll = () => {
-    setExpandedDates(new Set(Object.keys(groupedData)));
+    setExpandedWeeks(new Set(Object.keys(groupedData)));
   };
 
   const collapseAll = () => {
-    setExpandedDates(new Set());
+    setExpandedWeeks(new Set());
   };
 
   const filterOptions = ['All', 'Golden Pair', 'Silver Pair', 'Helping', 'BDF'];
   const totalRecords = processedData.length;
-  const totalDays = Object.keys(groupedData).length;
+  const totalWeeks = Object.keys(groupedData).length;
 
-  // NOW we can have conditional returns AFTER all hooks are called
   if (isPending) {
     return <Loader />;
   }
@@ -407,9 +459,30 @@ const DisplayPendingCommisionReport: React.FC = () => {
               ? `${selectedFilter} Pending Commissions`
               : 'Pending Commissions'}
           </h1>
+          <p className="text-gray-500 mt-1 text-sm">
+            Grouped by week | {totalWeeks} week(s) | {totalRecords} record(s)
+          </p>
         </div>
 
         <div className="flex items-center gap-4">
+          {/* Expand/Collapse All Buttons */}
+          {totalWeeks > 0 && (
+            <>
+              <button
+                onClick={expandAll}
+                className="rounded border border-stroke px-3 py-1 text-sm transition-colors hover:bg-gray-50"
+              >
+                Expand All
+              </button>
+              <button
+                onClick={collapseAll}
+                className="rounded border border-stroke px-3 py-1 text-sm transition-colors hover:bg-gray-50"
+              >
+                Collapse All
+              </button>
+            </>
+          )}
+
           {/* Pay All Button */}
           {totalRecords > 0 && (
             <button
@@ -434,17 +507,10 @@ const DisplayPendingCommisionReport: React.FC = () => {
 
       {totalRecords === 0 ? (
         <div className="rounded-sm border border-stroke bg-white p-8 text-center shadow-default dark:border-strokedark dark:bg-boxdark">
-          {/* <h3 className="text-lg font-medium text-black dark:text-white">
-    No commissions found
-  </h3>
-  <p className="text-gray-500 mt-2">
-    {selectedFilter
-      ? `No ${selectedFilter} commissions available`
-      : 'No pending commissions available'}
-  </p> */}
           <GenericTable
             columns={[
-              {header: 'Date', accessor: 'formattedDate'},
+              {header: 'Week', accessor: 'weekRange'},
+              {header: 'Date', accessor: 'fullDate'},
               {header: 'Time', accessor: 'formattedTime'},
               {header: 'CRN No', accessor: 'crnNo'},
               {header: 'Full Name', accessor: 'fullname'},
@@ -460,77 +526,76 @@ const DisplayPendingCommisionReport: React.FC = () => {
               {header: 'Details', accessor: 'details'},
               {header: 'Type', accessor: 'type'},
               {header: 'Status', accessor: 'status'},
-              // {header:'Wallet',accessor:'walletAddress'},
             ]}
             data={[]}
-
-                      itemsPerPage={5}
-          searchAble={false}
-          title="No commission data available"
+            itemsPerPage={5}
+            searchAble={false}
+            title="No commission data available"
           />
-
-          {/* <-- Added the closing tag here */}
         </div>
       ) : (
         <div className="space-y-4">
-          {Object.entries(groupedData).map(([date, items]) => (
+          {Object.entries(groupedData).map(([weekKey, items]) => (
             <div
-              key={date}
+              key={weekKey}
               className="overflow-hidden rounded-lg border border-stroke bg-white shadow"
             >
-              {/* Date Header */}
+              {/* Week Header */}
               <div
-                onClick={() => toggleDate(date)}
+                onClick={() => toggleWeek(weekKey)}
                 className="bg-gray-50 hover:bg-gray-100 flex cursor-pointer auto-rows-max items-center justify-between px-4 py-3"
               >
                 <div className="flex items-center gap-2">
-                  {expandedDates.has(date) ? (
+                  {expandedWeeks.has(weekKey) ? (
                     <ChevronDown size={20} className="text-gray-600" />
                   ) : (
                     <ChevronRight size={20} className="text-gray-600" />
                   )}
                   <Calendar size={18} className="text-gray-500" />
                   <h2 className="text-gray-700 text-lg font-semibold">
-                    {date}
+                    Week of {weekDisplayNames[weekKey]}
                   </h2>
+                  <span className="ml-2 rounded-full bg-gray-200 px-2 py-0.5 text-xs font-medium text-gray-700">
+                    {items.length} record(s)
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-6">
-                  {/* Date Summary */}
+                  {/* Week Summary */}
                   <div className="flex items-center gap-4 text-sm">
                     <span className="text-gray-600 font-medium">
                       Amount:{' '}
                       <span className="font-semibold text-gray-900">
-                        ₹{dateSummaries[date]?.totalAmount}
+                        ₹{weekSummaries[weekKey]?.totalAmount.toFixed(2)}
                       </span>
                     </span>
                     <span className="font-medium text-primary">
                       Payable:{' '}
                       <span className="font-semibold">
-                        ₹{dateSummaries[date]?.totalPayable}
+                        ₹{weekSummaries[weekKey]?.totalPayable.toFixed(2)}
                       </span>
                     </span>
                     <span className="font-medium text-orange-500">
                       Admin (5%):{' '}
                       <span className="font-semibold">
-                        ₹{dateSummaries[date]?.totalAdmin?.toFixed(2)}
+                        ₹{weekSummaries[weekKey]?.totalAdmin?.toFixed(2)}
                       </span>
                     </span>
                     <span className="font-medium text-red-500">
                       TDS (5%):{' '}
                       <span className="font-semibold">
-                        ₹{dateSummaries[date]?.totalTDS?.toFixed(2)}
+                        ₹{weekSummaries[weekKey]?.totalTDS?.toFixed(2)}
                       </span>
                     </span>
                   </div>
 
-                  {/* Pay All button for this date */}
+                  {/* Pay All button for this week */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handlePayAllForDate(date);
+                      handlePayAllForWeek(weekKey);
                     }}
-                    className="rounded  bg-secondary px-3 py-1 text-xs text-white transition-colors hover:bg-primary"
+                    className="rounded bg-secondary px-3 py-1 text-xs text-white transition-colors hover:bg-primary"
                   >
                     Pay All ({items.length})
                   </button>
@@ -538,12 +603,13 @@ const DisplayPendingCommisionReport: React.FC = () => {
               </div>
 
               {/* Expanded Table */}
-              {expandedDates.has(date) && (
+              {expandedWeeks.has(weekKey) && (
                 <div className="border-t border-stroke p-4">
                   <div className="max-w-full overflow-x-auto">
                     <table className="w-full table-auto border-collapse">
                       <thead>
                         <tr className="bg-gray-2 dark:bg-meta-4">
+                          <th className="px-4 py-4 text-left font-medium">Date</th>
                           <th className="px-4 py-4 text-left font-medium">Time</th>
                           <th className="px-4 py-4 text-left font-medium">CRN No</th>
                           <th className="px-4 py-4 text-left font-medium">Full Name</th>
@@ -565,6 +631,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
                             key={row.id || index}
                             className="hover:bg-gray-50 border-b border-stroke dark:border-strokedark"
                           >
+                            <td className="px-4 py-2 text-left text-sm">{row.fullDate}</td>
                             <td className="px-4 py-2 text-left text-sm">{row.formattedTime}</td>
                             <td className="px-4 py-2 text-left text-sm">{row.crnNo}</td>
                             <td className="px-4 py-2 text-left text-sm">{row.fullname}</td>
@@ -614,10 +681,13 @@ const DisplayPendingCommisionReport: React.FC = () => {
             Confirm Payment
           </h2>
           <p className="text-gray-600 mt-2 text-sm">
-            {selectedDateForPayAll ? (
+            {selectedWeekForPayAll ? (
               <>
                 Are you sure you want to pay all commissions for{' '}
-                <span className="font-medium">{selectedDateForPayAll}</span>?
+                <span className="font-medium">
+                  week of {weekDisplayNames[selectedWeekForPayAll]}
+                </span>
+                ?
                 <br />
                 <span className="bg-gray-50 mt-2 block rounded p-2">
                   Total records:{' '}
@@ -625,11 +695,10 @@ const DisplayPendingCommisionReport: React.FC = () => {
                   <br />
                   Total amount:{' '}
                   <span className="font-bold">
-                    $
-                    {groupedData[selectedDateForPayAll]?.reduce(
+                    ₹{groupedData[selectedWeekForPayAll]?.reduce(
                       (sum, item) => sum + item.amount,
                       0,
-                    )}
+                    ).toFixed(2)}
                   </span>
                 </span>
               </>
@@ -637,7 +706,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
               <>
                 Are you sure you want to pay all commissions (
                 <span className="font-bold">{totalRecords}</span> records)
-                across all dates?
+                across all weeks?
               </>
             )}
           </p>
