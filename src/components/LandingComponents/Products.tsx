@@ -11,47 +11,83 @@ import p4 from '@/assets/images/product.png';
 import p5 from '@/assets/images/product/p5.jpeg';
 
 const Products: React.FC = () => {
-  // Product data
+  // Product data with corrected prices
   const products = [
     {
       name: 'Happily Parsana Acupressure Therapy Plate',
       image: p,
-      price: '2000 rs 1 plate',
+      originalPrice: 2500,
+      offerPrice: 2000,
     },
     {
-      name: 'Happily sanitary napkin',
+      name: 'Happily Sanitary Napkin',
       image: p1,
-      price: ' 2500 rs  20 box',
+      originalPrice: 3000,
+      offerPrice: 2500,
+      packSize: '20 Box',
     },
-
     {
-      name: 'Combo Pack',
+      name: 'Happily Sanitary Napkin',
+      image: p2,
+      originalPrice: 2500,
+      offerPrice: 2000,
+      packSize: '10 Box',
+    },
+    {
+      name: 'Happily Millionaire Bracelet Combo Pack',
       image: p4,
-      price: '3000 rs',
+      originalPrice: 3200,
+      offerPrice: 3000,
+
+      description:
+        'Includes Sanitary Napkins + N Mother Care + Millionaire Bracelet',
+      features: [
+        'Premium Quality Sanitary Napkins',
+        'N Mother Care Product',
+        'Happily Millionaire Bracelet',
+        'Complete Wellness Package',
+      ],
     },
   ];
 
   return (
-    <div className="p-6">
+    <div className="w-full overflow-x-auto px-4 py-6">
       <h1 className="title-font mb-8 text-center text-2xl font-semibold text-black sm:text-3xl">
         Products
       </h1>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+
+      {/* Horizontal Scroll Container */}
+      <div className="flex gap-6 overflow-x-auto pb-4 md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-4 lg:overflow-x-visible">
         {products.map((product, index) => (
           <div
             key={index}
-            className="rounded-lg bg-white p-4 text-center shadow-lg"
+            className="min-w-[280px] flex-shrink-0 rounded-lg bg-white p-4 text-center shadow-lg transition-transform duration-300 hover:scale-105 md:min-w-0"
           >
             <img
               src={product.image}
               alt={product.name}
-              className="mb-4 h-80 w-full rounded-md object-contain"
+              className="mb-4 h-64 w-full rounded-md object-contain"
             />
-            <h2 className="text-lg font-semibold text-black">
+            <h2 className="line-clamp-2 text-lg font-semibold text-black">
               {product.name}
-
-              <p>Price: {product.price}</p>
             </h2>
+  
+            <p className="text-gray-600 mt-1 text-sm">{product.packSize}</p>
+            {/* Actual Price - No strikethrough */}
+            <div className="mt-2">
+              <span className="text-gray-600 text-base font-medium">
+              Actual Price: ₹{product.originalPrice.toLocaleString()}
+              </span>
+            </div>
+            
+            {/* Offer Price */}
+            <div className="mt-1">
+              <span className="text-lg font-bold text-primary">
+                Offer Price: ₹{product.offerPrice.toLocaleString()}
+              </span>
+            </div>
+            
+          
           </div>
         ))}
       </div>

@@ -138,14 +138,7 @@ const CustomerDashboard = () => {
     isSuccess,
   } = useFetchCustomerHome();
 
-  const {data: networkData} = useGetNetwotkTree();
-  const children = networkData?.children || [];
-  const activeTeamCount = children.filter(
-    (child: any) => child.data?.isActive,
-  ).length;
-  const inactiveTeamCount = children.filter(
-    (child: any) => !child.data?.isActive,
-  ).length;
+ 
 
   console.log('dashboardData', dashboardData);
 
@@ -300,10 +293,10 @@ const CustomerDashboard = () => {
     walletBalance: dashboardData?.WalletBalance ?? 0,
     // New cards
     customerTeam: dashboardData?.customerTeam ?? 0,
-    activeTeam: activeTeamCount,
-    inactiveTeam: inactiveTeamCount,
+    activeTeam: dashboardData?.activeTeam,
+    inactiveTeam: dashboardData?.inactiveTeam,
     generationIncome: dashboardData?.genrationIncome ?? 0,
-    helpingIncome: dashboardData?.helpCommission ?? 0,
+    helpingIncome: dashboardData?.helpingIncome ?? 0,
     totalSales: dashboardData?.totalSales ?? dashboardData?.TotalSales ?? 0,
   };
 
@@ -480,7 +473,7 @@ const CustomerDashboard = () => {
       <div className="mb-8">
         <div className="grid grid-cols-2 gap-3">
           {/* Bonus Income Card - Auto remove when completed (5 active members) */}
-          {Math.max(0, 5 - activeTeamCount) > 0 && (
+          {Math.max(0, 5 - stats.activeTeam) > 0 && (
             <div className="rounded-xl bg-gradient-to-r from-pink-50 to-pink-100/50 p-3 shadow-sm transition-all hover:shadow-md">
               <div className="mb-2 flex items-center gap-2">
                 <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-pink-200">
@@ -494,16 +487,16 @@ const CustomerDashboard = () => {
                 </div>
               </div>
               {/* Progress bar - only show when not completed */}
-              {Math.max(0, 5 - activeTeamCount) > 0 && (
+              {Math.max(0, 5 - stats.activeTeam) > 0 && (
                 <div className="mt-2">
                   <div className="bg-gray-200 h-1.5 w-full rounded-full">
                     <div
                       className="h-1.5 rounded-full bg-pink-500 transition-all duration-500"
-                      style={{width: `${(activeTeamCount / 5) * 100}%`}}
+                      style={{width: `${(stats.activeTeam / 5) * 100}%`}}
                     ></div>
                   </div>
                   <p className="text-gray-400 mt-1 text-[10px]">
-                    {activeTeamCount}/5 active
+                    {stats.activeTeam}/5 active
                   </p>
                 </div>
               )}
@@ -574,7 +567,7 @@ const CustomerDashboard = () => {
             title: 'Bonus Income',
             value: 1000,
             icon: <FaShoppingBag className="text-2xl text-pink-500" />,
-            remaining: Math.max(0, 5 - activeTeamCount),
+            remaining: Math.max(0, 5 - stats.activeTeam),
           },
 
           {
@@ -593,8 +586,8 @@ const CustomerDashboard = () => {
 
           // Third Row Cards
           {
-            title: 'Upgrade Members',
-            value: formatCount(Math.max(0, 5 - activeTeamCount)),
+            title: 'Auto Members',
+            value: formatCount(Math.max(0, 5 - stats.activeTeam)),
             icon: <FaUsers className="text-2xl text-orange-500" />,
           },
         ]

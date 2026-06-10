@@ -1,4 +1,4 @@
-/*eslint-disable */
+/* eslint-disable */
 // @ts-nocheck
 
 import React, {useState, useEffect} from 'react';
@@ -150,12 +150,12 @@ const BinaryTreeNode = ({network}: {network: any}) => {
     svg: {
       fn: (rd3tProps: any, appState: any) => (
         <PureSvgNodeElement
-  nodeDatum={rd3tProps.nodeDatum}
-  toggleNode={rd3tProps.toggleNode}
-  orientation={appState.orientation}
-  matchedNode={undefined}
-  fullTreeData={data}
-/>
+          nodeDatum={rd3tProps.nodeDatum}
+          toggleNode={rd3tProps.toggleNode}
+          orientation={appState.orientation}
+          matchedNode={undefined}
+          fullTreeData={data}
+        />
       ),
     },
     mixed: {
@@ -206,7 +206,7 @@ const BinaryTreeNode = ({network}: {network: any}) => {
     nodeSize: {x: 200, y: 200},
     enableLegacyTransitions: false,
     transitionDuration: 500,
-    renderCustomNodeElement: customNodeFnMapping['svg'].fn,
+    renderCustomNodeElement: customNodeFnMapping['svg'].fn,  // Keep SVG but the plus will be hidden in PureSvgNodeElement
   };
 
   if (!data) return <div>Loading...</div>;

@@ -38,7 +38,7 @@ const About = () => {
                         </p>
                         
                         <p className="text-slate-400 leading-relaxed mb-12 text-base font-light">
-                            ARC International is a private financial company specializing in sports betting-based investment strategies. Our system is designed to significantly reduce risk through the continuous development and enhancement of a semi-automatic betting model. We have upgraded our automated system so that the final step before placing any bet is carefully reviewed and executed by our professional operators.
+                            ARC International is a private financial company specializing in sports betting-based investment strategies. Our system is designed to significantly reduce risk through the continuous development and enhancement of a semi-automatic betting model. We have Autod our automated system so that the final step before placing any bet is carefully reviewed and executed by our professional operators.
                         </p>
 
                         {/* Feature Grid */}

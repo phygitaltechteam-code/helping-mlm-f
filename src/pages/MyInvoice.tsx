@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import {useAuthContext} from '@/context/AuthContext';
+import { useGetProductDataCustomer } from '@/lib/react-query/Customer/product';
 
 interface InvoiceProps {
   createdAt?: string;
@@ -9,18 +10,32 @@ interface InvoiceProps {
 const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
   const {user} = useAuthContext();
   console.log('user', user);
-
+  const {data: getproductdata} = useGetProductDataCustomer();
+  console.log('getproductdata', getproductdata);
+  
   const displayDate = createdAt
     ? new Date(createdAt).toLocaleDateString('en-GB')
     : new Date().toLocaleDateString('en-GB');
 
   if (!user) return <p className="py-8 text-center">No user data found</p>;
 
-  // Extract only the number from CRN for receipt number
+  // Extract only the number from CRN for receipt number and show only last 4 digits
   const getReceiptNumber = (crnNo: string) => {
     if (!crnNo) return '-';
-    return crnNo.replace(/^CRN/i, '');
+    const numberOnly = crnNo.replace(/^CRN/i, '');
+    // Show only last 4 digits
+    return numberOnly.slice(-4);
   };
+
+  // Get product data from API response
+  const productData = getproductdata?.[0]?.product;
+  const productName = productData?.name || '-';
+  const discountedPrice = productData?.discountedPrice || 0;
+  const actualPrice = productData?.actualPrice || 0;
+  const productImage = productData?.images || '';
+
+  // Calculate total amount
+  const totalAmount = discountedPrice;
 
   return (
     <div className="flex justify-center py-8">
@@ -63,6 +78,64 @@ const MyInvoice: React.FC<InvoiceProps> = ({createdAt}) => {
               <li>Mobile No : {user.phoneNumber || '-'}</li>
             </ul>
           </div>
+        </div>
+
+        {/* Divider */}
+        <div className="mx-6 border-t border-primary/20" />
+
+        {/* Product Details Table */}
+        <div className="px-6 py-4">
+          <table className="w-full border-collapse font-[Cambria]">
+            <thead>
+              <tr className="border-b-2 border-primary/30 bg-primary/5">
+                <th className="py-2 text-left text-sm font-semibold text-primary">Sr. No.</th>
+                <th className="py-2 text-left text-sm font-semibold text-primary">Product Name</th>
+                <th className="py-2 text-right text-sm font-semibold text-primary">Quantity</th>
+                <th className="py-2 text-right text-sm font-semibold text-primary">Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-primary/10">
+                <td className="py-3 text-sm text-black">1</td>
+                <td className="py-3 text-sm text-black">
+                  {productName}
+                  {productImage && (
+                    <div className="mt-1">
+                      <img 
+                        src={productImage} 
+                        alt={productName} 
+                        className="h-12 w-12 rounded object-cover"
+                      />
+                    </div>
+                  )}
+                </td>
+                <td className="py-3 text-right text-sm text-black">1</td>
+                <td className="py-3 text-right text-sm font-medium text-primary">
+                  ₹{discountedPrice.toLocaleString()}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr className="border-t-2 border-primary/30 bg-primary/5">
+                <td colSpan={3} className="py-2 text-right font-semibold text-black">
+                  Total Amount:
+                </td>
+                <td className="py-2 text-right text-lg font-bold text-primary">
+                  ₹{totalAmount.toLocaleString()}
+                </td>
+              </tr>
+              {actualPrice > discountedPrice && (
+                <tr>
+                  <td colSpan={3} className="py-1 text-right text-xs text-gray-500">
+                    Original Price:
+                  </td>
+                  <td className="py-1 text-right text-xs text-gray-500 line-through">
+                    ₹{actualPrice.toLocaleString()}
+                  </td>
+                </tr>
+              )}
+            </tfoot>
+          </table>
         </div>
 
         {/* Divider */}

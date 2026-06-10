@@ -15,11 +15,11 @@ const HelpingTreePage: React.FC = () => {
       {/* Header */}
       <div className=" bg-white px-6 py-5 shadow-sm dark:border-gray-700 dark:bg-boxdark">
         <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Upgrade Tree</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Auto Tree</h1>
 
         </div>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          Binary network — Left and Right downline structure
+          
         </p>
       </div>
 

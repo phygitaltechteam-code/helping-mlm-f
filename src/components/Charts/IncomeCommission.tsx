@@ -78,7 +78,7 @@ const IncomeCommission: React.FC = () => {
               />
             </div>
             <div className="flex items-center justify-between border-b-2 border-gray py-2 dark:border-graydark">
-              <span>Package Upgrade</span>
+              <span>Package Auto</span>
               <input
                 type="text"
                 value="150.00"

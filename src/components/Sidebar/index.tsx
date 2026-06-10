@@ -39,7 +39,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}: SidebarProps) => {
             icon: <FaNetworkWired size={18} />,
           },
           {
-            label: 'Upgrade Tree',
+            label: 'Auto Tree',
             path: '/admin/binarytree',
             icon: <NetworkIcon size={18} />,
           },
@@ -138,7 +138,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}: SidebarProps) => {
                   path: '/customer/generation-tree',
                 },
                 {
-                  label: 'Upgrade Tree',
+                  label: 'Auto Tree',
                   path: '/customer/helping-tree',
                 },
               ],

@@ -10,3 +10,14 @@ export const getCustomerAllProducts = async () => {
     throw err;
   }
 };
+
+export const getCustomerProductData = async () => {
+  try {
+    const response = await api.get('/customers/products');
+    return response.data;
+  } catch (error) {
+    const err = error.response?.data || error;
+    console.error('Error fetching product data:', err.message);
+    throw err;
+  }
+};

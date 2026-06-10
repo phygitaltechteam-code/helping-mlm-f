@@ -2,11 +2,11 @@
 
 // import Logo from '../../../public/ARClogo.png';
 import React, {useState, useEffect} from 'react';
-import {BiLogoPlayStore} from 'react-icons/bi';
 import {GiHamburgerMenu} from 'react-icons/gi';
 import {RxCross2} from 'react-icons/rx';
 import {Link} from 'react-scroll';
 import {Link as Link2, useLocation} from '@tanstack/react-router';
+import pdf from '../../assets/HappilyLife.pdf';
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -55,44 +55,28 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="start-0 top-0 z-20 w-full border-b border-stroke bg-white shadow-sm md:fixed">
-      <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between px-4 py-2 md:px-6 lg:px-8">
-        {/* Logo */}
-        <Link
-          to="home"
-          smooth={true}
-          duration={500}
-          offset={-80}
-          className="flex cursor-pointer items-center space-x-3 rtl:space-x-reverse"
-          onClick={() => setActiveTab('home')}
-        >
-          <img src="/logo.png" alt="Logo" width={60} />
-        </Link>
-
-        {/* Mobile Menu Button */}
-        <div className="flex space-x-3 md:order-2 rtl:space-x-reverse">
-          <button
-            data-collapse-toggle="navbar-sticky"
-            type="button"
-            className="text-gray-500 hover:bg-gray-100 focus:ring-gray-200 inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm focus:outline-none focus:ring-2 md:hidden"
-            aria-controls="navbar-sticky"
-            aria-expanded="false"
-            onClick={() => setOpen(!open)}
+      <div className="mx-auto max-w-screen-xl px-4 py-4 md:px-6 lg:px-8">
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex md:items-center md:justify-between">
+          {/* Logo - Left on desktop */}
+          <Link
+            to="home"
+            smooth={true}
+            duration={500}
+            offset={-80}
+            className="flex cursor-pointer items-center"
+            onClick={() => setActiveTab('home')}
           >
-            <span className="sr-only">Open main menu</span>
-            {!open ? <GiHamburgerMenu size={20} /> : <RxCross2 size={20} />}
-          </button>
-        </div>
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="h-auto w-[120px] md:w-[140px] lg:w-[160px]"
+            />
+          </Link>
 
-        {/* Navigation Items */}
-        <div
-          className={`${
-            open ? 'block' : 'hidden'
-          } w-full md:order-1 md:flex md:w-auto`}
-          id="navbar-sticky"
-        >
-          <ul className="bg-gray-50 mt-4 flex flex-col items-center rounded-lg border border-stroke p-4 font-medium md:mt-0 md:flex-row md:space-x-1 md:border-0 md:bg-transparent md:p-0 lg:space-x-2 rtl:space-x-reverse">
-            {/* Home Tab */}
-            <li className="w-full md:w-auto">
+          {/* Navigation Items - Right on desktop */}
+          <ul className="flex items-center space-x-1 lg:space-x-3">
+            <li>
               <Link
                 to="home"
                 smooth={true}
@@ -100,20 +84,12 @@ const Navbar: React.FC = () => {
                 offset={-80}
                 spy={true}
                 onSetActive={() => setActiveTab('home')}
-                onClick={() => {
-                  setOpen(false);
-                  setActiveTab('home');
-                }}
-                className={`block cursor-pointer rounded-md px-4 py-2 text-center transition-all duration-300 md:rounded-md ${getActiveStyles(
-                  'home',
-                )}`}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 ${getActiveStyles('home')}`}
               >
                 Home
               </Link>
             </li>
-
-            {/* About Tab */}
-            <li className="w-full md:w-auto">
+            <li>
               <Link
                 to="hero"
                 smooth={true}
@@ -121,32 +97,21 @@ const Navbar: React.FC = () => {
                 offset={-80}
                 spy={true}
                 onSetActive={() => setActiveTab('hero')}
-                onClick={() => {
-                  setOpen(false);
-                  setActiveTab('hero');
-                }}
-                className={`block cursor-pointer rounded-md px-4 py-2 text-center transition-all duration-300 md:rounded-md ${getActiveStyles(
-                  'hero',
-                )}`}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 ${getActiveStyles('hero')}`}
               >
                 About
               </Link>
             </li>
-
-            {/* Business Plan Tab */}
-            <li className="w-full md:w-auto">
+            <li>
               <a
-                href="/businessplan.pdf"
+                href={pdf}
                 download="businessplan.pdf"
-                onClick={() => setOpen(false)}
-                className="text-gray-700 block cursor-pointer rounded-md px-4 py-2 text-center transition-all duration-300 hover:bg-purple-50 hover:text-purple-700 md:rounded-md"
+                className="text-gray-700 block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 hover:bg-purple-50 hover:text-purple-700"
               >
                 Business Plan
               </a>
             </li>
-
-            {/* FAQs Tab */}
-            <li className="w-full md:w-auto">
+            <li>
               <Link
                 to="faq"
                 smooth={true}
@@ -154,20 +119,12 @@ const Navbar: React.FC = () => {
                 offset={-80}
                 spy={true}
                 onSetActive={() => setActiveTab('faq')}
-                onClick={() => {
-                  setOpen(false);
-                  setActiveTab('faq');
-                }}
-                className={`block cursor-pointer rounded-md px-4 py-2 text-center transition-all duration-300 md:rounded-md ${getActiveStyles(
-                  'faq',
-                )}`}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 ${getActiveStyles('faq')}`}
               >
                 FAQs
               </Link>
             </li>
-
-            {/* Testimonials Tab */}
-            <li className="w-full md:w-auto">
+            <li>
               <Link
                 to="testimonials"
                 smooth={true}
@@ -175,20 +132,12 @@ const Navbar: React.FC = () => {
                 offset={-80}
                 spy={true}
                 onSetActive={() => setActiveTab('testimonials')}
-                onClick={() => {
-                  setOpen(false);
-                  setActiveTab('testimonials');
-                }}
-                className={`block cursor-pointer rounded-md px-4 py-2 text-center transition-all duration-300 md:rounded-md ${getActiveStyles(
-                  'testimonials',
-                )}`}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 ${getActiveStyles('testimonials')}`}
               >
                 Testimonials
               </Link>
             </li>
-
-            {/* Contact Tab */}
-            <li className="w-full md:w-auto">
+            <li>
               <Link
                 to="contact"
                 smooth={true}
@@ -196,27 +145,141 @@ const Navbar: React.FC = () => {
                 offset={-80}
                 spy={true}
                 onSetActive={() => setActiveTab('contact')}
-                onClick={() => {
-                  setOpen(false);
-                  setActiveTab('contact');
-                }}
-                className={`block cursor-pointer rounded-md px-4 py-2 text-center transition-all duration-300 md:rounded-md ${getActiveStyles(
-                  'contact',
-                )}`}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 ${getActiveStyles('contact')}`}
               >
                 Contact
               </Link>
             </li>
-
-            {/* Login Tab */}
-            <li className="w-full md:w-auto">
+            <li>
               <Link2
                 to="/signin"
-                onClick={() => {
-                  setOpen(false);
-                  setActiveTab('signin');
-                }}
-                className={`block cursor-pointer rounded-md px-4 py-2 text-center transition-all duration-300 md:rounded-md ${
+                className={`block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 ${
+                  isSignInPage || activeTab === 'signin'
+                    ? 'border-b-2 border-purple-700 text-purple-700'
+                    : 'text-gray-700 hover:bg-purple-50 hover:text-purple-700'
+                }`}
+              >
+                Login
+              </Link2>
+            </li>
+          </ul>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="relative flex items-center justify-between md:hidden">
+          {/* Logo - Centered on mobile */}
+          <div className="absolute left-1/2 -translate-x-1/2 transform">
+            <Link
+              to="home"
+              smooth={true}
+              duration={500}
+              offset={-80}
+              className="flex cursor-pointer items-center"
+              onClick={() => setActiveTab('home')}
+            >
+              <img src="/logo.png" alt="Logo" className="h-auto w-[80px]" />
+            </Link>
+          </div>
+
+          {/* Menu Button - Right side */}
+          <button
+            type="button"
+            className="text-gray-500 hover:bg-gray-100 focus:ring-gray-200 ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 focus:outline-none focus:ring-2"
+            onClick={() => setOpen(!open)}
+          >
+            <span className="sr-only">Open main menu</span>
+            {!open ? <GiHamburgerMenu size={24} /> : <RxCross2 size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Menu Dropdown */}
+        <div className={`${open ? 'block' : 'hidden'} mt-4 md:hidden`}>
+          <ul className="bg-gray-50 flex flex-col items-center space-y-2 rounded-lg border border-stroke p-4">
+            <li className="w-full">
+              <Link
+                to="home"
+                smooth={true}
+                duration={500}
+                offset={-80}
+                spy={true}
+                onSetActive={() => setActiveTab('home')}
+                onClick={() => setOpen(false)}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('home')}`}
+              >
+                Home
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                to="hero"
+                smooth={true}
+                duration={500}
+                offset={-80}
+                spy={true}
+                onSetActive={() => setActiveTab('hero')}
+                onClick={() => setOpen(false)}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('hero')}`}
+              >
+                About
+              </Link>
+            </li>
+            <li className="w-full">
+              <a
+                href={pdf}
+                download="businessplan.pdf"
+                onClick={() => setOpen(false)}
+                className="text-gray-700 block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 hover:bg-purple-50 hover:text-purple-700"
+              >
+                Business Plan
+              </a>
+            </li>
+            <li className="w-full">
+              <Link
+                to="faq"
+                smooth={true}
+                duration={500}
+                offset={-80}
+                spy={true}
+                onSetActive={() => setActiveTab('faq')}
+                onClick={() => setOpen(false)}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('faq')}`}
+              >
+                FAQs
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                to="testimonials"
+                smooth={true}
+                duration={500}
+                offset={-80}
+                spy={true}
+                onSetActive={() => setActiveTab('testimonials')}
+                onClick={() => setOpen(false)}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('testimonials')}`}
+              >
+                Testimonials
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                to="contact"
+                smooth={true}
+                duration={500}
+                offset={-80}
+                spy={true}
+                onSetActive={() => setActiveTab('contact')}
+                onClick={() => setOpen(false)}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('contact')}`}
+              >
+                Contact
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link2
+                to="/signin"
+                onClick={() => setOpen(false)}
+                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${
                   isSignInPage || activeTab === 'signin'
                     ? 'border-b-2 border-purple-700 text-purple-700'
                     : 'text-gray-700 hover:bg-purple-50 hover:text-purple-700'

@@ -115,7 +115,7 @@ const MyNetworkPage: React.FC = () => {
               <div>
                 <div className="flex items-center gap-2 border-b px-6 py-3 dark:border-gray-700">
                   <h2 className="text-base font-semibold text-gray-700 dark:text-gray-200">
-                    Upgrade Tree — Binary View (Left / Right)
+                    Auto Tree — Binary View (Left / Right)
                   </h2>
                 </div>
                 {binaryLoading ? <Loader /> : (binaryData && Object.keys(binaryData).length > 0 ? <BinaryTreeNode network={binaryData} /> : <div className="p-6 text-center text-gray-500">No tree data found.</div>)}

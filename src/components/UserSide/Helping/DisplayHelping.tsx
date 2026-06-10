@@ -7,7 +7,7 @@ type Data = {
   level: string;
   levelCount: number;
   levelPrice: string;
-  Upgrade: string;
+  Auto: string;
   Rebirth: string;
   totalIncome: number;
 };
@@ -17,7 +17,7 @@ const commissionData: Data[] = [
     level: 'Level 1',
     levelCount: 2,
     levelPrice: '50 Rs',
-    Upgrade: '200 Rs',
+    Auto: '200 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 600,
   },
@@ -25,7 +25,7 @@ const commissionData: Data[] = [
     level: 'Level 2',
     levelCount: 4,
     levelPrice: '150 Rs',
-    Upgrade: '400 Rs',
+    Auto: '400 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 800,
   },
@@ -33,7 +33,7 @@ const commissionData: Data[] = [
     level: 'Level 3',
     levelCount: 8,
     levelPrice: '300 Rs',
-    Upgrade: '800 Rs',
+    Auto: '800 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 1600,
   },
@@ -41,7 +41,7 @@ const commissionData: Data[] = [
     level: 'Level 4',
     levelCount: 16,
     levelPrice: '1,400 Rs',
-    Upgrade: '1,600 Rs',
+    Auto: '1,600 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 3200,
   },
@@ -49,7 +49,7 @@ const commissionData: Data[] = [
     level: 'Level 5',
     levelCount: 32,
     levelPrice: '6,000 Rs',
-    Upgrade: '3,200 Rs',
+    Auto: '3,200 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 6400,
   },
@@ -57,7 +57,7 @@ const commissionData: Data[] = [
     level: 'Level 6',
     levelCount: 64,
     levelPrice: '25,000 Rs',
-    Upgrade: '6,400 Rs',
+    Auto: '6,400 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 12800,
   },
@@ -65,7 +65,7 @@ const commissionData: Data[] = [
     level: 'Level 7',
     levelCount: 128,
     levelPrice: '76,000 Rs',
-    Upgrade: '12,800 Rs',
+    Auto: '12,800 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 25600,
   },
@@ -73,7 +73,7 @@ const commissionData: Data[] = [
     level: 'Level 8',
     levelCount: 256,
     levelPrice: '2,03,800 Rs',
-    Upgrade: '25,600 Rs',
+    Auto: '25,600 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 51200,
   },
@@ -81,7 +81,7 @@ const commissionData: Data[] = [
     level: 'Level 9',
     levelCount: 512,
     levelPrice: '5,10,000 Rs',
-    Upgrade: '51,200 Rs',
+    Auto: '51,200 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 102400,
   },
@@ -89,7 +89,7 @@ const commissionData: Data[] = [
     level: 'Level 10',
     levelCount: 1024,
     levelPrice: '20,48,000 Rs',
-    Upgrade: '1,02,400 Rs',
+    Auto: '1,02,400 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 204800,
   },
@@ -97,7 +97,7 @@ const commissionData: Data[] = [
     level: 'Level 11',
     levelCount: 2048,
     levelPrice: '20,48,000 Rs',
-    Upgrade: '2,04,800 Rs',
+    Auto: '2,04,800 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 409600,
   },
@@ -105,7 +105,7 @@ const commissionData: Data[] = [
     level: 'Level 12',
     levelCount: 4098,
     levelPrice: '20,48,000 Rs',
-    Upgrade: '4,09,800 Rs',
+    Auto: '4,09,800 Rs',
     Rebirth: '- 200 $',
     totalIncome: 819200,
   },
@@ -113,7 +113,7 @@ const commissionData: Data[] = [
     level: 'Level 13',
     levelCount: 2048,
     levelPrice: '20,48,000 Rs',
-    Upgrade: '8,19,600 Rs',
+    Auto: '8,19,600 Rs',
     Rebirth: '- 200 Rs',
     totalIncome: 1639200,
   },
@@ -236,7 +236,7 @@ const DisplayHelping = () => {
               <th className="p-3 text-left text-sm font-semibold">
                 Total Income{' '}
               </th>
-              <th className="p-3 text-left text-sm font-semibold">Upgrade</th>
+              <th className="p-3 text-left text-sm font-semibold">Auto</th>
               <th className="p-3 text-left text-sm font-semibold">Rebirth</th>
             </tr>
           </thead>
@@ -275,7 +275,7 @@ const DisplayHelping = () => {
                     {row.totalIncome}
                   </td>
                   <td className="text-gray-600 dark:text-gray-300 p-3">
-                    {row.Upgrade}
+                    {row.Auto}
                   </td>
                   <td className="p-3 text-red-600">{row.Rebirth}</td>
                 </tr>

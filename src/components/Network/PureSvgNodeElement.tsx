@@ -93,19 +93,19 @@ const sponsorName =
               cursor: 'pointer',
               border: '1px dashed gray',
             }}
-            onClick={() =>
-              navigate({
-                to: '/admin/customerregister',
-                state: {
-                  data: {
-                    side: nodeDatum.__side,
-                    parentId: nodeDatum.__parentId,
-                  },
-                },
-              })
-            }
+            // onClick={() =>
+            //   navigate({
+            //     to: '/admin/customerregister',
+            //     state: {
+            //       data: {
+            //         side: nodeDatum.__side,
+            //         parentId: nodeDatum.__parentId,
+            //       },
+            //     },
+            //   })
+            // }
           >
-            <FiPlus />
+            {/* <FiPlus /> */}
           </div>
         </foreignObject>
       </>
