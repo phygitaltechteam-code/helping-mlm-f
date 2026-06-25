@@ -208,6 +208,11 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}: SidebarProps) => {
               path: '/customer/customeractivation',
               icon: <MdApproval size={18} />,
             },
+            {
+              label:"Achivement" ,
+              path:"/customer/customer-achivment",
+              icon:<PiSquaresFourLight size={18} />
+            }
           ]
         : [];
 

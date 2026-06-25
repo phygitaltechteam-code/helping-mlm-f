@@ -42,6 +42,7 @@ import { Route as AppCustomerDownlinelistRouteImport } from './routes/_app/custo
 import { Route as AppCustomerDirectcustomerRouteImport } from './routes/_app/customer/directcustomer'
 import { Route as AppCustomerDashboardRouteImport } from './routes/_app/customer/dashboard'
 import { Route as AppCustomerCustomeractivationRouteImport } from './routes/_app/customer/customeractivation'
+import { Route as AppCustomerCustomerAchivmentRouteImport } from './routes/_app/customer/customer-achivment'
 import { Route as AppCustomerCustmerfundtransferRouteImport } from './routes/_app/customer/custmerfundtransfer'
 import { Route as AppAdminWlcmletterRouteImport } from './routes/_app/admin/wlcmletter'
 import { Route as AppAdminRegistrationlandingRouteImport } from './routes/_app/admin/registrationlanding'
@@ -308,6 +309,12 @@ const AppCustomerCustomeractivationRoute =
   AppCustomerCustomeractivationRouteImport.update({
     id: '/customer/customeractivation',
     path: '/customer/customeractivation',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppCustomerCustomerAchivmentRoute =
+  AppCustomerCustomerAchivmentRouteImport.update({
+    id: '/customer/customer-achivment',
+    path: '/customer/customer-achivment',
     getParentRoute: () => AppRoute,
   } as any)
 const AppCustomerCustmerfundtransferRoute =
@@ -839,6 +846,7 @@ export interface FileRoutesByFullPath {
   '/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
+  '/customer/customer-achivment': typeof AppCustomerCustomerAchivmentRoute
   '/customer/customeractivation': typeof AppCustomerCustomeractivationRoute
   '/customer/dashboard': typeof AppCustomerDashboardRoute
   '/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
@@ -958,6 +966,7 @@ export interface FileRoutesByTo {
   '/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
+  '/customer/customer-achivment': typeof AppCustomerCustomerAchivmentRoute
   '/customer/customeractivation': typeof AppCustomerCustomeractivationRoute
   '/customer/dashboard': typeof AppCustomerDashboardRoute
   '/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
@@ -1081,6 +1090,7 @@ export interface FileRoutesById {
   '/_app/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/_app/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/_app/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
+  '/_app/customer/customer-achivment': typeof AppCustomerCustomerAchivmentRoute
   '/_app/customer/customeractivation': typeof AppCustomerCustomeractivationRoute
   '/_app/customer/dashboard': typeof AppCustomerDashboardRoute
   '/_app/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
@@ -1202,6 +1212,7 @@ export interface FileRouteTypes {
     | '/admin/registrationlanding'
     | '/admin/wlcmletter'
     | '/customer/custmerfundtransfer'
+    | '/customer/customer-achivment'
     | '/customer/customeractivation'
     | '/customer/dashboard'
     | '/customer/directcustomer'
@@ -1321,6 +1332,7 @@ export interface FileRouteTypes {
     | '/admin/registrationlanding'
     | '/admin/wlcmletter'
     | '/customer/custmerfundtransfer'
+    | '/customer/customer-achivment'
     | '/customer/customeractivation'
     | '/customer/dashboard'
     | '/customer/directcustomer'
@@ -1443,6 +1455,7 @@ export interface FileRouteTypes {
     | '/_app/admin/registrationlanding'
     | '/_app/admin/wlcmletter'
     | '/_app/customer/custmerfundtransfer'
+    | '/_app/customer/customer-achivment'
     | '/_app/customer/customeractivation'
     | '/_app/customer/dashboard'
     | '/_app/customer/directcustomer'
@@ -1781,6 +1794,13 @@ declare module '@tanstack/react-router' {
       path: '/customer/customeractivation'
       fullPath: '/customer/customeractivation'
       preLoaderRoute: typeof AppCustomerCustomeractivationRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customer/customer-achivment': {
+      id: '/_app/customer/customer-achivment'
+      path: '/customer/customer-achivment'
+      fullPath: '/customer/customer-achivment'
+      preLoaderRoute: typeof AppCustomerCustomerAchivmentRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/customer/custmerfundtransfer': {
@@ -2398,6 +2418,7 @@ interface AppRouteChildren {
   AppAdminRegistrationlandingRoute: typeof AppAdminRegistrationlandingRoute
   AppAdminWlcmletterRoute: typeof AppAdminWlcmletterRoute
   AppCustomerCustmerfundtransferRoute: typeof AppCustomerCustmerfundtransferRoute
+  AppCustomerCustomerAchivmentRoute: typeof AppCustomerCustomerAchivmentRoute
   AppCustomerCustomeractivationRoute: typeof AppCustomerCustomeractivationRoute
   AppCustomerDashboardRoute: typeof AppCustomerDashboardRoute
   AppCustomerDirectcustomerRoute: typeof AppCustomerDirectcustomerRoute
@@ -2498,6 +2519,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminRegistrationlandingRoute: AppAdminRegistrationlandingRoute,
   AppAdminWlcmletterRoute: AppAdminWlcmletterRoute,
   AppCustomerCustmerfundtransferRoute: AppCustomerCustmerfundtransferRoute,
+  AppCustomerCustomerAchivmentRoute: AppCustomerCustomerAchivmentRoute,
   AppCustomerCustomeractivationRoute: AppCustomerCustomeractivationRoute,
   AppCustomerDashboardRoute: AppCustomerDashboardRoute,
   AppCustomerDirectcustomerRoute: AppCustomerDirectcustomerRoute,
