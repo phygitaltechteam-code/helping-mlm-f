@@ -40,6 +40,7 @@ const BinaryTreeNode = ({network}: {network: any}) => {
     if (!node || !node.data) return null;
 
     const {
+      crnNo = '',
       side = '',
       id = '',
       first_name = '',
@@ -53,7 +54,9 @@ const BinaryTreeNode = ({network}: {network: any}) => {
 
     let children: any[] = [];
 
-    const normalizedChildren = Array.isArray(node.children) ? node.children : [];
+    const normalizedChildren = Array.isArray(node.children)
+      ? node.children
+      : [];
 
     const leftChildBySide = normalizedChildren.find(
       (child: any) => child?.data?.side === 'LEFT',
@@ -101,15 +104,15 @@ const BinaryTreeNode = ({network}: {network: any}) => {
 
     const teamCount = realChildren.reduce(
       (acc, child) => acc + countRealNodes(child),
-      0
+      0,
     );
 
     return {
       name: first_name,
       attributes: {
-        ID: id,
+        ID: crnNo,
         FirstName: first_name,
-       DirectSponsorId: directSponsorId || null,
+        DirectSponsorId: directSponsorId || null,
         Side: side,
         IsGolden: isGolden,
         IsActive: isActive,
@@ -206,7 +209,7 @@ const BinaryTreeNode = ({network}: {network: any}) => {
     nodeSize: {x: 200, y: 200},
     enableLegacyTransitions: false,
     transitionDuration: 500,
-    renderCustomNodeElement: customNodeFnMapping['svg'].fn,  // Keep SVG but the plus will be hidden in PureSvgNodeElement
+    renderCustomNodeElement: customNodeFnMapping['svg'].fn, // Keep SVG but the plus will be hidden in PureSvgNodeElement
   };
 
   if (!data) return <div>Loading...</div>;
@@ -223,6 +226,7 @@ const BinaryTreeNode = ({network}: {network: any}) => {
         className={`relative ${smallScreen ? 'mobileTree' : 'desktopTree'}`}
         style={containerStyles}
       >
+        <div className="p-4">Total Members: {countRealNodes(data)}</div>
         <Tree
           data={treeProps.data as any}
           renderCustomNodeElement={(rd3tProps: any) =>

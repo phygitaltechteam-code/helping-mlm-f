@@ -139,7 +139,7 @@ const DisplayCommisionReport: React.FC = () => {
         <GenericTable
           data={[]}
           columns={columns}
-          itemsPerPage={5}
+          itemsPerPage={10}
           searchAble={false}
           title="No commission data available"
         />

@@ -117,6 +117,7 @@ import { Route as AppAdminBannerBannerRouteImport } from './routes/_app/admin/_b
 import { Route as AppAdminAutopooltreeAutopoolnewRouteImport } from './routes/_app/admin/_autopooltree/autopoolnew'
 import { Route as AppAdminVoucherVoucherRouteImport } from './routes/_app/admin/_Voucher/voucher'
 import { Route as AppAdminNetworktreenewAutopoolnewtworkRouteImport } from './routes/_app/admin/_Networktreenew/autopoolnewtwork'
+import { Route as AppAdminNetworkPooltreeRouteImport } from './routes/_app/admin/_Network/pooltree'
 import { Route as AppAdminNetworkNetworkRouteImport } from './routes/_app/admin/_Network/network'
 import { Route as AppAdminNetworkBinarytreeRouteImport } from './routes/_app/admin/_Network/binarytree'
 import { Route as AppAdminEditEmailEditemailRouteImport } from './routes/_app/admin/_EditEmail/editemail'
@@ -745,6 +746,11 @@ const AppAdminNetworktreenewAutopoolnewtworkRoute =
     path: '/admin/autopoolnewtwork',
     getParentRoute: () => AppRoute,
   } as any)
+const AppAdminNetworkPooltreeRoute = AppAdminNetworkPooltreeRouteImport.update({
+  id: '/admin/_Network/pooltree',
+  path: '/admin/pooltree',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminNetworkNetworkRoute = AppAdminNetworkNetworkRouteImport.update({
   id: '/admin/_Network/network',
   path: '/admin/network',
@@ -846,6 +852,7 @@ export interface FileRoutesByFullPath {
   '/admin/editemail': typeof AppAdminEditEmailEditemailRoute
   '/admin/binarytree': typeof AppAdminNetworkBinarytreeRoute
   '/admin/network': typeof AppAdminNetworkNetworkRoute
+  '/admin/pooltree': typeof AppAdminNetworkPooltreeRoute
   '/admin/autopoolnewtwork': typeof AppAdminNetworktreenewAutopoolnewtworkRoute
   '/admin/voucher': typeof AppAdminVoucherVoucherRoute
   '/admin/autopoolnew': typeof AppAdminAutopooltreeAutopoolnewRoute
@@ -964,6 +971,7 @@ export interface FileRoutesByTo {
   '/admin/editemail': typeof AppAdminEditEmailEditemailRoute
   '/admin/binarytree': typeof AppAdminNetworkBinarytreeRoute
   '/admin/network': typeof AppAdminNetworkNetworkRoute
+  '/admin/pooltree': typeof AppAdminNetworkPooltreeRoute
   '/admin/autopoolnewtwork': typeof AppAdminNetworktreenewAutopoolnewtworkRoute
   '/admin/voucher': typeof AppAdminVoucherVoucherRoute
   '/admin/autopoolnew': typeof AppAdminAutopooltreeAutopoolnewRoute
@@ -1086,6 +1094,7 @@ export interface FileRoutesById {
   '/_app/admin/_EditEmail/editemail': typeof AppAdminEditEmailEditemailRoute
   '/_app/admin/_Network/binarytree': typeof AppAdminNetworkBinarytreeRoute
   '/_app/admin/_Network/network': typeof AppAdminNetworkNetworkRoute
+  '/_app/admin/_Network/pooltree': typeof AppAdminNetworkPooltreeRoute
   '/_app/admin/_Networktreenew/autopoolnewtwork': typeof AppAdminNetworktreenewAutopoolnewtworkRoute
   '/_app/admin/_Voucher/voucher': typeof AppAdminVoucherVoucherRoute
   '/_app/admin/_autopooltree/autopoolnew': typeof AppAdminAutopooltreeAutopoolnewRoute
@@ -1206,6 +1215,7 @@ export interface FileRouteTypes {
     | '/admin/editemail'
     | '/admin/binarytree'
     | '/admin/network'
+    | '/admin/pooltree'
     | '/admin/autopoolnewtwork'
     | '/admin/voucher'
     | '/admin/autopoolnew'
@@ -1324,6 +1334,7 @@ export interface FileRouteTypes {
     | '/admin/editemail'
     | '/admin/binarytree'
     | '/admin/network'
+    | '/admin/pooltree'
     | '/admin/autopoolnewtwork'
     | '/admin/voucher'
     | '/admin/autopoolnew'
@@ -1445,6 +1456,7 @@ export interface FileRouteTypes {
     | '/_app/admin/_EditEmail/editemail'
     | '/_app/admin/_Network/binarytree'
     | '/_app/admin/_Network/network'
+    | '/_app/admin/_Network/pooltree'
     | '/_app/admin/_Networktreenew/autopoolnewtwork'
     | '/_app/admin/_Voucher/voucher'
     | '/_app/admin/_autopooltree/autopoolnew'
@@ -2296,6 +2308,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminNetworktreenewAutopoolnewtworkRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/_Network/pooltree': {
+      id: '/_app/admin/_Network/pooltree'
+      path: '/admin/pooltree'
+      fullPath: '/admin/pooltree'
+      preLoaderRoute: typeof AppAdminNetworkPooltreeRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/_Network/network': {
       id: '/_app/admin/_Network/network'
       path: '/admin/network'
@@ -2392,6 +2411,7 @@ interface AppRouteChildren {
   AppAdminEditEmailEditemailRoute: typeof AppAdminEditEmailEditemailRoute
   AppAdminNetworkBinarytreeRoute: typeof AppAdminNetworkBinarytreeRoute
   AppAdminNetworkNetworkRoute: typeof AppAdminNetworkNetworkRoute
+  AppAdminNetworkPooltreeRoute: typeof AppAdminNetworkPooltreeRoute
   AppAdminNetworktreenewAutopoolnewtworkRoute: typeof AppAdminNetworktreenewAutopoolnewtworkRoute
   AppAdminVoucherVoucherRoute: typeof AppAdminVoucherVoucherRoute
   AppAdminAutopooltreeAutopoolnewRoute: typeof AppAdminAutopooltreeAutopoolnewRoute
@@ -2491,6 +2511,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminEditEmailEditemailRoute: AppAdminEditEmailEditemailRoute,
   AppAdminNetworkBinarytreeRoute: AppAdminNetworkBinarytreeRoute,
   AppAdminNetworkNetworkRoute: AppAdminNetworkNetworkRoute,
+  AppAdminNetworkPooltreeRoute: AppAdminNetworkPooltreeRoute,
   AppAdminNetworktreenewAutopoolnewtworkRoute:
     AppAdminNetworktreenewAutopoolnewtworkRoute,
   AppAdminVoucherVoucherRoute: AppAdminVoucherVoucherRoute,

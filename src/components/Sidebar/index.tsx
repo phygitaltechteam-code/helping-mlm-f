@@ -44,6 +44,11 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}: SidebarProps) => {
             icon: <NetworkIcon size={18} />,
           },
           {
+            label: 'Pool Tree',
+            path: '/admin/pooltree',
+            icon: <NetworkIcon size={18} />,
+          },
+          {
             label: 'Payout',
             path: '/admin/commisionreport',
             icon: <BiRupee size={18} />,
@@ -139,7 +144,11 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}: SidebarProps) => {
                 },
                 {
                   label: 'Auto Tree',
-                  path: '/customer/helping-tree',
+                  path: '/admin/binarytree',
+                },
+                {
+                  label: 'Pool Tree',
+                  path: '/admin/pooltree',
                 },
               ],
             },
