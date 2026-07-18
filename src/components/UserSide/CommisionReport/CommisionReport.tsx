@@ -44,9 +44,9 @@ const CommissionReport: React.FC = () => {
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       .map((item: any) => {
         const amount = Number(item.amount || 0);
-        const tdsAmount = amount * 0.05;
-        const adminCharges = amount * 0.05;
-        const payableAmount = amount - (tdsAmount + adminCharges);
+        const tdsAmount = (amount * 0.03).toFixed(2);
+        const adminCharges = (amount * 0.07).toFixed(2);
+        const payableAmount = amount - (Number(tdsAmount) + Number(adminCharges));
 
         return {
           id: item.id?.substring(0, 8) || 'N/A',
@@ -82,12 +82,12 @@ const CommissionReport: React.FC = () => {
       Cell: (value: number) => <span>${value?.toFixed(2) || '0.00'}</span>,
     },
     {
-      header: '5% TDS',
+      header: '3% TDS',
       accessor: 'tdsAmount',
       Cell: (value: number) => <span>${value?.toFixed(2) || '0.00'}</span>,
     },
     {
-      header: '5% Admin Charges',
+      header: '7% Admin Charges',
       accessor: 'adminCharges',
       Cell: (value: number) => <span>${value?.toFixed(2) || '0.00'}</span>,
     },

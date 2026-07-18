@@ -37,6 +37,7 @@ type PendingCommission = {
   bankAccNo?: string;
   bankIFSC?: string;
   bankBranch?: string;
+  ids?: string[];
 };
 
 export const payCommissionBulkAll = async (ids: string[]) => {
@@ -175,8 +176,8 @@ const DisplayPendingCommisionReport: React.FC = () => {
           details: item.details,
           type: item.type,
           payableAmount: item.payableAmount,
-          adminAmount: parseFloat((item.amount * 0.05).toFixed(2)),
-          tdsAmount: parseFloat((item.amount * 0.05).toFixed(2)),
+          adminAmount: parseFloat((item.amount * 0.07).toFixed(2)),
+          tdsAmount: parseFloat((item.amount * 0.03).toFixed(2)),
           crnNo: item.crnNo || 'N/A',
           phoneNumber: item.phoneNumber || item.customer?.user?.phoneNumber || '-',
           fullname: item.fullname || item.customer?.user?.fullname || '-',
@@ -193,7 +194,7 @@ const DisplayPendingCommisionReport: React.FC = () => {
       );
   }, [data, selectedFilter]);
 
-  // Group data by week
+  // Group data by week and aggregate by customer
   const groupedData = useMemo(() => {
     const groups: {[key: string]: any[]} = {};
 
@@ -209,8 +210,55 @@ const DisplayPendingCommisionReport: React.FC = () => {
     const sortedGroups: {[key: string]: any[]} = {};
     Object.keys(groups)
       .sort((a, b) => b.localeCompare(a))
-      .forEach(key => {
-        sortedGroups[key] = groups[key];
+      .forEach((key) => {
+        // Within each week, aggregate items by customerId (or crnNo if customerId is missing)
+        const customerGroups: {[custId: string]: any} = {};
+
+        groups[key].forEach((item: any) => {
+          const custId = item.crnNo ;
+          if (!customerGroups[custId]) {
+            customerGroups[custId] = {
+              ...item,
+              ids: [item.id],
+              detailsList: item.details ? [item.details] : [],
+              typeList: item.type ? [item.type] : [],
+            };
+          } else {
+            const existing = customerGroups[custId];
+            existing.ids.push(item.id);
+            existing.amount += item.amount;
+            existing.payableAmount += item.payableAmount;
+            existing.adminAmount += item.adminAmount;
+            existing.tdsAmount += item.tdsAmount;
+
+            if (item.details && !existing.detailsList.includes(item.details)) {
+              existing.detailsList.push(item.details);
+            }
+            if (item.type && !existing.typeList.includes(item.type)) {
+              existing.typeList.push(item.type);
+            }
+
+            // Keep the latest date/time
+            if (new Date(item.createdAt).getTime() > new Date(existing.createdAt).getTime()) {
+              existing.createdAt = item.createdAt;
+              existing.fullDate = item.fullDate;
+              existing.formattedTime = item.formattedTime;
+            }
+          }
+        });
+
+        // Map aggregated groups back to list, processing details and type to strings
+        sortedGroups[key] = Object.values(customerGroups).map((aggregated: any) => {
+          return {
+            ...aggregated,
+            amount: parseFloat(aggregated.amount.toFixed(2)),
+            payableAmount: parseFloat(aggregated.payableAmount.toFixed(2)),
+            adminAmount: parseFloat(aggregated.adminAmount.toFixed(2)),
+            tdsAmount: parseFloat(aggregated.tdsAmount.toFixed(2)),
+            details: aggregated.detailsList.join(', '),
+            type: aggregated.typeList.join(', '),
+          };
+        });
       });
 
     return sortedGroups;
@@ -259,24 +307,41 @@ const DisplayPendingCommisionReport: React.FC = () => {
   }, [groupedData]);
 
   const handlePayClick = (row: PendingCommission) => {
-    payCommission(
-      {id: row.id, data: {status: 'PAID'}},
-      {
+    const ids = row.ids || [row.id];
+    if (ids.length === 1) {
+      payCommission(
+        {id: ids[0], data: {status: 'PAID'}},
+        {
+          onSuccess: () => {
+            toast.success('Commission paid successfully');
+            queryClient.invalidateQueries({queryKey: ['admin-commission']});
+          },
+          onError: (error) => {
+            toast.error('Failed to pay commission');
+            console.error('Pay error:', error);
+          },
+        },
+      );
+    } else {
+      const loadingToast = toast.loading(`Paying ${ids.length} commissions...`);
+      payBulkCommission(ids, {
         onSuccess: () => {
-          toast.success('Commission paid successfully');
+          toast.dismiss(loadingToast);
+          toast.success('Commissions paid successfully');
           queryClient.invalidateQueries({queryKey: ['admin-commission']});
         },
         onError: (error) => {
-          toast.error('Failed to pay commission');
+          toast.dismiss(loadingToast);
+          toast.error('Failed to pay commissions');
           console.error('Pay error:', error);
         },
-      },
-    );
+      });
+    }
   };
 
   const handlePayAllForWeek = (weekKey: string) => {
     const weekItems = groupedData[weekKey] || [];
-    const ids = weekItems.map((item) => item.id);
+    const ids = weekItems.flatMap((item) => item.ids || [item.id]);
 
     setBulkPaymentIds(ids);
     setSelectedWeekForPayAll(weekKey);
@@ -415,8 +480,9 @@ const DisplayPendingCommisionReport: React.FC = () => {
     setExpandedWeeks(new Set());
   };
 
-  const filterOptions = ['All', 'Golden Pair', 'Silver Pair', 'Helping', 'BDF'];
-  const totalRecords = processedData.length;
+  const totalRecords = useMemo(() => {
+    return Object.values(groupedData).reduce((sum, items) => sum + items.length, 0);
+  }, [groupedData]);
   const totalWeeks = Object.keys(groupedData).length;
 
   if (isPending) {
@@ -576,13 +642,13 @@ const DisplayPendingCommisionReport: React.FC = () => {
                       </span>
                     </span>
                     <span className="font-medium text-orange-500">
-                      Admin (5%):{' '}
+                      Admin (7%):{' '}
                       <span className="font-semibold">
                         ₹{weekSummaries[weekKey]?.totalAdmin?.toFixed(2)}
                       </span>
                     </span>
                     <span className="font-medium text-red-500">
-                      TDS (5%):{' '}
+                      TDS (3%):{' '}
                       <span className="font-semibold">
                         ₹{weekSummaries[weekKey]?.totalTDS?.toFixed(2)}
                       </span>
@@ -620,8 +686,8 @@ const DisplayPendingCommisionReport: React.FC = () => {
                           <th className="px-4 py-4 text-left font-medium">Branch</th>
                           <th className="px-4 py-4 text-left font-medium">Amount</th>
                           <th className="px-4 py-4 text-left font-medium text-primary">Payable</th>
-                          <th className="px-4 py-4 text-left font-medium text-orange-500">Admin Charges (5%)</th>
-                          <th className="px-4 py-4 text-left font-medium text-red-500">TDS (5%)</th>
+                          <th className="px-4 py-4 text-left font-medium text-orange-500">Admin Charges (7%)</th>
+                          <th className="px-4 py-4 text-left font-medium text-red-500">TDS (3%)</th>
                           <th className="px-4 py-4 text-left font-medium">Actions</th>
                         </tr>
                       </thead>

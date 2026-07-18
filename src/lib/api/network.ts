@@ -35,10 +35,21 @@ export const getbinarynetwork = async () => {
     throw error;
   }
 };
-export const getpoolnetwork = async () => {
+export const getpoolnetwork = async (id: number) => {
   try {
     console.log('Fetching network data...');
-    const response = await api.get('/tree/pool');
+    const response = await api.get(`/tree/pool/${id}`);
+    console.log('Network data fetched', response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+export const getpoolCount = async () => {
+  try {
+    console.log('Fetching network data...');
+    const response = await api.get('/customers/poolCount');
     console.log('Network data fetched', response.data);
     return response.data;
   } catch (error) {
