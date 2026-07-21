@@ -15,6 +15,7 @@ import { Route as LandingRouteImport } from './routes/_landing'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as RegistrationRegistrationRouteImport } from './routes/_registration/registration'
+import { Route as LandingTermsandconditionsRouteImport } from './routes/_landing/termsandconditions'
 import { Route as LandingReviewRouteImport } from './routes/_landing/review'
 import { Route as LandingResultChar38footerRouteImport } from './routes/_landing/result&footer'
 import { Route as LandingRegistrationformRouteImport } from './routes/_landing/registrationform'
@@ -170,6 +171,12 @@ const RegistrationRegistrationRoute =
     id: '/_registration/registration',
     path: '/registration',
     getParentRoute: () => rootRouteImport,
+  } as any)
+const LandingTermsandconditionsRoute =
+  LandingTermsandconditionsRouteImport.update({
+    id: '/termsandconditions',
+    path: '/termsandconditions',
+    getParentRoute: () => LandingRoute,
   } as any)
 const LandingReviewRoute = LandingReviewRouteImport.update({
   id: '/review',
@@ -837,6 +844,7 @@ export interface FileRoutesByFullPath {
   '/registrationform': typeof LandingRegistrationformRoute
   '/result&footer': typeof LandingResultChar38footerRoute
   '/review': typeof LandingReviewRoute
+  '/termsandconditions': typeof LandingTermsandconditionsRoute
   '/registration': typeof RegistrationRegistrationRoute
   '/dashboard': typeof AppDashboardLazyRoute
   '/landing': typeof LandingLandingLazyRoute
@@ -957,6 +965,7 @@ export interface FileRoutesByTo {
   '/registrationform': typeof LandingRegistrationformRoute
   '/result&footer': typeof LandingResultChar38footerRoute
   '/review': typeof LandingReviewRoute
+  '/termsandconditions': typeof LandingTermsandconditionsRoute
   '/registration': typeof RegistrationRegistrationRoute
   '/dashboard': typeof AppDashboardLazyRoute
   '/landing': typeof LandingLandingLazyRoute
@@ -1080,6 +1089,7 @@ export interface FileRoutesById {
   '/_landing/registrationform': typeof LandingRegistrationformRoute
   '/_landing/result&footer': typeof LandingResultChar38footerRoute
   '/_landing/review': typeof LandingReviewRoute
+  '/_landing/termsandconditions': typeof LandingTermsandconditionsRoute
   '/_registration/registration': typeof RegistrationRegistrationRoute
   '/_app/dashboard': typeof AppDashboardLazyRoute
   '/_landing/landing': typeof LandingLandingLazyRoute
@@ -1203,6 +1213,7 @@ export interface FileRouteTypes {
     | '/registrationform'
     | '/result&footer'
     | '/review'
+    | '/termsandconditions'
     | '/registration'
     | '/dashboard'
     | '/landing'
@@ -1323,6 +1334,7 @@ export interface FileRouteTypes {
     | '/registrationform'
     | '/result&footer'
     | '/review'
+    | '/termsandconditions'
     | '/registration'
     | '/dashboard'
     | '/landing'
@@ -1445,6 +1457,7 @@ export interface FileRouteTypes {
     | '/_landing/registrationform'
     | '/_landing/result&footer'
     | '/_landing/review'
+    | '/_landing/termsandconditions'
     | '/_registration/registration'
     | '/_app/dashboard'
     | '/_landing/landing'
@@ -1606,6 +1619,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/registration'
       preLoaderRoute: typeof RegistrationRegistrationRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_landing/termsandconditions': {
+      id: '/_landing/termsandconditions'
+      path: '/termsandconditions'
+      fullPath: '/termsandconditions'
+      preLoaderRoute: typeof LandingTermsandconditionsRouteImport
+      parentRoute: typeof LandingRoute
     }
     '/_landing/review': {
       id: '/_landing/review'
@@ -2664,6 +2684,7 @@ interface LandingRouteChildren {
   LandingRegistrationformRoute: typeof LandingRegistrationformRoute
   LandingResultChar38footerRoute: typeof LandingResultChar38footerRoute
   LandingReviewRoute: typeof LandingReviewRoute
+  LandingTermsandconditionsRoute: typeof LandingTermsandconditionsRoute
   LandingLandingLazyRoute: typeof LandingLandingLazyRoute
 }
 
@@ -2682,6 +2703,7 @@ const LandingRouteChildren: LandingRouteChildren = {
   LandingRegistrationformRoute: LandingRegistrationformRoute,
   LandingResultChar38footerRoute: LandingResultChar38footerRoute,
   LandingReviewRoute: LandingReviewRoute,
+  LandingTermsandconditionsRoute: LandingTermsandconditionsRoute,
   LandingLandingLazyRoute: LandingLandingLazyRoute,
 }
 
