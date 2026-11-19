@@ -39,18 +39,17 @@ import {getCustomerRank} from '@/lib/react-query/Customer/ranking';
 
 // ─── Rank Badge Strip Component ──────────────────────────────────────────────
 const RankBadgeStrip: React.FC<{
-  directTeam: number;
-  totalEarning: number;
-  activeTeam: number;
-}> = ({directTeam, totalEarning, activeTeam}) => {
-  const rank = getCustomerRank(directTeam, totalEarning);
-  const isStarRank = rank.type === 'star';
+  rank: string;
+  teamSize: number;
+}> = ({rank, teamSize}) => {
+  const rankData = getCustomerRank(rank);
+  const isStarRank = rankData.type === 'star';
 
   return (
     <div
       style={{
-        background: rank.gradient,
-        boxShadow: `0 4px 24px ${rank.glow}`,
+        background: rankData.gradient,
+        boxShadow: `0 4px 24px ${rankData.glow}`,
       }}
       className="mb-4 flex items-center justify-between gap-4 rounded-xl p-4 transition-all duration-500"
     >
@@ -64,7 +63,7 @@ const RankBadgeStrip: React.FC<{
         >
           {isStarRank ? (
             <span className="flex gap-0.5">
-              {Array.from({length: rank.starCount ?? 1}).map((_, i) => (
+              {Array.from({length: rankData.starCount ?? 1}).map((_, i) => (
                 <FaStar
                   key={i}
                   style={{
@@ -75,29 +74,29 @@ const RankBadgeStrip: React.FC<{
               ))}
             </span>
           ) : (
-            <span style={{lineHeight: 1}}>{rank.emoji}</span>
+            <span style={{lineHeight: 1}}>{rankData.emoji}</span>
           )}
         </div>
         <div>
           <p
             className="text-xs font-bold uppercase tracking-widest opacity-70"
-            style={{color: rank.textColor}}
+            style={{color: rankData.textColor}}
           >
             Your Current Rank
           </p>
           {isStarRank ? (
             <p
               className="flex items-center gap-2 text-xl font-extrabold"
-              style={{color: rank.textColor}}
+              style={{color: rankData.textColor}}
             >
-              {rank.label}
+              {rankData.label}
             </p>
           ) : (
             <p
               className="text-xl font-extrabold tracking-wide"
-              style={{color: rank.textColor}}
+              style={{color: rankData.textColor}}
             >
-              {rank.label}
+              {rankData.label}
             </p>
           )}
         </div>
@@ -106,12 +105,12 @@ const RankBadgeStrip: React.FC<{
       <div className="shrink-0 text-right">
         <p
           className="text-xs font-semibold opacity-70"
-          style={{color: rank.textColor}}
+          style={{color: rankData.textColor}}
         >
           {isStarRank ? 'Active Team' : 'Direct Team'}
         </p>
-        <p className="text-lg font-bold" style={{color: rank.textColor}}>
-          {isStarRank ? activeTeam : directTeam}
+        <p className="text-lg font-bold" style={{color: rankData.textColor}}>
+          {teamSize}
         </p>
       </div>
     </div>
@@ -138,9 +137,7 @@ const CustomerDashboard = () => {
     isSuccess,
   } = useFetchCustomerHome();
 
- 
-
-  console.log('dashboardData', dashboardData);
+  // console.log('dashboardData', dashboardData);
 
   const [copied, setCopied] = useState<string | null>(null);
   const [showInactivePopup, setShowInactivePopup] = useState(true);
@@ -282,7 +279,9 @@ const CustomerDashboard = () => {
 
   // Use fallback values if data is missing
   const stats = {
+    rank: dashboardData?.rank ?? 'None',
     myPackage: dashboardData?.myPackage ?? 0,
+    totalTeam: dashboardData?.totalTeam ?? 0,
     directTeam: dashboardData?.directTeam ?? 0,
     leftTeam: dashboardData?.leftTeam ?? 0,
     rightTeam: dashboardData?.rightTeam ?? 0,
@@ -295,9 +294,11 @@ const CustomerDashboard = () => {
     customerTeam: dashboardData?.customerTeam ?? 0,
     activeTeam: dashboardData?.activeTeam,
     inactiveTeam: dashboardData?.inactiveTeam,
+    autoTeam: dashboardData?.autoTeam ?? 0,
     generationIncome: dashboardData?.genrationIncome ?? 0,
     helpingIncome: dashboardData?.helpingIncome ?? 0,
     totalSales: dashboardData?.totalSales ?? dashboardData?.TotalSales ?? 0,
+    poolIncome: dashboardData?.poolIncome ?? 0,
   };
 
   return (
@@ -422,11 +423,7 @@ const CustomerDashboard = () => {
 
       {/* Rank Badge Strip */}
       {/* Rank Badge Strip */}
-      <RankBadgeStrip
-        directTeam={stats.directTeam}
-        totalEarning={stats.totalEarning}
-        activeTeam={stats.activeTeam}
-      />
+      <RankBadgeStrip rank={stats.rank} teamSize={stats.activeTeam} />
 
       {/* Referral Link */}
       <div className="mb-8">
@@ -528,7 +525,7 @@ const CustomerDashboard = () => {
 
           {
             title: 'Total Team',
-            value: formatCount(stats.directTeam),
+            value: formatCount(stats.totalTeam),
             icon: <FaUsers className="text-2xl text-blue-500" />,
           },
 
@@ -576,7 +573,12 @@ const CustomerDashboard = () => {
             icon: <FaSeedling className="text-2xl text-yellow-500" />,
             dollor: 'Rs.',
           },
-
+          {
+            title: 'Pool Income',
+            value: formatCurrency(stats.poolIncome),
+            icon: <FaSeedling className="text-2xl text-yellow-500" />,
+            dollor: 'Rs.',
+          },
           {
             title: 'Next Auto Income',
             value: formatCurrency(stats.binaryIncome),
@@ -587,7 +589,7 @@ const CustomerDashboard = () => {
           // Third Row Cards
           {
             title: 'Auto Members',
-            value: formatCount(Math.max(0, 5 - stats.activeTeam)),
+            value: formatCount(stats.autoTeam),
             icon: <FaUsers className="text-2xl text-orange-500" />,
           },
         ]

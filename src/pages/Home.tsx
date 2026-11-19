@@ -79,7 +79,8 @@ const Home: React.FC = () => {
       const activeTeam = totalTeam - inactiveTeam;
 
       // Income & Commission
-      const helpIncomeGivers = data?.autopoolIncome || 0;
+      const helpIncomeGivers = data?.helpingCommission || 0;
+      const poolCommission = data?.autopoolIncome || 0;
       const totalBonusIncomeGivers = data?.bonusIncomeAchivers*1000 || 0;
       const totalGenerationIncomeGivers = data?.genrationIncome || 0;
       const totalCommission = data?.totalCommission || 0;
@@ -115,6 +116,11 @@ const Home: React.FC = () => {
           icon: <FaHandHoldingUsd className="text-2xl text-yellow-500" />,
         },
         {
+          title: 'Pool Income Given',
+          amount: String(poolCommission),
+          icon: <FaHandHoldingUsd className="text-2xl text-yellow-500" />,
+        },
+        {
           title: 'Total Bonus Income Given',
           amount: String(totalBonusIncomeGivers),
           icon: <FaAward className="text-2xl text-pink-500" />,
@@ -142,6 +148,7 @@ const Home: React.FC = () => {
       ]);
     }
   }, [isSuccess, data]);
+
 
   // const handleApplyFilter = () => {
   //   setAppliedFrom(fromDate);

@@ -5,9 +5,11 @@ import customer1 from '@/assets/images/customer1.jpeg';
 import customer2 from '@/assets/images/customer2.jpeg';
 import customer3 from '@/assets/images/customer3.jpeg';
 import customer4 from '@/assets/images/customer4.jpeg';
+import customer5 from '@/assets/images/customer5.jpeg';
+import customer6 from '@/assets/images/customer6.jpeg';
 
 const Trial = () => {
-  const images = [customer1, customer2, customer3, customer4];
+  const images = [customer1, customer2, customer3, customer4, customer5, customer6];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // For mobile: show 1 card, for desktop: show 2 cards
@@ -38,7 +40,15 @@ const Trial = () => {
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - cardsToShow + images.length) % images.length);
+    setCurrentIndex((prev) => {
+      const newIndex = prev - cardsToShow;
+      if (newIndex < 0) {
+        // If going back from first slides, jump to last set
+        const totalSets = Math.ceil(images.length / cardsToShow);
+        return (totalSets - 1) * cardsToShow;
+      }
+      return newIndex;
+    });
   };
 
   const visibleImages = () => {
@@ -54,8 +64,15 @@ const Trial = () => {
     "The acupressure plate has relieved my back pain significantly! Feeling much better after daily use.",
     "Amazing product! My sleep quality has improved and stress levels have reduced dramatically.",
     "Best investment for my health! My headaches and neck pain are almost gone now.",
-    "Life-changing therapy plate! My energy levels are up and body feels more relaxed."
+    "Life-changing therapy plate! My energy levels are up and body feels more relaxed.",
+    "Highly recommend HappilyLife! The quality and results are truly remarkable.",
+    "This product exceeded my expectations! My overall wellness has improved tremendously."
   ];
+
+  // Get the index of the actual image for testimonial text
+  const getActualIndex = (visibleIdx) => {
+    return (currentIndex + visibleIdx) % images.length;
+  };
 
   return (
     <section className="bg-gray-50 py-8">
@@ -84,7 +101,7 @@ const Trial = () => {
 
                 <div className="flex gap-4 md:gap-8 justify-center px-8 md:px-0">
                   {visibleImages().map((image, idx) => {
-                    const actualIndex = (currentIndex + idx) % images.length;
+                    const actualIndex = getActualIndex(idx);
                     return (
                       <div key={idx} className="flex flex-col overflow-hidden shadow-xl w-72 md:w-80">
                         <div className="flex flex-1 flex-col justify-between bg-white p-4 md:p-6">
@@ -129,15 +146,18 @@ const Trial = () => {
               </div>
 
               <div className="mt-6 flex justify-center gap-2">
-                {[...Array(Math.ceil(images.length / cardsToShow))].map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentIndex(idx * cardsToShow)}
-                    className={`h-2 rounded-full transition-all ${
-                      Math.floor(currentIndex / cardsToShow) === idx ? 'w-6 bg-blue-500' : 'w-2 bg-gray-300'
-                    }`}
-                  />
-                ))}
+                {[...Array(Math.ceil(images.length / cardsToShow))].map((_, idx) => {
+                  const isActive = Math.floor(currentIndex / cardsToShow) === idx;
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentIndex(idx * cardsToShow)}
+                      className={`h-2 rounded-full transition-all ${
+                        isActive ? 'w-6 bg-blue-500' : 'w-2 bg-gray-300'
+                      }`}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>

@@ -11,6 +11,7 @@ import pdf from '../../assets/HappilyLife.pdf';
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
+  
   const location = useLocation();
   const isSignInPage = location.pathname === '/signin';
 
@@ -22,7 +23,7 @@ const Navbar: React.FC = () => {
     }
 
     const handleScroll = () => {
-      const sections = ['home', 'hero', 'faq', 'testimonials', 'contact'];
+      const sections = ['home', 'hero', 'faq', 'testimonials', 'contact', 'termsandconditions'];
       const scrollPosition = window.scrollY + 150;
 
       for (const section of sections) {
@@ -122,6 +123,7 @@ const Navbar: React.FC = () => {
                 className={`block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 ${getActiveStyles('faq')}`}
               >
                 FAQs
+                
               </Link>
             </li>
             <li>
@@ -151,145 +153,172 @@ const Navbar: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link2
-                to="/signin"
-                className={`block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 ${
-                  isSignInPage || activeTab === 'signin'
-                    ? 'border-b-2 border-purple-700 text-purple-700'
-                    : 'text-gray-700 hover:bg-purple-50 hover:text-purple-700'
-                }`}
+              <Link to="termsandconditions" 
+              smooth={true}
+              duration={500}
+              offset={-80}
+              spy={true}
+              onSetActive={() => setActiveTab('termsandconditions')}
+              className={`block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 ${getActiveStyles('termsandconditions')}`}
               >
-                Login
-              </Link2>
+                Terms & Conditions
+              </Link>
             </li>
+            <Link2
+              to="/signin"
+              className={`block cursor-pointer rounded-md px-4 py-2.5 transition-all duration-300 ${
+                isSignInPage || activeTab === 'signin'
+                  ? 'border-b-2 border-purple-700 text-purple-700'
+                  : 'text-gray-700 hover:bg-purple-50 hover:text-purple-700'
+              }`}
+            >
+              Login
+            </Link2>
           </ul>
         </div>
+      </div>
 
-        {/* Mobile Navigation */}
-        <div className="relative flex items-center justify-between md:hidden">
-          {/* Logo - Centered on mobile */}
-          <div className="absolute left-1/2 -translate-x-1/2 transform">
+      {/* Mobile Navigation */}
+      <div className="relative flex items-center justify-between md:hidden">
+        {/* Logo - Centered on mobile */}
+        <div className="absolute left-1/2 -translate-x-1/2 transform">
+          <Link
+            to="home"
+            smooth={true}
+            duration={500}
+            offset={-80}
+            className="flex cursor-pointer items-center"
+            onClick={() => setActiveTab('home')}
+          >
+            <img src="/logo.png" alt="Logo" className="h-auto w-[80px]" />
+          </Link>
+        </div>
+
+        {/* Menu Button - Right side */}
+        <button
+          type="button"
+          className="text-gray-500 hover:bg-gray-100 focus:ring-gray-200 ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 focus:outline-none focus:ring-2"
+          onClick={() => setOpen(!open)}
+        >
+          <span className="sr-only">Open main menu</span>
+          {!open ? <GiHamburgerMenu size={24} /> : <RxCross2 size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      <div className={`${open ? 'block' : 'hidden'} mt-4 md:hidden`}>
+        <ul className="bg-gray-50 flex flex-col items-center space-y-2 rounded-lg border border-stroke p-4">
+          <li className="w-full">
             <Link
               to="home"
               smooth={true}
               duration={500}
               offset={-80}
-              className="flex cursor-pointer items-center"
-              onClick={() => setActiveTab('home')}
+              spy={true}
+              onSetActive={() => setActiveTab('home')}
+              onClick={() => setOpen(false)}
+              className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('home')}`}
             >
-              <img src="/logo.png" alt="Logo" className="h-auto w-[80px]" />
+              Home
             </Link>
-          </div>
+          </li>
+          <li className="w-full">
+            <Link
+              to="hero"
+              smooth={true}
+              duration={500}
+              offset={-80}
+              spy={true}
+              onSetActive={() => setActiveTab('hero')}
+              onClick={() => setOpen(false)}
+              className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('hero')}`}
+            >
+              About
+            </Link>
+          </li>
+          <li className="w-full">
+            <a
+              href={pdf}
+              download="businessplan.pdf"
+              onClick={() => setOpen(false)}
+              className="text-gray-700 block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 hover:bg-purple-50 hover:text-purple-700"
+            >
+              Business Plan
+            </a>
+          </li>
+          <li className="w-full">
+            <Link
+              to="faq"
+              smooth={true}
+              duration={500}
+              offset={-80}
+              spy={true}
+              onSetActive={() => setActiveTab('faq')}
+              onClick={() => setOpen(false)}
+              className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('faq')}`}
+            >
+              FAQs
+            </Link>
+          </li>
+          <li className="w-full">
+            <Link
+              to="testimonials"
+              smooth={true}
+              duration={500}
+              offset={-80}
+              spy={true}
+              onSetActive={() => setActiveTab('testimonials')}
+              onClick={() => setOpen(false)}
+              className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('testimonials')}`}
+            >
+              Testimonials
+            </Link>
+          </li>
+          <li className="w-full">
+            <Link
+              to="contact"
+              smooth={true}
+              duration={500}
+              offset={-80}
+              spy={true}
+              onSetActive={() => setActiveTab('contact')}
+              onClick={() => setOpen(false)}
+              className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('contact')}`}
+            >
+              Contact
+            </Link>
 
-          {/* Menu Button - Right side */}
-          <button
-            type="button"
-            className="text-gray-500 hover:bg-gray-100 focus:ring-gray-200 ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 focus:outline-none focus:ring-2"
-            onClick={() => setOpen(!open)}
-          >
-            <span className="sr-only">Open main menu</span>
-            {!open ? <GiHamburgerMenu size={24} /> : <RxCross2 size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile Menu Dropdown */}
-        <div className={`${open ? 'block' : 'hidden'} mt-4 md:hidden`}>
-          <ul className="bg-gray-50 flex flex-col items-center space-y-2 rounded-lg border border-stroke p-4">
-            <li className="w-full">
-              <Link
-                to="home"
-                smooth={true}
-                duration={500}
-                offset={-80}
-                spy={true}
-                onSetActive={() => setActiveTab('home')}
-                onClick={() => setOpen(false)}
-                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('home')}`}
-              >
-                Home
-              </Link>
-            </li>
-            <li className="w-full">
-              <Link
-                to="hero"
-                smooth={true}
-                duration={500}
-                offset={-80}
-                spy={true}
-                onSetActive={() => setActiveTab('hero')}
-                onClick={() => setOpen(false)}
-                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('hero')}`}
-              >
-                About
-              </Link>
-            </li>
-            <li className="w-full">
-              <a
-                href={pdf}
-                download="businessplan.pdf"
-                onClick={() => setOpen(false)}
-                className="text-gray-700 block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 hover:bg-purple-50 hover:text-purple-700"
-              >
-                Business Plan
-              </a>
-            </li>
-            <li className="w-full">
-              <Link
-                to="faq"
-                smooth={true}
-                duration={500}
-                offset={-80}
-                spy={true}
-                onSetActive={() => setActiveTab('faq')}
-                onClick={() => setOpen(false)}
-                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('faq')}`}
-              >
-                FAQs
-              </Link>
-            </li>
-            <li className="w-full">
-              <Link
-                to="testimonials"
-                smooth={true}
-                duration={500}
-                offset={-80}
-                spy={true}
-                onSetActive={() => setActiveTab('testimonials')}
-                onClick={() => setOpen(false)}
-                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('testimonials')}`}
-              >
-                Testimonials
-              </Link>
-            </li>
-            <li className="w-full">
-              <Link
-                to="contact"
-                smooth={true}
-                duration={500}
-                offset={-80}
-                spy={true}
-                onSetActive={() => setActiveTab('contact')}
-                onClick={() => setOpen(false)}
-                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('contact')}`}
-              >
-                Contact
-              </Link>
-            </li>
-            <li className="w-full">
-              <Link2
-                to="/signin"
-                onClick={() => setOpen(false)}
-                className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${
-                  isSignInPage || activeTab === 'signin'
-                    ? 'border-b-2 border-purple-700 text-purple-700'
-                    : 'text-gray-700 hover:bg-purple-50 hover:text-purple-700'
-                }`}
-              >
-                Login
-              </Link2>
-            </li>
-          </ul>
-        </div>
+          </li>
+          
+          <li className="w-full">
+            <Link
+              to="termsandconditions"
+              smooth={true}
+              duration={500}
+              offset={-80}
+              spy={true}
+              onSetActive={() => setActiveTab('termsandconditions')}
+              onClick={() => setOpen(false)}
+              className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${getActiveStyles('termsandconditions')}`}
+            >
+              Terms & Conditions
+            </Link>
+          </li>
+          
+          <li className="w-full">
+            <Link2
+              to="/signin"
+              onClick={() => setOpen(false)}
+              className={`block cursor-pointer rounded-md px-4 py-2.5 text-center transition-all duration-300 ${
+                isSignInPage || activeTab === 'signin'
+                  ? 'border-b-2 border-purple-700 text-purple-700'
+                  : 'text-gray-700 hover:bg-purple-50 hover:text-purple-700'
+              }`}
+            >
+              Login
+            </Link2>
+          </li>
+        </ul>
       </div>
     </nav>
   );

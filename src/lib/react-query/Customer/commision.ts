@@ -1,8 +1,9 @@
-import {getCustomer, getCommission} from '@/lib/api/Customer/home';
-import {Customer, Commission} from '@/types';
-import {useQuery} from '@tanstack/react-query';
-import {CUSTOMER_QUERY_KEYS} from '../QueryKeys';
-import {getDirectCustomer} from '@/lib/api/Customer/commission';
+import { getCustomer, getCommission } from '@/lib/api/Customer/home';
+import { Customer, Commission } from '@/types';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { ADMIN_DASHBOARD_QUERY_KEYS, CUSTOMER_QUERY_KEYS } from '../QueryKeys';
+import { approveAchievement, getAchivement, getDirectCustomer } from '@/lib/api/Customer/commission';
+import toast from 'react-hot-toast';
 
 // Fetch customer details hook
 export const useGetCustomer = (id: string) => {
@@ -26,3 +27,27 @@ export const useGetDirectCustomer = () => {
     queryFn: () => getDirectCustomer(),
   });
 };
+
+// Approve an achievement — mutation (PUT side-effect)
+export const useApproveAchievement = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => approveAchievement(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [ADMIN_DASHBOARD_QUERY_KEYS.CUSTOMER_LIST] });
+      toast.success("Achievement approved successfully");
+    },
+    onError: () => {
+      toast.error("Failed to approve achievement");
+    }
+  });
+};
+
+
+export const useGetAchivement = () => {
+  return useQuery({
+    queryKey: ['customer-achivement'],
+    queryFn: () => getAchivement(),
+  });
+};
+

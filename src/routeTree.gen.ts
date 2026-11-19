@@ -15,6 +15,7 @@ import { Route as LandingRouteImport } from './routes/_landing'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as RegistrationRegistrationRouteImport } from './routes/_registration/registration'
+import { Route as LandingTermsandconditionsRouteImport } from './routes/_landing/termsandconditions'
 import { Route as LandingReviewRouteImport } from './routes/_landing/review'
 import { Route as LandingResultChar38footerRouteImport } from './routes/_landing/result&footer'
 import { Route as LandingRegistrationformRouteImport } from './routes/_landing/registrationform'
@@ -42,6 +43,7 @@ import { Route as AppCustomerDownlinelistRouteImport } from './routes/_app/custo
 import { Route as AppCustomerDirectcustomerRouteImport } from './routes/_app/customer/directcustomer'
 import { Route as AppCustomerDashboardRouteImport } from './routes/_app/customer/dashboard'
 import { Route as AppCustomerCustomeractivationRouteImport } from './routes/_app/customer/customeractivation'
+import { Route as AppCustomerCustomerAchivmentRouteImport } from './routes/_app/customer/customer-achivment'
 import { Route as AppCustomerCustmerfundtransferRouteImport } from './routes/_app/customer/custmerfundtransfer'
 import { Route as AppAdminWlcmletterRouteImport } from './routes/_app/admin/wlcmletter'
 import { Route as AppAdminRegistrationlandingRouteImport } from './routes/_app/admin/registrationlanding'
@@ -117,6 +119,7 @@ import { Route as AppAdminBannerBannerRouteImport } from './routes/_app/admin/_b
 import { Route as AppAdminAutopooltreeAutopoolnewRouteImport } from './routes/_app/admin/_autopooltree/autopoolnew'
 import { Route as AppAdminVoucherVoucherRouteImport } from './routes/_app/admin/_Voucher/voucher'
 import { Route as AppAdminNetworktreenewAutopoolnewtworkRouteImport } from './routes/_app/admin/_Networktreenew/autopoolnewtwork'
+import { Route as AppAdminNetworkPooltreeRouteImport } from './routes/_app/admin/_Network/pooltree'
 import { Route as AppAdminNetworkNetworkRouteImport } from './routes/_app/admin/_Network/network'
 import { Route as AppAdminNetworkBinarytreeRouteImport } from './routes/_app/admin/_Network/binarytree'
 import { Route as AppAdminEditEmailEditemailRouteImport } from './routes/_app/admin/_EditEmail/editemail'
@@ -168,6 +171,12 @@ const RegistrationRegistrationRoute =
     id: '/_registration/registration',
     path: '/registration',
     getParentRoute: () => rootRouteImport,
+  } as any)
+const LandingTermsandconditionsRoute =
+  LandingTermsandconditionsRouteImport.update({
+    id: '/termsandconditions',
+    path: '/termsandconditions',
+    getParentRoute: () => LandingRoute,
   } as any)
 const LandingReviewRoute = LandingReviewRouteImport.update({
   id: '/review',
@@ -307,6 +316,12 @@ const AppCustomerCustomeractivationRoute =
   AppCustomerCustomeractivationRouteImport.update({
     id: '/customer/customeractivation',
     path: '/customer/customeractivation',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppCustomerCustomerAchivmentRoute =
+  AppCustomerCustomerAchivmentRouteImport.update({
+    id: '/customer/customer-achivment',
+    path: '/customer/customer-achivment',
     getParentRoute: () => AppRoute,
   } as any)
 const AppCustomerCustmerfundtransferRoute =
@@ -745,6 +760,11 @@ const AppAdminNetworktreenewAutopoolnewtworkRoute =
     path: '/admin/autopoolnewtwork',
     getParentRoute: () => AppRoute,
   } as any)
+const AppAdminNetworkPooltreeRoute = AppAdminNetworkPooltreeRouteImport.update({
+  id: '/admin/_Network/pooltree',
+  path: '/admin/pooltree',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminNetworkNetworkRoute = AppAdminNetworkNetworkRouteImport.update({
   id: '/admin/_Network/network',
   path: '/admin/network',
@@ -824,6 +844,7 @@ export interface FileRoutesByFullPath {
   '/registrationform': typeof LandingRegistrationformRoute
   '/result&footer': typeof LandingResultChar38footerRoute
   '/review': typeof LandingReviewRoute
+  '/termsandconditions': typeof LandingTermsandconditionsRoute
   '/registration': typeof RegistrationRegistrationRoute
   '/dashboard': typeof AppDashboardLazyRoute
   '/landing': typeof LandingLandingLazyRoute
@@ -833,6 +854,7 @@ export interface FileRoutesByFullPath {
   '/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
+  '/customer/customer-achivment': typeof AppCustomerCustomerAchivmentRoute
   '/customer/customeractivation': typeof AppCustomerCustomeractivationRoute
   '/customer/dashboard': typeof AppCustomerDashboardRoute
   '/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
@@ -846,6 +868,7 @@ export interface FileRoutesByFullPath {
   '/admin/editemail': typeof AppAdminEditEmailEditemailRoute
   '/admin/binarytree': typeof AppAdminNetworkBinarytreeRoute
   '/admin/network': typeof AppAdminNetworkNetworkRoute
+  '/admin/pooltree': typeof AppAdminNetworkPooltreeRoute
   '/admin/autopoolnewtwork': typeof AppAdminNetworktreenewAutopoolnewtworkRoute
   '/admin/voucher': typeof AppAdminVoucherVoucherRoute
   '/admin/autopoolnew': typeof AppAdminAutopooltreeAutopoolnewRoute
@@ -942,6 +965,7 @@ export interface FileRoutesByTo {
   '/registrationform': typeof LandingRegistrationformRoute
   '/result&footer': typeof LandingResultChar38footerRoute
   '/review': typeof LandingReviewRoute
+  '/termsandconditions': typeof LandingTermsandconditionsRoute
   '/registration': typeof RegistrationRegistrationRoute
   '/dashboard': typeof AppDashboardLazyRoute
   '/landing': typeof LandingLandingLazyRoute
@@ -951,6 +975,7 @@ export interface FileRoutesByTo {
   '/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
+  '/customer/customer-achivment': typeof AppCustomerCustomerAchivmentRoute
   '/customer/customeractivation': typeof AppCustomerCustomeractivationRoute
   '/customer/dashboard': typeof AppCustomerDashboardRoute
   '/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
@@ -964,6 +989,7 @@ export interface FileRoutesByTo {
   '/admin/editemail': typeof AppAdminEditEmailEditemailRoute
   '/admin/binarytree': typeof AppAdminNetworkBinarytreeRoute
   '/admin/network': typeof AppAdminNetworkNetworkRoute
+  '/admin/pooltree': typeof AppAdminNetworkPooltreeRoute
   '/admin/autopoolnewtwork': typeof AppAdminNetworktreenewAutopoolnewtworkRoute
   '/admin/voucher': typeof AppAdminVoucherVoucherRoute
   '/admin/autopoolnew': typeof AppAdminAutopooltreeAutopoolnewRoute
@@ -1063,6 +1089,7 @@ export interface FileRoutesById {
   '/_landing/registrationform': typeof LandingRegistrationformRoute
   '/_landing/result&footer': typeof LandingResultChar38footerRoute
   '/_landing/review': typeof LandingReviewRoute
+  '/_landing/termsandconditions': typeof LandingTermsandconditionsRoute
   '/_registration/registration': typeof RegistrationRegistrationRoute
   '/_app/dashboard': typeof AppDashboardLazyRoute
   '/_landing/landing': typeof LandingLandingLazyRoute
@@ -1073,6 +1100,7 @@ export interface FileRoutesById {
   '/_app/admin/registrationlanding': typeof AppAdminRegistrationlandingRoute
   '/_app/admin/wlcmletter': typeof AppAdminWlcmletterRoute
   '/_app/customer/custmerfundtransfer': typeof AppCustomerCustmerfundtransferRoute
+  '/_app/customer/customer-achivment': typeof AppCustomerCustomerAchivmentRoute
   '/_app/customer/customeractivation': typeof AppCustomerCustomeractivationRoute
   '/_app/customer/dashboard': typeof AppCustomerDashboardRoute
   '/_app/customer/directcustomer': typeof AppCustomerDirectcustomerRoute
@@ -1086,6 +1114,7 @@ export interface FileRoutesById {
   '/_app/admin/_EditEmail/editemail': typeof AppAdminEditEmailEditemailRoute
   '/_app/admin/_Network/binarytree': typeof AppAdminNetworkBinarytreeRoute
   '/_app/admin/_Network/network': typeof AppAdminNetworkNetworkRoute
+  '/_app/admin/_Network/pooltree': typeof AppAdminNetworkPooltreeRoute
   '/_app/admin/_Networktreenew/autopoolnewtwork': typeof AppAdminNetworktreenewAutopoolnewtworkRoute
   '/_app/admin/_Voucher/voucher': typeof AppAdminVoucherVoucherRoute
   '/_app/admin/_autopooltree/autopoolnew': typeof AppAdminAutopooltreeAutopoolnewRoute
@@ -1184,6 +1213,7 @@ export interface FileRouteTypes {
     | '/registrationform'
     | '/result&footer'
     | '/review'
+    | '/termsandconditions'
     | '/registration'
     | '/dashboard'
     | '/landing'
@@ -1193,6 +1223,7 @@ export interface FileRouteTypes {
     | '/admin/registrationlanding'
     | '/admin/wlcmletter'
     | '/customer/custmerfundtransfer'
+    | '/customer/customer-achivment'
     | '/customer/customeractivation'
     | '/customer/dashboard'
     | '/customer/directcustomer'
@@ -1206,6 +1237,7 @@ export interface FileRouteTypes {
     | '/admin/editemail'
     | '/admin/binarytree'
     | '/admin/network'
+    | '/admin/pooltree'
     | '/admin/autopoolnewtwork'
     | '/admin/voucher'
     | '/admin/autopoolnew'
@@ -1302,6 +1334,7 @@ export interface FileRouteTypes {
     | '/registrationform'
     | '/result&footer'
     | '/review'
+    | '/termsandconditions'
     | '/registration'
     | '/dashboard'
     | '/landing'
@@ -1311,6 +1344,7 @@ export interface FileRouteTypes {
     | '/admin/registrationlanding'
     | '/admin/wlcmletter'
     | '/customer/custmerfundtransfer'
+    | '/customer/customer-achivment'
     | '/customer/customeractivation'
     | '/customer/dashboard'
     | '/customer/directcustomer'
@@ -1324,6 +1358,7 @@ export interface FileRouteTypes {
     | '/admin/editemail'
     | '/admin/binarytree'
     | '/admin/network'
+    | '/admin/pooltree'
     | '/admin/autopoolnewtwork'
     | '/admin/voucher'
     | '/admin/autopoolnew'
@@ -1422,6 +1457,7 @@ export interface FileRouteTypes {
     | '/_landing/registrationform'
     | '/_landing/result&footer'
     | '/_landing/review'
+    | '/_landing/termsandconditions'
     | '/_registration/registration'
     | '/_app/dashboard'
     | '/_landing/landing'
@@ -1432,6 +1468,7 @@ export interface FileRouteTypes {
     | '/_app/admin/registrationlanding'
     | '/_app/admin/wlcmletter'
     | '/_app/customer/custmerfundtransfer'
+    | '/_app/customer/customer-achivment'
     | '/_app/customer/customeractivation'
     | '/_app/customer/dashboard'
     | '/_app/customer/directcustomer'
@@ -1445,6 +1482,7 @@ export interface FileRouteTypes {
     | '/_app/admin/_EditEmail/editemail'
     | '/_app/admin/_Network/binarytree'
     | '/_app/admin/_Network/network'
+    | '/_app/admin/_Network/pooltree'
     | '/_app/admin/_Networktreenew/autopoolnewtwork'
     | '/_app/admin/_Voucher/voucher'
     | '/_app/admin/_autopooltree/autopoolnew'
@@ -1581,6 +1619,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/registration'
       preLoaderRoute: typeof RegistrationRegistrationRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_landing/termsandconditions': {
+      id: '/_landing/termsandconditions'
+      path: '/termsandconditions'
+      fullPath: '/termsandconditions'
+      preLoaderRoute: typeof LandingTermsandconditionsRouteImport
+      parentRoute: typeof LandingRoute
     }
     '/_landing/review': {
       id: '/_landing/review'
@@ -1769,6 +1814,13 @@ declare module '@tanstack/react-router' {
       path: '/customer/customeractivation'
       fullPath: '/customer/customeractivation'
       preLoaderRoute: typeof AppCustomerCustomeractivationRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customer/customer-achivment': {
+      id: '/_app/customer/customer-achivment'
+      path: '/customer/customer-achivment'
+      fullPath: '/customer/customer-achivment'
+      preLoaderRoute: typeof AppCustomerCustomerAchivmentRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/customer/custmerfundtransfer': {
@@ -2296,6 +2348,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminNetworktreenewAutopoolnewtworkRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/_Network/pooltree': {
+      id: '/_app/admin/_Network/pooltree'
+      path: '/admin/pooltree'
+      fullPath: '/admin/pooltree'
+      preLoaderRoute: typeof AppAdminNetworkPooltreeRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/_Network/network': {
       id: '/_app/admin/_Network/network'
       path: '/admin/network'
@@ -2379,6 +2438,7 @@ interface AppRouteChildren {
   AppAdminRegistrationlandingRoute: typeof AppAdminRegistrationlandingRoute
   AppAdminWlcmletterRoute: typeof AppAdminWlcmletterRoute
   AppCustomerCustmerfundtransferRoute: typeof AppCustomerCustmerfundtransferRoute
+  AppCustomerCustomerAchivmentRoute: typeof AppCustomerCustomerAchivmentRoute
   AppCustomerCustomeractivationRoute: typeof AppCustomerCustomeractivationRoute
   AppCustomerDashboardRoute: typeof AppCustomerDashboardRoute
   AppCustomerDirectcustomerRoute: typeof AppCustomerDirectcustomerRoute
@@ -2392,6 +2452,7 @@ interface AppRouteChildren {
   AppAdminEditEmailEditemailRoute: typeof AppAdminEditEmailEditemailRoute
   AppAdminNetworkBinarytreeRoute: typeof AppAdminNetworkBinarytreeRoute
   AppAdminNetworkNetworkRoute: typeof AppAdminNetworkNetworkRoute
+  AppAdminNetworkPooltreeRoute: typeof AppAdminNetworkPooltreeRoute
   AppAdminNetworktreenewAutopoolnewtworkRoute: typeof AppAdminNetworktreenewAutopoolnewtworkRoute
   AppAdminVoucherVoucherRoute: typeof AppAdminVoucherVoucherRoute
   AppAdminAutopooltreeAutopoolnewRoute: typeof AppAdminAutopooltreeAutopoolnewRoute
@@ -2478,6 +2539,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminRegistrationlandingRoute: AppAdminRegistrationlandingRoute,
   AppAdminWlcmletterRoute: AppAdminWlcmletterRoute,
   AppCustomerCustmerfundtransferRoute: AppCustomerCustmerfundtransferRoute,
+  AppCustomerCustomerAchivmentRoute: AppCustomerCustomerAchivmentRoute,
   AppCustomerCustomeractivationRoute: AppCustomerCustomeractivationRoute,
   AppCustomerDashboardRoute: AppCustomerDashboardRoute,
   AppCustomerDirectcustomerRoute: AppCustomerDirectcustomerRoute,
@@ -2491,6 +2553,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminEditEmailEditemailRoute: AppAdminEditEmailEditemailRoute,
   AppAdminNetworkBinarytreeRoute: AppAdminNetworkBinarytreeRoute,
   AppAdminNetworkNetworkRoute: AppAdminNetworkNetworkRoute,
+  AppAdminNetworkPooltreeRoute: AppAdminNetworkPooltreeRoute,
   AppAdminNetworktreenewAutopoolnewtworkRoute:
     AppAdminNetworktreenewAutopoolnewtworkRoute,
   AppAdminVoucherVoucherRoute: AppAdminVoucherVoucherRoute,
@@ -2621,6 +2684,7 @@ interface LandingRouteChildren {
   LandingRegistrationformRoute: typeof LandingRegistrationformRoute
   LandingResultChar38footerRoute: typeof LandingResultChar38footerRoute
   LandingReviewRoute: typeof LandingReviewRoute
+  LandingTermsandconditionsRoute: typeof LandingTermsandconditionsRoute
   LandingLandingLazyRoute: typeof LandingLandingLazyRoute
 }
 
@@ -2639,6 +2703,7 @@ const LandingRouteChildren: LandingRouteChildren = {
   LandingRegistrationformRoute: LandingRegistrationformRoute,
   LandingResultChar38footerRoute: LandingResultChar38footerRoute,
   LandingReviewRoute: LandingReviewRoute,
+  LandingTermsandconditionsRoute: LandingTermsandconditionsRoute,
   LandingLandingLazyRoute: LandingLandingLazyRoute,
 }
 

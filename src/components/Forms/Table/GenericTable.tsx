@@ -33,7 +33,7 @@ type GenericTableProps<T> = {
 const GenericTable = <T,>({
   data,
   columns,
-  itemsPerPage = 5,
+  itemsPerPage = 15,
   searchAble,
   title,
   onEdit,

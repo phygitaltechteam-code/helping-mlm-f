@@ -154,9 +154,9 @@ export const Epin: React.FC = () => {
               label="Price"
               name="price"
               options={[
-                { label: '2000', value: '2000' },
-                { label: '2500', value: '2500' },
+                { label: '2300', value: '2300' },
                 { label: '3000', value: '3000' },
+                { label: '3200', value: '3200' },
               ]}
               onChange={handleTypeChange}
             />

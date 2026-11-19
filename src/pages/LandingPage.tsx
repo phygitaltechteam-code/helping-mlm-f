@@ -14,6 +14,7 @@ import Trial from '@/components/LandingComponents/Trial';
 import VisionMission from '@/components/LandingComponents/VisionMission';
 import {Element} from 'react-scroll';
 import '@/assets/css/loader.css';
+import TermsAndConditions from '@/components/LandingComponents/TermsAndConditions';
 
 const LandingPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,6 +48,9 @@ const LandingPage: React.FC = () => {
       </Element>
       <Element name="contact">
         <Contact />
+      </Element>
+        <Element name="termsandconditions">
+        <TermsAndConditions/>
       </Element>
       <Footer />
 

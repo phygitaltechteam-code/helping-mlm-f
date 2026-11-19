@@ -127,7 +127,7 @@ const DisplayCustomerList: React.FC = () => {
         const directTeam = directCountMap[customer.crnNo] ?? 0;
         const totalEarning =
           customer.totalEarning ?? customer.totalCommission ?? 0;
-        const rank = getCustomerRank(directTeam, totalEarning);
+        const rank = getCustomerRank(customer.rank);
         const rankLabel = rank.emoji
           ? `${rank.emoji} ${rank.label}`
           : rank.label;
